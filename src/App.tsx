@@ -16,9 +16,9 @@ const App: Component = () => {
 
   return (<>
     <Steps current={currentStep} identification='Passo à passo de compra'>
-      <Step>endereço</Step>
-      <Step>pagamento</Step>
-      <Step>conclusão</Step>
+      <Step description='coloque seu endereço'>endereço</Step>
+      <Step description='dados de pagamento'>pagamento</Step>
+      <Step description='confirme a compra'>conclusão</Step>
     </Steps>
 
     <Box>

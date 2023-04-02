@@ -4,21 +4,52 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  margin-block: 20px;
   width: 100%;
   padding-inline: 10px;
 
   .step {
     display: flex;
-    position: relative;
     width: 100%;
-    overflow: hidden;
+    position: relative;
+
+    & .step-info {
+      position: relative;
+      
+      & > .step-title {
+        font-weight: 700;
+        max-width: 100%;
+        font-size: 14px;
+        margin: 0;
+        transition: .4s;
+        color: $gray-4;
+      }
+
+      & > .step-description {
+        position: absolute;
+        width: fit-content;
+        white-space: nowrap;
+        font-size: 14px;
+        font-weight: 700;
+        color: $gray-4;
+        left: 0;
+        top: 0;
+      }
+    }
+
+    &.current-step .step-title,
+    &.done-step .step-title {
+      font-weight: 800;
+      color: $gray-5;
+      line-height: 22px;
+    }
 
     & > .step-content {
       display: flex;
       align-items: center;
       gap: 10px;
       position: relative;
-      overflow: hidden;
+      height: fit-content;
 
       & > .step-circle {
         border-radius: 50%;
@@ -68,7 +99,7 @@
     }
 
     &.current-step:not(:last-of-type)::after {
-      animation: grow-background-gradient .4s ease-in-out;
+      animation: grow-background-gradient .4s linear;
       background: linear-gradient(90deg, 
       $primary 25%, $gray-3 75%);
       background-position: 330% 50%;
@@ -77,7 +108,7 @@
 
     @keyframes grow-background-gradient {
       0% {
-        background-position: 360% 100%;
+        background-position: 370% 100%;
       }
       100% {
         background-position: 330% 100%;
