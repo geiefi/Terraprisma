@@ -1,0 +1,23 @@
+:root {
+  --gray-0: #ffffff;
+  --gray-1: rgba(220, 220, 220, 0.77);
+  --gray-2: #D8D5D5;
+  --gray-3: #a0a0a0;
+  --gray-4: #808080;
+  --primary-accent: #bd462b;
+  --32-light-primary-accent: rgba(189, 70, 43, 0.32);
+  --secondary-accent: #1cb88e;
+  --tertiary-accent: #9b66d9;
+}
+
+$primary: var(--primary-accent);
+$lightened-primary: var(--32-light-primary-accent);
+$secondary: var(--secondary-accent);
+$tertiary: var(--tertiary-accent);
+
+$gray-0: var(--gray-0);
+$gray-1: var(--gray-1);
+$gray-2: var(--gray-2); 
+$gray-3: var(--gray-3);
+$gray-4: var(--gray-4);
+
