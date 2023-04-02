@@ -10,26 +10,24 @@ type Depth = 0 | 1 | 2 | 3 | 4;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
-const Box: Component<ParentProps> = ({ children }) => {
+const Box: Component<ParentProps> = (props) => {
   const oldDepth = useContext(BoxContext);
   const depth = createMemo(() => {
-    console.log(oldDepth);
     if (typeof oldDepth !== 'undefined') {
-      return Math.max(oldDepth() + 1, 4);
+      return Math.min(oldDepth() + 1, 3);
     } else {
-      return 0;
+      return 1;
     }
   }) as Accessor<Depth>;
 
   return <BoxContext.Provider value={depth}>
     <div class='box' classList={{
-      'gray-0': depth() === 0,
       'gray-1': depth() === 1,
       'gray-2': depth() === 2,
       'gray-3': depth() === 3,
-      'gray-4': depth() === 4,
+      'bordered': (oldDepth || (() => 0))() === 3
     }}>
-      {children}
+      {props.children}
     </div>
   </BoxContext.Provider>;
 };

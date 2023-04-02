@@ -17,9 +17,17 @@ const App: Component = () => {
     <Button onClick={() => setCurrentStep(currentStep() - 1)}>Previous</Button>
 
     <Box>
+      <h1>Box 1</h1>
       <Box>
+        <h2>Box 2</h2>
         <Box>
           <h3>Box 3</h3>
+          <Box>
+            <h3>Box 4</h3>
+            <Box>
+              <h3>Box 4</h3>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>
