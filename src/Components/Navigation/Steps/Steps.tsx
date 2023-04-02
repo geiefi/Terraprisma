@@ -73,9 +73,18 @@ function Steps(props: StepsProps) {
     return children.filter(child => isElementAStepProps(child)) as unknown as StepProps[];
   });
 
+  const stepsCount = createMemo(() => steps().length);
+
+  createEffect(() => {
+    if (props.current() >= stepsCount()) {
+      throw new StepsError(`Cannot set current step to the step at index ${props.current()} for` +
+      ` Steps with identification "${props.identification}" because it does not exist!`);
+    }
+  });
+
   return <StepsContext.Provider value={[
     props.current,
-    () => steps().length
+    stepsCount
   ]}>
     <div class='steps-container' style={props.style}>
       <For each={steps()}>{(step, i) => (

@@ -15,14 +15,14 @@ const App: Component = () => {
   const formStore = createStore<FormStore<{}>>(new FormStore({}));
 
   return (<>
-    <Steps current={currentStep} identification='Passo à passo de compra'>
+    <Steps current={currentStep} identification='PassoAPassoDeCompra'>
       <Step description='coloque seu endereço'>endereço</Step>
       <Step description='dados de pagamento'>pagamento</Step>
       <Step description='confirme a compra'>conclusão</Step>
     </Steps>
 
     <Box>
-      <Form formStore={formStore} indentification='Informações de pagamento'>
+      <Form formStore={formStore} indentification='InformacoesDePagamento'>
         <Stack direction='horizontal' align='space-between'>
           <Button
             size='large'
