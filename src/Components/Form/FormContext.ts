@@ -7,6 +7,14 @@ export type FormValue = Record<string, FieldValue>;
 
 export type FieldValidator<ValueType = FieldValue> = (value: ValueType) => string | undefined;
 
+/**
+  * @example 
+  * ```typescript
+  * const formStore = createStore<FormStore<MyFormValueType>>(new FormStore({
+  *   // all of my default field values
+  * }))
+  * ```
+  */
 export class FormStore<Values extends FormValue> {
   values: Values;
   errors: Partial<Record<keyof Values, string[]>>;
