@@ -1,9 +1,10 @@
-import type { Component, ParentProps } from "solid-js";
+import type { Component, JSX, ParentProps } from "solid-js";
 
 import './Ripple.scss';
 
 export type RippleProps = ParentProps<{
   onClick?: (event: MouseEvent) => any,
+  style?: JSX.CSSProperties
 }>;
 
 const Ripple: Component<RippleProps> = (props) => {
@@ -30,6 +31,7 @@ const Ripple: Component<RippleProps> = (props) => {
 
   return <div 
     class='ripple-container' 
+    style={props.style}
     onClick={(event) => {
       createRipple(event.target.parentElement!, event.clientX, event.clientY);
       if (typeof props.onClick !== 'undefined') {

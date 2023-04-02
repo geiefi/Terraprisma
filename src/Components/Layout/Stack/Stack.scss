@@ -1,0 +1,15 @@
+.stack {
+  display: flex;
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+  }
+
+  &.vertical {
+    flex-direction: column;
+  }
+}
