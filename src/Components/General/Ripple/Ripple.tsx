@@ -1,4 +1,4 @@
-import type { Component, JSX, ParentProps } from "solid-js";
+import { Component, createSignal, JSX, ParentProps } from "solid-js";
 
 import './Ripple.scss';
 
@@ -29,13 +29,23 @@ const Ripple: Component<RippleProps> = (props) => {
     element.appendChild(circle);
   };
 
+  const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
+
   return <div 
     class='ripple-container' 
+    ref={setRippleContainer}
     style={props.style}
     onClick={(event) => {
-      createRipple(event.target.parentElement!, event.clientX, event.clientY);
-      if (typeof props.onClick !== 'undefined') {
-        props.onClick(event);
+      if (typeof rippleContainer() !== 'undefined') {
+        createRipple(rippleContainer()!, event.clientX, event.clientY);
+        if (typeof props.onClick !== 'undefined') {
+          props.onClick(event);
+        }
+      } else {
+        createRipple(event.target as any, event.clientX, event.clientY);
+        if (typeof props.onClick !== 'undefined') {
+          props.onClick(event);
+        }
       }
     }}
   >{props.children}</div>;
