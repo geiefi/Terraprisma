@@ -2,7 +2,6 @@ import {
   Accessor,
   children as accessChildren,
   Component,
-  createContext,
   createEffect,
   createMemo,
   createSignal,
@@ -10,6 +9,8 @@ import {
   JSX,
   useContext
 } from "solid-js";
+
+import { StepsContext } from "./StepsContext";
 
 import './Steps.scss';
 
@@ -43,7 +44,7 @@ const InternalStep: Component<{ index: number } & StepProps> = ({ index, descrip
         class="step-circle"
       >{current() <= index
         ? index + 1
-        : '✓'}</span>
+        : <i class="fa-solid fa-check"></i>}</span>
       <span class='step-info'>
         <p class='step-title'>{children}</p>
         {description && <p class='step-description'>{description}</p>}
@@ -51,13 +52,6 @@ const InternalStep: Component<{ index: number } & StepProps> = ({ index, descrip
     </span>
   </div>;
 }
-
-export type StepsContextProviderValue = [
-  current: Accessor<number>,
-  count: Accessor<number>
-];
-
-const StepsContext = createContext<StepsContextProviderValue>();
 
 function isElementAStepProps(el: unknown): el is StepProps {
   return typeof el === 'object' && Object.hasOwn(el || {}, 'children');

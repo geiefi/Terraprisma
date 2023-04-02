@@ -1,3 +1,5 @@
+@import "../../../theme";
+
 .steps-container {
   position: relative;
   display: flex;
@@ -22,12 +24,16 @@
         border-radius: 50%;
         transition: background-color .4s ease-in-out,
                     color .4s ease-in-out;
-        background: #505050;
+        background: $gray-3;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
         color: #fff;
         box-sizing: border-box;
+        user-select: none;
         width: 32px;
         height: 32px;
+        font-size: 15px;
         min-width: 32px;
+        font-size: 20px;
         min-height: 32px;
         padding: 0;
         display: flex;
@@ -37,12 +43,13 @@
     }
 
     &.current-step > .step-content > .step-circle {
-      background: #c95f22;
+      background: $primary;
     }
 
     &.done-step > .step-content > .step-circle {
       background: rgba(201, 95, 34, 0.1);
-      color: #c95f22;
+      background: $lightened-primary;
+      color: $primary;
       font-weight: bolder;
     }
 
@@ -53,15 +60,32 @@
       /*    this variable is set by SolidJS and then used here */
       left: calc(var(--step-content-width) + 10px);
       width: calc(100% - var(--step-content-width) - 20px);
-      height: 1px;
+      height: 3px;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
       transition: background-color .4s ease-in-out,
                   color .4s ease-in-out;
-      background: #505050;
+      background: $gray-3;
+    }
+
+    &.current-step:not(:last-of-type)::after {
+      animation: grow-background-gradient .4s ease-in-out;
+      background: linear-gradient(90deg, 
+      $primary 25%, $gray-3 75%);
+      background-position: 330% 50%;
+      background-size: 400% 100%;
+    }
+
+    @keyframes grow-background-gradient {
+      0% {
+        background-position: 360% 100%;
+      }
+      100% {
+        background-position: 330% 100%;
+      }
     }
 
     &.done-step:not(:last-of-type)::after {
-      background: #c95f22;
+      background: $primary;
     }
   }
 }
-
