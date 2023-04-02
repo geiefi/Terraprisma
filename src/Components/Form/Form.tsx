@@ -1,7 +1,7 @@
 import { JSX, onMount, useContext } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
-import { FieldValidator, FieldValue, FormContext, FormProvider, FormStore, FormValue } from "./FormContext";
+import { FieldValidator, FieldValue, FormContext, FormProviderValue, FormStore, FormValue } from "./FormContext";
 
 /**
  * A type of validation that is agnostic with relation to which field it validates, meaning
@@ -121,7 +121,7 @@ export function Form(props: {
  * to be used inside of internal FoxPox components.
  */
 export function useForm<T extends FormValue>() {
-  return useContext<FormProvider<FormValue> | undefined>(
+  return useContext<FormProviderValue<FormValue> | undefined>(
     FormContext
-  ) as unknown as FormProvider<T>;
+  ) as unknown as FormProviderValue<T>;
 }
