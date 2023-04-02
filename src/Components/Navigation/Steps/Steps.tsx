@@ -8,7 +8,6 @@ import {
   createSignal,
   For,
   JSX,
-  Signal,
   useContext
 } from "solid-js";
 
@@ -24,7 +23,7 @@ export const Step: Component<StepProps> = (props) => {
 };
 
 const InternalStep: Component<{ index: number } & StepProps> = ({ index, description, children }) => {
-  const [current, _count, _actions] = useSteps()!;
+  const [current, _count] = useSteps()!;
 
   const [contentWidth, setContentWidth] = createSignal<string>('0px');
   const [ref, setRef] = createSignal<HTMLSpanElement>();
