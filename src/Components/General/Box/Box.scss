@@ -1,0 +1,36 @@
+$gray-0: #ffffff;
+$gray-1: #dfdfdf;
+$gray-2: #c0c0c0;
+$gray-3: #a0a0a0;
+$gray-4: #808080;
+
+.box {
+  padding-inline: 18px;
+  padding-block: 20px;
+  width: 100%;
+}
+
+.box.gray-0 {
+  background: $gray-0;
+  border: 1px solid $gray-1;
+}
+
+.box.gray-1 {
+  background: $gray-1;
+  border: 1px solid $gray-2;
+}
+
+.box.gray-2 {
+  background: $gray-2;
+  border: 1px solid $gray-3;
+}
+
+.box.gray-3 {
+  background: $gray-3;
+  border: 1px solid $gray-4;
+}
+
+.box.gray-4 {
+  background: $gray-4;
+  border: 1px solid #000;
+}

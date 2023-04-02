@@ -1,0 +1,67 @@
+.steps-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-inline: 10px;
+
+  .step {
+    display: flex;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    & > .step-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+
+      & > .step-circle {
+        border-radius: 50%;
+        transition: background-color .4s ease-in-out,
+                    color .4s ease-in-out;
+        background: #505050;
+        color: #fff;
+        box-sizing: border-box;
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    &.current-step > .step-content > .step-circle {
+      background: #c95f22;
+    }
+
+    &.done-step > .step-content > .step-circle {
+      background: rgba(201, 95, 34, 0.1);
+      color: #c95f22;
+      font-weight: bolder;
+    }
+
+    &:not(:last-of-type)::after { 
+      content: '';
+      position: absolute;
+      top: 50%;
+      /*    this variable is set by SolidJS and then used here */
+      left: calc(var(--step-content-width) + 10px);
+      width: calc(100% - var(--step-content-width) - 20px);
+      height: 1px;
+      transition: background-color .4s ease-in-out,
+                  color .4s ease-in-out;
+      background: #505050;
+    }
+
+    &.done-step:not(:last-of-type)::after {
+      background: #c95f22;
+    }
+  }
+}
+

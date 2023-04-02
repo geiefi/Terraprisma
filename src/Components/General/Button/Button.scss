@@ -1,0 +1,42 @@
+button {
+  background: #BD462B;
+  color: #fff;
+  display: inline-block;
+  width: fit-content;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  display: inline-block;
+  transition: background .2s ease-in,
+              box-shadow .2s linear;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  margin: 2px;
+  cursor: pointer;
+}
+
+button.small {
+  padding-block: 2px;
+  padding-inline: 10px;
+  font-size: 10px;
+}
+
+button.medium {
+  padding-block: 5px;
+  padding-inline: 14px;
+  font-size: 14px;
+}
+
+button.large {
+  padding-block: 10px;
+  padding-inline: 43px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background: darken(#BD462B, 10%);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
