@@ -10,12 +10,15 @@
     position: absolute; /* The absolute position we mentioned earlier */
     border-radius: 50%;
     transform: scale(0);
-    animation: ripple 500ms linear;
-    background-color: rgba(255, 255, 255, 0.7);
+    animation: ripple 0.8s linear;
+    background-color: rgba(255, 255, 255, 0.3);
   }
 }
 
 @keyframes ripple {
+  from {
+    transform: scale(0.2);
+  }
   to {
     transform: scale(4);
     opacity: 0;

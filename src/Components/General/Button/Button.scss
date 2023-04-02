@@ -1,5 +1,7 @@
+@import "../../../theme";
+
 button {
-  background: #BD462B;
+  background: $primary;
   color: #fff;
   display: inline-block;
   width: fit-content;

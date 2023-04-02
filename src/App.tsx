@@ -23,7 +23,7 @@ const App: Component = () => {
 
     <Box>
       <Form formStore={formStore} indentification='InformacoesDePagamento'>
-        <Stack direction='horizontal' align='space-between'>
+        <Stack direction='horizontal' align='space-around'>
           <Button
             size='large'
             onClick={() => setCurrentStep(currentStep() - 1)}
