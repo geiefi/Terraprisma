@@ -12,28 +12,36 @@ import { FormStore } from './Components/Form/FormContext';
 const App: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<number>(1);
 
-  const formStore = createStore<FormStore<{}>>(new FormStore({}));
+  const addressFormStore = createStore<FormStore<{}>>(new FormStore({}));
+  const paymentFormStore = createStore<FormStore<{}>>(new FormStore({}));
 
   return (<>
     <Steps current={currentStep} identification='PassoAPassoDeCompra'>
-      <Step description='coloque seu endereço'>endereço</Step>
+      <Step description='endereço de entrega'>endereço</Step>
       <Step description='dados de pagamento'>pagamento</Step>
       <Step description='confirme a compra'>conclusão</Step>
     </Steps>
 
     <Box>
-      <Form formStore={formStore} indentification='InformacoesDePagamento'>
-        <Stack direction='horizontal' align='space-around'>
-          <Button
-            size='large'
-            onClick={() => setCurrentStep(currentStep() - 1)}
-          >Previous</Button>
-          <Button
-            size='large'
-            onClick={() => setCurrentStep(currentStep() + 1)}
-          >Next</Button>
-        </Stack>
-      </Form>
+      {currentStep() === 0
+        && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
+        </Form>}
+      {currentStep() === 1
+        && <Form formStore={paymentFormStore} indentification='EnderecoDeEntrega'>
+        </Form>}
+      {currentStep() === 2
+        && <h1>conclusão</h1>}
+
+      <Stack direction='horizontal' align='space-around'>
+        <Button
+          size='large'
+          onClick={() => setCurrentStep(currentStep() - 1)}
+        >Previous</Button>
+        <Button
+          size='large'
+          onClick={() => setCurrentStep(currentStep() + 1)}
+        >Next</Button>
+      </Stack>
     </Box>
   </>);
 };
