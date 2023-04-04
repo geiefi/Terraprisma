@@ -28,6 +28,7 @@ export class FormStore<Values extends FormValue> {
 }
 
 export type FormActions = {
+  identification(): string;
   /**
     * @description Initializes the field inside of the formStore 
     * using the `validators` and the initial `value`.

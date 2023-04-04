@@ -1,0 +1,91 @@
+@import '../../../theme';
+
+.helper-text {
+  color: $gray-4;
+  margin-inline: 14px;
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.input-container {
+  width: fit-content;
+  max-width: fit-content;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border-bottom: 3px solid $gray-3;
+  border-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  // overflow: hidden;
+
+  label {
+    position: absolute;
+    left: 12px;
+    color: $gray-5;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: top left;
+    transition: .2s ease-in-out;
+  }
+
+  &.focused label,
+  &.hasContent label {
+    top: 20px;
+    color: $gray-4;
+    font-weight: 500;
+    transform: translateY(-50%) scale(0.7);
+  }
+
+  &.focused label {
+    color: $primary;
+    font-weight: 600;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 3px;
+    background: $primary;
+    transform: translateX(-50%);
+    transition: .2s width ease-in-out;
+  }
+
+  &.focused::after {
+    width: 100%;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    padding-inline: 12px;
+    padding-top: 25px;
+    padding-bottom: 8px;
+    transition: .2s background linear;
+
+    &:hover:not(:focus) {
+      background: $gray-1;
+    }
+  }
+}
+
+.form-control.error {
+  .helper-text {
+    color: $error;
+  }
+
+  .input-container {
+    label {
+      color: $error;
+    }
+
+    &::after {
+      background: $error;
+      width: 100%;
+    }
+  }
+}

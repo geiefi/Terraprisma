@@ -32,6 +32,9 @@ export function Form(props: {
   return <FormContext.Provider value={[
     props.formStore,
     {
+      identification(): string {
+        return props.indentification;
+      },
       init(
         name: string,
         validators: FieldValidator<FieldValue>[] = [],

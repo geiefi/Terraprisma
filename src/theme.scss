@@ -6,10 +6,13 @@
   --gray-4: #808080;
   --gray-5: #534848;
   --primary-accent: #bd462b;
+  --error: #AB4B4B;
   --32-light-primary-accent: rgba(189, 70, 43, 0.32);
   --secondary-accent: #1cb88e;
   --tertiary-accent: #9b66d9;
 }
+
+$error: var(--error);
 
 $primary: var(--primary-accent);
 $lightened-primary: var(--32-light-primary-accent);

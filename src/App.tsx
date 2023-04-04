@@ -8,11 +8,17 @@ import Stack from './Components/Layout/Stack/Stack';
 import Steps, { Step } from './Components/Navigation/Steps/Steps';
 
 import { FormStore } from './Components/Form/FormContext';
+import Input from './Components/Form/Fields/Input';
+import Validators from './Components/Form/Validators';
+
+export type AddressFormValue = Partial<{
+  address: string;
+}>;
 
 const App: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(1);
+  const [currentStep, setCurrentStep] = createSignal<number>(0);
 
-  const addressFormStore = createStore<FormStore<{}>>(new FormStore({}));
+  const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<{}>>(new FormStore({}));
 
   return (<>
@@ -25,6 +31,11 @@ const App: Component = () => {
     <Box>
       {currentStep() === 0
         && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
+          <Input 
+            name='address' 
+            label='Endereço'
+            validators={[Validators.required]} 
+          />
         </Form>}
       {currentStep() === 1
         && <Form formStore={paymentFormStore} indentification='EnderecoDeEntrega'>
