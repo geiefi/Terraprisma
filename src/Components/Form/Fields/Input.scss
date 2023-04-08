@@ -67,6 +67,10 @@
     padding-bottom: 8px;
     transition: .2s background linear;
 
+    &.no-label {
+      padding-block: 12px;
+    }
+
     &:hover:not(:focus) {
       background: $gray-1;
     }

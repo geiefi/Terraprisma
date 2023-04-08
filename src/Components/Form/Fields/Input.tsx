@@ -13,7 +13,7 @@ export type InputOnChangeEvent = Event & {
 
 export interface InputProps {
   name: string;
-  label: JSX.Element;
+  label?: JSX.Element;
   // TODO: implement placeholder treatment
   placeholder?: string;
   helperText?: JSX.Element;
@@ -50,10 +50,11 @@ const Input: Component<InputProps> = (props) => {
         hasContent: value().length > 0
       }}
     >
-      <label for={id()}>{props.label}</label>
+      {props.label && <label for={id()}>{props.label}</label>}
       <input
         id={id()}
         value={value()}
+        classList={{ 'no-label': typeof props.label === 'undefined' }}
         onChange={(event) => {
           if (props.onChange) {
             props.onChange(event);
