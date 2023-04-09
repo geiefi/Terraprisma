@@ -13,6 +13,7 @@ export type InputOnChangeEvent = Event & {
 
 export interface InputProps {
   name: string;
+  type?: 'text' | 'number' | 'email' | 'password';
   label?: JSX.Element;
   // TODO: implement placeholder treatment
   placeholder?: string;
@@ -54,6 +55,7 @@ const Input: Component<InputProps> = (props) => {
       <input
         id={id()}
         value={value()}
+        type={props.type || 'text'}
         classList={{ 'no-label': typeof props.label === 'undefined' }}
         onChange={(event) => {
           if (props.onChange) {
@@ -71,12 +73,12 @@ const Input: Component<InputProps> = (props) => {
         }}
       />
     </div>
-    {(form.hasErrors(props.name) || props.helperText) &&
-      <div class='helper-text'>
-        {form.hasErrors(props.name)
-          ? form.firstErrorFor(props.name)
-          : props.helperText}
-      </div>}
+    <div class='helper-text'>
+      {form.hasErrors(props.name)
+        ? form.firstErrorFor(props.name)
+        : props.helperText}
+      &nbsp;
+    </div>
   </div>;
 };
 
