@@ -1,4 +1,4 @@
-import { Accessor, Component, createContext, createMemo, ParentProps, useContext } from "solid-js";
+import { Accessor, Component, createContext, createMemo, JSX, ParentProps, useContext } from "solid-js";
 
 import './Box.scss';
 
@@ -10,7 +10,11 @@ type Depth = 0 | 1 | 2 | 3 | 4;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
-const Box: Component<ParentProps> = (props) => {
+export type BoxProps = ParentProps<{
+  style?: JSX.CSSProperties,
+}>;
+
+const Box: Component<BoxProps> = (props) => {
   const oldDepth = useContext(BoxContext);
   const depth = createMemo(() => {
     if (typeof oldDepth !== 'undefined') {
@@ -21,12 +25,16 @@ const Box: Component<ParentProps> = (props) => {
   }) as Accessor<Depth>;
 
   return <BoxContext.Provider value={depth}>
-    <div class='box' classList={{
-      'gray-1': depth() === 1,
-      'gray-2': depth() === 2,
-      'gray-3': depth() === 3,
-      'bordered': (oldDepth || (() => 0))() === 3
-    }}>
+    <div 
+      class='box' 
+      classList={{
+        'gray-1': depth() === 1,
+        'gray-2': depth() === 2,
+        'gray-3': depth() === 3,
+        'bordered': (oldDepth || (() => 0))() === 3
+      }}
+      style={props.style}
+    >
       {props.children}
     </div>
   </BoxContext.Provider>;
