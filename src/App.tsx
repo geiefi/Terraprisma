@@ -10,9 +10,17 @@ import Steps, { Step } from './Components/Navigation/Steps/Steps';
 import { FormStore } from './Components/Form/FormContext';
 import Input from './Components/Form/Fields/Input';
 import Validators from './Components/Form/Validators';
+import Container from './Components/Layout/Container/Container';
+import Row from './Components/Layout/Gird/Row';
+import Col from './Components/Layout/Gird/Col';
 
 export type AddressFormValue = Partial<{
-  address: string;
+  cidade: string;
+  rua: string;
+  estado: string;
+  numero: number;
+  cep: string;
+  bairro: string;
 }>;
 
 const App: Component = () => {
@@ -21,21 +29,68 @@ const App: Component = () => {
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<{}>>(new FormStore({}));
 
-  return (<>
+  return (<Container
+    maxWidth='sm'
+    style={{ height: '100vh' }}
+    horizontalAlign='center'
+    verticalAlign='center'
+  >
     <Steps current={currentStep} identification='PassoAPassoDeCompra'>
       <Step description='endereço de entrega'>endereço</Step>
       <Step description='dados de pagamento'>pagamento</Step>
       <Step description='confirme a compra'>conclusão</Step>
     </Steps>
 
-    <Box>
+    <Box
+      style={{
+        width: '100%',
+        'max-width': '398px'
+      }}
+    >
       {currentStep() === 0
         && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
-          <Input 
-            name='address' 
-            label='Endereço'
-            validators={[Validators.required]} 
-          />
+          <Row>
+            <Col size={18}>
+              <Input
+                name='cidade'
+                label='Cidade'
+                validators={[Validators.required]}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col size={16}>
+              <Input
+                name='rua'
+                label='Rua'
+                validators={[Validators.required]}
+              />
+            </Col>
+            <Col size={8}>
+              <Input
+                type='number'
+                name='numero'
+                label='N°'
+                validators={[Validators.required]}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col size={16}>
+              <Input
+                name='bairro'
+                label='Bairro'
+                validators={[Validators.required]}
+              />
+            </Col>
+            <Col size={8}>
+              <Input
+                name='cep'
+                label='CEP'
+                validators={[Validators.required]}
+              />
+            </Col>
+          </Row>
         </Form>}
       {currentStep() === 1
         && <Form formStore={paymentFormStore} indentification='EnderecoDeEntrega'>
@@ -54,7 +109,7 @@ const App: Component = () => {
         >Next</Button>
       </Stack>
     </Box>
-  </>);
+  </Container>);
 };
 
 export default App;
