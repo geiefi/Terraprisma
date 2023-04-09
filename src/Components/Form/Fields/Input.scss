@@ -4,6 +4,13 @@
   display: inline-block;
   padding-inline: 8px;
 
+  .helper-text {
+    color: $gray-4;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
   &.error {
     .helper-text {
       color: $error;
@@ -16,7 +23,7 @@
 
       &::after {
         transition: .2s width ease-out,
-          .2s height ease-out;
+          .2s height ease-out !important;
         background: $error;
         width: 100%;
       }
@@ -102,15 +109,6 @@
         -webkit-appearance: none;
         margin: 0;
       }
-    }
-
-    .helper-text {
-      color: $gray-4;
-      margin-inline: 14px;
-      margin-top: 3px;
-      line-height: 0.5;
-      font-size: 12px;
-      font-weight: 700;
     }
   }
 }
