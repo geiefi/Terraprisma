@@ -1,43 +1,24 @@
-import { Component, createMemo, createSignal, JSX, onCleanup, onMount } from 'solid-js';
-
-import { useForm } from '../Form';
-
-import { FieldValidator } from '../FormContext';
+import { Component, createMemo, createSignal, JSX } from 'solid-js';
 
 import './Input.scss';
+import { FieldProps, setupCommunicationWithFormContext } from './Utilts';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
   target: Element;
 };
 
-export interface InputProps {
-  name: string;
+export interface InputProps extends FieldProps {
   type?: 'text' | 'number' | 'email' | 'password';
   label?: JSX.Element;
   // TODO: implement placeholder treatment
   placeholder?: string;
   helperText?: JSX.Element;
-  validators?: FieldValidator[];
   onChange?: (event: InputOnChangeEvent) => any,
 }
 
 const Input: Component<InputProps> = (props) => {
-  const [_formStore, form] = useForm();
-
-  const value = createMemo(() => (form.valueFor(props.name) || '').toString());
-
-  onMount(() => {
-    if (typeof form.valueFor(props.name) !== 'undefined') {
-      form.cleanUp(props.name);
-    }
-
-    form.init(props.name, props.validators || [], value());
-  });
-
-  onCleanup(() => {
-    form.cleanUp(props.name);
-  });
+  const {form, value} = setupCommunicationWithFormContext(props);
 
   const id = createMemo(() => `input-${form.identification()}-${props.name}`);
 
@@ -48,13 +29,13 @@ const Input: Component<InputProps> = (props) => {
       class='input-container'
       classList={{
         focused: focused(),
-        hasContent: value().length > 0
+        hasContent: (value() || '').toString().length > 0
       }}
     >
       {props.label && <label for={id()}>{props.label}</label>}
       <input
         id={id()}
-        value={value()}
+        value={(value() || '').toString()}
         type={props.type || 'text'}
         classList={{ 'no-label': typeof props.label === 'undefined' }}
         onChange={(event) => {

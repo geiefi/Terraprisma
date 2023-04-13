@@ -1,11 +1,19 @@
 import { createContext } from "solid-js";
-import { SetStoreFunction } from "solid-js/store";
+import { produce, SetStoreFunction } from "solid-js/store";
 
 export type FieldValue = string | string[] | number | boolean | Date;
 
 export type FormValue = Record<string, FieldValue>;
 
 export type FieldValidator<ValueType = FieldValue> = (value: ValueType) => string | undefined;
+
+/**
+ * A type of validation that is agnostic with relation to which field it validates, meaning
+ * it can validate all of the fields at the same time.
+ */
+export type AgnosticValidator = (value: FormValue) => Record<string, string[]>;
+
+export class FormError extends Error { }
 
 /**
   * @example 
@@ -27,8 +35,23 @@ export class FormStore<Values extends FormValue> {
   }
 }
 
-export type FormActions = {
-  identification(): string;
+export type Store<T> = [get: T, set: SetStoreFunction<T>];
+
+/**
+  * This is going to be the value that comes from the `useForm()` call to get the data
+  * and access to some actions related to the context Form.
+  */
+export class FormProviderValue<T extends FormValue> {
+  constructor(
+    public store: Store<FormStore<T>>,
+    public agnosticValidators: AgnosticValidator[],
+    private _identification: string
+  ) { }
+
+  identification(): string {
+    return this._identification;
+  }
+
   /**
     * @description Initializes the field inside of the formStore 
     * using the `validators` and the initial `value`.
@@ -44,47 +67,118 @@ export type FormActions = {
     *
     * @param value Just the initial value of the field being initialized.
     */
-  init(name: string, validators: FieldValidator[], value: FieldValue): void;
+  init(name: keyof T, validators: FieldValidator[], value: T[keyof T]): void {
+    this.store[1](produce(form => {
+      form.values[name] = value;
+      form.validators[name] = validators;
+    }));
+  }
+
   /**
     * @description Removes all of the references inside of the formStore that
     * are associated with the field identified by `name`.
     */
-  cleanUp(name: string): void;
+  cleanUp(name: keyof T): void {
+    this.store[1](produce(form => {
+      delete form.values[name];
+      delete form.errors[name];
+      delete form.validators[name];
+    }));
+  }
+
   /**
     * @description Runs over all of the validators of the field with the specified
     * `name` and adds the errors to the field if necessary, thus making it invalid.
     */
-  validate(name: string): void;
+  validate(name: keyof T): void {
+    const formValueKeys: (keyof T)[] = Object.keys(this.store[0].values);
+    if (!formValueKeys.includes(name)) {
+      throw new FormError(`Cannot validate the field named ${name.toString()} inside of the form with id` +
+        ` ${this.identification()} because it does not exist!`);
+    } else {
+      this.store[1](produce(form => {
+        const validators = form.validators[name] || [];
+        const value = form.values[name];
+        const errors = validators.map(validator => validator(value)!).filter(Boolean);
+        form.errors[name] = errors;
+      }));
+    }
+  }
+
   /**
     * @description Validates all of the fields and then uses all of the agnostic
     * validators associated with the form.
     */
-  validateAll(): void;
+  validateAll(): void {
+    this.store[1](produce(form => {
+      const fields: (keyof T)[] = Object.keys(form.validators);
+      const allErrors: Partial<Record<keyof T, string[]>> = {};
+      fields.forEach(field => {
+        const validators = form.validators[field]!;
+        const value = form.values[field];
+        const errors = validators.map(validator => validator(value)!).filter(Boolean);
+        allErrors[field] = errors;
+      });
+      if (this.agnosticValidators) {
+        this.agnosticValidators.forEach(validator => {
+          const newErrors: Partial<Record<keyof T, string>> = validator(form.values) as any;
+          const newFieldsWithErrors: (keyof T)[] = Object.keys(newErrors);
+          newFieldsWithErrors.forEach(field => {
+            if (typeof allErrors[field] !== 'undefined') {
+              allErrors[field]!.push(newErrors[field]!);
+            } else {
+              allErrors[field] = [newErrors[field]!];
+            }
+          });
+        });
+      }
+      form.errors = allErrors;
+    }));
+  }
+
   /**
     * @description Checks weather or not the form is valid.
     */
-  isValid(): boolean;
+  isValid(): boolean {
+    const fieldsWithErrors: (keyof T)[] = Object.keys(this.store[0].errors);
+    return fieldsWithErrors.reduce(
+      (accumulator, key) => accumulator + this.store[0].errors[key]!.length, 
+      0
+    ) === 0;
+  }
+
   /**
     * @description Checks weather or not the form is invalid.
     */
-  isInvalid(): boolean;
+  isInvalid(): boolean {
+    return !this.isValid();
+  }
+
   /**
     * @description Gets the first error for the field with the specified
     * `name`.
     */
-  firstErrorFor(name: string): string | undefined;
-  hasErrors(name: string): boolean;
-  valueFor(name: string): FieldValue | undefined;
-  update(name: string, newValue: FieldValue): void;
-}
+  firstErrorFor(name: string): string | undefined {
+    return Object.keys(this.store[0].errors).includes(name)
+      ? this.store[0].errors[name]![0]
+      : undefined;
+  }
 
-/**
-  * This is going to be the value that comes from the `useForm()` call to get the data
-  * and access to some actions related to the context Form.
-  */
-export type FormProviderValue<T extends FormValue> = [
-  formStore: [get: FormStore<T>, set: SetStoreFunction<FormStore<T>>],
-  actions: FormActions,
-];
+  hasErrors(name: string): boolean {
+    return typeof this.store[0].errors[name] !== 'undefined'
+      ? this.store[0].errors[name]!.length > 0
+      : false;
+  }
+
+  valueFor(name: keyof T): T[keyof T] | undefined {
+    return this.store[0].values[name];
+  }
+
+  update(name: keyof T, newValue: T[keyof T]): void {
+    this.store[1](produce(form => {
+      form.values[name] = newValue;
+    }));
+  }
+};
 
 export const FormContext = createContext<FormProviderValue<FormValue>>();

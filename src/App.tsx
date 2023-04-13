@@ -30,7 +30,7 @@ const App: Component = () => {
   const paymentFormStore = createStore<FormStore<{}>>(new FormStore({}));
 
   return (<Container
-    maxWidth='sm'
+    maxWidth='md'
     style={{ height: '100vh' }}
     horizontalAlign='center'
     verticalAlign='center'
