@@ -25,6 +25,29 @@ const Option: Component<OptionProps> = (props) => {
   return props as unknown as JSX.Element;
 };
 
+/**
+ * @description The component to be able to select only one option among many such as choosing a state/county,
+ * a payment type or any other thing you wish. 
+ *
+ * The values of the options can be written using the `Select.Option` component which just returns the
+ * props of the Option instead of rendering it. The `Select` is the one that renders it. All other children
+ * of the Select *will be ignored*.
+ *
+ * @example 
+ * ```typescript
+ * <Select 
+ *   name='bestGame' 
+ *   label='Which one is better?' 
+ *   helperText='OBS: choose Terraria :)'
+ *   validators=[{Validators.required}]
+ * >
+ *   <Select.Option value='minecraft'>Minecraft</Select.Option>
+ *   <Select.Option value='terraria'>Terraria</Select.Option>
+ *   <Select.Option value='starbound'>Starbound</Select.Option>
+ *   <Select.Option value='stardew-valley'>Stardew Valley</Select.Option>
+ * </Select>
+ * ```
+ */
 const Select = (props: SelectProps) => {
   const { form, value } = setupCommunicationWithFormContext(props);
 
