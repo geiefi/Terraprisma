@@ -8,7 +8,7 @@ import Stack from './Components/Layout/Stack/Stack';
 import Steps, { Step } from './Components/Navigation/Steps/Steps';
 
 import { FormStore } from './Components/Form';
-import { Input } from './Components/Form/Fields';
+import { Input, Select } from './Components/Form/Fields';
 import Validators from './Components/Form/Validators';
 import Container from './Components/Layout/Container/Container';
 import Row from './Components/Layout/Gird/Row';
@@ -17,7 +17,7 @@ import Col from './Components/Layout/Gird/Col';
 export type AddressFormValue = Partial<{
   cidade: string;
   rua: string;
-  estado: string;
+  uf: string;
   numero: number;
   cep: string;
   bairro: string;
@@ -50,12 +50,25 @@ const App: Component = () => {
       {currentStep() === 0
         && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
           <Row>
-            <Col size={18}>
+            <Col size={16}>
               <Input
                 name='cidade'
                 label='Cidade'
                 validators={[Validators.required]}
               />
+            </Col>
+            <Col size={8}>
+              <Select
+                name='uf'
+                label='UF'
+                validators={[Validators.required]}
+              >
+                <Select.Option value='pe'>PE</Select.Option>
+                <Select.Option value='mg'>MG</Select.Option>
+                <Select.Option value='pr'>PR</Select.Option>
+                <Select.Option value='rj'>RJ</Select.Option>
+                <Select.Option value='sp'>SP</Select.Option>
+              </Select>
             </Col>
           </Row>
           <Row>

@@ -62,15 +62,4 @@ const Input: Component<InputProps> = (props) => {
   </FormControl>;
 };
 
-
-// <div
-//   class='input-container'
-//   classList={{
-//     focused: focused(),
-//     hasContent: (value() || '').toString().length > 0
-//   }}
-// >
-//   {props.label && <label for={id()}>{props.label}</label>}
-// </div>
-
 export default Input;

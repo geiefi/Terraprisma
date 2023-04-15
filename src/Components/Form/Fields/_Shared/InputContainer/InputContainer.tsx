@@ -7,15 +7,19 @@ export type InputContainerProps = ParentProps<{
   label?: JSX.Element;
   focused: Accessor<boolean>,
   hasContent: Accessor<boolean>,
+  ref?: (inputContainer: HTMLDivElement) => any,
+  onClick?: (event: MouseEvent) => any,
 }>;
 
 const InputContainer: Component<InputContainerProps> = (props) => {
   return <div 
     class='input-container'
+    ref={props.ref}
     classList={{
       focused: props.focused(),
       hasContent: props.hasContent()
     }}
+    onClick={props.onClick}
   >
     {props.label && <label for={props.id()}>{props.label}</label>}
     {props.children}

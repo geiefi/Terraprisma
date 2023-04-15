@@ -8,6 +8,7 @@
   --primary-accent: #bd462b;
   --error: #AB4B4B;
   --32-light-primary-accent: rgba(189, 70, 43, 0.32);
+  --20-light-primary-accent: rgba(189, 70, 43, 0.20);
   --secondary-accent: #1cb88e;
   --tertiary-accent: #9b66d9;
 }
@@ -16,6 +17,7 @@ $error: var(--error);
 
 $primary: var(--primary-accent);
 $lightened-primary: var(--32-light-primary-accent);
+$lightened-primary-2: var(--20-light-primary-accent);
 $secondary: var(--secondary-accent);
 $tertiary: var(--tertiary-accent);
 
