@@ -3,6 +3,7 @@ import { Component, createMemo, createSignal, JSX } from 'solid-js';
 import './Input.scss';
 import { FieldProps, setupCommunicationWithFormContext } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
+import FormControl from '../_Shared/FormControl/FormControl';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -27,7 +28,10 @@ const Input: Component<InputProps> = (props) => {
 
   const hasContent = createMemo(() => (value() || '').toString().length > 0);
 
-  return <div class='form-control' classList={{ error: form.hasErrors(props.name) }}>
+  return <FormControl 
+    name={props.name} 
+    helperText={props.helperText}
+  >
     <InputContainer
       id={id}
       hasContent={hasContent}
@@ -55,13 +59,7 @@ const Input: Component<InputProps> = (props) => {
         }}
       />
     </InputContainer>
-    <div class='helper-text'>
-      {form.hasErrors(props.name)
-        ? form.firstErrorFor(props.name)
-        : props.helperText}
-      &nbsp;
-    </div>
-  </div>;
+  </FormControl>;
 };
 
 

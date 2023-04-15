@@ -1,50 +1,30 @@
 @import '../../../../theme';
 
-.form-control {
+input {
+  border: none;
+  outline: none;
   width: 100%;
-  display: inline-block;
-  padding-inline: 8px;
+  padding-inline: 12px;
+  padding-top: 19px;
+  padding-bottom: 8px;
+  transition: .2s background linear;
 
-  .helper-text {
-    color: $gray-4;
-    margin-left: 5px;
-    font-size: 12px;
-    font-weight: 700;
+  &.no-label {
+    padding-block: 9px;
   }
 
-  &.error {
-    .helper-text {
-      color: $error;
-    }
-  }
-  
-  input {
-    border: none;
-    outline: none;
-    width: 100%;
-    padding-inline: 12px;
-    padding-top: 19px;
-    padding-bottom: 8px;
-    transition: .2s background linear;
-
-    &.no-label {
-      padding-block: 9px;
-    }
-
-    &:hover:not(:focus) {
-      background: $gray-1;
-    }
-  }
-
-  input[type='number'] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  &:hover:not(:focus) {
+    background: $gray-1;
   }
 }
 
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
