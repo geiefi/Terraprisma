@@ -13,6 +13,28 @@ import {
 /**
  * @description A component used for managing the values of the form through the provided Store,
  * validating and managing the errors as necessary.
+ *
+ * @example 
+ * ```typescript
+ * type MyFormValue = Partial<{
+ *   email: string;
+ * }>;
+ *
+ * const App = () => {
+ *  const formStore = createStore<FormStore<MyFormValue>>(new FormStore(
+ *    { // here goes the initial values of your form
+ *      email: 'my@email.com'
+ *    }
+ *  ));
+ *
+ *  return <Form 
+ *    identification='My Form' 
+ *    formStore={formStore}
+ *  >
+ *    ...
+ *  </Form>;
+ * };
+ * ```
  */
 export function Form(props: {
   indentification: string,
