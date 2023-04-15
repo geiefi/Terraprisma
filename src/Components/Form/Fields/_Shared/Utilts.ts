@@ -1,7 +1,7 @@
 import { Accessor, createMemo, onCleanup, onMount } from "solid-js";
 
-import { useForm } from "../Form";
-import { FieldValidator, FormProviderValue, FormValue } from "../FormContext";
+import { useForm } from "../../Form";
+import { FieldValidator, FormProviderValue, FormValue } from "../../FormContext";
 
 /**
   * The field props that are required for all of the fields used in conjunction with the `<Form />`

@@ -1,7 +1,8 @@
 import { Component, createMemo, createSignal, JSX } from 'solid-js';
 
 import './Input.scss';
-import { FieldProps, setupCommunicationWithFormContext } from './Utilts';
+import { FieldProps, setupCommunicationWithFormContext } from '../_Shared/Utilts';
+import InputContainer from '../_Shared/InputContainer/InputContainer';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -24,15 +25,15 @@ const Input: Component<InputProps> = (props) => {
 
   const [focused, setFocused] = createSignal<boolean>(false);
 
+  const hasContent = createMemo(() => (value() || '').toString().length > 0);
+
   return <div class='form-control' classList={{ error: form.hasErrors(props.name) }}>
-    <div
-      class='input-container'
-      classList={{
-        focused: focused(),
-        hasContent: (value() || '').toString().length > 0
-      }}
+    <InputContainer
+      id={id}
+      hasContent={hasContent}
+      focused={focused}
+      label={props.label}
     >
-      {props.label && <label for={id()}>{props.label}</label>}
       <input
         id={id()}
         value={(value() || '').toString()}
@@ -53,7 +54,7 @@ const Input: Component<InputProps> = (props) => {
           setFocused(false);
         }}
       />
-    </div>
+    </InputContainer>
     <div class='helper-text'>
       {form.hasErrors(props.name)
         ? form.firstErrorFor(props.name)
@@ -62,5 +63,16 @@ const Input: Component<InputProps> = (props) => {
     </div>
   </div>;
 };
+
+
+// <div
+//   class='input-container'
+//   classList={{
+//     focused: focused(),
+//     hasContent: (value() || '').toString().length > 0
+//   }}
+// >
+//   {props.label && <label for={id()}>{props.label}</label>}
+// </div>
 
 export default Input;

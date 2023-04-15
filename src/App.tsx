@@ -7,8 +7,8 @@ import Button from './Components/General/Button/Button';
 import Stack from './Components/Layout/Stack/Stack';
 import Steps, { Step } from './Components/Navigation/Steps/Steps';
 
-import { FormStore } from './Components/Form/FormContext';
-import Input from './Components/Form/Fields/Input';
+import { FormStore } from './Components/Form';
+import { Input } from './Components/Form/Fields';
 import Validators from './Components/Form/Validators';
 import Container from './Components/Layout/Container/Container';
 import Row from './Components/Layout/Gird/Row';
