@@ -11,8 +11,8 @@ import { FormStore } from './Components/Form';
 import { Input, Select } from './Components/Form/Fields';
 import Validators from './Components/Form/Validators';
 import Container from './Components/Layout/Container/Container';
-import Row from './Components/Layout/Gird/Row';
-import Col from './Components/Layout/Gird/Col';
+import Row from './Components/Layout/Grid/Row';
+import Col from './Components/Layout/Grid/Col';
 
 export type AddressFormValue = Partial<{
   cidade: string;
