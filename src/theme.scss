@@ -28,3 +28,19 @@ $gray-3: var(--gray-3);
 $gray-4: var(--gray-4);
 $gray-5: var(--gray-5);
 
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: $primary;
+}
+

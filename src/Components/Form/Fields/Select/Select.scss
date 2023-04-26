@@ -29,7 +29,10 @@
 
     cursor: pointer;
     padding-inline: 9px;
-    padding-block: 3px;
+    padding-block: 9px;
+
+    border-bottom-right-radius: 3px;
+    margin-right: 3px;
 
     overflow-x: hidden;
     text-overflow: ellipsis;
@@ -45,3 +48,4 @@
     }
   }
 }
+
