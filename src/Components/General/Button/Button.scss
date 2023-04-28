@@ -1,7 +1,7 @@
 @import "../../../theme";
 
 button {
-  background: $primary;
+  background: var(--bg-color);
   color: #fff;
   display: inline-block;
   width: fit-content;
@@ -10,7 +10,7 @@ button {
   outline: none;
   border-radius: 3px;
   display: inline-block;
-  transition: background .2s ease-in,
+  transition: filter .2s ease-in,
               box-shadow .2s linear;
   user-select: none;
   vertical-align: middle;
@@ -38,6 +38,18 @@ button.large {
 }
 
 button:hover {
-  background: darken(#BD462B, 10%);
+  filter: brightness(85%);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
+
+button.empty {
+  color: $gray-5;
+  border: 1px solid var(--bg-color);
+  filter: none;
+  transition: .2s;
+
+  &:hover {
+    border: 1px solid $primary;
+  }
+}
+

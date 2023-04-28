@@ -6,7 +6,7 @@ import './Box.scss';
  * @description Determines what depth the current context of box is in
  * to then determine its background color based on the theme's defined monochromatic scale. 
  */
-type Depth = 0 | 1 | 2 | 3 | 4;
+export type Depth = 0 | 1 | 2 | 3 | 4;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
@@ -22,11 +22,11 @@ export type BoxProps = ParentProps<{
  * @example
  * ```typescript
  * <Box>
- *  <h1>Box with depth 1</h1>
+ *   <h1>Box with depth 1</h1>
  *
- *  <Box>
- *    <h2>Box with depth 2</h2>
- *  </Box>
+ *   <Box>
+ *     <h2>Box with depth 2</h2>
+ *   </Box>
  * </Box>
  * ```
  */
@@ -55,6 +55,10 @@ const Box: Component<BoxProps> = (props) => {
     </div>
   </BoxContext.Provider>;
 };
+
+export function useDepth(): Accessor<Depth> | undefined {
+  return useContext(BoxContext);
+}
 
 export default Box;
 
