@@ -34,12 +34,12 @@ const Option: Component<OptionProps> = (props) => {
  * of the Select *will be ignored*.
  *
  * @example 
- * ```typescript
+ * ```tsx
  * <Select 
  *   name='bestGame' 
  *   label='Which one is better?' 
  *   helperText='OBS: choose Terraria :)'
- *   validators=[{Validators.required}]
+ *   validators={[Validators.required]}
  * >
  *   <Select.Option value='minecraft'>Minecraft</Select.Option>
  *   <Select.Option value='terraria'>Terraria</Select.Option>

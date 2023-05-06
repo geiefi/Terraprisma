@@ -1,4 +1,4 @@
-import { JSX, onMount, useContext } from "solid-js";
+import { JSX, onCleanup, onMount, useContext } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
 import { 
@@ -14,7 +14,7 @@ import {
  * validating and managing the errors as necessary.
  *
  * @example 
- * ```typescript
+ * ```tsx
  * type MyFormValue = Partial<{
  *   email: string;
  * }>;

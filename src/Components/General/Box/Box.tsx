@@ -20,7 +20,7 @@ export type BoxProps = ParentProps<{
  * their color accordingly.
  *
  * @example
- * ```typescript
+ * ```tsx
  * <Box>
  *   <h1>Box with depth 1</h1>
  *
