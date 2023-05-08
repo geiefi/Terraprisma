@@ -23,7 +23,7 @@ export interface InputProps extends FieldProps {
 
 const Input: Component<InputProps> = (props) => {
   const form = setupCommunicationWithFormContext(props);
-  const [value, setValue] = setupFieldsValueSignal(props);
+  const [value, setValue] = setupFieldsValueSignal(props, form);
 
   const id = createMemo(() => 
     form 
