@@ -1,4 +1,4 @@
-import { JSX, onCleanup, onMount, useContext } from "solid-js";
+import { JSX, onMount, useContext } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
 import { 
@@ -65,8 +65,8 @@ export function Form(props: {
  * The provider value that gets out of this function is precisely a class that has implemented methods
  * that help with validating, cleaninUp and managing all of the values of the form.
  */
-export function useForm<T extends FormValue>() {
+export function useForm<K extends FormValue = FormValue>() {
   return useContext<FormProviderValue<FormValue> | undefined>(
     FormContext
-  ) as unknown as FormProviderValue<T>;
+  ) as unknown as FormProviderValue<K>;
 }

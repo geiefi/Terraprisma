@@ -1,7 +1,7 @@
 import { Component, createMemo, createSignal, JSX } from 'solid-js';
 
 import './Input.scss';
-import { FieldProps, setupCommunicationWithFormContext } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FormControl from '../_Shared/FormControl/FormControl';
 
@@ -16,13 +16,20 @@ export interface InputProps extends FieldProps {
   // TODO: implement placeholder treatment
   placeholder?: string;
   helperText?: JSX.Element;
+
   onChange?: (event: InputOnChangeEvent) => any,
+  onFocus?: () => any,
 }
 
 const Input: Component<InputProps> = (props) => {
-  const {form, value} = setupCommunicationWithFormContext(props);
+  const form = setupCommunicationWithFormContext(props);
+  const [value, setValue] = setupFieldsValueSignal(props);
 
-  const id = createMemo(() => `input-${form.identification()}-${props.name}`);
+  const id = createMemo(() => 
+    form 
+      ? `input-${form.identification()}-${props.name}`
+      : `input-${props.name}`
+  );
 
   const [focused, setFocused] = createSignal<boolean>(false);
 
@@ -48,13 +55,18 @@ const Input: Component<InputProps> = (props) => {
             props.onChange(event);
           }
 
-          form.update(props.name, event.currentTarget.value);
+          setValue(event.currentTarget.value);
         }}
         onFocus={() => {
+          if (props.onFocus) {
+            props.onFocus();
+          }
           setFocused(true);
         }}
         onBlur={() => {
-          form.validate(props.name);
+          if (form) {
+            form.validate(props.name);
+          }
           setFocused(false);
         }}
       />

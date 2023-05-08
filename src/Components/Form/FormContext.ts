@@ -80,7 +80,7 @@ export class FormProviderValue<T extends FormValue> {
     */
   cleanUp(name: keyof T): void {
     this.store[1](produce(form => {
-      delete form.values[name];
+      // delete form.values[name];
       delete form.errors[name];
       delete form.validators[name];
     }));

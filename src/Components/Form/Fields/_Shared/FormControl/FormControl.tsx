@@ -13,12 +13,12 @@ const FormControl: Component<FormControlProps> = (props) => {
 
   return <div 
     class='form-control' 
-    classList={{ error: form.hasErrors(props.name) }}
+    classList={{ error: form?.hasErrors(props.name) }}
   >
     {props.children}
     <div class='helper-text'>
-      {form.hasErrors(props.name)
-        ? form.firstErrorFor(props.name)
+      {form?.hasErrors(props.name)
+        ? form?.firstErrorFor(props.name)
         : props.helperText}
       &nbsp;
     </div>

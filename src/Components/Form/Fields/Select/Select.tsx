@@ -1,19 +1,32 @@
-import { Component, createMemo, children as accessChildren, createSignal, JSX, onCleanup, onMount, ParentProps, For, createEffect, on } from 'solid-js';
+import {
+  Component,
+  createMemo,
+  children as accessChildren,
+  createSignal,
+  JSX,
+  onCleanup,
+  onMount,
+  For,
+  createEffect,
+  on,
+  ParentProps,
+} from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FormControl from '../_Shared/FormControl/FormControl';
 
-import { FieldProps, setupCommunicationWithFormContext } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from '../_Shared/Utilts';
 
 import { FieldValue } from '../../FormContext';
 
 import './Select.scss';
 
-export interface SelectProps extends FieldProps {
+export interface SelectProps extends FieldProps, ParentProps {
   label?: JSX.Element;
   helperText?: JSX.Element;
+
   onChange?: (newValue: FieldValue) => any;
-  children: JSX.Element[] | JSX.Element;
+  onFocused?: () => any;
 }
 
 export interface OptionProps {
@@ -49,10 +62,17 @@ const Option: Component<OptionProps> = (props) => {
  * ```
  */
 const Select = (props: SelectProps) => {
-  const { form, value } = setupCommunicationWithFormContext(props);
+  const form = setupCommunicationWithFormContext(props);
+  const [value, setValue] = setupFieldsValueSignal(props, form);
 
-  const id = createMemo(() => `select-${form.identification()}-${props.name}`);
-  const hasContent = createMemo(() => (value() || '').toString().length > 0);
+  const id = createMemo(() =>
+    form
+      ? `select-${form.identification()}-${props.name}`
+      : `select-${props.name}`
+  );
+  const hasContent = createMemo(() =>
+    (value() || '').toString().length > 0
+  );
 
   const [focused, setFocused] = createSignal<boolean>(false);
 
@@ -95,9 +115,15 @@ const Select = (props: SelectProps) => {
     return options().find(opt => opt.value === value)?.children;
   };
 
-  createEffect(on(focused, () => {
-    form.validate(props.name);
-  }));
+  createEffect(() => {
+    if (props.onFocused && focused() === true) {
+      props.onFocused();
+    }
+
+    if (form && focused() === false) {
+      form.validate(props.name);
+    }
+  });
 
   return <FormControl
     name={props.name}
@@ -112,14 +138,13 @@ const Select = (props: SelectProps) => {
       ref={setInputContainerRef}
     >
       {optionLabelFromValue(value())}
-
     </InputContainer>
 
-    {focused() && <div 
-      class='select-dropdown' 
+    {focused() && <div
+      class='select-dropdown'
       style={{
         '--input-container-left': `${inputContainerRef()?.offsetLeft}px`,
-        '--input-container-top':  `${inputContainerRef()?.offsetTop}px`,
+        '--input-container-top': `${inputContainerRef()?.offsetTop}px`,
         '--input-container-width': `${inputContainerRef()?.clientWidth}px`,
         '--input-container-height': `${inputContainerRef()?.clientHeight}px`
       }}
@@ -133,7 +158,7 @@ const Select = (props: SelectProps) => {
               props.onChange(opt.value);
             }
 
-            form.update(props.name, opt.value);
+            setValue(opt.value);
             setFocused(false);
           }}
         >
