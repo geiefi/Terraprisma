@@ -10,37 +10,3 @@ body {
   margin: 0;
 }
 
-:root {
-  --gray-0: #ffffff;
-  --gray-1: rgba(220, 220, 220, 0.77);
-  --gray-2: #D8D5D5;
-  --gray-3: #a0a0a0;
-  --gray-4: #808080;
-  --gray-5: #534848;
-
-  --primary: #bd462b;
-  --lightned-primary: rgba(189, 70, 43, 0.32);
-  --lightned-primary-2: rgba(189, 70, 43, 0.20);
-  --secondary: #1cb88e;
-  --tertiary: #9b66d9;
-
-  --error: #AB4B4B;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: inherit;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: var(--primary-accent);
-  box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.25);
-}
-

@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: inherit;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--primary-accent);
+  box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.25);
+}
+
