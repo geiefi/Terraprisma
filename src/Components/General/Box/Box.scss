@@ -1,4 +1,4 @@
-@import "../../../theme";
+
 
 .box {
   padding-inline: 18px;
@@ -7,16 +7,16 @@
   width: 100%;
 
   &.gray-1 {
-    background: $gray-1;
-    border: 1px solid $gray-2;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
   }
 
   &.gray-2 {
-    background: $gray-2;
+    background: var(--gray-2);
   }
 
   &.gray-3 {
-    background: $gray-3;
+    background: var(--gray-3);
 
     &.bordered {
       border: 1px solid rgba(128, 128, 128, 0.6);

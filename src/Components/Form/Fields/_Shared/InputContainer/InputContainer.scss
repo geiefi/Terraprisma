@@ -1,17 +1,17 @@
-@import '../../../../../theme';
+
 
 .error .input-container,
 .error.input-container {
-  border-bottom: 3px solid $error;
+  border-bottom: 3px solid var(--error);
 
   label {
-    color: $error;
+    color: var(--error);
   }
 
   &::after {
     transition: .2s width ease-out,
       .2s height ease-out !important;
-    background: $error;
+    background: var(--error);
     width: 100%;
   }
 }
@@ -22,7 +22,7 @@
   margin: 0;
   padding: 0;
   position: relative;
-  border-bottom: 3px solid $gray-3;
+  border-bottom: 3px solid var(--gray-3);
   border-radius: 5px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -35,13 +35,13 @@
   transition: .2s background linear;
 
   &:hover:not(:focus) {
-    background: $gray-1;
+    background: var(--gray-1);
   }
 
   label {
     position: absolute;
     left: 12px;
-    color: $gray-5;
+    color: var(--gray-5);
     top: 50%;
     user-select: none;
     transform: translateY(-50%);
@@ -52,13 +52,13 @@
   &.focused label,
   &.hasContent label {
     top: 15.5px;
-    color: $gray-4;
+    color: var(--gray-4);
     font-weight: 500;
     transform: translateY(-50%) scale(0.7);
   }
 
   &.focused label {
-    color: $primary;
+    color: var(--primary);
     font-weight: 600;
   }
 
@@ -69,7 +69,7 @@
     top: 100%;
     width: 0;
     height: 1px;
-    background: $primary;
+    background: var(--primary);
     transform: translateX(-50%);
     transition: .2s width ease-out;
   }

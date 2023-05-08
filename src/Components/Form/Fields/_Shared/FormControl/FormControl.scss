@@ -1,4 +1,4 @@
-@import '../../../../../theme';
+
 
 .form-control {
   width: 100%;
@@ -7,7 +7,7 @@
   padding-inline: 8px;
 
   .helper-text {
-    color: $gray-4;
+    color: var(--gray-4);
     margin-left: 5px;
     font-size: 12px;
     font-weight: 700;
@@ -15,7 +15,7 @@
 
   &.error {
     .helper-text {
-      color: $error;
+      color: var(--error);
     }
   }
 }
