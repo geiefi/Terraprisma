@@ -1,0 +1,48 @@
+.button-chooser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-block: 10px;
+
+  & > .label,
+  & > .helper-text {
+    width: 100%;
+    transition: .2s;
+    flex-wrap: nowrap;
+    word-wrap: nowrap;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &.error > .label,
+  &.error > .helper-text {
+    color: var(--error);
+  }
+
+  & > .helper-text {
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+
+  & .buttons {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    button {
+      margin: 0;
+    }
+
+    button.active {
+      border: 2px solid var(--primary);
+    }
+  }
+
+  &.error .buttons button.active {
+    border: 2px solid var(--error);
+  }
+}
+
+

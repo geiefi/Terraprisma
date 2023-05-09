@@ -43,30 +43,27 @@ button:hover {
 button.empty {
   color: var(--gray-5);
   filter: none;
-  transition: .2s;
+  transition: .2s linear;
+  border: 2px solid rgba(0, 0, 0, 0);
 
   &.gray-0 {
     background: var(--gray-0);
-    border: 1px solid var(--gray-0);
   }
 
   &.gray-1 {
     background: var(--gray-1);
-    border: 1px solid var(--gray-1);
   }
 
   &.gray-2 {
     background: var(--gray-2);
-    border: 1px solid var(--gray-2);
   }
 
   &.gray-3 {
     background: var(--gray-3);
-    border: 1px solid var(--gray-3);
   }
 
   &:hover {
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
   }
 }
 
