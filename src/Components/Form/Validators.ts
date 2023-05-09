@@ -27,8 +27,8 @@ const Validators = {
     : undefined,
 
   isEqual: (expectedValue: FieldValue) => (
-    (value: FieldValue) => value === expectedValue
-      ? `This field is expected to equal ${expectedValue}!`
+    (value: FieldValue) => value !== expectedValue
+      ? `This is expected to be ${expectedValue}!`
       : undefined
   )
 }
