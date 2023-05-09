@@ -8,7 +8,6 @@ import {
   onMount,
   For,
   createEffect,
-  on,
   ParentProps,
 } from 'solid-js';
 

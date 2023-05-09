@@ -29,7 +29,9 @@ const Button: Component<ButtonProps> = (props) => {
 
         'small': props.size === 'small',
         'medium': props.size === 'medium' || typeof props.size === 'undefined',
-        'large': props.size === 'large'
+        'large': props.size === 'large',
+
+        ...props.classList
       }}
     >{props.children}</button>
   </Ripple>;

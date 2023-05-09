@@ -2,7 +2,8 @@ import { FieldValidator, FieldValue } from "./FormContext";
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-const Validators: Record<any, FieldValidator> = {
+// : Record<any, FieldValidator | ((...args: any[]) => FieldValidator)>
+const Validators = {
   /**
     * Validates weather or not the field is undefined, null, empty when trimmed 
     * or if being an array is also empty.
@@ -13,6 +14,7 @@ const Validators: Record<any, FieldValidator> = {
     || (Array.isArray(value) && value.length === 0)
     ? 'This is a required field!'
     : undefined,
+
   /**
     * Validates weather or not the field matches a Regex email.
     * 
@@ -22,7 +24,13 @@ const Validators: Record<any, FieldValidator> = {
     || (value === null)
     || emailRegex.test(value.toString().trim())
     ? 'This is not a valid email!'
-    : undefined
+    : undefined,
+
+  isEqual: (expectedValue: FieldValue) => (
+    (value: FieldValue) => value === expectedValue
+      ? `This field is expected to equal ${expectedValue}!`
+      : undefined
+  )
 }
 
 export default Validators;
