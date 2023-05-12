@@ -63,7 +63,7 @@ const Form = (props: ParentProps<{
  * but is made to be used inside of a <Form> and it acts as a proxy between the fields
  * and an object field inside the values of the <Form>.
  */
-const Inner = (props: ParentProps<{
+const innerForm = (props: ParentProps<{
   identification: string,
   /**
    * This name is **NOT** the identification of the component, it rather is the field name inside
@@ -117,7 +117,7 @@ const Inner = (props: ParentProps<{
   </FormContext.Provider>;
 };
 
-Form.Inner = Inner;
+Form.Inner = innerForm;
 
 /**
  * Gets a reference to the context of the parent form, this is mainly going
