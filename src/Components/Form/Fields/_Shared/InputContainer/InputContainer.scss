@@ -34,7 +34,7 @@
 
   transition: .2s background linear;
 
-  &:hover:not(:focus) {
+  &:hover:not(:focus):not(.focused) {
     background: var(--gray-1);
   }
 
