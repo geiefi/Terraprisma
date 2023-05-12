@@ -37,7 +37,7 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const App: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(1);
+  const [currentStep, setCurrentStep] = createSignal<number>(0);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({}));
@@ -85,8 +85,7 @@ const App: Component = () => {
                   <Select.Option value='sp'>SP</Select.Option>
                 </Select>
               </Col>
-            </Row>
-            <Row>
+
               <Col size={16}>
                 <Input
                   name='rua'
@@ -102,8 +101,7 @@ const App: Component = () => {
                   validators={[Validators.required]}
                 />
               </Col>
-            </Row>
-            <Row>
+
               <Col size={16}>
                 <Input
                   name='bairro'
