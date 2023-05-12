@@ -121,7 +121,7 @@ const App: Component = () => {
             </Row>
           </Form>}
         {currentStep() === 1
-          && <Form formStore={paymentFormStore} indentification='EnderecoDeEntrega'>
+          && <Form formStore={paymentFormStore} indentification='DadosDePagamento'>
             <ButtonChooser 
               name='paymentMethod' 
               label='Método de pagamento'
@@ -144,7 +144,7 @@ const App: Component = () => {
               </Typography>
 
               <Form.Inner 
-                identification='CreditCardDetailsInnerForm' 
+                identification='CreditCardDetails' 
                 name='creditCardDetails'
               >
                 <Row>
