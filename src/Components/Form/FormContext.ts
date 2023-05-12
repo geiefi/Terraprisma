@@ -1,7 +1,7 @@
 import { createContext } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
-export type FieldValue = string | string[] | number | boolean | Date;
+export type FieldValue = string | string[] | number | boolean | Date | Record<string, any>;
 
 export type FormValue = Record<string, FieldValue>;
 
@@ -37,16 +37,25 @@ export class FormStore<Values extends FormValue> {
 
 export type Store<T> = [get: T, set: SetStoreFunction<T>];
 
+type FieldChangeListener<T extends FormValue> = (newValue: T[keyof T]) => any;
+type FormValueChangeListener<T extends FormValue> = (newValues: T) => any;
+
 /**
   * This is going to be the value that comes from the `useForm()` call to get the data
   * and access to some actions related to the context Form.
   */
 export class FormProviderValue<T extends FormValue> {
+  private onFieldChangeListeners: Partial<Record<keyof T, FieldChangeListener<T>[]>>;
+  private onFormValueChangeListeners: FormValueChangeListener<T>[];
+
   constructor(
     public store: Store<FormStore<T>>,
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
-  ) { }
+  ) {
+    this.onFieldChangeListeners = {};
+    this.onFormValueChangeListeners = [];
+  }
 
   identification(): string {
     return this._identification;
@@ -84,6 +93,8 @@ export class FormProviderValue<T extends FormValue> {
       delete form.errors[name];
       delete form.validators[name];
     }));
+
+    delete this.onFieldChangeListeners[name];
   }
 
   /**
@@ -142,7 +153,7 @@ export class FormProviderValue<T extends FormValue> {
   isValid(): boolean {
     const fieldsWithErrors: (keyof T)[] = Object.keys(this.store[0].errors);
     return fieldsWithErrors.reduce(
-      (accumulator, key) => accumulator + this.store[0].errors[key]!.length, 
+      (accumulator, key) => accumulator + this.store[0].errors[key]!.length,
       0
     ) === 0;
   }
@@ -174,10 +185,30 @@ export class FormProviderValue<T extends FormValue> {
     return this.store[0].values[name];
   }
 
+  onChange(effect: FormValueChangeListener<T>): void {
+    this.onFormValueChangeListeners.push(effect);
+  }
+
+  onFieldChange(name: keyof T, effect: FieldChangeListener<T>): void {
+    if (Object.hasOwn(this.onFieldChangeListeners, name)
+      && Array.isArray(this.onFieldChangeListeners[name])) {
+      this.onFieldChangeListeners[name]!.push(effect);
+    } else {
+      this.onFieldChangeListeners[name] = [effect];
+    }
+  }
+
   update(name: keyof T, newValue: T[keyof T]): void {
     this.store[1](produce(form => {
       form.values[name] = newValue;
     }));
+
+    if (Object.hasOwn(this.onFieldChangeListeners, name)
+      && Array.isArray(this.onFieldChangeListeners[name])) {
+      this.onFieldChangeListeners[name]!.forEach(listener => listener(newValue));
+    }
+
+    this.onFormValueChangeListeners.forEach(listener => listener(this.store[0].values));
   }
 };
 
