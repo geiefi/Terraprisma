@@ -1,8 +1,11 @@
-import { FieldValidator, FieldValue } from "./FormContext";
+import { FieldValue } from "./FormContext";
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
-// : Record<any, FieldValidator | ((...args: any[]) => FieldValidator)>
+/**
+  * A object containing some useful and predefined validators
+  * for FoxPox's fields
+  */
 const Validators = {
   /**
     * Validates weather or not the field is undefined, null, empty when trimmed 
