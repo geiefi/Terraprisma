@@ -1,12 +1,13 @@
-import { JSX, onMount, useContext } from "solid-js";
-import { produce, SetStoreFunction } from "solid-js/store";
+import { createEffect, JSX, on, onCleanup, onMount, ParentProps, useContext } from "solid-js";
+import { createStore, produce, SetStoreFunction } from "solid-js/store";
 
-import { 
-  AgnosticValidator, 
-  FormContext, 
-  FormProviderValue, 
-  FormStore, 
-  FormValue 
+import {
+  AgnosticValidator,
+  FormContext,
+  FormError,
+  FormProviderValue,
+  FormStore,
+  FormValue
 } from "./FormContext";
 
 /**
@@ -35,12 +36,11 @@ import {
  * };
  * ```
  */
-export function Form(props: {
+const Form = (props: ParentProps<{
   indentification: string,
   formStore: [get: FormStore<any>, set: SetStoreFunction<FormStore<any>>],
   agnosticValidators?: AgnosticValidator[],
-  children: JSX.Element[] | JSX.Element
-}): JSX.Element {
+}>): JSX.Element => {
   const [form, setForm] = props.formStore;
 
   onMount(() => {
@@ -59,6 +59,67 @@ export function Form(props: {
 }
 
 /**
+ * @description Does basically the same as the <Form> component,
+ * but is made to be used inside of a <Form> and it acts as a proxy between the fields
+ * and an object field inside the values of the <Form>.
+ */
+const Inner = (props: ParentProps<{
+  identification: string,
+  /**
+   * This name is **NOT** the identification of the component, it rather is the field name inside
+   * of the values of the parent <Form>
+   */
+  name: string,
+  agnosticValidators?: AgnosticValidator[],
+}>) => {
+  const form = useForm();
+
+  if (typeof form === 'undefined') {
+    throw new FormError(
+      `Error with the <Form.Inner> called "${props.identification}": ` +
+      'Cannot have a <Form.Inner> component if it is not inside a <Form> component!'
+    );
+  }
+
+  const [innerForm, setInnerForm] = createStore<FormStore<any>>(new FormStore({}));
+  const innerFormProvider = new FormProviderValue(
+    [innerForm, setInnerForm],
+    props.agnosticValidators || [],
+    props.identification,
+  );
+
+  onMount(() => {
+    if (typeof form.valueFor(props.name) !== 'undefined') {
+      form.cleanUp(props.name);
+    }
+
+    form.init(props.name, [], {} as any);
+  });
+
+  innerFormProvider.onChange(newValues => {
+    form.update(props.name, newValues);
+  });
+
+  form.onFieldChange(props.name, newValuesFromParent => {
+    if (JSON.stringify(innerForm.values) !== JSON.stringify(newValuesFromParent)) {
+      setInnerForm(produce(innerForm => {
+        innerForm.values = newValuesFromParent;
+      }));
+    }
+  });
+
+  onCleanup(() => {
+    form.cleanUp(props.name);
+  });
+
+  return <FormContext.Provider value={innerFormProvider}>
+    {props.children}
+  </FormContext.Provider>;
+};
+
+Form.Inner = Inner;
+
+/**
  * Gets a reference to the context of the parent form, this is mainly going
  * to be used inside of internal FoxPox components.
  *
@@ -70,3 +131,5 @@ export function useForm<K extends FormValue = FormValue>() {
     FormContext
   ) as unknown as FormProviderValue<K>;
 }
+
+export default Form;
