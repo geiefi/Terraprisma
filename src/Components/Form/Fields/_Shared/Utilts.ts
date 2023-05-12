@@ -32,7 +32,7 @@ export function setupCommunicationWithFormContext<
         form.cleanUp(props.name);
       }
 
-      form.init(props.name, props.validators || [], form.valueFor(props.name) || '' as any);
+      form.init(props.name, props.validators || [], '' as K[keyof K]);
     });
 
     onCleanup(() => {
