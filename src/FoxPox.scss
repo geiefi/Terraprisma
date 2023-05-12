@@ -15,7 +15,6 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: var(--primary-accent);
+  background: var(--primary);
   box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.25);
 }
-
