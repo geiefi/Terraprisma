@@ -12,9 +12,9 @@ export const FoxPoxLightTheme: Theme = {
     5: new Color('#534848'),
   },
 
-  primary: new Color('#bd462b'),
+  primary: new Color('#9b66d9'),
   secondary: new Color('#1cb88e'),
-  tertiary: new Color('#9b66d9'),
+  tertiary: new Color('#bd462b'),
 
   error: new Color('#AB4B4B'),
 };
