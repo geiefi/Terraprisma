@@ -13,8 +13,9 @@ export class Color {
   }
 
   setAlpha(newAlpha: number): Color {
-    this.internal.setAlpha(newAlpha);
-    return this;
+    const clone = new Color(this.internal.clone());
+    clone.internal.setAlpha(newAlpha);
+    return clone;
   }
 
   toHex(): string {
