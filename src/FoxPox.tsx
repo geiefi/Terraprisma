@@ -1,4 +1,4 @@
-import { Accessor, Component, createContext, createMemo, createSignal, ParentProps, Signal, useContext } from "solid-js";
+import { Accessor, Component, createContext, createEffect, createMemo, createSignal, onMount, ParentProps, Signal, useContext } from "solid-js";
 
 import "./FoxPox.scss";
 
@@ -76,6 +76,12 @@ export const FoxPoxLightTheme: Theme = {
   id: 'light',
 
   grays: {
+    /**
+     * This is the first gray color, it is automatically
+     * used to set the background-color of the body. 
+     *
+     * This color is most useful for dark themes.
+     */
     0: new Color('#ffffff'),
     1: new Color('#dcdcdc').setAlpha(0.77),
     2: new Color('#D8D5D5'),
@@ -126,6 +132,10 @@ export const FoxPox: Component<ParentProps<{
     ];
 
   const currentTheme = createMemo(() => themes.find(t => t.id === currentThemeIdSignal[0]())!);
+
+  createEffect(() => {
+    document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
+  });
 
   return <FoxPoxContext.Provider value={{
     themes,
