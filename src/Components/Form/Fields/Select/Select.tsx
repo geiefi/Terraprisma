@@ -132,6 +132,9 @@ const Select = (props: SelectProps) => {
       id={id}
       label={props.label}
       focused={focused}
+      style={{
+        cursor: 'pointer'
+      }}
       hasContent={hasContent}
       onClick={() => setFocused(focused => !focused)}
       ref={setInputContainerRef}
