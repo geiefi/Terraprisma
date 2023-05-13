@@ -12,7 +12,10 @@ button {
   user-select: none;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
+
+  &:not(.disabled) {
+    cursor: pointer;
+  }
 
   &.primary {
     background: var(--primary);
@@ -46,7 +49,7 @@ button.large {
   text-transform: uppercase;
 }
 
-button:hover {
+button:hover:not(.disabled):not(.empty) {
   filter: brightness(85%);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
@@ -72,5 +75,11 @@ button.empty {
   &.gray-3 {
     background: var(--gray-3);
   }
+}
+
+button.disabled {
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
 }
 

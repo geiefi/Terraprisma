@@ -9,6 +9,8 @@ export type ButtonProps = ParentProps<{
   size?: 'small' | 'medium' | 'large',
   type?: 'default' | 'empty',
 
+  disabled?: boolean,
+
   class?: string,
   classList?: Record<string, boolean>,
 
@@ -20,35 +22,55 @@ const Button: Component<ButtonProps> = (props) => {
 
   const color = createMemo(() => props.color || 'primary');
 
-  return <Ripple 
-    onClick={props.onClick} 
-    color={props.type === 'empty'
-      ? `var(--lightened-${color()})`
-      : undefined}
-    style={{ display: 'inline-block' }}
-  >
-    <button 
-      class={props.class} 
-      type='button'
-      classList={{
-        'primary': color() === 'primary',
-        'secondary': color() === 'secondary',
-        'tertiary': color() === 'tertiary',
+  return (<>
+    {props.disabled
+      ? <button
+        class={props.class}
+        type='button'
+        classList={{
+          'disabled': props.disabled,
 
-        'empty': props.type === 'empty',
-        'gray-0': depth() === 1,
-        'gray-1': depth() === 0 || depth() === 2,
-        'gray-2': depth() === 3,
-        'gray-3': depth() === 4,
+          'empty': props.type === 'empty',
 
-        'small': props.size === 'small',
-        'medium': props.size === 'medium' || typeof props.size === 'undefined',
-        'large': props.size === 'large',
+          'small': props.size === 'small',
+          'medium': props.size === 'medium' || typeof props.size === 'undefined',
+          'large': props.size === 'large',
 
-        ...props.classList
-      }}
-    >{props.children}</button>
-  </Ripple>;
+          ...props.classList
+        }}
+      >{props.children}</button>
+      : <Ripple
+        onClick={props.onClick}
+        color={props.type === 'empty'
+          ? `var(--lightened-${color()})`
+          : undefined}
+        style={{ display: 'inline-block' }}
+      >
+        <button
+          class={props.class}
+          type='button'
+          classList={{
+            'primary': color() === 'primary',
+            'secondary': color() === 'secondary',
+            'tertiary': color() === 'tertiary',
+
+            'disabled': props.disabled,
+
+            'empty': props.type === 'empty',
+            'gray-0': depth() === 1,
+            'gray-1': depth() === 0 || depth() === 2,
+            'gray-2': depth() === 3,
+            'gray-3': depth() === 4,
+
+            'small': props.size === 'small',
+            'medium': props.size === 'medium' || typeof props.size === 'undefined',
+            'large': props.size === 'large',
+
+            ...props.classList
+          }}
+        >{props.children}</button>
+      </Ripple>}
+  </>);
 }
 
 export default Button;
