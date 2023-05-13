@@ -9,6 +9,7 @@ import "./ButtonChooser.scss";
 
 export interface ButtonChooserProps extends FieldProps, ParentProps {
   label: JSX.Element;
+  color?: 'primary' | 'secondary' | 'tertiary';
   helperText?: JSX.Element;
 
   onChange?: (newValue: FieldValue) => any;
@@ -30,9 +31,6 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     form
       ? `button-chooser-${form.identification()}-${props.name}`
       : `button-chooser-${props.name}`
-  );
-  const hasContent = createMemo(() =>
-    (value() || '').toString().length > 0
   );
 
   const getChildren = accessChildren(() => props.children);
@@ -60,6 +58,8 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     }
   }));
 
+  const color = createMemo(() => props.color || 'primary');
+
   return <div
     class="button-chooser"
     id={id()}
@@ -73,6 +73,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
       <For each={options()}>{(opt) => (
         <Button
           type="empty"
+          color={color()}
           classList={{
             'active': opt.value === value()
           }}
