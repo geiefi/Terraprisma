@@ -57,7 +57,17 @@ export type Theme = {
    */
   lightnedPrimary2?: Color;
   secondary: Color;
+  /**
+   * Generally just a 0.32 alpha version of the already defined secondary color,
+   * which is calculated automatically, but can be defined to be something else.
+   */
+  lightnedSecondary?: Color;
   tertiary: Color;
+  /**
+   * Generally just a 0.32 alpha version of the already defined tertiary color,
+   * which is calculated automatically, but can be defined to be something else.
+   */
+  lightnedTertiary?: Color;
 
   error: Color;
 };
@@ -131,13 +141,19 @@ export const FoxPox: Component<ParentProps<{
       '--gray-5': currentTheme().grays[5].toRGBA(),
 
       '--primary': currentTheme().primary.toRGBA(),
+      '--lightened-primary': (currentTheme().lightnedPrimary 
+        || currentTheme().primary.setAlpha(0.32)).toRGBA(),
+
       '--secondary': currentTheme().secondary.toRGBA(),
+      '--lightened-secondary': (currentTheme().lightnedSecondary 
+        || currentTheme().secondary.setAlpha(0.32)).toRGBA(),
+
       '--tertiary': currentTheme().tertiary.toRGBA(),
+      '--lightened-tertiary': (currentTheme().lightnedTertiary 
+        || currentTheme().tertiary.setAlpha(0.32)).toRGBA(),
 
       '--error': currentTheme().error.toRGBA(),
 
-      '--lightened-primary': (currentTheme().lightnedPrimary 
-        || currentTheme().primary.setAlpha(0.32)).toRGBA(),
       '--lightened-primary-2': (currentTheme().lightnedPrimary2 
         || currentTheme().primary.setAlpha(0.20)).toRGBA(),
     }}>
