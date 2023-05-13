@@ -1,5 +1,3 @@
-
-
 input {
   border: none;
   outline: none;
@@ -7,12 +5,22 @@ input {
   position: absolute;
   width: calc(100% - 12px);
   height: 100%;
+  box-sizing: border-box;
   left: 11px;
   top: 6px;
 
   &.no-label {
     padding-block: 9px;
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  // need this stupid workaround because Chrome just forces
+  // the background-color into the input
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 input[type='number'] {
