@@ -54,6 +54,12 @@ button:hover:not(.disabled):not(.empty) {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
+button.disabled:not(.empty) {
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
 button.empty {
   color: var(--gray-5);
   filter: none;
@@ -75,11 +81,11 @@ button.empty {
   &.gray-3 {
     background: var(--gray-3);
   }
-}
 
-button.disabled {
-  color: rgba(0, 0, 0, 0.26);
-  box-shadow: none;
-  background-color: rgba(0, 0, 0, 0.12);
+  &.disabled {
+    filter: brightness(88%);
+    box-shadow: none;
+    color: rgba(0, 0, 0, 0.26);
+  }
 }
 
