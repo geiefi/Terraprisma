@@ -123,18 +123,18 @@ export const FoxPox: Component<ParentProps<{
     currentThemeIdSignal
   }}>
     <div id="fox-pox-app" style={{
-      '--gray-0': currentTheme().grays[0].toHex(),
-      '--gray-1': currentTheme().grays[1].toHex(),
-      '--gray-2': currentTheme().grays[2].toHex(),
-      '--gray-3': currentTheme().grays[3].toHex(),
-      '--gray-4': currentTheme().grays[4].toHex(),
-      '--gray-5': currentTheme().grays[5].toHex(),
+      '--gray-0': currentTheme().grays[0].toRGBA(),
+      '--gray-1': currentTheme().grays[1].toRGBA(),
+      '--gray-2': currentTheme().grays[2].toRGBA(),
+      '--gray-3': currentTheme().grays[3].toRGBA(),
+      '--gray-4': currentTheme().grays[4].toRGBA(),
+      '--gray-5': currentTheme().grays[5].toRGBA(),
 
-      '--primary': currentTheme().primary.toHex(),
-      '--secondary': currentTheme().secondary.toHex(),
-      '--tertiary': currentTheme().tertiary.toHex(),
+      '--primary': currentTheme().primary.toRGBA(),
+      '--secondary': currentTheme().secondary.toRGBA(),
+      '--tertiary': currentTheme().tertiary.toRGBA(),
 
-      '--error': currentTheme().error.toHex(),
+      '--error': currentTheme().error.toRGBA(),
 
       '--lightened-primary': (currentTheme().lightnedPrimary 
         || currentTheme().primary.setAlpha(0.32)).toRGBA(),
