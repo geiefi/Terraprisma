@@ -146,7 +146,7 @@ const App: Component = () => {
                 name='creditCardDetails'
               >
                 <Row>
-                  <Col size={18}>
+                  <Col size={14}>
                     <Input 
                       name='number'
                       label='número do cartão'
@@ -155,7 +155,7 @@ const App: Component = () => {
                     />
                   </Col>
 
-                  <Col size={6}>
+                  <Col size={10}>
                     <Input 
                       name='cvv'
                       label='cvv'
