@@ -1,8 +1,7 @@
 import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For } from "solid-js";
-import Button from "../../../General/Button/Button";
+import Button, { ButtonProps } from "../../../General/Button/Button";
 import { FieldValue } from "../../FormContext";
 
-import FormControl from "../_Shared/FormControl/FormControl";
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from "../_Shared/Utilts";
 
 import "./ButtonChooser.scss";
@@ -15,7 +14,7 @@ export interface ButtonChooserProps extends FieldProps, ParentProps {
   onChange?: (newValue: FieldValue) => any;
 }
 
-export interface OptionProps extends ParentProps {
+export interface OptionProps extends ParentProps, ButtonProps {
   value: string;
 }
 
@@ -72,12 +71,20 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     <div class="buttons">
       <For each={options()}>{(opt) => (
         <Button
-          type="empty"
           color={color()}
+          {...opt}
+          type="empty"
           classList={{
-            'active': opt.value === value()
+            'active': opt.value === value(),
+            ...opt.classList
           }}
-          onClick={() => setValue(opt.value)}
+          onClick={(event) => {
+            setValue(opt.value);
+
+            if (opt.onClick) {
+              opt.onClick(event);
+            }
+          }}
         >{opt.children}</Button>
       )}</For>
     </div>
