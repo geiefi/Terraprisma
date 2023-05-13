@@ -16,6 +16,8 @@ import Col from './Components/Layout/Grid/Col';
 import Typography, { Title } from './Components/General/Typography/Typography';
 import { FoxPox } from './FoxPox';
 import ButtonChooser from './Components/Form/Fields/ButtonChooser/ButtonChooser';
+import { FoxPoxDarkTheme } from './Themes/FoxPoxDark';
+import { FoxPoxLightTheme } from './Themes/FoxPoxLight';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -120,8 +122,8 @@ const App: Component = () => {
           </Form>}
         {currentStep() === 1
           && <Form formStore={paymentFormStore} indentification='DadosDePagamento'>
-            <ButtonChooser 
-              name='paymentMethod' 
+            <ButtonChooser
+              name='paymentMethod'
               label='Método de pagamento'
               validators={[Validators.required]}
             >
@@ -141,13 +143,13 @@ const App: Component = () => {
                 <Title type={4}>Dados do cartão de crédito</Title>
               </Typography>
 
-              <Form.Inner 
-                identification='CreditCardDetails' 
+              <Form.Inner
+                identification='CreditCardDetails'
                 name='creditCardDetails'
               >
                 <Row>
                   <Col size={14}>
-                    <Input 
+                    <Input
                       name='number'
                       label='número do cartão'
                       type='number'
@@ -156,7 +158,7 @@ const App: Component = () => {
                   </Col>
 
                   <Col size={10}>
-                    <Input 
+                    <Input
                       name='cvv'
                       label='cvv'
                       type='number'
