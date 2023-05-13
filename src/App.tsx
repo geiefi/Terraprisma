@@ -176,10 +176,12 @@ const App: Component = () => {
           <Button
             size='large'
             onClick={() => setCurrentStep(currentStep() - 1)}
+            disabled={currentStep() === 0}
           >Previous</Button>
           <Button
             size='large'
             onClick={() => setCurrentStep(currentStep() + 1)}
+            disabled={currentStep() === 2}
           >Next</Button>
         </Stack>
       </Box>
