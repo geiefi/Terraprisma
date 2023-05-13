@@ -16,7 +16,13 @@ export type ButtonProps = {
 const Button: Component<ButtonProps> = (props) => {
   const depth = useDepth() || (() => 0);
 
-  return <Ripple onClick={props.onClick} style={{ display: 'inline-block' }}>
+  return <Ripple 
+    onClick={props.onClick} 
+    color={props.type === 'empty'
+      ? 'var(--lightened-primary)'
+      : undefined}
+    style={{ display: 'inline-block' }}
+  >
     <button 
       class={props.class} 
       type='button'

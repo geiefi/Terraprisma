@@ -4,6 +4,7 @@ import './Ripple.scss';
 
 export type RippleProps = ParentProps<{
   onClick?: (event: MouseEvent) => any,
+  color?: string,
   style?: JSX.CSSProperties
 }>;
 
@@ -22,6 +23,9 @@ const Ripple: Component<RippleProps> = (props) => {
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${positionX - (element.offsetLeft + radius)}px`;
     circle.style.top = `${positionY - (element.offsetTop + radius)}px`;
+    if (props.color) {
+      circle.style.backgroundColor = props.color;
+    }
     circle.classList.add("ripple"); 
 
     removeFirstRipple(element);
