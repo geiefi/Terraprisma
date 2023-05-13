@@ -12,7 +12,7 @@ export class Color {
     this.internal = tinycolor2(input);
   }
 
-  setAlpha(newAlpha: number): Color {
+  withAlpha(newAlpha: number): Color {
     const clone = new Color(this.internal.clone());
     clone.internal.setAlpha(newAlpha);
     return clone;
