@@ -1,25 +1,29 @@
-import { Component, createMemo, JSX } from "solid-js";
+import { Component, createMemo, ParentProps } from "solid-js";
 import { useDepth } from "../Box/Box";
 import Ripple from "../Ripple/Ripple";
 
 import './Button.scss';
 
-export type ButtonProps = {
-  onClick?: (event: MouseEvent) => any,
-  class?: string,
-  classList?: Record<string, boolean>,
+export type ButtonProps = ParentProps<{
+  color?: 'primary' | 'secondary' | 'tertiary',
   size?: 'small' | 'medium' | 'large',
   type?: 'default' | 'empty',
-  children: JSX.Element
-};
+
+  class?: string,
+  classList?: Record<string, boolean>,
+
+  onClick?: (event: MouseEvent) => any,
+}>;
 
 const Button: Component<ButtonProps> = (props) => {
   const depth = useDepth() || (() => 0);
 
+  const color = createMemo(() => props.color || 'primary');
+
   return <Ripple 
     onClick={props.onClick} 
     color={props.type === 'empty'
-      ? 'var(--lightened-primary)'
+      ? `var(--lightened-${color()})`
       : undefined}
     style={{ display: 'inline-block' }}
   >
@@ -27,6 +31,10 @@ const Button: Component<ButtonProps> = (props) => {
       class={props.class} 
       type='button'
       classList={{
+        'primary': color() === 'primary',
+        'secondary': color() === 'secondary',
+        'tertiary': color() === 'tertiary',
+
         'empty': props.type === 'empty',
         'gray-0': depth() === 1,
         'gray-1': depth() === 0 || depth() === 2,

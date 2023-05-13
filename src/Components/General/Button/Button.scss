@@ -1,5 +1,4 @@
 button {
-  background: var(--primary);
   color: #fff;
   display: inline-block;
   width: fit-content;
@@ -14,6 +13,18 @@ button {
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
+
+  &.primary {
+    background: var(--primary);
+  }
+
+  &.secondary {
+    background: var(--secondary);
+  }
+
+  &.tertiary {
+    background: var(--tertiary);
+  }
 }
 
 button.small {
