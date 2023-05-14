@@ -10,7 +10,7 @@ import Validators from 'foxpox/Components/Form/Validators';
 import { Input, Select, ButtonChooser } from 'foxpox/Components/Form/Fields';
 import { Box, Button } from 'foxpox/Components/General';
 import { Typography, Title } from 'foxpox/Components/General/Typography';
-import { Stack, Container } from 'foxpox/Components/Layout';
+import { Stack, Container, Divisor } from 'foxpox/Components/Layout';
 import { Row, Col } from 'foxpox/Components/Layout/Grid';
 import { Steps, Step } from 'foxpox/Components/Navigation';
 
@@ -47,18 +47,27 @@ const Demo: Component = () => {
       horizontalAlign='center'
       verticalAlign='center'
     >
-      <Steps current={currentStep} identification='PassoAPassoDeCompra'>
-        <Step description='endereço de entrega'>endereço</Step>
-        <Step description='dados de pagamento'>pagamento</Step>
-        <Step description='confirme a compra'>conclusão</Step>
-      </Steps>
-
       <Box
         style={{
           width: '100%',
-          'max-width': '398px'
+          'max-width': '768px',
         }}
       >
+        <Steps 
+          current={currentStep} 
+          identification='PassoAPassoDeCompra' 
+          style={{ 
+            "padding-right": "60px",
+            "margin-top": "0"
+          }}
+        >
+          <Step description='endereço de entrega'>endereço</Step>
+          <Step description='dados de pagamento'>pagamento</Step>
+          <Step description='confirme a compra'>conclusão</Step>
+        </Steps>
+
+        <Divisor/>
+
         {currentStep() === 0
           && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
             <Row>
@@ -167,14 +176,20 @@ const Demo: Component = () => {
         {currentStep() === 2
           && <h1>conclusão</h1>}
 
-        <Stack direction='horizontal' align='space-around'>
+        <Stack direction='horizontal' align='space-between'>
           <Button
-            size='large'
+            size='medium'
+            style={{
+              "border-radius": '7px',
+            }}
             onClick={() => setCurrentStep(currentStep() - 1)}
             disabled={currentStep() === 0}
           >Previous</Button>
           <Button
-            size='large'
+            size='medium'
+            style={{
+              "border-radius": '7px',
+            }}
             onClick={() => setCurrentStep(currentStep() + 1)}
             disabled={currentStep() === 2}
           >Next</Button>
