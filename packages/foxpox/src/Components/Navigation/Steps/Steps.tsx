@@ -12,6 +12,8 @@ import {
 
 import { StepsContext } from "./StepsContext";
 
+import { Check } from "../../Icons";
+
 import './Steps.scss';
 
 export type StepProps = {
@@ -44,7 +46,7 @@ const InternalStep: Component<{ index: number } & StepProps> = ({ index, descrip
         class="step-circle"
       >{current() <= index
         ? index + 1
-        : <i class="fa-solid fa-check"></i>}</span>
+        : <Check />}</span>
       <span class='step-info'>
         <p class='step-title'>{children}</p>
         {description && <p class='step-description'>{description}</p>}
