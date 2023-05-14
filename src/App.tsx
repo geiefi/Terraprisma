@@ -1,23 +1,25 @@
-import { Component, createEffect, createSignal } from 'solid-js';
+import { Component, createEffect, createSignal, on } from 'solid-js';
 import { createStore } from 'solid-js/store';
+
+import { FoxPox } from './FoxPox';
+
+import { BarcodeScanner, CreditCard } from './Components/Icons';
 
 import Form from './Components/Form/Form';
 import Box from './Components/General/Box/Box';
 import Button from './Components/General/Button/Button';
 import Stack from './Components/Layout/Stack/Stack';
-import Steps, { Step } from './Components/Navigation/Steps/Steps';
-
-import { FormStore } from './Components/Form';
-import { Input, Select } from './Components/Form/Fields';
-import Validators from './Components/Form/Validators';
 import Container from './Components/Layout/Container/Container';
 import Row from './Components/Layout/Grid/Row';
 import Col from './Components/Layout/Grid/Col';
 import Typography, { Title } from './Components/General/Typography/Typography';
-import { FoxPox } from './FoxPox';
+
+import Steps, { Step } from './Components/Navigation/Steps/Steps';
+import { Input, Select } from './Components/Form/Fields';
 import ButtonChooser from './Components/Form/Fields/ButtonChooser/ButtonChooser';
-import { FoxPoxDarkTheme } from './Themes/FoxPoxDark';
-import { FoxPoxLightTheme } from './Themes/FoxPoxLight';
+
+import Validators from './Components/Form/Validators';
+import { FormStore } from './Components/Form';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -128,10 +130,10 @@ const App: Component = () => {
               validators={[Validators.required]}
             >
               <ButtonChooser.Option value='cartao-de-credito'>
-                Cartão de crédito
+                <CreditCard /> Cartão de crédito
               </ButtonChooser.Option>
               <ButtonChooser.Option value='boleto'>
-                Boleto
+                <BarcodeScanner /> Boleto
               </ButtonChooser.Option>
               <ButtonChooser.Option value='pix'>
                 Pix
