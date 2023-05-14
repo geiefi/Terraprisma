@@ -11,8 +11,17 @@
     "jsxImportSource": "solid-js",
     "composite": true,
     "isolatedModules": false,
+    "rootDir": "src",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "paths": {
+      "foxpox": ["../foxpox/src"],
+      "foxpox/*": ["../foxpox/src/*"],
+      "~/*": ["./src/*"]
+    }
   },
-  "exclude": ["**/temp/", "**/.*/", "**/lib", "**/node_modules"]
+  "includes": ["src"],
+  "references": [
+    { "path": "../foxpox/tsconfig.build.json" }
+  ]
 }

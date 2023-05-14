@@ -1,25 +1,18 @@
-import { Component, createEffect, createSignal, on } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { FoxPox } from './FoxPox';
+import { FoxPox } from 'foxpox';
 
-import { BarcodeScanner, CreditCard } from './Components/Icons';
+import { BarcodeScanner, CreditCard } from 'foxpox/Components/Icons';
 
-import Form from './Components/Form/Form';
-import Box from './Components/General/Box/Box';
-import Button from './Components/General/Button/Button';
-import Stack from './Components/Layout/Stack/Stack';
-import Container from './Components/Layout/Container/Container';
-import Row from './Components/Layout/Grid/Row';
-import Col from './Components/Layout/Grid/Col';
-import Typography, { Title } from './Components/General/Typography/Typography';
-
-import Steps, { Step } from './Components/Navigation/Steps/Steps';
-import { Input, Select } from './Components/Form/Fields';
-import ButtonChooser from './Components/Form/Fields/ButtonChooser/ButtonChooser';
-
-import Validators from './Components/Form/Validators';
-import { FormStore } from './Components/Form';
+import { Form, FormStore } from 'foxpox/Components/Form';
+import Validators from 'foxpox/Components/Form/Validators';
+import { Input, Select, ButtonChooser } from 'foxpox/Components/Form/Fields';
+import { Box, Button } from 'foxpox/Components/General';
+import { Typography, Title } from 'foxpox/Components/General/Typography';
+import { Stack, Container } from 'foxpox/Components/Layout';
+import { Row, Col } from 'foxpox/Components/Layout/Grid';
+import { Steps, Step } from 'foxpox/Components/Navigation';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -40,7 +33,7 @@ export type PaymentFormValue = Partial<{
   };
 }>;
 
-const App: Component = () => {
+const Demo: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<number>(1);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
@@ -191,4 +184,4 @@ const App: Component = () => {
   </FoxPox>);
 };
 
-export default App;
+export default Demo;

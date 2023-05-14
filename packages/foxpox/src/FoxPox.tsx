@@ -14,7 +14,7 @@ export type FoxPoxProviderValue = {
 const FoxPoxContext = createContext<FoxPoxProviderValue>();
 
 /**
- * A component that creates the <FoxPoxContext> with the themes defined and creates
+ * A component that creates the `<FoxPoxContext>` with the themes defined and creates
  * the signal that will hold the current theme.
  *
  * If there are no custom themes defined, FoxPox's default themes are used.

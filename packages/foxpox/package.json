@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
+  "name": "foxpox",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "description": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build tsconfig.build.json",
+    "clean": "tsc --build --clean tsconfig.build.json",
+    "watch": "tsc --build -w tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/tinycolor2": "^1.4.3"
+  },
+  "dependencies": {
+    "material-symbols": "^0.5.5",
+    "solid-js": "^1.7.2",
+    "tinycolor2": "^1.6.0"
+  },
+  "publishConfig": {
+    "directory": "lib"
+  },
+  "author": "Gabriel Miranda"
+}
