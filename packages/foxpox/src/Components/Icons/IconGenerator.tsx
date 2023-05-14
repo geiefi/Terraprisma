@@ -19,7 +19,8 @@ export function createIconComponent(iconName: string): IconComponent {
     return <span 
       class={`material-symbols-${props.variant || 'outlined'} ${props.class || ''}`}
       style={{
-        "margin-inline": '3px',
+        'font-size': 'inherit',
+        'scale': '1.4',
         ...props.style
       }}
       classList={props.classList}
