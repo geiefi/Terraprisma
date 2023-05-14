@@ -13,6 +13,7 @@ import {
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FormControl from '../_Shared/FormControl/FormControl';
+import { KeyboardArrowDown } from '../../../Icons';
 
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from '../_Shared/Utilts';
 
@@ -140,6 +141,14 @@ const Select = (props: SelectProps) => {
       ref={setInputContainerRef}
     >
       {optionLabelFromValue(value())}
+
+      <KeyboardArrowDown 
+        variant='rounded'
+        class='select-icon'
+        classList={{
+          'open': focused()
+        }}
+      />
     </InputContainer>
 
     {focused() && <div
