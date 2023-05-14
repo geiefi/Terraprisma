@@ -1,4 +1,4 @@
-import { Component, createMemo, ParentProps } from "solid-js";
+import { Component, createMemo, JSX, ParentProps } from "solid-js";
 import { useDepth } from "../Box/Box";
 import Ripple from "../Ripple/Ripple";
 
@@ -11,6 +11,7 @@ export type ButtonProps = ParentProps<{
 
   disabled?: boolean,
 
+  style?: JSX.CSSProperties,
   class?: string,
   classList?: Record<string, boolean>,
 
@@ -27,6 +28,7 @@ const Button: Component<ButtonProps> = (props) => {
       ? <button
         class={props.class}
         type='button'
+        style={props.style}
         classList={{
           'disabled': props.disabled,
 
@@ -49,6 +51,7 @@ const Button: Component<ButtonProps> = (props) => {
         <button
           class={props.class}
           type='button'
+          style={props.style}
           classList={{
             'primary': color() === 'primary',
             'secondary': color() === 'secondary',
