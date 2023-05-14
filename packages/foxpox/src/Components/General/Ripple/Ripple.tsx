@@ -4,6 +4,10 @@ import './Ripple.scss';
 
 export type RippleProps = ParentProps<{
   onClick?: (event: MouseEvent) => any,
+  /**
+   * Disabled the ripple effect but still propagates clicks through
+   */
+  noRipple?: boolean,
   color?: string,
   style?: JSX.CSSProperties
 }>;
@@ -17,6 +21,8 @@ const Ripple: Component<RippleProps> = (props) => {
   }
 
   const createRipple = (element: HTMLElement, positionX: number, positionY: number) => {
+    if (props.noRipple === true) return;
+
     const circle = document.createElement("span");
     const diameter = Math.max(element.clientWidth, element.clientHeight);
     const radius = diameter / 2;
