@@ -1,16 +1,23 @@
 button {
   color: #fff;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+
+  height: 100%;
+
   width: fit-content;
   box-sizing: border-box;
+
   border: none;
   outline: none;
   border-radius: 3px;
-  display: inline-block;
+
   transition: filter .2s ease-in,
               box-shadow .2s linear;
+
   user-select: none;
   vertical-align: middle;
+
   -webkit-tap-highlight-color: transparent;
 
   &:not(.disabled) {
