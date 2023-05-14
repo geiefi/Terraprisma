@@ -60,20 +60,20 @@ export const FoxPox: Component<ParentProps<{
 
       '--primary': currentTheme().primary.toRGBA(),
       '--lightened-primary': (currentTheme().lightnedPrimary 
-        || currentTheme().primary.setAlpha(0.32)).toRGBA(),
+        || currentTheme().primary.withAlpha(0.32)).toRGBA(),
 
       '--secondary': currentTheme().secondary.toRGBA(),
       '--lightened-secondary': (currentTheme().lightnedSecondary 
-        || currentTheme().secondary.setAlpha(0.32)).toRGBA(),
+        || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
 
       '--tertiary': currentTheme().tertiary.toRGBA(),
       '--lightened-tertiary': (currentTheme().lightnedTertiary 
-        || currentTheme().tertiary.setAlpha(0.32)).toRGBA(),
+        || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 
       '--error': currentTheme().error.toRGBA(),
 
       '--lightened-primary-2': (currentTheme().lightnedPrimary2 
-        || currentTheme().primary.setAlpha(0.20)).toRGBA(),
+        || currentTheme().primary.withAlpha(0.20)).toRGBA(),
     }}>
       {props.children}
     </div>

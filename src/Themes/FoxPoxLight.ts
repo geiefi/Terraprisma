@@ -5,7 +5,7 @@ export const FoxPoxLightTheme: Theme = {
 
   grays: {
     0: new Color('#ffffff'),
-    1: new Color('#dcdcdc').setAlpha(0.77),
+    1: new Color('#dcdcdc').withAlpha(0.77),
     2: new Color('#D8D5D5'),
     3: new Color('#a0a0a0'),
     4: new Color('#808080'),
