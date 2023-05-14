@@ -33,6 +33,18 @@
 
     button {
       margin: 0;
+
+      &.small {
+        padding-inline: 4px;
+      }
+
+      &.medium {
+        padding-inline: 6px;
+      }
+
+      &.large {
+        padding-inline: 28px;
+      }
     }
 
     button.active {
