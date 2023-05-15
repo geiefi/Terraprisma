@@ -50,6 +50,7 @@
     display: block;
 
     background: none;
+    transition: .2s background;
     font-size: 15px;
     line-height: 20px;
 
@@ -70,7 +71,6 @@
 
     &:hover:not(.active) {
       background: var(--gray-1);
-      transition: .2s background;
     }
   }
 }
