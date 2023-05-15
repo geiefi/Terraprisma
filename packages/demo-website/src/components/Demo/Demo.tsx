@@ -75,6 +75,7 @@ const Demo: Component = () => {
                 <Input
                   name='cidade'
                   label='Cidade'
+                  placeholder='São Paulo'
                   validators={[Validators.required]}
                 />
               </Col>
@@ -103,6 +104,7 @@ const Demo: Component = () => {
                 <Input
                   type='number'
                   name='numero'
+                  placeholder='513'
                   label='N°'
                   validators={[Validators.required]}
                 />
@@ -112,12 +114,14 @@ const Demo: Component = () => {
                 <Input
                   name='bairro'
                   label='Bairro'
+                  placeholder='Butantã Morumbi'
                   validators={[Validators.required]}
                 />
               </Col>
               <Col size={8}>
                 <Input
                   name='cep'
+                  placeholder='99999-999'
                   label='CEP'
                   validators={[Validators.required]}
                 />
@@ -156,6 +160,7 @@ const Demo: Component = () => {
                     <Input
                       name='number'
                       label='número do cartão'
+                      placeholder='0000 0000 0000 0000'
                       type='number'
                       validators={[Validators.required]}
                     />
@@ -165,6 +170,7 @@ const Demo: Component = () => {
                     <Input
                       name='cvv'
                       label='cvv'
+                      placeholder='123'
                       type='number'
                       validators={[Validators.required]}
                     />
