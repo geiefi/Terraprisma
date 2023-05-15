@@ -17,7 +17,7 @@ const FormControl: Component<FormControlProps> = (props) => {
   >
     {props.children}
     <div class='helper-text'>
-      {form?.hasErrors(props.name)
+      {form?.hasErrors(props.name) && !form.isDisabled(props.name)
         ? form?.firstErrorFor(props.name)
         : props.helperText}
       &nbsp;

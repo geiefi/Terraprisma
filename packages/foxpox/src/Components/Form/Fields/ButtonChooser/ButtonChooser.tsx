@@ -2,7 +2,7 @@ import { Component, createMemo, children as accessChildren, JSX, on, ParentProps
 import Button, { ButtonProps } from "../../../General/Button/Button";
 import { FieldValue } from "../../FormContext";
 
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from "../_Shared/Utilts";
+import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from "../_Shared/Utilts";
 
 import "./ButtonChooser.scss";
 
@@ -25,6 +25,7 @@ const Option: Component<OptionProps> = (props) => {
 const ButtonChooser = (props: ButtonChooserProps) => {
   const form = setupCommunicationWithFormContext(props);
   const [value, setValue] = setupFieldsValueSignal(props, form);
+  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
 
   const id = createMemo(() =>
     form
@@ -74,6 +75,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
           color={color()}
           {...opt}
           type="empty"
+          disabled={disabled()}
           classList={{
             'active': opt.value === value(),
             ...opt.classList
@@ -91,7 +93,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
     {(props.helperText || form?.hasErrors(props.name))
       && <div class="helper-text">{
-        form?.hasErrors(props.name)
+        (form?.hasErrors(props.name) && !disabled())
           ? form.firstErrorFor(props.name)
           : props.helperText
       }</div>}

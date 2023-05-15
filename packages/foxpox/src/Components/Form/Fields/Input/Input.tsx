@@ -1,7 +1,7 @@
-import { Component, createMemo, createSignal, JSX } from 'solid-js';
+import { Component, createEffect, createMemo, createSignal, JSX, on } from 'solid-js';
 
 import './Input.scss';
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FormControl from '../_Shared/FormControl/FormControl';
 
@@ -24,6 +24,7 @@ export interface InputProps extends FieldProps {
 const Input: Component<InputProps> = (props) => {
   const form = setupCommunicationWithFormContext(props);
   const [value, setValue] = setupFieldsValueSignal(props, form);
+  const [disabled, setDisabled] = setupFieldsDisabledSignal(props, form);
 
   const id = createMemo(() => 
     form 
@@ -43,12 +44,14 @@ const Input: Component<InputProps> = (props) => {
       id={id}
       hasContent={hasContent}
       focused={focused}
+      disabled={disabled}
       label={props.label}
     >
       <input
         id={id()}
         value={(value() || '').toString()}
         type={props.type || 'text'}
+        disabled={disabled()}
         classList={{ 'no-label': typeof props.label === 'undefined' }}
         onChange={(event) => {
           if (props.onChange) {

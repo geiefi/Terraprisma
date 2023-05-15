@@ -34,7 +34,7 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(1);
+  const [currentStep, setCurrentStep] = createSignal<number>(0);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({}));

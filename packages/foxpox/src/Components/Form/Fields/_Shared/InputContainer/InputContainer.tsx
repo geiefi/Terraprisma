@@ -15,6 +15,8 @@ export type InputContainerProps = ParentProps<{
 
   focused: Accessor<boolean>,
   hasContent: Accessor<boolean>,
+  disabled: Accessor<boolean>,
+
   onClick?: (event: MouseEvent) => any,
 }>;
 
@@ -22,14 +24,13 @@ const InputContainer: Component<InputContainerProps> = (props) => {
   const depth = useDepth() || (() => 0);
 
   return <div 
-    class={props.class 
-      ? props.class + ' input-container'
-      : 'input-container'}
+    class={`input-container ${props.class || ''}`}
     ref={props.ref}
     style={props.style}
     classList={{
       focused: props.focused(),
       hasContent: props.hasContent(),
+      disabled: props.disabled ? props.disabled() : false,
 
       'inside-box': depth() > 0,
 

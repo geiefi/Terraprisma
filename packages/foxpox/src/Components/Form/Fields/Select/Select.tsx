@@ -16,7 +16,7 @@ import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FormControl from '../_Shared/FormControl/FormControl';
 import { KeyboardArrowDown } from '../../../Icons';
 
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
 
 import { FieldValue } from '../../FormContext';
 
@@ -65,6 +65,7 @@ const Option: Component<OptionProps> = (props) => {
 const Select = (props: SelectProps) => {
   const form = setupCommunicationWithFormContext(props);
   const [value, setValue] = setupFieldsValueSignal(props, form);
+  const [disabled, setDisabled] = setupFieldsDisabledSignal(props, form);
 
   const id = createMemo(() =>
     form
@@ -134,11 +135,16 @@ const Select = (props: SelectProps) => {
       id={id}
       label={props.label}
       focused={focused}
-      style={{
-        cursor: 'pointer'
-      }}
+      disabled={disabled}
       hasContent={hasContent}
-      onClick={() => setFocused(focused => !focused)}
+      style={{
+        cursor: disabled() === false ? 'pointer' : 'default'
+      }}
+      onClick={() => {
+        if (!disabled()) {
+          setFocused(focused => !focused)
+        }
+      }}
       ref={setInputContainerRef}
     >
       {optionLabelFromValue(value())}

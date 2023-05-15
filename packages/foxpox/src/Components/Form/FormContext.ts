@@ -1,4 +1,4 @@
-import { createContext } from "solid-js";
+import { createContext, Setter } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
 export type FieldValue = string | string[] | number | boolean | Date | Record<string, any>;
@@ -25,11 +25,16 @@ export class FormError extends Error { }
   */
 export class FormStore<Values extends FormValue> {
   values: Values;
+  /**
+    * A array of field names that are currently disabled
+    */
+  disabled: Partial<Record<keyof Values, boolean>>;
   errors: Partial<Record<keyof Values, string[]>>;
   validators: Partial<Record<keyof Values, FieldValidator<FieldValue>[]>>;
 
   constructor(values: Values) {
     this.values = values;
+    this.disabled = {};
     this.validators = {};
     this.errors = {};
   }
@@ -37,24 +42,27 @@ export class FormStore<Values extends FormValue> {
 
 export type Store<T> = [get: T, set: SetStoreFunction<T>];
 
-type FieldChangeListener<T extends FormValue> = (newValue: T[keyof T]) => any;
 type FormValueChangeListener<T extends FormValue> = (newValues: T) => any;
 
 /**
   * This is going to be the value that comes from the `useForm()` call to get the data
   * and access to some actions related to the context Form.
   */
-export class FormProviderValue<T extends FormValue> {
-  private onFieldChangeListeners: Partial<Record<keyof T, FieldChangeListener<T>[]>>;
-  private onFormValueChangeListeners: FormValueChangeListener<T>[];
+export class FormProviderValue<Values extends FormValue> {
+  private onFormValueChangeListeners: FormValueChangeListener<Values>[];
+
+  private form: FormStore<Values>;
+  private setForm: Setter<FormStore<Values>>;
 
   constructor(
-    public store: Store<FormStore<T>>,
+    public store: Store<FormStore<Values>>,
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
   ) {
-    this.onFieldChangeListeners = {};
     this.onFormValueChangeListeners = [];
+
+    this.form = store[0];
+    this.setForm = store[1];
   }
 
   identification(): string {
@@ -76,8 +84,8 @@ export class FormProviderValue<T extends FormValue> {
     *
     * @param value Just the initial value of the field being initialized.
     */
-  init(name: keyof T, validators: FieldValidator[], value: T[keyof T]): void {
-    this.store[1](produce(form => {
+  init(name: keyof Values, validators: FieldValidator[], value: Values[keyof Values]): void {
+    this.setForm(produce(form => {
       form.values[name] = value;
       form.validators[name] = validators;
     }));
@@ -85,29 +93,27 @@ export class FormProviderValue<T extends FormValue> {
 
   /**
     * @description Removes all of the references inside of the formStore that
-    * are associated with the field identified by `name`.
+    * are associated with the field identified by `name` except for its value.
     */
-  cleanUp(name: keyof T): void {
-    this.store[1](produce(form => {
+  cleanUp(name: keyof Values): void {
+    this.setForm(produce(form => {
       // delete form.values[name];
       delete form.errors[name];
       delete form.validators[name];
     }));
-
-    delete this.onFieldChangeListeners[name];
   }
 
   /**
     * @description Runs over all of the validators of the field with the specified
     * `name` and adds the errors to the field if necessary, thus making it invalid.
     */
-  validate(name: keyof T): void {
-    const formValueKeys: (keyof T)[] = Object.keys(this.store[0].values);
+  validate(name: keyof Values): void {
+    const formValueKeys: (keyof Values)[] = Object.keys(this.form.values);
     if (!formValueKeys.includes(name)) {
       throw new FormError(`Cannot validate the field named ${name.toString()} inside of the form with id` +
         ` ${this.identification()} because it does not exist!`);
     } else {
-      this.store[1](produce(form => {
+      this.setForm(produce(form => {
         const validators = form.validators[name] || [];
         const value = form.values[name];
         const errors = validators.map(validator => validator(value)!).filter(Boolean);
@@ -121,9 +127,9 @@ export class FormProviderValue<T extends FormValue> {
     * validators associated with the form.
     */
   validateAll(): void {
-    this.store[1](produce(form => {
-      const fields: (keyof T)[] = Object.keys(form.validators);
-      const allErrors: Partial<Record<keyof T, string[]>> = {};
+    this.setForm(produce(form => {
+      const fields: (keyof Values)[] = Object.keys(form.validators);
+      const allErrors: Partial<Record<keyof Values, string[]>> = {};
       fields.forEach(field => {
         const validators = form.validators[field]!;
         const value = form.values[field];
@@ -132,8 +138,8 @@ export class FormProviderValue<T extends FormValue> {
       });
       if (this.agnosticValidators) {
         this.agnosticValidators.forEach(validator => {
-          const newErrors: Partial<Record<keyof T, string>> = validator(form.values) as any;
-          const newFieldsWithErrors: (keyof T)[] = Object.keys(newErrors);
+          const newErrors: Partial<Record<keyof Values, string>> = validator(form.values) as any;
+          const newFieldsWithErrors: (keyof Values)[] = Object.keys(newErrors);
           newFieldsWithErrors.forEach(field => {
             if (typeof allErrors[field] !== 'undefined') {
               allErrors[field]!.push(newErrors[field]!);
@@ -147,13 +153,24 @@ export class FormProviderValue<T extends FormValue> {
     }));
   }
 
+  isDisabled(name: keyof Values): boolean {
+    return this.form.disabled[name] || false;
+  }
+
+  setDisabled(name: keyof Values, disabled: boolean): void {
+    this.setForm(produce(form => {
+      form.disabled[name] = disabled;
+      form.errors[name] = [];
+    }));
+  }
+
   /**
     * @description Checks weather or not the form is valid.
     */
   isValid(): boolean {
-    const fieldsWithErrors: (keyof T)[] = Object.keys(this.store[0].errors);
-    return fieldsWithErrors.reduce(
-      (accumulator, key) => accumulator + this.store[0].errors[key]!.length,
+    const fieldsWithErrorObject: (keyof Values)[] = Object.keys(this.form.errors);
+    return fieldsWithErrorObject.reduce(
+      (accumulator, key) => accumulator + this.form.errors[key]!.length,
       0
     ) === 0;
   }
@@ -169,46 +186,32 @@ export class FormProviderValue<T extends FormValue> {
     * @description Gets the first error for the field with the specified
     * `name`.
     */
-  firstErrorFor(name: string): string | undefined {
-    return Object.keys(this.store[0].errors).includes(name)
-      ? this.store[0].errors[name]![0]
+  firstErrorFor(name: keyof Values): string | undefined {
+    return Object.keys(this.form.errors).includes(name.toString())
+      ? this.form.errors[name]![0]
       : undefined;
   }
 
-  hasErrors(name: string): boolean {
-    return typeof this.store[0].errors[name] !== 'undefined'
-      ? this.store[0].errors[name]!.length > 0
+  hasErrors(name: keyof Values): boolean {
+    return typeof this.form.errors[name] !== 'undefined'
+      ? this.form.errors[name]!.length > 0
       : false;
   }
 
-  valueFor(name: keyof T): T[keyof T] | undefined {
-    return this.store[0].values[name];
+  valueFor(name: keyof Values): Values[keyof Values] | undefined {
+    return this.form.values[name];
   }
 
-  onChange(effect: FormValueChangeListener<T>): void {
+  onChange(effect: FormValueChangeListener<Values>): void {
     this.onFormValueChangeListeners.push(effect);
   }
 
-  onFieldChange(name: keyof T, effect: FieldChangeListener<T>): void {
-    if (Object.hasOwn(this.onFieldChangeListeners, name)
-      && Array.isArray(this.onFieldChangeListeners[name])) {
-      this.onFieldChangeListeners[name]!.push(effect);
-    } else {
-      this.onFieldChangeListeners[name] = [effect];
-    }
-  }
-
-  update(name: keyof T, newValue: T[keyof T]): void {
-    this.store[1](produce(form => {
+  update(name: keyof Values, newValue: Values[keyof Values]): void {
+    this.setForm(produce(form => {
       form.values[name] = newValue;
     }));
 
-    if (Object.hasOwn(this.onFieldChangeListeners, name)
-      && Array.isArray(this.onFieldChangeListeners[name])) {
-      this.onFieldChangeListeners[name]!.forEach(listener => listener(newValue));
-    }
-
-    this.onFormValueChangeListeners.forEach(listener => listener(this.store[0].values));
+    this.onFormValueChangeListeners.forEach(listener => listener(this.form.values));
   }
 };
 
