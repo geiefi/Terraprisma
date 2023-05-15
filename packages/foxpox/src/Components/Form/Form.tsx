@@ -100,17 +100,16 @@ const innerForm = (props: ParentProps<{
     form.update(props.name, newValues);
   });
 
-  form.onFieldChange(props.name, newValuesFromParent => {
-    if (JSON.stringify(innerForm.values) !== JSON.stringify(newValuesFromParent)) {
+  createEffect(on(
+    () => form.valueFor(props.name),
+    () => {
+      const newValuesFromParent = form.valueFor(props.name);
+
       setInnerForm(produce(innerForm => {
         innerForm.values = newValuesFromParent;
       }));
     }
-  });
-
-  onCleanup(() => {
-    form.cleanUp(props.name);
-  });
+  ));
 
   return <FormContext.Provider value={innerFormProvider}>
     {props.children}
