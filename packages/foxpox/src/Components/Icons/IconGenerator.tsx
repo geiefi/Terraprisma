@@ -21,6 +21,9 @@ export function createIconComponent(iconName: string): IconComponent {
       style={{
         'font-size': 'inherit',
         'scale': '1.4',
+        'display': 'flex',
+        'justify-content': 'center',
+        'align-items': 'center',
         ...props.style
       }}
       classList={props.classList}
