@@ -9,6 +9,7 @@ import {
   For,
   createEffect,
   ParentProps,
+  on,
 } from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
@@ -115,7 +116,7 @@ const Select = (props: SelectProps) => {
     return options().find(opt => opt.value === value)?.children;
   };
 
-  createEffect(() => {
+  createEffect(on(focused, () => {
     if (props.onFocused && focused() === true) {
       props.onFocused();
     }
@@ -123,7 +124,7 @@ const Select = (props: SelectProps) => {
     if (form && focused() === false) {
       form.validate(props.name);
     }
-  });
+  }, { defer: true }));
 
   return <FormControl
     name={props.name}
@@ -142,7 +143,7 @@ const Select = (props: SelectProps) => {
     >
       {optionLabelFromValue(value())}
 
-      <KeyboardArrowDown 
+      <KeyboardArrowDown
         variant='rounded'
         class='select-icon'
         classList={{
