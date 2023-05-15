@@ -52,11 +52,17 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     }) as OptionProps[];
   });
 
-  createEffect(on(value, () => {
-    if (form) {
-      form.validate(props.name);
-    }
-  }));
+  createEffect(
+    on(
+      value, 
+      () => {
+        if (form) {
+          form.validate(props.name);
+        }
+      },
+      { defer: true }
+    )
+  );
 
   const color = createMemo(() => props.color || 'primary');
 
