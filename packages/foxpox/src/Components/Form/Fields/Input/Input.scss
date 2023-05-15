@@ -9,8 +9,17 @@ input {
   left: 11px;
   top: 6px;
 
+  transition: opacity .2s;
+  opacity: 1;
+
   &.no-label {
     padding-block: 9px;
+  }
+}
+
+.input-container:not(.has-content):not(.focused) {
+  input:not(:focus) {
+    opacity: 0;
   }
 }
 
@@ -23,6 +32,7 @@ input:-webkit-autofill:active {
   transition: background-color 9999s ease-in-out 0s;
 }
 
+// Remove annoying up and down arrows from all number type of input
 input[type='number'] {
   appearance: textfield;
   -moz-appearance: textfield;

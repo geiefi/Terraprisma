@@ -52,6 +52,7 @@ const Input: Component<InputProps> = (props) => {
         value={(value() || '').toString()}
         type={props.type || 'text'}
         disabled={disabled()}
+        placeholder={props.placeholder}
         classList={{ 'no-label': typeof props.label === 'undefined' }}
         onChange={(event) => {
           if (props.onChange) {

@@ -29,7 +29,7 @@ const InputContainer: Component<InputContainerProps> = (props) => {
     style={props.style}
     classList={{
       focused: props.focused(),
-      hasContent: props.hasContent(),
+      'has-content': props.hasContent(),
       disabled: props.disabled ? props.disabled() : false,
 
       'inside-box': depth() > 0,
