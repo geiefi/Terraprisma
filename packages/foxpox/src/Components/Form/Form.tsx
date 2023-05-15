@@ -81,9 +81,11 @@ const innerForm = (props: ParentProps<{
     );
   }
 
-  const [innerForm, setInnerForm] = createStore<FormStore<any>>(new FormStore({}));
-  const innerFormProvider = new FormProviderValue(
-    [innerForm, setInnerForm],
+  const [innerFormStore, setInnerFormStore] = createStore<FormStore<any>>(
+    new FormStore(form.valueFor(props.name) as any || {})
+  );
+  const innerForm = new FormProviderValue(
+    [innerFormStore, setInnerFormStore],
     props.agnosticValidators || [],
     props.identification,
   );
@@ -93,10 +95,10 @@ const innerForm = (props: ParentProps<{
       form.cleanUp(props.name);
     }
 
-    form.init(props.name, [], {} as any);
+    form.init(props.name, [], innerFormStore.values as any);
   });
 
-  innerFormProvider.onChange(newValues => {
+  innerForm.onChange(newValues => {
     form.update(props.name, newValues);
   });
 
@@ -105,13 +107,13 @@ const innerForm = (props: ParentProps<{
     () => {
       const newValuesFromParent = form.valueFor(props.name);
 
-      setInnerForm(produce(innerForm => {
-        innerForm.values = newValuesFromParent;
+      setInnerFormStore(produce(innerFormStore => {
+        innerFormStore.values = newValuesFromParent;
       }));
     }
   ));
 
-  return <FormContext.Provider value={innerFormProvider}>
+  return <FormContext.Provider value={innerForm}>
     {props.children}
   </FormContext.Provider>;
 };
