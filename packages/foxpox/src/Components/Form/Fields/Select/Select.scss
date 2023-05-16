@@ -24,18 +24,13 @@
   --max-width: 200px;
 
   position: absolute;
-  left: calc(
-    var(--input-container-left) 
-    + var(--input-container-width)
-  );
-  transform: translateX(-100%);
+  left: var(--input-container-left);
   top: calc(var(--input-container-top) + var(--input-container-height) + 5px);
   z-index: 12;
 
   width: var(--input-container-width);
-  max-width: var(--max-width); // at most five options appearing at once
   height: fit-content;
-  max-height: calc(26px * 5);
+  max-height: calc(26px * 5); // at most five options appearing at once
 
   overflow-y: auto;
   overflow-x: hidden;
