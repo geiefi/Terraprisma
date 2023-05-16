@@ -1,0 +1,33 @@
+textarea {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  height: 20.4px; /* Only temporarily */
+  margin-bottom: -8px;
+  box-sizing: content-box;
+  overflow: hidden;
+  resize: none;
+
+  transition: opacity .2s;
+  opacity: 1;
+
+  &.no-label {
+    padding-block: 9px;
+  }
+}
+
+.input-container:not(.has-content):not(.focused) {
+  textarea:not(:focus) {
+    opacity: 0;
+  }
+}
+
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active {
+  // need this stupid workaround because Chrome just forces
+  // the background-color into the input
+  transition: background-color 9999s ease-in-out 0s;
+}
