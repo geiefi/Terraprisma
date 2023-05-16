@@ -108,6 +108,8 @@ export class FormProviderValue<Values extends FormValue> {
     * `name` and adds the errors to the field if necessary, thus making it invalid.
     */
   validate(name: keyof Values): void {
+    if (this.isDisabled(name)) return;
+
     const formValueKeys: (keyof Values)[] = Object.keys(this.form.values);
     if (!formValueKeys.includes(name)) {
       throw new FormError(`Cannot validate the field named ${name.toString()} inside of the form with id` +
@@ -129,27 +131,34 @@ export class FormProviderValue<Values extends FormValue> {
   validateAll(): void {
     this.setForm(produce(form => {
       const fields: (keyof Values)[] = Object.keys(form.validators);
-      const allErrors: Partial<Record<keyof Values, string[]>> = {};
+      const errors: Partial<Record<keyof Values, string[]>> = {};
+
       fields.forEach(field => {
+        if (this.isDisabled(field)) return;
+
         const validators = form.validators[field]!;
         const value = form.values[field];
-        const errors = validators.map(validator => validator(value)!).filter(Boolean);
-        allErrors[field] = errors;
+        const caughtErrors = validators.map(validator => validator(value)!).filter(Boolean);
+        errors[field] = caughtErrors;
       });
+
       if (this.agnosticValidators) {
         this.agnosticValidators.forEach(validator => {
-          const newErrors: Partial<Record<keyof Values, string>> = validator(form.values) as any;
-          const newFieldsWithErrors: (keyof Values)[] = Object.keys(newErrors);
-          newFieldsWithErrors.forEach(field => {
-            if (typeof allErrors[field] !== 'undefined') {
-              allErrors[field]!.push(newErrors[field]!);
+          const agnosticValidatorCaughtErrors: Partial<Record<keyof Values, string>> = validator(form.values) as any;
+          const fieldsWithErrorsCaughtByAgnosticValidator: (keyof Values)[] = Object.keys(agnosticValidatorCaughtErrors);
+          fieldsWithErrorsCaughtByAgnosticValidator.forEach(field => {
+            if (this.isDisabled(field)) return;
+
+            if (typeof errors[field] !== 'undefined') {
+              errors[field]!.push(agnosticValidatorCaughtErrors[field]!);
             } else {
-              allErrors[field] = [newErrors[field]!];
+              errors[field] = [agnosticValidatorCaughtErrors[field]!];
             }
           });
         });
       }
-      form.errors = allErrors;
+
+      form.errors = errors;
     }));
   }
 
