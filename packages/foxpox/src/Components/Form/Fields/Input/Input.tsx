@@ -13,7 +13,6 @@ export type InputOnChangeEvent = Event & {
 export interface InputProps extends FieldProps {
   type?: 'text' | 'number' | 'email' | 'password';
   label?: JSX.Element;
-  // TODO: implement placeholder treatment
   placeholder?: string;
   helperText?: JSX.Element;
 
@@ -24,7 +23,7 @@ export interface InputProps extends FieldProps {
 const Input: Component<InputProps> = (props) => {
   const form = setupCommunicationWithFormContext(props);
   const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, setDisabled] = setupFieldsDisabledSignal(props, form);
+  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
 
   const id = createMemo(() => 
     form 
@@ -53,8 +52,10 @@ const Input: Component<InputProps> = (props) => {
         type={props.type || 'text'}
         disabled={disabled()}
         placeholder={props.placeholder}
-        classList={{ 'no-label': typeof props.label === 'undefined' }}
-        onChange={(event) => {
+        classList={{ 
+          'no-label': typeof props.label === 'undefined',
+        }}
+        onInput={(event) => {
           if (props.onChange) {
             props.onChange(event);
           }
