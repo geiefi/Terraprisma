@@ -2,8 +2,7 @@ import { Accessor, Component, createContext, createEffect, createMemo, createSig
 
 import "./FoxPox.scss";
 
-import { Theme } from "./Themes/Theme";
-import { FoxPoxLightTheme } from "./Themes/FoxPoxLight";
+import { Theme, FoxPoxDarkTheme, FoxPoxLightTheme } from "./Themes";
 
 export type FoxPoxProviderValue = {
   themes: Theme[];
@@ -36,7 +35,8 @@ export const FoxPox: Component<ParentProps<{
   const themes = hasCustomThemes()
     ? props.themes!
     : [
-      FoxPoxLightTheme
+      FoxPoxLightTheme,
+      FoxPoxDarkTheme
     ];
 
   const currentTheme = createMemo(() => themes.find(t => t.id === currentThemeIdSignal[0]())!);
@@ -58,15 +58,25 @@ export const FoxPox: Component<ParentProps<{
       '--gray-4': currentTheme().grays[4].toRGBA(),
       '--gray-5': currentTheme().grays[5].toRGBA(),
 
+      '--text-0': currentTheme().textColors[0].toRGBA(),
+      '--text-1': currentTheme().textColors[1].toRGBA(),
+      '--text-2': currentTheme().textColors[2].toRGBA(),
+      '--text-3': currentTheme().textColors[3].toRGBA(),
+      '--text-4': currentTheme().textColors[4].toRGBA(),
+      '--text-5': currentTheme().textColors[5].toRGBA(),
+
       '--primary': currentTheme().primary.toRGBA(),
+      "--text-primary": currentTheme().textColors.primary.toRGBA(),
       '--lightened-primary': (currentTheme().lightnedPrimary 
         || currentTheme().primary.withAlpha(0.32)).toRGBA(),
 
       '--secondary': currentTheme().secondary.toRGBA(),
+      "--text-secondary": currentTheme().textColors.secondary.toRGBA(),
       '--lightened-secondary': (currentTheme().lightnedSecondary 
         || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
 
       '--tertiary': currentTheme().tertiary.toRGBA(),
+      "--text-tertiary": currentTheme().textColors.tertiary.toRGBA(),
       '--lightened-tertiary': (currentTheme().lightnedTertiary 
         || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 

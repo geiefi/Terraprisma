@@ -7,9 +7,22 @@ export const FoxPoxLightTheme: Theme = {
     0: new Color('#ffffff'),
     1: new Color('#dcdcdc').withAlpha(0.77),
     2: new Color('#D8D5D5'),
-    3: new Color('#a0a0a0'),
-    4: new Color('#808080'),
-    5: new Color('#534848'),
+    3: new Color('#C4C2C2'),
+    4: new Color('#B2B0B0'),
+    5: new Color('#A2A0A0'),
+  },
+
+  textColors: {
+    primary: new Color("#FFFFFF"),
+    secondary: new Color("#FFFFFF"),
+    tertiary: new Color("#ffffff"),
+
+    0: new Color('#1E1E1E'),
+    1: new Color('#535353'),
+    2: new Color('#5B5B5B'),
+    3: new Color('#6A6A6A'),
+    4: new Color('#787878'),
+    5: new Color('#848484'),
   },
 
   primary: new Color('#9b66d9'),

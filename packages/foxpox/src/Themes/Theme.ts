@@ -47,7 +47,28 @@ export type Theme = {
     3: Color;
     4: Color;
     5: Color;
-  }
+  };
+  textColors: {
+    /**
+      * A text color that will match the primary color
+      */
+    primary: Color;
+    /**
+      * A text color that will match the secondary color
+      */
+    secondary: Color;
+    /**
+      * A text color that will match the tertiary color
+      */
+    tertiary: Color;
+
+    0: Color;
+    1: Color;
+    2: Color;
+    3: Color;
+    4: Color;
+    5: Color;
+  },
   primary: Color;
   /**
    * Generally just a 0.32 alpha version of the already defined primary color,
