@@ -79,9 +79,9 @@ const ButtonChooser = (props: ButtonChooserProps) => {
       <For each={options()}>{(opt) => (
         <Button
           color={color()}
+          disabled={disabled()}
           {...opt}
           type="empty"
-          disabled={disabled()}
           classList={{
             'active': opt.value === value(),
             ...opt.classList
