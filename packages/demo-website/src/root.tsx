@@ -11,6 +11,7 @@ import {
 } from "solid-start";
 
 import Demo from "./components/Demo/Demo";
+// import FieldsWithoutForms from "./components/FieldsWithoutForms/FieldsWithoutForms";
 
 export default function Root() {
   return (
@@ -23,6 +24,7 @@ export default function Root() {
       <Body style={{ margin: 0 }}>
         <Suspense>
           <ErrorBoundary>
+            {/*<FieldsWithoutForms/>*/}
             <Demo/>
           </ErrorBoundary>
         </Suspense>
