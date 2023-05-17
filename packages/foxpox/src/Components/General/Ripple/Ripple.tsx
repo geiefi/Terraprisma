@@ -9,6 +9,7 @@ export type RippleProps = ParentProps<{
    * Disabled the ripple effect but still propagates clicks through
    */
   noRipple?: boolean,
+  classList?: Record<string, boolean | undefined>,
   color?: string,
   style?: JSX.CSSProperties
 }>;
@@ -49,6 +50,7 @@ const Ripple: Component<RippleProps> = (props) => {
     class='ripple-container'
     ref={setRippleContainer}
     style={props.style}
+    classList={props.classList}
     onClick={(event) => {
       createRipple(rippleContainer()!, event.clientX, event.clientY);
       if (typeof props.onClick !== 'undefined') {
