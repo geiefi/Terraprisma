@@ -67,7 +67,7 @@ const Ripple: Component<RippleProps> = (props) => {
             height: `${ripple.diameter}px`,
             left: `${ripple.left}px`,
             top: `${ripple.top}px`,
-            ...(props.color ? { backgroundColor: props.color } : {})
+            ...(props.color ? { 'background-color': props.color } : {})
           }}
         ></span>
       )}

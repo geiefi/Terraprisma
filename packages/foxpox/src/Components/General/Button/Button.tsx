@@ -22,6 +22,15 @@ const Button: Component<ButtonProps> = (props) => {
   const depth = useDepth() || (() => 0);
 
   const color = createMemo(() => props.color || 'primary');
+  const rippleColor = createMemo(() => {
+    const buttonType = props.type || 'default';
+    switch (buttonType) {
+      case 'empty':
+        return `var(--lightened-${color()})`;
+      case 'default':
+        return `var(--text-${color()})`;
+    }
+  });
 
   return <Ripple
     onClick={(event) => {
@@ -38,9 +47,7 @@ const Button: Component<ButtonProps> = (props) => {
       'large': props.size === 'large',
     }}
     noRipple={props.disabled}
-    color={props.type === 'empty'
-      ? `var(--lightened-${color()})`
-      : undefined}
+    color={rippleColor()}
     style={{ display: 'inline-block' }}
   >
     <button
