@@ -1,5 +1,23 @@
+$disabled-text-color: color-mix(in srgb, var(--text-0), transparent 80%);
+
+// Need to make the ripple container round as well
+// to avoid weird square ripples
+.ripple-container.rounded,
+.ripple-container.icon {
+  &.small {
+    border-radius: 12px;
+  }
+
+  &.medium {
+    border-radius: 24px;
+  }
+
+  &.large {
+    border-radius: 28px;
+  }
+}
+
 button {
-  color: #fff;
   display: inline-flex;
   gap: 5px;
   align-items: center;
@@ -27,14 +45,17 @@ button {
 
   &.primary {
     background: var(--primary);
+    color: var(--text-primary);
   }
 
   &.secondary {
     background: var(--secondary);
+    color: var(--text-secondary);
   }
 
   &.tertiary {
     background: var(--tertiary);
+    color: var(--text-tertiary);
   }
 
   &.small:not(.rounded):not(.icon) {
@@ -61,6 +82,7 @@ button {
     justify-content: center;
     text-align: center;
     padding-inline: 16px;
+    color: var(--text-0);
 
     &.small {
       min-width: 24px;
@@ -97,11 +119,11 @@ button {
   &.icon {
     background: transparent;
     padding: 0;
-    color: var(--gray-5);
     transition: background .2s;
 
     &:hover {
-      background: rgba(0,0,0,0.1);
+      // generates a opaque version of the text-0 color
+      background: color-mix(in srgb, var(--text-0), transparent 85%);
     }
   }
 
@@ -111,13 +133,13 @@ button {
   }
 
   &.disabled:not(.empty) {
-    color: rgba(0, 0, 0, 0.26);
+    color: $disabled-text-color;
     box-shadow: none;
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: color-mix(in srgb, var(--gray-0), transparent 80%);
   }
 
   &.empty {
-    color: var(--gray-5);
+    color: var(--text-1);
     filter: none;
     transition: .2s linear;
     border: 2px solid rgba(0, 0, 0, 0);
@@ -141,7 +163,7 @@ button {
     &.disabled {
       filter: brightness(88%);
       box-shadow: none;
-      color: rgba(0, 0, 0, 0.26);
+      color: $disabled-text-color;
     }
 
     &:hover:not(.active):not(:active) {

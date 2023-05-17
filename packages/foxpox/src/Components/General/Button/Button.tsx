@@ -29,6 +29,14 @@ const Button: Component<ButtonProps> = (props) => {
         props.onClick(event);
       }
     }}
+    classList={{
+      'icon': props.type === 'icon',
+      'rounded': props.type === 'rounded',
+
+      'small': props.size === 'small',
+      'medium': props.size === 'medium' || typeof props.size === 'undefined',
+      'large': props.size === 'large',
+    }}
     noRipple={props.disabled}
     color={props.type === 'empty'
       ? `var(--lightened-${color()})`
