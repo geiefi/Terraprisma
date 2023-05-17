@@ -1,4 +1,5 @@
-import { Component, createSignal, JSX, ParentProps } from "solid-js";
+import { Component, createSignal, For, JSX, ParentProps } from "solid-js";
+import { createStore, produce } from "solid-js/store";
 
 import './Ripple.scss';
 
@@ -12,53 +13,66 @@ export type RippleProps = ParentProps<{
   style?: JSX.CSSProperties
 }>;
 
+interface RippleConfig {
+  diameter: number;
+  left: number;
+  top: number;
+}
+
 const Ripple: Component<RippleProps> = (props) => {
-  const removeFirstRipple = (element: HTMLElement) => {
-    const ripple = element.getElementsByClassName("ripple")[0];
-    if (ripple) {
-      ripple.remove();
-    }
-  }
+  const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
   const createRipple = (element: HTMLElement, positionX: number, positionY: number) => {
     if (props.noRipple === true) return;
 
-    const circle = document.createElement("span");
     const diameter = Math.max(element.clientWidth, element.clientHeight);
     const radius = diameter / 2;
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${positionX - (element.offsetLeft + radius)}px`;
-    circle.style.top = `${positionY - (element.offsetTop + radius)}px`;
-    if (props.color) {
-      circle.style.backgroundColor = props.color;
-    }
-    circle.classList.add("ripple"); 
 
-    removeFirstRipple(element);
+    const rippleConfig: RippleConfig = {
+      diameter,
+      left: positionX - (element.offsetLeft + radius),
+      top: positionY - (element.offsetTop + radius)
+    };
 
-    element.appendChild(circle);
+    setRipples(produce(ripples => {
+      ripples.unshift(rippleConfig);
+
+      setTimeout(() => {
+        ripples.splice(-1, 1);
+      }, 2000);
+    }));
   };
 
   const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
 
-  return <div 
-    class='ripple-container' 
+  return <div
+    class='ripple-container'
     ref={setRippleContainer}
     style={props.style}
     onClick={(event) => {
-      if (typeof rippleContainer() !== 'undefined') {
-        createRipple(rippleContainer()!, event.clientX, event.clientY);
-        if (typeof props.onClick !== 'undefined') {
-          props.onClick(event);
-        }
-      } else {
-        createRipple(event.target as any, event.clientX, event.clientY);
-        if (typeof props.onClick !== 'undefined') {
-          props.onClick(event);
-        }
+      createRipple(rippleContainer()!, event.clientX, event.clientY);
+      if (typeof props.onClick !== 'undefined') {
+        props.onClick(event);
       }
     }}
-  >{props.children}</div>;
+  >
+    <For each={ripples}>
+      {(ripple) => (
+        ripple && <span
+          class='ripple'
+          style={{
+            width: `${ripple.diameter}px`,
+            height: `${ripple.diameter}px`,
+            left: `${ripple.left}px`,
+            top: `${ripple.top}px`,
+            ...(props.color ? { backgroundColor: props.color } : {})
+          }}
+        ></span>
+      )}
+    </For>
+
+    {props.children}
+  </div>;
 }
 
 export default Ripple;
