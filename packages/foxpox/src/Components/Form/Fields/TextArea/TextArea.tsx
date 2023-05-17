@@ -19,7 +19,7 @@ export interface TextAreaProps extends FieldProps {
   rows?: number;
   cols?: number;
 
-  onChange?: (event: TextAreaChangeEvent) => any,
+  onChange?: (newValue: string, event?: TextAreaChangeEvent) => any,
   onFocus?: () => any,
 }
 
@@ -70,7 +70,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
           event.target.parentElement!.style.height = `${scrollHeight}px`;
 
           if (props.onChange) {
-            props.onChange(event);
+            props.onChange(event.currentTarget.value, event);
           }
 
           setValue(event.currentTarget.value);

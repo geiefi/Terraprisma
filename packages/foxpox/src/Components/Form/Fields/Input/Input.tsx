@@ -16,7 +16,7 @@ export interface InputProps extends FieldProps {
   placeholder?: string;
   helperText?: JSX.Element;
 
-  onChange?: (event: InputOnChangeEvent) => any,
+  onChange?: (value: string, event?: InputOnChangeEvent) => any,
   onFocus?: () => any,
 }
 
@@ -57,7 +57,7 @@ const Input: Component<InputProps> = (props) => {
         }}
         onInput={(event) => {
           if (props.onChange) {
-            props.onChange(event);
+            props.onChange(event.currentTarget.value, event);
           }
 
           setValue(event.currentTarget.value);
