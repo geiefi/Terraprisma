@@ -61,12 +61,13 @@ const TextArea: Component<TextAreaProps> = (props) => {
         }}
         onInput={(event) => {
           event.target.style.height = "0px";
-          const scrollHeight = event.target.scrollHeight;
-          if (scrollHeight < 30) {
-            event.target.style.height = "20.4px";
-          } else {
-            event.target.style.height = `${scrollHeight}px`;
-          }
+          const scrollHeight = Math.max(
+            event.target.scrollHeight, 
+            54
+          );
+          event.target.style.height = `${scrollHeight}px`;
+
+          event.target.parentElement!.style.height = `${scrollHeight}px`;
 
           if (props.onChange) {
             props.onChange(event);
