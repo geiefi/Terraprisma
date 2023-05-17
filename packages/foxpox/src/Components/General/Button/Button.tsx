@@ -50,10 +50,10 @@ const Button: Component<ButtonProps> = (props) => {
         'rounded': props.type === 'rounded',
 
         'empty': props.type === 'empty',
-        'gray-0': depth() === 1,
-        'gray-1': depth() === 0 || depth() === 2,
-        'gray-2': depth() === 3,
-        'gray-3': depth() === 4,
+        'gray-1': depth() === 0,
+        'gray-2': depth() === 1,
+        'gray-3': depth() === 2,
+        'gray-4': depth() === 3,
 
         'small': props.size === 'small',
         'medium': props.size === 'medium' || typeof props.size === 'undefined',
