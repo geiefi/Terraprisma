@@ -52,8 +52,8 @@ button {
     background: var(--primary);
     color: var(--text-primary);
 
-    &:hover {
-      background-color: darken(var(--primary), 20%);
+    &:hover:not(.disabled):not(.empty) {
+      background: darken(var(--primary), 20%);
     }
   }
 
@@ -61,8 +61,8 @@ button {
     background: var(--secondary);
     color: var(--text-secondary);
 
-    &:hover {
-      background-color: darken(var(--secondary), 20%);
+    &:hover:not(.disabled):not(.empty) {
+      background: darken(var(--secondary), 20%);
     }
   }
 
@@ -70,8 +70,8 @@ button {
     background: var(--tertiary);
     color: var(--text-tertiary);
 
-    &:hover {
-      background-color: darken(var(--tertiary), 20%);
+    &:hover:not(.disabled):not(.empty) {
+      background: darken(var(--tertiary), 20%);
     }
   }
 
@@ -86,9 +86,10 @@ button {
   }
 
   &.medium:not(.rounded):not(.icon) {
-    padding-block: 5px;
-    padding-inline: 14px;
+    padding-block: 9px;
+    padding-inline: 21px;
     font-size: 14px;
+    font-weight: 700;
   }
 
   &.large:not(.rounded):not(.icon) {
@@ -96,6 +97,7 @@ button {
     padding-inline: 43px;
     font-size: 16px;
     text-transform: uppercase;
+    font-weight: bolder;
   }
 
   &.rounded,
@@ -156,7 +158,6 @@ button {
 
   &.empty {
     color: var(--text-1);
-    filter: none;
     transition: .2s linear;
     border: 2px solid rgba(0, 0, 0, 0);
 
@@ -174,10 +175,6 @@ button {
 
     &.gray-3 {
       background: var(--gray-3);
-    }
-
-    &:hover:not(.active):not(:active) {
-      filter: brightness(94%);
     }
   }
 }
