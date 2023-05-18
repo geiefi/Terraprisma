@@ -85,6 +85,12 @@ export class FormProviderValue<Values extends FormValue> {
     * @param value Just the initial value of the field being initialized.
     */
   init(name: keyof Values, validators: FieldValidator[], value: Values[keyof Values]): void {
+    if (document.querySelectorAll(`#field-${this.identification()}-${name.toString()}`).length > 1) {
+      throw new FormError(
+        `Error with the field "${name.toString()}" on the <Form> with identification "${this.identification()}": `
+        + 'You cannot have multiple fields defined on the same <Form> that have the same name!'
+      );
+    }
     this.setForm(produce(form => {
       form.values[name] = value;
       form.validators[name] = validators;

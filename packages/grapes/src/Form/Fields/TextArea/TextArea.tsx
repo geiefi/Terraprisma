@@ -30,8 +30,8 @@ const TextArea: Component<TextAreaProps> = (props) => {
 
   const id = createMemo(() => 
     form 
-      ? `textarea-${form.identification()}-${props.name}`
-      : `textarea-${props.name}`
+      ? `field-${form.identification()}-${props.name}`
+      : `field-${props.name}`
   );
 
   const [focused, setFocused] = createSignal<boolean>(false);

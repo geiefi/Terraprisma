@@ -27,8 +27,8 @@ const Input: Component<InputProps> = (props) => {
 
   const id = createMemo(() => 
     form 
-      ? `input-${form.identification()}-${props.name}`
-      : `input-${props.name}`
+      ? `field-${form.identification()}-${props.name}`
+      : `field-${props.name}`
   );
 
   const [focused, setFocused] = createSignal<boolean>(false);

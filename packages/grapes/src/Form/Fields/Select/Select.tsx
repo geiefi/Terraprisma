@@ -65,12 +65,12 @@ const Option: Component<OptionProps> = (props) => {
 const Select = (props: SelectProps) => {
   const form = setupCommunicationWithFormContext(props);
   const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, setDisabled] = setupFieldsDisabledSignal(props, form);
+  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
 
   const id = createMemo(() =>
     form
-      ? `select-${form.identification()}-${props.name}`
-      : `select-${props.name}`
+      ? `field-${form.identification()}-${props.name}`
+      : `field-${props.name}`
   );
   const hasContent = createMemo(() =>
     (value() || '').toString().length > 0

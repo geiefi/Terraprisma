@@ -29,8 +29,8 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
   const id = createMemo(() =>
     form
-      ? `button-chooser-${form.identification()}-${props.name}`
-      : `button-chooser-${props.name}`
+      ? `field-${form.identification()}-${props.name}`
+      : `field-${props.name}`
   );
 
   const getChildren = accessChildren(() => props.children);
