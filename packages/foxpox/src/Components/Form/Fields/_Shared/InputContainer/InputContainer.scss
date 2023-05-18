@@ -8,8 +8,10 @@
   border-radius: 7px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  background: var(--gray-1);
   border-bottom: 2px solid var(--gray-3);
+
+  color: var(--text-0);
+  background: var(--gray-1);
 
   padding-inline: 12px;
   padding-top: 19px;
@@ -18,18 +20,9 @@
   transition: .2s filter linear,
     .2s background-color linear;
 
-  &.inside-box {
-    background: var(--gray-0);
-  }
-
-  &:hover:not(.focused) {
-    filter: brightness(94%);
-  }
-
   label {
     position: absolute;
     left: 12px;
-    color: var(--gray-5);
     top: 50%;
     user-select: none;
     transform: translateY(-50%);
@@ -37,10 +30,62 @@
     transition: .2s ease-in-out;
   }
 
+  // these are the default values
+  --text-color: var(--text-0);
+  --label-color: var(--text-1);
+  --focused-label-color: var(--text-2);
+  --background-color: var(--gray-1);
+  --border-color: var(--gray-3);
+
+  &.gray-2 {
+    --text-color: var(--text-1);
+    --label-color: var(--text-2);
+    --focused-label-color: var(--text-3);
+    --background-color: var(--gray-2);
+    --border-color: var(--gray-4);
+  }
+
+  &.gray-3 {
+    --text-color: var(--text-2);
+    --label-color: var(--text-3);
+    --focused-label-color: var(--text-4);
+    --background-color: var(--gray-3);
+    --border-color: var(--gray-5);
+  }
+
+  &.gray-4 {
+    --text-color: var(--text-3);
+    --label-color: var(--text-4);
+    --focused-label-color: var(--text-5);
+    --background-color: var(--gray-4);
+    --border-color: var(--gray-5);
+  }
+
+
+  // sets the colors based on the variables created above
+  background: var(--background-color);
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-color);
+
+  label {
+    color: var(--label-color);
+  }
+
+  &.focused label,
+  &.has-content label {
+    color: var(--focused-label-color);
+  }
+
+
+
+  &:hover:not(.focused) {
+    filter: brightness(94%);
+  }
+
   &.focused label,
   &.has-content label {
     top: 15.5px;
-    color: var(--gray-4);
+    opacity: 0.7;
     font-weight: 500;
     transform: translateY(-50%) scale(0.7);
   }
@@ -73,7 +118,7 @@
   border-bottom: 3px solid var(--error);
 
   label {
-    color: var(--error);
+    color: var(--error) !important;
   }
 
   &::after {
@@ -84,18 +129,16 @@
   }
 }
 
+@function add-transparency($color, $percentage) {
+  @return color-mix(in srgb, $color, transparent $percentage);
+}
+
 .input-container.disabled {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.16);
-  color: rgba(0, 0, 0, 0.16);
-  box-shadow: none;
-  background-color: rgba(0, 0, 0, 0.10);
+  opacity: 0.4;
+  filter: brightness(90%) !important;
 
-  label {
-    color: rgba(0, 0, 0, 0.36);
-  }
-
-  &::after {
-    background: rgba(0, 0, 0, 0.16);
+  * {
+    cursor: not-allowed;
   }
 }
 
