@@ -88,7 +88,6 @@ const Demo: Component = () => {
               <Col size={8}>
                 <Select
                   name='uf'
-                  disabled
                   label='UF'
                   validators={[Validators.required]}
                 >
