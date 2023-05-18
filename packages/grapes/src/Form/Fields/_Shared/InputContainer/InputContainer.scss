@@ -61,7 +61,6 @@
     --border-color: var(--gray-5);
   }
 
-
   // sets the colors based on the variables created above
   background: var(--background-color);
   border-bottom: 2px solid var(--border-color);
@@ -135,10 +134,11 @@
 
 .input-container.disabled {
   opacity: 0.4;
-  filter: brightness(90%) !important;
+  filter: brightness(95%) !important;
+  // cursor: not-allowed;
 
-  * {
-    cursor: not-allowed;
-  }
+  // * {
+  //   cursor: not-allowed;
+  // }
 }
 

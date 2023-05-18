@@ -8,8 +8,8 @@ export const GrapeSDarkTheme: Theme = {
     1: new Color('#211E1E'),
     2: new Color('#292626'),
     3: new Color('#3A3737'),
-    4: new Color('#4B4848'),
-    5: new Color('#5C5858'),
+    4: new Color('#5B5858'),
+    5: new Color('#7C7878'),
   },
 
   textColors: {

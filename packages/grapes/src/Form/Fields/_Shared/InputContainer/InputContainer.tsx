@@ -32,9 +32,9 @@ const InputContainer: Component<InputContainerProps> = (props) => {
       'has-content': props.hasContent(),
       disabled: props.disabled ? props.disabled() : false,
 
-      'gray-2': depth() === 1,
+      'gray-2': depth() === 1 || depth() === 3,
       'gray-3': depth() === 2,
-      'gray-4': depth() === 3,
+      // 'gray-2': depth() === 3,
 
       ...props.classList
     }}
