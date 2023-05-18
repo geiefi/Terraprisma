@@ -3,16 +3,16 @@ import { createStore } from 'solid-js/store';
 
 import { FoxPox } from 'foxpox';
 
-import { BarcodeScanner, CreditCard } from 'foxpox/Components/Icons';
+import { BarcodeScanner, CreditCard } from 'foxpox/Icons';
 
-import { Form, FormStore } from 'foxpox/Components/Form';
-import Validators from 'foxpox/Components/Form/Validators';
-import { Input, Select, ButtonChooser } from 'foxpox/Components/Form/Fields';
-import { Box, Button } from 'foxpox/Components/General';
-import { Typography, Title } from 'foxpox/Components/General/Typography';
-import { Stack, Container, Divisor } from 'foxpox/Components/Layout';
-import { Row, Col } from 'foxpox/Components/Layout/Grid';
-import { Steps, Step } from 'foxpox/Components/Navigation';
+import { Form, FormStore } from 'foxpox/Form';
+import Validators from 'foxpox/Form/Validators';
+import { Input, Select, ButtonChooser } from 'foxpox/Form/Fields';
+import { Box, Button } from 'foxpox/General';
+import { Typography, Title } from 'foxpox/General/Typography';
+import { Stack, Container, Divisor } from 'foxpox/Layout';
+import { Row, Col } from 'foxpox/Layout/Grid';
+import { Steps, Step } from 'foxpox/Navigation';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -40,7 +40,7 @@ const Demo: Component = () => {
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({}));
   const [paymentForm, _setPaymentForm] = paymentFormStore;
 
-  return (<FoxPox>
+  return (<FoxPox defaultThemeId='dark'>
     <Container
       maxWidth='md'
       style={{ height: '100vh' }}

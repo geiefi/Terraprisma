@@ -1,10 +1,10 @@
 import { Component, createEffect, createSignal } from "solid-js";
 
 import { FoxPox } from "foxpox";
-import { Input, TextArea } from "foxpox/Components/Form/Fields";
-import { Button } from "foxpox/Components/General";
-import { Send } from "foxpox/Components/Icons";
-import { Divisor, Stack } from "foxpox/Components/Layout";
+import { Input, TextArea } from "foxpox/Form/Fields";
+import { Button } from "foxpox/General";
+import { Send } from "foxpox/Icons";
+import { Divisor, Stack } from "foxpox/Layout";
 
 const FieldsWithoutForms: Component = () => {
   const [title, setTitle] = createSignal<string>();

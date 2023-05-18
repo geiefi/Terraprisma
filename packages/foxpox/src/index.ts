@@ -1,2 +1,1 @@
 export { FoxPox } from './FoxPox';
-

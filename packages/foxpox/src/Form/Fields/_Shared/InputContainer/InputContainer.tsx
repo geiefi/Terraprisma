@@ -32,7 +32,6 @@ const InputContainer: Component<InputContainerProps> = (props) => {
       'has-content': props.hasContent(),
       disabled: props.disabled ? props.disabled() : false,
 
-      'gray-1': depth() === 0,
       'gray-2': depth() === 1,
       'gray-3': depth() === 2,
       'gray-4': depth() === 3,
