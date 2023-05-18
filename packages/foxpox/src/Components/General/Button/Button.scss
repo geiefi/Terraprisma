@@ -48,29 +48,29 @@ button {
     cursor: pointer;
   }
 
-  &.primary {
+  &.primary:not(.disabled):not(.empty):not(.icon) {
     background: var(--primary);
     color: var(--text-primary);
 
-    &:hover:not(.disabled):not(.empty) {
+    &:hover {
       background: darken(var(--primary), 20%);
     }
   }
 
-  &.secondary {
+  &.secondary:not(.disabled):not(.empty):not(.icon) {
     background: var(--secondary);
     color: var(--text-secondary);
 
-    &:hover:not(.disabled):not(.empty) {
+    &:hover {
       background: darken(var(--secondary), 20%);
     }
   }
 
-  &.tertiary {
+  &.tertiary:not(.disabled):not(.empty):not(.icon) {
     background: var(--tertiary);
     color: var(--text-tertiary);
 
-    &:hover:not(.disabled):not(.empty) {
+    &:hover {
       background: darken(var(--tertiary), 20%);
     }
   }
