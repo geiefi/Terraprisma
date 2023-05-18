@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, Show } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { GrapeS } from 'grapes';
@@ -34,10 +34,12 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(0);
+  const [currentStep, setCurrentStep] = createSignal<number>(1);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
-  const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({}));
+  const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({
+    paymentMethod: 'cartao-de-credito'
+  }));
   const [paymentForm, _setPaymentForm] = paymentFormStore;
 
   return (<GrapeS defaultThemeId='dark'>
@@ -51,12 +53,16 @@ const Demo: Component = () => {
         style={{
           width: '100%',
           'max-width': '768px',
+          'min-height': '568px',
+          'height': 'fit-content',
+          'display': 'flex',
+          'flex-direction': 'column',
         }}
       >
-        <Steps 
-          current={currentStep} 
-          identification='PassoAPassoDeCompra' 
-          style={{ 
+        <Steps
+          current={currentStep}
+          identification='PassoAPassoDeCompra'
+          style={{
             "padding-right": "60px",
             "margin-top": "0"
           }}
@@ -66,7 +72,7 @@ const Demo: Component = () => {
           <Step description='confirme a compra'>conclusão</Step>
         </Steps>
 
-        <Divisor/>
+        <Divisor />
 
         {currentStep() === 0
           && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
@@ -82,6 +88,7 @@ const Demo: Component = () => {
               <Col size={8}>
                 <Select
                   name='uf'
+                  disabled
                   label='UF'
                   validators={[Validators.required]}
                 >
@@ -146,43 +153,45 @@ const Demo: Component = () => {
               </ButtonChooser.Option>
             </ButtonChooser>
 
-            {paymentForm.values.paymentMethod === 'cartao-de-credito' && <Box>
-              <Typography>
-                <Title type={4}>Dados do cartão de crédito</Title>
-              </Typography>
+            <Show when={paymentForm.values.paymentMethod === 'cartao-de-credito'}>
+              <Box>
+                <Typography>
+                  <Title type={4}>Dados do cartão de crédito</Title>
+                </Typography>
 
-              <Form.Inner
-                identification='CreditCardDetails'
-                name='creditCardDetails'
-              >
-                <Row>
-                  <Col size={14}>
-                    <Input
-                      name='number'
-                      label='número do cartão'
-                      placeholder='0000 0000 0000 0000'
-                      type='number'
-                      validators={[Validators.required]}
-                    />
-                  </Col>
+                <Form.Inner
+                  identification='CreditCardDetails'
+                  name='creditCardDetails'
+                >
+                  <Row>
+                    <Col size={14}>
+                      <Input
+                        name='number'
+                        label='número do cartão'
+                        placeholder='0000 0000 0000 0000'
+                        type='number'
+                        validators={[Validators.required]}
+                      />
+                    </Col>
 
-                  <Col size={10}>
-                    <Input
-                      name='cvv'
-                      label='cvv'
-                      placeholder='123'
-                      type='number'
-                      validators={[Validators.required]}
-                    />
-                  </Col>
-                </Row>
-              </Form.Inner>
-            </Box>}
+                    <Col size={10}>
+                      <Input
+                        name='cvv'
+                        label='cvv'
+                        placeholder='123'
+                        type='number'
+                        validators={[Validators.required]}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Inner>
+              </Box>
+            </Show>
           </Form>}
         {currentStep() === 2
           && <h1>conclusão</h1>}
 
-        <Stack direction='horizontal' align='space-between'>
+        <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
           <Button
             size='medium'
             style={{
