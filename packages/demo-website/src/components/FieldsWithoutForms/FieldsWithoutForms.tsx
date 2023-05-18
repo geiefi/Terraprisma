@@ -1,16 +1,16 @@
-import { Component, createEffect, createSignal } from "solid-js";
+import { Component, createSignal } from "solid-js";
 
-import { FoxPox } from "foxpox";
-import { Input, TextArea } from "foxpox/Form/Fields";
-import { Button } from "foxpox/General";
-import { Send } from "foxpox/Icons";
-import { Divisor, Stack } from "foxpox/Layout";
+import { GrapeS } from "grapes";
+import { Input, TextArea } from "grapes/Form/Fields";
+import { Button } from "grapes/General";
+import { Send } from "grapes/Icons";
+import { Divisor, Stack } from "grapes/Layout";
 
 const FieldsWithoutForms: Component = () => {
   const [title, setTitle] = createSignal<string>();
   const [description, setDescription] = createSignal<string>();
 
-  return <FoxPox>
+  return <GrapeS>
     <Stack direction="vertical" style={{
       'max-width': '568px',
       'margin-inline': 'auto',
@@ -34,7 +34,7 @@ const FieldsWithoutForms: Component = () => {
 
       <Button size='large'>Send <Send /></Button>
     </Stack>
-  </FoxPox>;
+  </GrapeS>;
 };
 
 export default FieldsWithoutForms;

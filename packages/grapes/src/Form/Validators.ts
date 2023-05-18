@@ -4,7 +4,7 @@ const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 /**
   * A object containing some useful and predefined validators
-  * for FoxPox's fields
+  * for Grape's fields
   */
 const Validators = {
   /**

@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
-  "name": "foxpox",
+  "name": "grapes",
   "version": "0.0.1",
   "main": "lib/index.js",
   "description": "",

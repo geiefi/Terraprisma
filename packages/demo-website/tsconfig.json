@@ -15,13 +15,13 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "foxpox": ["../foxpox/src"],
-      "foxpox/*": ["../foxpox/src/*"],
+      "grapes": ["../grapes/src"],
+      "grapes/*": ["../grapes/src/*"],
       "~/*": ["./src/*"]
     }
   },
   "includes": ["src"],
   "references": [
-    { "path": "../foxpox/tsconfig.build.json" }
+    { "path": "../grapes/tsconfig.build.json" }
   ]
 }

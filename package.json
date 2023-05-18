@@ -1,17 +1,17 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
-  "name": "foxpox-project",
+  "name": "grapes-project",
   "version": "0.0.0",
   "description": "A flexible and fun to use Material Design-based SolidJS component library.",
   "workspaces": [ "packages/*" ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrielmfern/foxpox.git"
+    "url": "git+https://github.com/gabrielmfern/grapes.git"
   },
   "author": "Gabriel Miranda",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gabrielmfern/foxpox/issues"
+    "url": "https://github.com/gabrielmfern/grapes/issues"
   },
-  "homepage": "https://github.com/gabrielmfern/foxpox#readme"
+  "homepage": "https://github.com/gabrielmfern/grapes#readme"
 }

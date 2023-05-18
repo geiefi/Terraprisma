@@ -1,26 +1,36 @@
-import { Accessor, Component, createContext, createEffect, createMemo, createSignal, ParentProps, Signal, useContext } from "solid-js";
+import { 
+  Accessor, 
+  Component, 
+  createContext, 
+  createEffect, 
+  createMemo, 
+  createSignal, 
+  ParentProps, 
+  Signal, 
+  useContext 
+} from "solid-js";
 
-import "./FoxPox.scss";
+import "./GrapeS.scss";
 
-import { Theme, FoxPoxDarkTheme, FoxPoxLightTheme } from "./Themes";
+import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from "./Themes";
 
-export type FoxPoxProviderValue = {
+export type GrapeSThemesProviderValue = {
   themes: Theme[];
   currentTheme: Accessor<Theme>;
   currentThemeIdSignal: Signal<string>;
 };
 
-const FoxPoxContext = createContext<FoxPoxProviderValue>();
+const GrapeSContext = createContext<GrapeSThemesProviderValue>();
 
 /**
- * A component that creates the `<FoxPoxContext>` with the themes defined and creates
+ * A component that creates the `<GrapeSContext>` with the themes defined and creates
  * the signal that will hold the current theme.
  *
- * If there are no custom themes defined, FoxPox's default themes are used.
+ * If there are no custom themes defined, GrapeS's default themes are used.
  *
- * If there is no default theme, the first custom theme is used or `FoxPoxLightTheme` is used.
+ * If there is no default theme, the first custom theme is used or `GrapeSLightTheme` is used.
  */
-export const FoxPox: Component<ParentProps<{
+export const GrapeS: Component<ParentProps<{
   themes?: Theme[];
   defaultThemeId?: string;
 }>> = (props) => {
@@ -29,14 +39,14 @@ export const FoxPox: Component<ParentProps<{
   const currentThemeIdSignal = createSignal<string>(props.defaultThemeId || (
     hasCustomThemes()
       ? props.themes![0].id
-      : FoxPoxLightTheme.id
+      : GrapeSLightTheme.id
   ));
 
   const themes = hasCustomThemes()
     ? props.themes!
     : [
-      FoxPoxLightTheme,
-      FoxPoxDarkTheme
+      GrapeSLightTheme,
+      GrapeSDarkTheme
     ];
 
   const currentTheme = createMemo(() => themes.find(t => t.id === currentThemeIdSignal[0]())!);
@@ -45,7 +55,7 @@ export const FoxPox: Component<ParentProps<{
     document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
   });
 
-  return <FoxPoxContext.Provider value={{
+  return <GrapeSContext.Provider value={{
     themes,
     currentTheme,
     currentThemeIdSignal
@@ -67,36 +77,36 @@ export const FoxPox: Component<ParentProps<{
 
       '--primary': currentTheme().primary.toRGBA(),
       "--text-primary": currentTheme().textColors.primary.toRGBA(),
-      '--lightened-primary': (currentTheme().lightnedPrimary 
+      '--lightened-primary': (currentTheme().lightnedPrimary
         || currentTheme().primary.withAlpha(0.32)).toRGBA(),
 
       '--secondary': currentTheme().secondary.toRGBA(),
       "--text-secondary": currentTheme().textColors.secondary.toRGBA(),
-      '--lightened-secondary': (currentTheme().lightnedSecondary 
+      '--lightened-secondary': (currentTheme().lightnedSecondary
         || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
 
       '--tertiary': currentTheme().tertiary.toRGBA(),
       "--text-tertiary": currentTheme().textColors.tertiary.toRGBA(),
-      '--lightened-tertiary': (currentTheme().lightnedTertiary 
+      '--lightened-tertiary': (currentTheme().lightnedTertiary
         || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 
       '--error': currentTheme().error.toRGBA(),
 
-      '--lightened-primary-2': (currentTheme().lightnedPrimary2 
+      '--lightened-primary-2': (currentTheme().lightnedPrimary2
         || currentTheme().primary.withAlpha(0.20)).toRGBA(),
     }}>
       {props.children}
     </div>
-  </FoxPoxContext.Provider>;
+  </GrapeSContext.Provider>;
 };
 
 /**
  * @description Gets access to the global metadata regarding the current theme
  * of the website and available themes. 
  *
- * This is supposed to be used inside a `<FoxPox>` component since it is the one whom
- * initializes the global FoxPox context.
+ * This is supposed to be used inside a `<GrapeS>` component since it is the one whom
+ * initializes the global GrapeS context.
  */
-export function useTheme(): FoxPoxProviderValue | undefined {
-  return useContext<FoxPoxProviderValue | undefined>(FoxPoxContext);
+export function useTheme(): GrapeSThemesProviderValue | undefined {
+  return useContext<GrapeSThemesProviderValue | undefined>(GrapeSContext);
 }

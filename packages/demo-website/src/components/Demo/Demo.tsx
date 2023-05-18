@@ -1,18 +1,18 @@
 import { Component, createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
-import { FoxPox } from 'foxpox';
+import { GrapeS } from 'grapes';
 
-import { BarcodeScanner, CreditCard } from 'foxpox/Icons';
+import { BarcodeScanner, CreditCard } from 'grapes/Icons';
 
-import { Form, FormStore } from 'foxpox/Form';
-import Validators from 'foxpox/Form/Validators';
-import { Input, Select, ButtonChooser } from 'foxpox/Form/Fields';
-import { Box, Button } from 'foxpox/General';
-import { Typography, Title } from 'foxpox/General/Typography';
-import { Stack, Container, Divisor } from 'foxpox/Layout';
-import { Row, Col } from 'foxpox/Layout/Grid';
-import { Steps, Step } from 'foxpox/Navigation';
+import { Form, FormStore } from 'grapes/Form';
+import Validators from 'grapes/Form/Validators';
+import { Input, Select, ButtonChooser } from 'grapes/Form/Fields';
+import { Box, Button } from 'grapes/General';
+import { Typography, Title } from 'grapes/General/Typography';
+import { Stack, Container, Divisor } from 'grapes/Layout';
+import { Row, Col } from 'grapes/Layout/Grid';
+import { Steps, Step } from 'grapes/Navigation';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -40,7 +40,7 @@ const Demo: Component = () => {
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({}));
   const [paymentForm, _setPaymentForm] = paymentFormStore;
 
-  return (<FoxPox defaultThemeId='dark'>
+  return (<GrapeS defaultThemeId='dark'>
     <Container
       maxWidth='md'
       style={{ height: '100vh' }}
@@ -202,7 +202,7 @@ const Demo: Component = () => {
         </Stack>
       </Box>
     </Container>
-  </FoxPox>);
+  </GrapeS>);
 };
 
 export default Demo;

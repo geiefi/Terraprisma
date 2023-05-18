@@ -122,7 +122,7 @@ Form.Inner = innerForm;
 
 /**
  * Gets a reference to the context of the parent form, this is mainly going
- * to be used inside of internal FoxPox components.
+ * to be used inside of internal GrapeS components.
  *
  * The provider value that gets out of this function is precisely a class that has implemented methods
  * that help with validating, cleaninUp and managing all of the values of the form.

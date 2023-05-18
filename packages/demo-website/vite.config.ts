@@ -12,7 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "~": resolve(__dirname, "src"),
-      "foxpox": resolve(__dirname, "../foxpox/src"),
+      "grapes": resolve(__dirname, "../grapes/src"),
     }
   }
 });

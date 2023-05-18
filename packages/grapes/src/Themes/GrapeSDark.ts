@@ -1,6 +1,6 @@
 import { Color, Theme } from "./Theme";
 
-export const FoxPoxDarkTheme: Theme = {
+export const GrapeSDarkTheme: Theme = {
   id: 'dark',
 
   grays: {
