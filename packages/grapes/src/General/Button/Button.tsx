@@ -37,7 +37,7 @@ const Button = (props: ButtonProps) => {
       'medium': props.size === 'medium' || typeof props.size === 'undefined',
       'large': props.size === 'large',
     }}
-    color={props.rippleColor || `var(--lightened-${color()})`}
+    color={props.rippleColor || `var(--text-${color()})`}
     class={props.rippleClass}
     style={{ display: 'inline-block' }}
   >
@@ -84,6 +84,7 @@ const IconButton: Component<ButtonProps> = (props) => {
   return <Button
     class="icon"
     rippleClass='icon'
+    rippleColor='var(--text-0)'
     {...props}
   >
     {props.children}
