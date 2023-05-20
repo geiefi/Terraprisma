@@ -8,6 +8,12 @@ import { FieldValidator, FieldValue, FormProviderValue, FormValue } from "../../
   * component
   */
 export interface FieldProps {
+  /**
+    * @description This is the identification of the field basically. If it is inside a `<Form>`
+    * it is used to identify the field's value, field's errors and field's validators inside of it.
+    *
+    * Currently it is not used if it is outside a `<Form>` but is still important for errors.
+    */
   name: string;
 
   /**
