@@ -20,14 +20,14 @@ const FieldsWithoutForms: Component = () => {
       <Input
         name='title'
         label='Title'
-        value={title}
+        value={title()}
         onChange={(newValue) => setTitle(newValue)}
       />
 
       <TextArea
         name='description'
         label='Description'
-        value={description}
+        value={description()}
         onChange={(newValue) => setDescription(newValue)}
       />
 
