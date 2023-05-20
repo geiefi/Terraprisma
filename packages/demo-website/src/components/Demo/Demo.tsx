@@ -60,7 +60,7 @@ const Demo: Component = () => {
         }}
       >
         <Steps
-          current={currentStep}
+          current={currentStep()}
           identification='PassoAPassoDeCompra'
           style={{
             "padding-right": "60px",

@@ -12,6 +12,8 @@ const BoxContext = createContext<Accessor<Depth>>();
 
 export type BoxProps = ParentProps<{
   style?: JSX.CSSProperties,
+  class?: string,
+  classList?: Record<string, boolean | undefined>
 }>;
 
 /**
@@ -42,12 +44,13 @@ const Box: Component<BoxProps> = (props) => {
 
   return <BoxContext.Provider value={depth}>
     <div 
-      class='box' 
+      class={'box ' + (props.class || '')} 
       classList={{
         'gray-1': depth() === 1,
         'gray-2': depth() === 2,
         'gray-3': depth() === 3,
-        'bordered': (oldDepth || (() => 0))() === 3
+        'bordered': (oldDepth || (() => 0))() === 3,
+        ...props.classList
       }}
       style={props.style}
     >

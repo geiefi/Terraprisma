@@ -1,5 +1,4 @@
 import { Component, createMemo, JSX, ParentProps } from "solid-js";
-import Stack from "../Stack/Stack";
 
 import './Container.scss';
 

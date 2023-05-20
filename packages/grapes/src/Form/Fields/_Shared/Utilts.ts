@@ -32,7 +32,7 @@ export interface FieldProps {
     * 
     * This is propagated above inside a Form so it is accessible through the Form's store.
     */
-  disabled?: Accessor<boolean> | boolean;
+  disabled?: boolean;
 
   /**
    * @description Defines a value that will override the current value of the state of the Field.
@@ -40,7 +40,7 @@ export interface FieldProps {
    * Will be ignored when there is a form above the field. This is because its value can 
    * be set in other better ways.
    */
-  value?: Accessor<FieldValue> | FieldValue;
+  value?: FieldValue;
 }
 
 export function setupCommunicationWithFormContext<
@@ -85,13 +85,9 @@ export function setupFieldsValueSignal<
     const signal = createSignal<K[keyof K]>();
     const [_value, setValue] = signal;
 
-    createEffect(() => {
-      if (typeof props.value === 'function') {
-        setValue(props.value() as any);
-      } else if (typeof props.value !== 'undefined') {
-        setValue(props.value as any);
-      }
-    });
+    createEffect(on(() => props.value, () => {
+      setValue(props.value as any);
+    }));
 
     return signal;
   }
@@ -118,12 +114,8 @@ export function setupFieldsDisabledSignal<
 
   const [_disabled, setDisabled] = signal;
 
-  const propsDisabled = typeof props.disabled === 'function'
-    ? props.disabled
-    : () => props.disabled;
-
-  createEffect(on(propsDisabled, () => {
-    setDisabled(propsDisabled() || false);
+  createEffect(on(() => props.disabled, () => {
+    setDisabled(props.disabled || false);
   }));
 
   return signal;

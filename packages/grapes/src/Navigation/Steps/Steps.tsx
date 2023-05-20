@@ -63,7 +63,7 @@ export type StepsProps = {
   style?: JSX.CSSProperties,
   onFinish?: () => void,
   identification: string,
-  current: Accessor<number>,
+  current: number,
   children: JSX.Element[]
 };
 
@@ -79,18 +79,18 @@ function Steps(props: StepsProps) {
   const stepsCount = createMemo(() => steps().length);
 
   createEffect(() => {
-    if (props.current() > stepsCount()) {
+    if (props.current > stepsCount()) {
       throw new StepsError(`Cannot set current step to the step at index ${props.current()} for` +
       ` Steps with identification "${props.identification}" because it does not exist!`);
     }
 
-    if (props.current() === stepsCount() && props.onFinish) {
+    if (props.current === stepsCount() && props.onFinish) {
       props.onFinish();
     }
   });
 
   return <StepsContext.Provider value={[
-    props.current,
+    () => props.current,
     stepsCount
   ]}>
     <div class='steps-container' style={props.style}>

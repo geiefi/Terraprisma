@@ -15,7 +15,7 @@ export type StackProps = {
 
 const Stack: Component<ParentProps<StackProps>> = (props) => {
   return <div 
-    class={'stack ' + (props.class | undefined)}
+    class={'stack ' + (props.class || '')}
     style={{ gap: `${props.spacing}px`, "justify-content": props.align, ...props.style }}
     classList={{
       'full-width': props.fullWidth,
