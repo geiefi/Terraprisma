@@ -12,9 +12,12 @@ export type InputOnChangeEvent = Event & {
 
 export interface InputProps extends FieldProps {
   type?: 'text' | 'number' | 'email' | 'password';
+
   label?: JSX.Element;
   placeholder?: string;
   helperText?: JSX.Element;
+
+  color?: 'primary' | 'secondary' | 'tertiary';
 
   onChange?: (value: string, event?: InputOnChangeEvent) => any,
   onFocus?: () => any,
@@ -43,6 +46,7 @@ const Input: Component<InputProps> = (props) => {
       id={id}
       hasContent={hasContent}
       focused={focused}
+      color={props.color}
       disabled={disabled}
       label={props.label}
     >

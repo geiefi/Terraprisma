@@ -16,6 +16,8 @@ export interface TextAreaProps extends FieldProps {
   placeholder?: string;
   helperText?: JSX.Element;
 
+  color?: 'primary' | 'secondary' | 'tertiary';
+
   rows?: number;
   cols?: number;
 
@@ -47,6 +49,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
       hasContent={hasContent}
       focused={focused}
       disabled={disabled}
+      color={props.color}
       label={props.label}
     >
       <textarea

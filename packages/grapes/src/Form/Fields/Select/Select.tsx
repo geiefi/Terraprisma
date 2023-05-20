@@ -26,6 +26,8 @@ export interface SelectProps extends FieldProps, ParentProps {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
+  color?: 'primary' | 'secondary' | 'tertiary';
+
   onChange?: (newValue: FieldValue) => any;
   onFocused?: () => any;
 }
@@ -135,6 +137,7 @@ const Select = (props: SelectProps) => {
       id={id}
       label={props.label}
       focused={focused}
+      color={props.color}
       disabled={disabled}
       hasContent={hasContent}
       style={{

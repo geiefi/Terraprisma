@@ -7,16 +7,18 @@ import './InputContainer.scss';
 export type InputContainerProps = ParentProps<{
   id: Accessor<string>;
   label?: JSX.Element;
+
+  color?: 'primary' | 'secondary' | 'tertiary',
+
   class?: string,
   classList?: Record<string, boolean | undefined>,
   style?: JSX.CSSProperties,
-
-  ref?: (inputContainer: HTMLDivElement) => any,
 
   focused: Accessor<boolean>,
   hasContent: Accessor<boolean>,
   disabled: Accessor<boolean>,
 
+  ref?: (inputContainer: HTMLDivElement) => any,
   onClick?: (event: MouseEvent) => any,
 }>;
 
@@ -28,6 +30,10 @@ const InputContainer: Component<InputContainerProps> = (props) => {
     ref={props.ref}
     style={props.style}
     classList={{
+      'primary': props.color === 'primary' || typeof props.color === 'undefined',
+      'secondary': props.color === 'secondary',
+      'tertiary': props.color === 'tertiary',
+
       focused: props.focused(),
       'has-content': props.hasContent(),
       disabled: props.disabled ? props.disabled() : false,
