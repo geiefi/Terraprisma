@@ -163,6 +163,11 @@ const Select = (props: SelectProps) => {
 
     {focused() && <div
       class='select-dropdown'
+      classList={{
+        'primary': props.color === 'primary' || typeof props.color === 'undefined',
+        'secondary': props.color === 'secondary',
+        'tertiary': props.color === 'tertiary'
+      }}
       style={{
         '--input-container-left': `${inputContainerRef()?.offsetLeft}px`,
         '--input-container-top': `${inputContainerRef()?.offsetTop}px`,
