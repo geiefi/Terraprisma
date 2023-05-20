@@ -1,11 +1,11 @@
-import type { Accessor, Component, JSX, ParentProps } from "solid-js";
+import { Accessor, Component, JSX, ParentProps, Show } from "solid-js";
 
 import { useDepth } from "../../../../General/Box/Box";
 
 import './InputContainer.scss';
 
 export type InputContainerProps = ParentProps<{
-  id: Accessor<string>;
+  id: string;
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary',
@@ -14,9 +14,9 @@ export type InputContainerProps = ParentProps<{
   classList?: Record<string, boolean | undefined>,
   style?: JSX.CSSProperties,
 
-  focused: Accessor<boolean>,
-  hasContent: Accessor<boolean>,
-  disabled: Accessor<boolean>,
+  focused: boolean,
+  hasContent: boolean,
+  disabled: boolean,
 
   ref?: (inputContainer: HTMLDivElement) => any,
   onClick?: (event: MouseEvent) => any,
@@ -25,7 +25,8 @@ export type InputContainerProps = ParentProps<{
 const InputContainer: Component<InputContainerProps> = (props) => {
   const depth = useDepth() || (() => 0);
 
-  return <div 
+  return <div
+    id={props.id}
     class={`input-container ${props.class || ''}`}
     ref={props.ref}
     style={props.style}
@@ -34,9 +35,9 @@ const InputContainer: Component<InputContainerProps> = (props) => {
       'secondary': props.color === 'secondary',
       'tertiary': props.color === 'tertiary',
 
-      focused: props.focused(),
-      'has-content': props.hasContent(),
-      disabled: props.disabled ? props.disabled() : false,
+      focused: props.focused,
+      'has-content': props.hasContent,
+      disabled: props.disabled,
 
       'gray-2': depth() === 1 || depth() === 3,
       'gray-3': depth() === 2,
@@ -46,7 +47,9 @@ const InputContainer: Component<InputContainerProps> = (props) => {
     }}
     onClick={props.onClick}
   >
-    {props.label && <label for={props.id()}>{props.label}</label>}
+    <Show when={props.label}>
+      <label for={props.id}>{props.label}</label>
+    </Show>
     {props.children}
   </div>;
 };

@@ -10,13 +10,14 @@ import {
   createEffect,
   ParentProps,
   on,
+  Show,
 } from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import { KeyboardArrowDown } from '../../../Icons';
 
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
 
 import { FieldValue } from '../../FormContext';
 
@@ -65,20 +66,16 @@ const Option: Component<OptionProps> = (props) => {
  * ```
  */
 const Select = (props: SelectProps) => {
-  const form = setupCommunicationWithFormContext(props);
-  const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
-
-  const id = createMemo(() =>
-    form
-      ? `field-${form.identification()}-${props.name}`
-      : `field-${props.name}`
-  );
-  const hasContent = createMemo(() =>
-    (value() || '').toString().length > 0
-  );
-
-  const [focused, setFocused] = createSignal<boolean>(false);
+  const {
+    form,
+    elementId: id,
+    errorsStore: [errors, _setErrors],
+    disabledSignal: [disabled, _setDisabled],
+    focusedSignal: [focused, setFocused],
+    valueSignal: [value, setValue],
+    validate,
+    hasContent,
+  } = setupField(props);
 
   const [inputContainerRef, setInputContainerRef] = createSignal<HTMLDivElement>();
 
@@ -124,30 +121,32 @@ const Select = (props: SelectProps) => {
       props.onFocused();
     }
 
-    if (form && focused() === false) {
-      form.validate(props.name);
+    if (focused() === false) {
+      validate(value());
     }
   }, { defer: true }));
 
   return <FieldInternalWrapper
     name={props.name}
+    errors={errors}
+    isDisabled={disabled()}
+    style={{
+      cursor: disabled() === false ? 'pointer' : 'default'
+    }}
     helperText={props.helperText}
   >
     <InputContainer
-      id={id}
+      id={id()}
       label={props.label}
-      focused={focused}
+      focused={focused()}
       color={props.color}
-      disabled={disabled}
-      hasContent={hasContent}
-      style={{
-        cursor: disabled() === false ? 'pointer' : 'default'
-      }}
+      disabled={disabled()}
       onClick={() => {
         if (!disabled()) {
           setFocused(focused => !focused)
         }
       }}
+      hasContent={hasContent()}
       ref={setInputContainerRef}
     >
       {optionLabelFromValue(value())}
@@ -161,37 +160,39 @@ const Select = (props: SelectProps) => {
       />
     </InputContainer>
 
-    {focused() && <div
-      class='select-dropdown'
-      classList={{
-        'primary': props.color === 'primary' || typeof props.color === 'undefined',
-        'secondary': props.color === 'secondary',
-        'tertiary': props.color === 'tertiary'
-      }}
-      style={{
-        '--input-container-left': `${inputContainerRef()?.offsetLeft}px`,
-        '--input-container-top': `${inputContainerRef()?.offsetTop}px`,
-        '--input-container-width': `${inputContainerRef()?.clientWidth}px`,
-        '--input-container-height': `${inputContainerRef()?.clientHeight}px`
-      }}
-    >
-      <For each={options()}>{(opt) => (
-        <div
-          class='option'
-          classList={{ 'active': opt.value === value() }}
-          onClick={() => {
-            if (props.onChange) {
-              props.onChange(opt.value);
-            }
+    <Show when={focused()}>
+      <div
+        class='select-dropdown'
+        classList={{
+          'primary': props.color === 'primary' || typeof props.color === 'undefined',
+          'secondary': props.color === 'secondary',
+          'tertiary': props.color === 'tertiary'
+        }}
+        style={{
+          '--input-container-left': `${inputContainerRef()?.offsetLeft}px`,
+          '--input-container-top': `${inputContainerRef()?.offsetTop}px`,
+          '--input-container-width': `${inputContainerRef()?.clientWidth}px`,
+          '--input-container-height': `${inputContainerRef()?.clientHeight}px`
+        }}
+      >
+        <For each={options()}>{(opt) => (
+          <div
+            class='option'
+            classList={{ 'active': opt.value === value() }}
+            onClick={() => {
+              if (props.onChange) {
+                props.onChange(opt.value);
+              }
 
-            setValue(opt.value);
-            setFocused(false);
-          }}
-        >
-          {opt.children}
-        </div>
-      )}</For>
-    </div>}
+              setValue(opt.value);
+              setFocused(false);
+            }}
+          >
+            {opt.children}
+          </div>
+        )}</For>
+      </div>
+    </Show>
   </FieldInternalWrapper>;
 };
 

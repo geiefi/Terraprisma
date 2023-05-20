@@ -1,6 +1,6 @@
-import { Component, createMemo, createSignal, JSX, onMount } from 'solid-js';
+import { Component, JSX } from 'solid-js';
 
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupField } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
@@ -26,29 +26,27 @@ export interface TextAreaProps extends FieldProps {
 }
 
 const TextArea: Component<TextAreaProps> = (props) => {
-  const form = setupCommunicationWithFormContext(props);
-  const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
-
-  const id = createMemo(() => 
-    form 
-      ? `field-${form.identification()}-${props.name}`
-      : `field-${props.name}`
-  );
-
-  const [focused, setFocused] = createSignal<boolean>(false);
-
-  const hasContent = createMemo(() => (value() || '').toString().length > 0);
+  const {
+    elementId: id,
+    errorsStore: [errors, _setErrors],
+    disabledSignal: [disabled, _setDisabled],
+    focusedSignal: [focused, setFocused],
+    valueSignal: [value, setValue],
+    validate,
+    hasContent,
+  } = setupField(props);
 
   return <FieldInternalWrapper 
     name={props.name} 
+    isDisabled={disabled()}
+    errors={errors}
     helperText={props.helperText}
   >
     <InputContainer
-      id={id}
-      hasContent={hasContent}
-      focused={focused}
-      disabled={disabled}
+      id={id()}
+      hasContent={hasContent()}
+      focused={focused()}
+      disabled={disabled()}
       color={props.color}
       label={props.label}
     >
@@ -85,9 +83,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
           setFocused(true);
         }}
         onBlur={() => {
-          if (form) {
-            form.validate(props.name);
-          }
+          validate(value());
           setFocused(false);
         }}
       />

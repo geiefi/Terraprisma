@@ -25,6 +25,7 @@
     left: 12px;
     top: 50%;
     user-select: none;
+    pointer-events: none;
     transform: translateY(-50%);
     transform-origin: top left;
     transition: .2s ease-in-out;

@@ -3,7 +3,7 @@ import Button, { ButtonProps } from "../../../General/Button/Button";
 import { FieldValue } from "../../FormContext";
 import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
 
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from "../_Shared/Utilts";
+import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal } from "../_Shared/Utilts";
 
 import "./ButtonChooser.scss";
 
@@ -24,15 +24,13 @@ const Option: Component<OptionProps> = (props) => {
 };
 
 const ButtonChooser = (props: ButtonChooserProps) => {
-  const form = setupCommunicationWithFormContext(props);
-  const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
-
-  const id = createMemo(() =>
-    form
-      ? `field-${form.identification()}-${props.name}`
-      : `field-${props.name}`
-  );
+  const {
+    elementId: id,
+    errorsStore: [errors, _setErrors],
+    disabledSignal: [disabled, _setDisabled],
+    valueSignal: [value, setValue],
+    validate,
+  } = setupField(props);
 
   const getChildren = accessChildren(() => props.children);
   const options = createMemo<OptionProps[]>(() => {
@@ -56,10 +54,8 @@ const ButtonChooser = (props: ButtonChooserProps) => {
   createEffect(
     on(
       value, 
-      () => {
-        if (form) {
-          form.validate(props.name);
-        }
+      (newValue) => {
+        validate(newValue);
       },
       { defer: true }
     )
@@ -69,6 +65,8 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
   return <FieldInternalWrapper
     id={id()}
+    isDisabled={disabled()}
+    errors={errors}
     name={props.name}
     helperText={props.helperText}
     class="button-chooser"

@@ -1,9 +1,10 @@
-import { Component, createEffect, createMemo, createSignal, JSX, on } from 'solid-js';
+import { Component, createMemo, createSignal, JSX } from 'solid-js';
+import { createStore } from 'solid-js/store';
 
 import './Input.scss';
-import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal, setupValidateFunction } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
-import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import FieldInternalWrapper, { FieldError } from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -24,30 +25,28 @@ export interface InputProps extends FieldProps {
 }
 
 const Input: Component<InputProps> = (props) => {
-  const form = setupCommunicationWithFormContext(props);
-  const [value, setValue] = setupFieldsValueSignal(props, form);
-  const [disabled, _setDisabled] = setupFieldsDisabledSignal(props, form);
+  const {
+    elementId: id,
+    errorsStore: [errors, _setErrors],
+    disabledSignal: [disabled, _setDisabled],
+    focusedSignal: [focused, setFocused],
+    valueSignal: [value, setValue],
+    validate,
+    hasContent,
+  } = setupField(props);
 
-  const id = createMemo(() => 
-    form 
-      ? `field-${form.identification()}-${props.name}`
-      : `field-${props.name}`
-  );
-
-  const [focused, setFocused] = createSignal<boolean>(false);
-
-  const hasContent = createMemo(() => (value() || '').toString().length > 0);
-
-  return <FieldInternalWrapper 
-    name={props.name} 
+  return <FieldInternalWrapper
+    name={props.name}
+    errors={errors}
     helperText={props.helperText}
+    isDisabled={disabled()}
   >
     <InputContainer
-      id={id}
-      hasContent={hasContent}
-      focused={focused}
+      id={id()}
+      hasContent={hasContent()}
+      focused={focused()}
       color={props.color}
-      disabled={disabled}
+      disabled={disabled()}
       label={props.label}
     >
       <input
@@ -56,7 +55,7 @@ const Input: Component<InputProps> = (props) => {
         type={props.type || 'text'}
         disabled={disabled()}
         placeholder={props.placeholder}
-        classList={{ 
+        classList={{
           'no-label': typeof props.label === 'undefined',
         }}
         onInput={(event) => {
@@ -73,9 +72,7 @@ const Input: Component<InputProps> = (props) => {
           setFocused(true);
         }}
         onBlur={() => {
-          if (form) {
-            form.validate(props.name);
-          }
+          validate(value());
           setFocused(false);
         }}
       />

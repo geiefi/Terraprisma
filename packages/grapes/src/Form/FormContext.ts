@@ -1,7 +1,7 @@
 import { createContext, Setter } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 
-export type FieldValue = string | string[] | number | boolean | Date | Record<string, any>;
+export type FieldValue = string | string[] | number | boolean | Date | Record<string, any> | undefined;
 
 export type FormValue = Record<string, FieldValue>;
 
@@ -207,6 +207,16 @@ export class FormProviderValue<Values extends FormValue> {
       : undefined;
   }
 
+  getErrors(name: keyof Values): string[] | undefined {
+    if (typeof this.form.errors[name] === 'undefined') return undefined;
+
+    // traverses through the errors so that Solid tracks them
+    // and the return value of this method is reactive
+    for (const _error of this.form.errors[name]!) {}
+
+    return this.form.errors[name];
+  }
+ 
   hasErrors(name: keyof Values): boolean {
     return typeof this.form.errors[name] !== 'undefined'
       ? this.form.errors[name]!.length > 0

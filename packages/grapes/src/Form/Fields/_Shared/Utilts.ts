@@ -1,7 +1,8 @@
 import { Accessor, createEffect, createMemo, createSignal, on, onCleanup, onMount, Setter, Signal } from "solid-js";
+import { createStore } from "solid-js/store";
 
 import { useForm } from "../../Form";
-import { FieldValidator, FieldValue, FormProviderValue, FormValue } from "../../FormContext";
+import { FieldValidator, FieldValue, FormProviderValue, FormValue, Store } from "../../FormContext";
 
 /**
   * The field props that are required for all of the fields used in conjunction with the `<Form />`
@@ -26,6 +27,14 @@ export interface FieldProps {
     * There are some basic validators implemented under the `Validators` const.
     */
   validators?: FieldValidator[];
+
+  /**
+    * @description A store containing all of the errors of the field.
+    *
+    * This store is to be used when manually trying to control a Field
+    * without any parent `<Form>`.
+    */
+  errorsStore?: Store<string[]>;
 
   /**
     * @description Defines if this field is disabled or not.
@@ -71,7 +80,7 @@ export function setupCommunicationWithFormContext<
 export function setupFieldsValueSignal<
   T extends FieldProps,
   K extends FormValue = FormValue
->(props: T, form?: FormProviderValue<K>): Signal<K[keyof K] | undefined> {
+>(props: T, form: FormProviderValue<K> | undefined): Signal<K[keyof K] | undefined> {
   if (typeof form !== 'undefined') {
     const value: Accessor<K[keyof K] | undefined> = createMemo(
       () => form.valueFor(props.name) || '' as any
@@ -93,10 +102,34 @@ export function setupFieldsValueSignal<
   }
 }
 
+export type FieldInternalValidate = (value: FieldValue) => string[] | undefined;
+
+export function setupValidateFunction<
+  T extends FieldProps,
+  K extends FormValue = FormValue
+>(props: T, setErrors: Setter<string[]>, form: FormProviderValue<K> | undefined): FieldInternalValidate {
+  return (value: FieldValue) => {
+    if (typeof form !== 'undefined') {
+      form.validate(props.name);
+
+      return form.getErrors(props.name);
+    } else if (typeof props.validators !== 'undefined') {
+      const newErrors = props.validators
+        // we assert it to be truthy here since we filter(Boolean) after
+        .map(validator => validator(value)!)
+        .filter(Boolean);
+
+      setErrors(newErrors);
+
+      return newErrors;
+    }
+  }
+}
+
 export function setupFieldsDisabledSignal<
   T extends FieldProps,
   K extends FormValue = FormValue
->(props: T, form?: FormProviderValue<K>): Signal<boolean> {
+>(props: T, form: FormProviderValue<K> | undefined): Signal<boolean> {
   let signal: Signal<boolean>;
 
   if (typeof form !== 'undefined') {
@@ -119,4 +152,56 @@ export function setupFieldsDisabledSignal<
   }));
 
   return signal;
+}
+
+export interface FieldSetupResult<K extends FormValue = FormValue> {
+  elementId: Accessor<string>,
+
+  form: FormProviderValue<K> | undefined,
+  errorsStore: Store<string[]>,
+
+  valueSignal: Signal<K[keyof K] | undefined>,
+  disabledSignal: Signal<boolean>,
+  focusedSignal: Signal<boolean>,
+
+  hasContent: Accessor<boolean>,
+
+  validate: FieldInternalValidate,
+};
+
+export function setupField<
+  T extends FieldProps,
+  K extends FormValue = FormValue
+>(props: T): FieldSetupResult<K> {
+  const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
+
+  const form = setupCommunicationWithFormContext<T, K>(props);
+  const [value, setValue] = setupFieldsValueSignal(props, form);
+  const disabledSignal = setupFieldsDisabledSignal(props, form);
+  const validate = setupValidateFunction(props, setErrors, form);
+
+  const focusedSignal = createSignal<boolean>(false);
+
+  const id = createMemo(() =>
+    form
+      ? `field-${form.identification()}-${props.name}`
+      : `field-${props.name}`
+  );
+
+  const hasContent = createMemo(() => (value() || '').toString().length > 0);
+
+  return {
+    elementId: id,
+
+    form,
+    errorsStore: [errors, setErrors],
+
+    valueSignal: [value, setValue],
+    disabledSignal,
+    focusedSignal,
+
+    hasContent,
+
+    validate,
+  };
 }
