@@ -10,6 +10,7 @@ export type RippleProps = ParentProps<{
    */
   noRipple?: boolean,
   classList?: Record<string, boolean | undefined>,
+  class?: string,
   color?: string,
   style?: JSX.CSSProperties
 }>;
@@ -47,7 +48,7 @@ const Ripple: Component<RippleProps> = (props) => {
   const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
 
   return <div
-    class='ripple-container'
+    class={'ripple-container ' + (props.class || '')}
     ref={setRippleContainer}
     style={props.style}
     classList={props.classList}

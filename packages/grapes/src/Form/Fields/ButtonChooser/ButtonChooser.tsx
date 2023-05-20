@@ -77,11 +77,10 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
     <div class="buttons">
       <For each={options()}>{(opt) => (
-        <Button
+        <Button.Empty
           color={color()}
           disabled={disabled()}
           {...opt}
-          type="empty"
           classList={{
             'active': opt.value === value(),
             ...opt.classList
@@ -93,7 +92,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
               opt.onClick(event);
             }
           }}
-        >{opt.children}</Button>
+        >{opt.children}</Button.Empty>
       )}</For>
     </div>
 

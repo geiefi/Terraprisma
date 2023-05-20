@@ -74,8 +74,8 @@ const Demo: Component = () => {
 
         <Divisor />
 
-        {currentStep() === 0
-          && <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
+        <Show when={currentStep() === 0}>
+          <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
             <Row>
               <Col size={16}>
                 <Input
@@ -133,9 +133,10 @@ const Demo: Component = () => {
                 />
               </Col>
             </Row>
-          </Form>}
-        {currentStep() === 1
-          && <Form formStore={paymentFormStore} indentification='DadosDePagamento'>
+          </Form>
+        </Show>
+        <Show when={currentStep() === 1}>
+          <Form formStore={paymentFormStore} indentification='DadosDePagamento'>
             <ButtonChooser
               name='paymentMethod'
               label='Método de pagamento'
@@ -186,9 +187,12 @@ const Demo: Component = () => {
                 </Form.Inner>
               </Box>
             </Show>
-          </Form>}
-        {currentStep() === 2
-          && <h1>conclusão</h1>}
+          </Form>
+        </Show>
+
+        <Show when={currentStep() === 2}>
+          <h1>conclusão</h1>
+        </Show>
 
         <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
           <Button
