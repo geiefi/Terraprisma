@@ -32,6 +32,11 @@ const Button = (props: ButtonProps) => {
       }
     }}
     noRipple={props.disabled}
+    classList={{
+      'small': props.size === 'small',
+      'medium': props.size === 'medium' || typeof props.size === 'undefined',
+      'large': props.size === 'large',
+    }}
     color={props.rippleColor || `var(--lightened-${color()})`}
     class={props.rippleClass}
     style={{ display: 'inline-block' }}
@@ -65,8 +70,8 @@ const Button = (props: ButtonProps) => {
 const RoundedButton: Component<ButtonProps> = (props) => {
   const color = createMemo(() => props.color || 'primary');
 
-  return <Button 
-    class="rounded" 
+  return <Button
+    class="rounded"
     rippleClass='rounded'
     rippleColor={`var(--text-${color()})`}
     {...props}
@@ -76,8 +81,8 @@ const RoundedButton: Component<ButtonProps> = (props) => {
 };
 
 const IconButton: Component<ButtonProps> = (props) => {
-  return <Button 
-    class="icon" 
+  return <Button
+    class="icon"
     rippleClass='icon'
     {...props}
   >
