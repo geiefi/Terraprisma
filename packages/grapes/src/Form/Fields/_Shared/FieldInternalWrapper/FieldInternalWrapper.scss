@@ -1,6 +1,4 @@
-
-
-.form-control {
+.field {
   width: 100%;
   height: 100%;
   display: inline-block;
@@ -8,14 +6,15 @@
 
   .helper-text {
     transition: .2s;
-    color: var(--gray-4);
+    color: var(--text-5);
+    opacity: 0.8;
     margin-left: 5px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
   }
 
   &.error {
-    .helper-text {
+    .helper-text { // the helper text shoes the error message in this situation
       color: var(--error);
     }
   }

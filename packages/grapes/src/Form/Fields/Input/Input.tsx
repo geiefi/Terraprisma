@@ -3,7 +3,7 @@ import { Component, createEffect, createMemo, createSignal, JSX, on } from 'soli
 import './Input.scss';
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
-import FormControl from '../_Shared/FormControl/FormControl';
+import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -38,7 +38,7 @@ const Input: Component<InputProps> = (props) => {
 
   const hasContent = createMemo(() => (value() || '').toString().length > 0);
 
-  return <FormControl 
+  return <FieldInternalWrapper 
     name={props.name} 
     helperText={props.helperText}
   >
@@ -80,7 +80,7 @@ const Input: Component<InputProps> = (props) => {
         }}
       />
     </InputContainer>
-  </FormControl>;
+  </FieldInternalWrapper>;
 };
 
 export default Input;

@@ -1,4 +1,4 @@
-import FormControl from "./FormControl/FormControl";
+import Field from "./FormControl/FormControl";
 import InputContainer from "./InputContainer/InputContainer";
 
-export { FormControl, InputContainer };
+export { Field as FormControl, InputContainer };

@@ -13,7 +13,7 @@ import {
 } from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
-import FormControl from '../_Shared/FormControl/FormControl';
+import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import { KeyboardArrowDown } from '../../../Icons';
 
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
@@ -129,7 +129,7 @@ const Select = (props: SelectProps) => {
     }
   }, { defer: true }));
 
-  return <FormControl
+  return <FieldInternalWrapper
     name={props.name}
     helperText={props.helperText}
   >
@@ -192,7 +192,7 @@ const Select = (props: SelectProps) => {
         </div>
       )}</For>
     </div>}
-  </FormControl>;
+  </FieldInternalWrapper>;
 };
 
 Select.Option = Option;

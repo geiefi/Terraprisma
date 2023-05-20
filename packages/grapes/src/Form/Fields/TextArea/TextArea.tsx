@@ -2,7 +2,7 @@ import { Component, createMemo, createSignal, JSX, onMount } from 'solid-js';
 
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
-import FormControl from '../_Shared/FormControl/FormControl';
+import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
 import './TextArea.scss';
 
@@ -40,7 +40,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
 
   const hasContent = createMemo(() => (value() || '').toString().length > 0);
 
-  return <FormControl 
+  return <FieldInternalWrapper 
     name={props.name} 
     helperText={props.helperText}
   >
@@ -92,7 +92,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
         }}
       />
     </InputContainer>
-  </FormControl>;
+  </FieldInternalWrapper>;
 };
 
 export default TextArea;

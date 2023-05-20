@@ -1,6 +1,7 @@
 import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For } from "solid-js";
 import Button, { ButtonProps } from "../../../General/Button/Button";
 import { FieldValue } from "../../FormContext";
+import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
 
 import { FieldProps, setupCommunicationWithFormContext, setupFieldsDisabledSignal, setupFieldsValueSignal } from "../_Shared/Utilts";
 
@@ -66,14 +67,16 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
   const color = createMemo(() => props.color || 'primary');
 
-  return <div
-    class="button-chooser"
+  return <FieldInternalWrapper
     id={id()}
-    classList={{
-      'error': form?.hasErrors(props.name)
+    name={props.name}
+    helperText={props.helperText}
+    class="button-chooser"
+    style={{
+      height: 'fit-content'
     }}
   >
-    <span class="label">{props.label}</span>
+    <label for={id()} class="label">{props.label}</label>
 
     <div class="buttons">
       <For each={options()}>{(opt) => (
@@ -95,14 +98,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
         >{opt.children}</Button.Empty>
       )}</For>
     </div>
-
-    {(props.helperText || form?.hasErrors(props.name))
-      && <div class="helper-text">{
-        (form?.hasErrors(props.name) && !disabled())
-          ? form.firstErrorFor(props.name)
-          : props.helperText
-      }</div>}
-  </div>;
+  </FieldInternalWrapper>;
 };
 
 ButtonChooser.Option = Option;
