@@ -80,7 +80,7 @@ function Steps(props: StepsProps) {
 
   createEffect(() => {
     if (props.current > stepsCount()) {
-      throw new StepsError(`Cannot set current step to the step at index ${props.current()} for` +
+      throw new StepsError(`Cannot set current step to the step at index ${props.current} for` +
       ` Steps with identification "${props.identification}" because it does not exist!`);
     }
 
