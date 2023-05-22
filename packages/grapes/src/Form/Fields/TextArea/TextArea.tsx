@@ -43,7 +43,6 @@ const TextArea: Component<TextAreaProps> = (props) => {
     helperText={props.helperText}
   >
     <InputContainer
-      id={id()}
       hasContent={hasContent()}
       focused={focused()}
       disabled={disabled()}

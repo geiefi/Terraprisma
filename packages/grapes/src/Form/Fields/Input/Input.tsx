@@ -1,10 +1,9 @@
-import { Component, createMemo, createSignal, JSX } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { Component, JSX } from 'solid-js';
 
 import './Input.scss';
-import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal, setupValidateFunction } from '../_Shared/Utilts';
+import { FieldProps, setupField } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
-import FieldInternalWrapper, { FieldError } from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -42,7 +41,6 @@ const Input: Component<InputProps> = (props) => {
     isDisabled={disabled()}
   >
     <InputContainer
-      id={id()}
       hasContent={hasContent()}
       focused={focused()}
       color={props.color}
