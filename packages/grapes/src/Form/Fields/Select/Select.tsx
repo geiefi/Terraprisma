@@ -17,7 +17,7 @@ import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import { KeyboardArrowDown } from '../../../Icons';
 
-import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal } from '../_Shared/Utilts';
+import { FieldProps, setupField } from '../_Shared/Utilts';
 
 import { FieldValue } from '../../FormContext';
 
@@ -67,7 +67,6 @@ const Option: Component<OptionProps> = (props) => {
  */
 const Select = (props: SelectProps) => {
   const {
-    form,
     elementId: id,
     errorsStore: [errors, _setErrors],
     disabledSignal: [disabled, _setDisabled],
