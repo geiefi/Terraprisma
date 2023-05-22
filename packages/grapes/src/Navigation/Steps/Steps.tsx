@@ -28,7 +28,7 @@ export const Step: Component<StepProps> = (props) => {
 };
 
 const InternalStep: Component<{ index: number } & StepProps> = (props) => {
-  const [current, count] = useSteps()!;
+  const [current, _count] = useSteps()!;
 
   const [descriptionPRef, setDescriptionPRef] = createSignal<HTMLParagraphElement>();
   const [stepInfoRef, setStepInfoRef] = createSignal<HTMLSpanElement>();
@@ -45,9 +45,11 @@ const InternalStep: Component<{ index: number } & StepProps> = (props) => {
   });
 
   const [contentWidth, setContentWidth] = createSignal<string>('0px');
+  const [contentHeight, setContentHeight] = createSignal<string>('0px');
   const [contentRef, setContentRef] = createSignal<HTMLSpanElement>();
   createEffect(() => {
     setContentWidth(`${contentRef()?.offsetWidth || 0}px`);
+    setContentHeight(`${contentRef()?.offsetHeight || 0}px`);
   });
 
   return <div
@@ -58,6 +60,8 @@ const InternalStep: Component<{ index: number } & StepProps> = (props) => {
     }}
     style={{ 
       '--step-content-width': contentWidth(),
+      '--step-content-height': contentHeight(),
+
       '--description-offset': descriptionOffset()
     }}
   >
@@ -86,6 +90,8 @@ function isElementAStepProps(el: unknown): el is StepProps {
 export type StepsProps = ParentProps<{
   identification: string,
   current: number,
+
+  direction?: 'horizontal' | 'vertical',
 
   style?: JSX.CSSProperties,
   class?: string,
@@ -122,7 +128,11 @@ function Steps(props: StepsProps) {
   ]}>
     <div
       class={'steps-container ' + (props.class || '')}
-      classList={props.classList}
+      classList={{
+        'vertical': props.direction === 'vertical',
+        'horizontal': props.direction === 'horizontal' || typeof props.direction === 'undefined',
+        ...props.classList
+      }}
       style={props.style}
     >
       <For each={steps()}>{(step, i) => (

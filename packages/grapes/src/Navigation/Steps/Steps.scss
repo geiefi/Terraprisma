@@ -8,14 +8,7 @@
 
   .step {
     display: flex;
-    width: 100%;
     position: relative;
-
-    &:last-of-type {
-      box-sizing: content-box;
-      padding-right: var(--description-offset);
-      width: var(--step-content-width);
-    }
 
     & .step-info {
       position: relative;
@@ -86,6 +79,64 @@
       font-weight: bolder;
     }
 
+    &.done-step::after {
+      background: var(--primary) !important;
+    }
+  }
+
+  &.vertical {
+    flex-direction: column;
+
+    .step {
+      height: 100%;
+      padding-right: var(--description-offset);
+
+      &:last-of-type {
+        box-sizing: content-box;
+        height: var(--step-content-height);
+      }
+
+      &.current-step:not(:last-of-type)::after {
+        animation: grow-background-gradient-vertical .4s linear;
+        background: linear-gradient(180deg, 
+        var(--primary) 25%, var(--gray-3) 75%);
+        background-position: 50% 330%;
+        background-size: 100% 400%;
+      }
+
+      &:not(:last-of-type)::after { 
+        content: '';
+        position: absolute;
+        left: 15px;
+        /*    this variable is set with JS and then used here */
+        top: calc(var(--step-content-height) + 10px);
+        height: calc(100% - var(--step-content-height) - 20px);
+        width: 3px;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+        transition: background-color .4s ease-in-out,
+                    color .4s ease-in-out;
+        background: var(--gray-3);
+      }
+    }
+  }
+
+  &.horizontal .step {
+    width: 100%;
+
+    &:last-of-type {
+      box-sizing: content-box;
+      padding-right: var(--description-offset);
+      width: var(--step-content-width);
+    }
+
+    &.current-step:not(:last-of-type)::after {
+      animation: grow-background-gradient-horizontal .4s linear;
+      background: linear-gradient(90deg, 
+      var(--primary) 25%, var(--gray-3) 75%);
+      background-position: 330% 50%;
+      background-size: 400% 100%;
+    }
+
     &:not(:last-of-type)::after { 
       content: '';
       position: absolute;
@@ -99,26 +150,23 @@
                   color .4s ease-in-out;
       background: var(--gray-3);
     }
+  }
+}
 
-    &.current-step:not(:last-of-type)::after {
-      animation: grow-background-gradient .4s linear;
-      background: linear-gradient(90deg, 
-      var(--primary) 25%, var(--gray-3) 75%);
-      background-position: 330% 50%;
-      background-size: 400% 100%;
-    }
+@keyframes grow-background-gradient-horizontal {
+  0% {
+    background-position: 370% 100%;
+  }
+  100% {
+    background-position: 330% 100%;
+  }
+}
 
-    @keyframes grow-background-gradient {
-      0% {
-        background-position: 370% 100%;
-      }
-      100% {
-        background-position: 330% 100%;
-      }
-    }
-
-    &.done-step:not(:last-of-type)::after {
-      background: var(--primary);
-    }
+@keyframes grow-background-gradient-vertical {
+  0% {
+    background-position: 100% 370%;
+  }
+  100% {
+    background-position: 100% 330%;
   }
 }
