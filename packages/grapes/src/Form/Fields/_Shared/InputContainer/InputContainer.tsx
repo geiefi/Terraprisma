@@ -5,7 +5,7 @@ import { useDepth } from "../../../../General/Box/Box";
 import './InputContainer.scss';
 
 export type InputContainerProps = ParentProps<{
-  id: string;
+  id?: string;
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary',
