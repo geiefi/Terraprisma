@@ -12,6 +12,8 @@
     position: relative;
 
     &:last-of-type {
+      box-sizing: content-box;
+      padding-right: var(--description-offset);
       width: var(--step-content-width);
     }
 
@@ -29,9 +31,9 @@
 
       & > .step-description {
         position: absolute;
-        width: fit-content;
+        width: max-content;
         font-size: 14px;
-        width: 200px;
+        max-width: 200px;
         font-weight: 700;
         color: var(--text-1);
         left: 0;

@@ -62,10 +62,6 @@ const Demo: Component = () => {
         <Steps
           current={currentStep()}
           identification='PassoAPassoDeCompra'
-          style={{
-            "padding-right": "60px",
-            "margin-top": "0"
-          }}
         >
           <Step description='endereço de entrega'>endereço</Step>
           <Step description='dados de pagamento'>pagamento</Step>
