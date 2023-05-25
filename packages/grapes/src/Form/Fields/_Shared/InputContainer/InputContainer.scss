@@ -20,6 +20,26 @@
   transition: .2s filter linear,
     .2s background-color linear;
 
+  .input-container-icon {
+    --icon-font-size: 16px;
+
+    position: absolute;
+    width: min-content;
+    height: min-content;
+    left: calc(100% - var(--icon-font-size) - 8px);
+    top: calc(50% - var(--icon-font-size) / 2);
+
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+
+    color: var(--text-3);
+    font-size: var(--icon-font-size);
+
+    user-select: none;
+    pointer-events: none;
+  }
+
   label {
     position: absolute;
     left: 12px;

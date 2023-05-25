@@ -146,18 +146,19 @@ const Select = (props: SelectProps) => {
           setFocused(focused => !focused)
         }
       }}
+      icon={
+        <KeyboardArrowDown
+          variant='rounded'
+          class='select-icon'
+          classList={{
+            'open': focused()
+          }}
+        />
+      }
       hasContent={hasContent()}
       ref={setInputContainerRef}
     >
       {optionLabelFromValue(value())}
-
-      <KeyboardArrowDown
-        variant='rounded'
-        class='select-icon'
-        classList={{
-          'open': focused()
-        }}
-      />
     </InputContainer>
 
     <Dropdown

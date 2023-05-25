@@ -1,4 +1,4 @@
-import { Accessor, Component, JSX, ParentProps, Show } from "solid-js";
+import { Component, JSX, ParentProps, Show } from "solid-js";
 
 import { useDepth } from "../../../../General/Box/Box";
 
@@ -9,6 +9,7 @@ export type InputContainerProps = ParentProps<{
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary',
+  icon?: JSX.Element;
 
   class?: string,
   classList?: Record<string, boolean | undefined>,
@@ -50,7 +51,10 @@ const InputContainer: Component<InputContainerProps> = (props) => {
     <Show when={props.label}>
       <label for={props.id}>{props.label}</label>
     </Show>
+
     {props.children}
+
+    <span class='input-container-icon'>{props.icon}</span>
   </div>;
 };
 
