@@ -22,6 +22,7 @@ import { FieldProps, setupField } from '../_Shared/Utilts';
 import { FieldValue } from '../../FormContext';
 
 import './Select.scss';
+import { Dropdown } from '../../../General';
 
 export interface SelectProps extends FieldProps, ParentProps {
   label?: JSX.Element;
@@ -159,39 +160,33 @@ const Select = (props: SelectProps) => {
       />
     </InputContainer>
 
-    <Show when={focused()}>
-      <div
-        class='select-dropdown'
-        classList={{
-          'primary': props.color === 'primary' || typeof props.color === 'undefined',
-          'secondary': props.color === 'secondary',
-          'tertiary': props.color === 'tertiary'
-        }}
-        style={{
-          '--input-container-left': `${inputContainerRef()?.offsetLeft}px`,
-          '--input-container-top': `${inputContainerRef()?.offsetTop}px`,
-          '--input-container-width': `${inputContainerRef()?.clientWidth}px`,
-          '--input-container-height': `${inputContainerRef()?.clientHeight}px`
-        }}
-      >
-        <For each={options()}>{(opt) => (
-          <div
-            class='option'
-            classList={{ 'active': opt.value === value() }}
-            onClick={() => {
-              if (props.onChange) {
-                props.onChange(opt.value);
-              }
+    <Dropdown
+      for={inputContainerRef()!}
+      class='select-dropdown'
+      visible={focused()}
+      classList={{
+        'primary': props.color === 'primary' || typeof props.color === 'undefined',
+        'secondary': props.color === 'secondary',
+        'tertiary': props.color === 'tertiary'
+      }}
+    >
+      <For each={options()}>{(opt) => (
+        <div
+          class='option'
+          classList={{ 'active': opt.value === value() }}
+          onClick={() => {
+            if (props.onChange) {
+              props.onChange(opt.value);
+            }
 
-              setValue(opt.value);
-              setFocused(false);
-            }}
-          >
-            {opt.children}
-          </div>
-        )}</For>
-      </div>
-    </Show>
+            setValue(opt.value);
+            setFocused(false);
+          }}
+        >
+          {opt.children}
+        </div>
+      )}</For>
+    </Dropdown>
   </FieldInternalWrapper>;
 };
 
