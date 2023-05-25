@@ -71,10 +71,10 @@ const RoundedButton: Component<ButtonProps> = (props) => {
   const color = createMemo(() => props.color || 'primary');
 
   return <Button
-    class="rounded"
     rippleClass='rounded'
     rippleColor={`var(--text-${color()})`}
     {...props}
+    class={'rounded ' + (props.class || '')}
   >
     {props.children}
   </Button>;
@@ -82,10 +82,10 @@ const RoundedButton: Component<ButtonProps> = (props) => {
 
 const IconButton: Component<ButtonProps> = (props) => {
   return <Button
-    class="icon"
     rippleClass='icon'
     rippleColor='var(--text-0)'
     {...props}
+    class={"icon " + (props.class || '')}
   >
     {props.children}
   </Button>;
@@ -95,9 +95,9 @@ const EmptyButton: Component<ButtonProps> = (props) => {
   const color = createMemo(() => props.color || 'primary');
 
   return <Button
-    class='empty'
-    rippleColor={`var(--lightened-${color()})`}
+    rippleColor={`var(--${color()})`}
     {...props}
+    class={'empty ' + (props.class || '')}
   >
     {props.children}
   </Button>;
