@@ -26,7 +26,6 @@ const Ripple: Component<RippleProps> = (props) => {
 
   const createRipple = (element: HTMLElement, globalPositionX: number, globalPositionY: number) => {
     if (props.noRipple === true) return;
-    console.log(element.offsetParent);
 
     const positionX = globalPositionX - element.getBoundingClientRect().x;
     const positionY = globalPositionY - element.getBoundingClientRect().y;
