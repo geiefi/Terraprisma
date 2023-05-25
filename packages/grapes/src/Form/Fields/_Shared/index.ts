@@ -1,4 +1,4 @@
-import Field from "./FormControl/FormControl";
+import FieldInternalWrapper from "./FieldInternalWrapper/FieldInternalWrapper";
 import InputContainer from "./InputContainer/InputContainer";
 
-export { Field as FormControl, InputContainer };
+export { FieldInternalWrapper, InputContainer };
