@@ -11,6 +11,13 @@ export type Depth = 0 | 1 | 2 | 3 | 4;
 const BoxContext = createContext<Accessor<Depth>>();
 
 export type BoxProps = ParentProps<{
+  /**
+   * @description The depth of the current Box.
+   *
+   * This is a way to manually set the Box's context's depth and
+   * its own background color when necessary, but normally this depth
+   * is set automatically based on the context the Box is found on.
+   */
   depth?: Depth,
 
   style?: JSX.CSSProperties,
