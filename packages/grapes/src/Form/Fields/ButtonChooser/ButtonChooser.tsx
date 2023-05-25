@@ -1,16 +1,20 @@
-import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For } from "solid-js";
+import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For, Show } from "solid-js";
 import Button, { ButtonProps } from "../../../General/Button/Button";
 import { FieldValue } from "../../FormContext";
 import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
 
-import { FieldProps, setupCommunicationWithFormContext, setupField, setupFieldsDisabledSignal, setupFieldsValueSignal } from "../_Shared/Utilts";
+import { FieldProps, setupField } from "../_Shared/Utilts";
 
 import "./ButtonChooser.scss";
 
 export interface ButtonChooserProps extends FieldProps, ParentProps {
-  label: JSX.Element;
+  label?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
   helperText?: JSX.Element;
+
+  class?: string;
+  classList?: Record<string, boolean | undefined>;
+  style?: JSX.CSSProperties;
 
   onChange?: (newValue: FieldValue) => any;
 }
@@ -53,7 +57,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
 
   createEffect(
     on(
-      value, 
+      value,
       (newValue) => {
         validate(newValue);
       },
@@ -68,10 +72,17 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     isDisabled={disabled()}
     errors={errors}
     name={props.name}
+    renderHelperText={
+      (typeof props.validators !== 'undefined' 
+        && props.validators.length !== 0) 
+      || typeof props.helperText !== 'undefined'
+    }
     helperText={props.helperText}
-    class="button-chooser"
+    class={'button-chooser ' + (props.class || '')}
+    classList={props.classList}
     style={{
-      height: 'fit-content'
+      height: 'fit-content',
+      ...props.style
     }}
   >
     <label for={id()} class="label">{props.label}</label>
