@@ -39,8 +39,6 @@ const Ripple: Component<RippleProps> = (props) => {
       top: positionY - radius
     };
 
-    console.log(rippleConfig);
-
     setRipples(produce(ripples => {
       ripples.unshift(rippleConfig);
 
