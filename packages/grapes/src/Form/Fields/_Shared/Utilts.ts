@@ -18,6 +18,17 @@ export interface FieldProps {
   name: string;
 
   /**
+    * @description Defines weather or not the state of the field is communicated across to the nearest `<Form>` or be manually controlled.
+    *
+    * This is useful when you need to manually controll a field even though it is inside a `<Form>`.
+    *
+    * This prop makes no difference when there is no `<Form>` above the field.
+    *
+    * @default false
+    */
+  manuallyControlled?: boolean;
+
+  /**
     * @description Validators of the field.
     *
     * Basically just a function that receives the current value of the field once unfocused,
@@ -55,20 +66,27 @@ export interface FieldProps {
 export function setupCommunicationWithFormContext<
   T extends FieldProps,
   K extends FormValue = FormValue
->(props: T): FormProviderValue<K> | undefined {
-  const form = useForm<K>();
+>(props: T, initialValue: FieldValue = ''): FormProviderValue<K> | undefined {
+  let form: FormProviderValue<K> | undefined = useForm<K>();
+  if (props.manuallyControlled) {
+    form = undefined;
+  }
 
   if (form) {
     onMount(() => {
-      if (typeof form.valueFor(props.name) !== 'undefined') {
-        form.cleanUp(props.name);
+      if (typeof form!.valueFor(props.name) !== 'undefined') {
+        form!.cleanUp(props.name);
       }
 
-      form.init(props.name, props.validators || [], (form.valueFor(props.name) || '') as K[keyof K]);
+      form!.init(
+        props.name, 
+        props.validators || [],
+        (form!.valueFor(props.name) || initialValue) as K[keyof K]
+      );
     });
 
     onCleanup(() => {
-      form.cleanUp(props.name);
+      form!.cleanUp(props.name);
     });
 
     return form;
@@ -79,19 +97,20 @@ export function setupCommunicationWithFormContext<
 
 export function setupFieldsValueSignal<
   T extends FieldProps,
-  K extends FormValue = FormValue
->(props: T, form: FormProviderValue<K> | undefined): Signal<K[keyof K] | undefined> {
+  K extends FormValue = FormValue,
+  ValueType extends FieldValue = FieldValue
+>(props: T, form: FormProviderValue<K> | undefined): Signal<ValueType | undefined> {
   if (typeof form !== 'undefined') {
-    const value: Accessor<K[keyof K] | undefined> = createMemo(
+    const value: Accessor<ValueType | undefined> = createMemo<ValueType>(
       () => form.valueFor(props.name) || '' as any
     );
-    const setValue: Setter<K[keyof K] | undefined> = (
+    const setValue: Setter<ValueType | undefined> = (
       (v: K[keyof K]) => form.update(props.name, v)
     ) as any;
 
     return [value, setValue];
   } else {
-    const signal = createSignal<K[keyof K]>();
+    const signal = createSignal<ValueType>();
     const [_value, setValue] = signal;
 
     createEffect(on(() => props.value, () => {
@@ -154,13 +173,16 @@ export function setupFieldsDisabledSignal<
   return signal;
 }
 
-export interface FieldSetupResult<K extends FormValue = FormValue> {
+export interface FieldSetupResult<
+  K extends FormValue = FormValue,
+  ValueType extends FieldValue = FieldValue
+> {
   elementId: Accessor<string>,
 
   form: FormProviderValue<K> | undefined,
   errorsStore: Store<string[]>,
 
-  valueSignal: Signal<K[keyof K] | undefined>,
+  valueSignal: Signal<ValueType | undefined>,
   disabledSignal: Signal<boolean>,
   focusedSignal: Signal<boolean>,
 
@@ -171,12 +193,13 @@ export interface FieldSetupResult<K extends FormValue = FormValue> {
 
 export function setupField<
   T extends FieldProps,
-  K extends FormValue = FormValue
->(props: T): FieldSetupResult<K> {
+  K extends FormValue = FormValue,
+  ValueType extends FieldValue = FieldValue
+>(props: T, initialValue: FieldValue = ''): FieldSetupResult<K, ValueType> {
   const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
-  const form = setupCommunicationWithFormContext<T, K>(props);
-  const [value, setValue] = setupFieldsValueSignal(props, form);
+  const form = setupCommunicationWithFormContext<T, K>(props, initialValue);
+  const [value, setValue] = setupFieldsValueSignal<T, K, ValueType>(props, form);
   const disabledSignal = setupFieldsDisabledSignal(props, form);
   const validate = setupValidateFunction(props, setErrors, form);
 

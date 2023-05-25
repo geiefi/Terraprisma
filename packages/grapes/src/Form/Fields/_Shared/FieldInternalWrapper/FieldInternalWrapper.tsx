@@ -14,6 +14,8 @@ export type FieldInternalWrapperProps = ParentProps<{
 
   helperText: JSX.Element | undefined;
 
+  renderHelperText?: boolean;
+
   id?: string;
   class?: string;
   style?: JSX.CSSProperties;
@@ -36,16 +38,17 @@ const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (props) => {
   );
 
   return <div
-      id={props.id}
-      class={'field ' + (props.class || '')}
-      style={props.style}
-      onClick={props.onClick}
-      classList={{
-        error: hasErrors(),
-        ...props.classList
-      }}
-    >
-      {props.children}
+    id={props.id}
+    class={'field ' + (props.class || '')}
+    style={props.style}
+    onClick={props.onClick}
+    classList={{
+      error: hasErrors(),
+      ...props.classList
+    }}
+  >
+    {props.children}
+    <Show when={typeof props.renderHelperText === 'undefined' || props.renderHelperText === true}>
       <div class='helper-text'>
         <Show
           when={hasErrors() && !props.isDisabled}
@@ -55,7 +58,8 @@ const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (props) => {
         </Show>
         &nbsp;
       </div>
-    </div>;
+    </Show>
+  </div>;
 };
 
 export default FieldInternalWrapper;
