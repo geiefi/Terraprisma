@@ -85,7 +85,9 @@ const ButtonChooser = (props: ButtonChooserProps) => {
       ...props.style
     }}
   >
-    <label for={id()} class="label">{props.label}</label>
+    <Show when={props.label}>
+      <label for={id()} class="label">{props.label}</label>
+    </Show>
 
     <div class="buttons">
       <For each={options()}>{(opt) => (
@@ -99,6 +101,10 @@ const ButtonChooser = (props: ButtonChooserProps) => {
           }}
           onClick={(event) => {
             setValue(opt.value);
+
+            if (props.onChange) {
+              props.onChange(opt.value);
+            }
 
             if (opt.onClick) {
               opt.onClick(event);
