@@ -24,17 +24,23 @@ interface RippleConfig {
 const Ripple: Component<RippleProps> = (props) => {
   const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
-  const createRipple = (element: HTMLElement, positionX: number, positionY: number) => {
+  const createRipple = (element: HTMLElement, globalPositionX: number, globalPositionY: number) => {
     if (props.noRipple === true) return;
+    console.log(element.offsetParent);
+
+    const positionX = globalPositionX - element.getBoundingClientRect().x;
+    const positionY = globalPositionY - element.getBoundingClientRect().y;
 
     const diameter = Math.max(element.clientWidth, element.clientHeight);
     const radius = diameter / 2;
 
     const rippleConfig: RippleConfig = {
       diameter,
-      left: positionX - (element.offsetLeft + radius),
-      top: positionY - (element.offsetTop + radius)
+      left: positionX - radius,
+      top: positionY - radius
     };
+
+    console.log(rippleConfig);
 
     setRipples(produce(ripples => {
       ripples.unshift(rippleConfig);
@@ -53,7 +59,7 @@ const Ripple: Component<RippleProps> = (props) => {
     style={props.style}
     classList={props.classList}
     onClick={(event) => {
-      createRipple(rippleContainer()!, event.clientX, event.clientY);
+      createRipple(rippleContainer()!, event.x, event.y);
       if (typeof props.onClick !== 'undefined') {
         props.onClick(event);
       }
