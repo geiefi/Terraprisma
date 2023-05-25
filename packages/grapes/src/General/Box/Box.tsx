@@ -11,6 +11,8 @@ export type Depth = 0 | 1 | 2 | 3 | 4;
 const BoxContext = createContext<Accessor<Depth>>();
 
 export type BoxProps = ParentProps<{
+  depth?: Depth,
+
   style?: JSX.CSSProperties,
   class?: string,
   classList?: Record<string, boolean | undefined>
@@ -35,11 +37,11 @@ export type BoxProps = ParentProps<{
 const Box: Component<BoxProps> = (props) => {
   const oldDepth = useContext(BoxContext);
   const depth = createMemo(() => {
-    if (typeof oldDepth !== 'undefined') {
-      return Math.min(oldDepth() + 1, 3);
-    } else {
-      return 1;
-    }
+    if (typeof props.depth !== 'undefined') return props.depth;
+
+    if (typeof oldDepth !== 'undefined') return Math.min(oldDepth() + 1, 3);
+
+    return 1;
   }) as Accessor<Depth>;
 
   return <BoxContext.Provider value={depth}>
