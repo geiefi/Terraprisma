@@ -34,7 +34,8 @@ export interface DropdownProps extends ParentProps {
    * @default 5px
    */
   offsetFromAnchor?: JSX.CSSProperties['top'];
-
+  
+  ref?: (el: HTMLDivElement) => void,
   style?: JSX.CSSProperties;
   class?: string;
   classList?: Record<string, boolean | undefined>;
@@ -45,6 +46,7 @@ const Dropdown: Component<DropdownProps> = (props) => {
     <div
       class={`dropdown ${props.class || ''}`}
       classList={props.classList}
+      ref={props.ref}
       style={{
         '--anchor-left': `${props.for.offsetLeft}px`,
         '--anchor-top': `${props.for.offsetTop}px`,
