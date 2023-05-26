@@ -9,7 +9,7 @@ $disabled-text-color: color-mix(in srgb, var(--text-0), transparent 80%);
 .ripple-container.rounded,
 .ripple-container.icon {
   &.small {
-    border-radius: 12px;
+    border-radius: 18px;
   }
 
   &.medium {
@@ -108,9 +108,9 @@ button {
     color: var(--text-0);
 
     &.small {
-      min-width: 24px;
-      height: 24px;
-      border-radius: 12px;
+      min-width: 36px;
+      height: 36px;
+      border-radius: 18px;
 
       span[class^="material-symbols-"] {
         font-size: 14px !important;
