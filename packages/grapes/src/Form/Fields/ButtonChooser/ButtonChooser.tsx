@@ -1,5 +1,6 @@
 import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For, Show } from "solid-js";
 import Button, { ButtonProps } from "../../../General/Button/Button";
+import { mergeClass } from "../../../_Shared/Utils";
 import { FieldValue } from "../../FormContext";
 import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
 
@@ -78,7 +79,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
       || typeof props.helperText !== 'undefined'
     }
     helperText={props.helperText}
-    class={'button-chooser ' + (props.class || '')}
+    class={mergeClass('button-chooser', props.class)}
     classList={props.classList}
     style={{
       height: 'fit-content',

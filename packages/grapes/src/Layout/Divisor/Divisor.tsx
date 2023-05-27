@@ -1,4 +1,5 @@
 import type { Component, JSX } from "solid-js";
+import { mergeClass } from "../../_Shared/Utils";
 
 import './Divisor.scss';
 
@@ -12,7 +13,7 @@ export type DivisorProps = {
 
 const Divisor: Component<DivisorProps> = (props) => {
   return <div 
-    class={`divisor ${props.class || ''}`} 
+    class={mergeClass('divisor', props.class)} 
     classList={{
       'vertical': props.direction === 'vertical',
       ...props.classList

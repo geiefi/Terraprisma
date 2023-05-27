@@ -1,5 +1,6 @@
 import { Component, createSignal, For, JSX, ParentProps } from "solid-js";
 import { createStore, produce } from "solid-js/store";
+import { mergeClass } from "../../_Shared/Utils";
 
 import './Ripple.scss';
 
@@ -51,7 +52,7 @@ const Ripple: Component<RippleProps> = (props) => {
   const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
 
   return <div
-    class={'ripple-container ' + (props.class || '')}
+    class={mergeClass('ripple-container', props.class)}
     ref={setRippleContainer}
     style={props.style}
     classList={props.classList}

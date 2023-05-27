@@ -1,8 +1,5 @@
-import { Component, createContext, createEffect, createMemo, JSX, ParentProps, Show, useContext } from "solid-js";
-import { createStore } from "solid-js/store";
-
-import { useForm } from "../../../Form";
-import { FieldValidator, FieldValue, Store } from "../../../FormContext";
+import { Component, createMemo, JSX, ParentProps, Show } from "solid-js";
+import { mergeClass } from "../../../../_Shared/Utils";
 
 import './FieldInternalWrapper.scss';
 
@@ -39,7 +36,7 @@ const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (props) => {
 
   return <div
     id={props.id}
-    class={'field ' + (props.class || '')}
+    class={mergeClass('field', props.class)}
     style={props.style}
     onClick={props.onClick}
     classList={{

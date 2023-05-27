@@ -1,4 +1,5 @@
 import type { Component, JSX, ParentProps } from "solid-js";
+import { mergeClass } from "../../_Shared/Utils";
 
 import './Stack.scss';
 
@@ -15,7 +16,7 @@ export type StackProps = {
 
 const Stack: Component<ParentProps<StackProps>> = (props) => {
   return <div 
-    class={'stack ' + (props.class || '')}
+    class={mergeClass('stack', props.class)}
     style={{ gap: `${props.spacing}px`, "justify-content": props.align, ...props.style }}
     classList={{
       'full-width': props.fullWidth,

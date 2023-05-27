@@ -1,4 +1,5 @@
 import type { Component, JSX } from 'solid-js';
+import { mergeClass } from '../_Shared/Utils';
 
 export type IconProps = {
   /**
@@ -17,7 +18,7 @@ export type IconComponent = Component<IconProps>;
 export function createIconComponent(iconName: string): IconComponent {
   return (props) => {
     return <span 
-      class={`material-symbols-${props.variant || 'outlined'} ${props.class || ''}`}
+      class={mergeClass(`material-symbols-${props.variant || 'outlined'}`, props.class)}
       style={{
         'font-size': 'inherit',
         'scale': '1.4',

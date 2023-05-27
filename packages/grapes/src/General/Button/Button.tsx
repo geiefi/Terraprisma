@@ -1,4 +1,5 @@
 import { Component, createMemo, JSX, ParentProps } from "solid-js";
+import { mergeClass } from "../../_Shared/Utils";
 import { useDepth } from "../Box/Box";
 import Ripple from "../Ripple/Ripple";
 
@@ -80,7 +81,7 @@ const RoundedButton: Component<ButtonProps> = (props) => {
     rippleClass='rounded'
     color='transparent'
     {...props}
-    class={'rounded ' + (props.class || '')}
+    class={mergeClass('rounded', props.class)}
   >
     {props.children}
   </Button>;
@@ -94,14 +95,17 @@ const EmptyButton: Component<ButtonProps> = (props) => {
       ? undefined
       : `var(--${color()})`}
     {...props}
-    class={'empty ' + (props.class || '')}
+    class={mergeClass('empty', props.class)}
   >
     {props.children}
   </Button>;
 };
 
 const IconButton: Component<ButtonProps> = (props) => {
-  return <RoundedButton class='icon' {...props}></RoundedButton>;
+  return <RoundedButton 
+    {...props}
+    class={mergeClass('icon', props.class)}
+  ></RoundedButton>;
 };
 
 Button.Rounded = RoundedButton;

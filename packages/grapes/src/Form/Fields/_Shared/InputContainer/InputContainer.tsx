@@ -1,6 +1,7 @@
 import { Component, JSX, ParentProps, Show } from "solid-js";
 
 import { useDepth } from "../../../../General/Box/Box";
+import { mergeClass } from "../../../../_Shared/Utils";
 
 import './InputContainer.scss';
 
@@ -28,7 +29,7 @@ const InputContainer: Component<InputContainerProps> = (props) => {
 
   return <div
     id={props.id}
-    class={`input-container ${props.class || ''}`}
+    class={mergeClass('input-container', props.class)}
     ref={props.ref}
     style={props.style}
     classList={{

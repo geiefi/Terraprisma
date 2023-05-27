@@ -1,6 +1,7 @@
 import { Component, createEffect, createSignal, JSX, ParentProps, Show, useTransition } from 'solid-js';
 
 import { Transition } from 'solid-transition-group';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Dropdown.scss';
 
@@ -46,7 +47,7 @@ export interface DropdownProps extends ParentProps {
 const Dropdown: Component<DropdownProps> = (props) => {
   return <Transition name="grow-fade">
     {props.visible && <div
-      class={`dropdown ${props.class || ''}`}
+      class={mergeClass('dropdown', props.class)}
       classList={props.classList}
       ref={props.ref}
       style={{

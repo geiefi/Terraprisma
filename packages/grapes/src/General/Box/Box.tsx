@@ -1,4 +1,5 @@
 import { Accessor, Component, createContext, createMemo, JSX, ParentProps, useContext } from "solid-js";
+import { mergeClass } from "../../_Shared/Utils";
 
 import './Box.scss';
 
@@ -53,7 +54,7 @@ const Box: Component<BoxProps> = (props) => {
 
   return <BoxContext.Provider value={depth}>
     <div 
-      class={'box ' + (props.class || '')} 
+      class={mergeClass('box', props.class)} 
       classList={{
         'gray-1': depth() === 1,
         'gray-2': depth() === 2,

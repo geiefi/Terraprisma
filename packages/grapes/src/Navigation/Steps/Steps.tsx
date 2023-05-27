@@ -17,6 +17,7 @@ import { StepsContext } from "./StepsContext";
 import { Check } from "../../Icons";
 
 import './Steps.scss';
+import { mergeClass } from "../../_Shared/Utils";
 
 export type StepProps = {
   description?: string | JSX.Element,
@@ -127,7 +128,7 @@ function Steps(props: StepsProps) {
     stepsCount
   ]}>
     <div
-      class={'steps-container ' + (props.class || '')}
+      class={mergeClass('steps-container', props.class)}
       classList={{
         'vertical': props.direction === 'vertical',
         'horizontal': props.direction === 'horizontal' || typeof props.direction === 'undefined',
