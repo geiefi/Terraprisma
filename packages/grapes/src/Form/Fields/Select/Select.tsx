@@ -23,7 +23,7 @@ import { FieldValue } from '../../FormContext';
 
 import './Select.scss';
 import { Dropdown } from '../../../General';
-import { mergeClass } from '../../../_Shared/Utils';
+import { dbg, mergeClass } from '../../../_Shared/Utils';
 
 export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
@@ -119,7 +119,7 @@ const Select = (allProps: SelectProps) => {
   });
 
   const optionLabelFromValue = (value: FieldValue | undefined) => {
-    return options().find(opt => opt.value === value)?.children;
+    return options().find(opt => opt.value === value)?.children || '';
   };
 
   createEffect(on(focused, () => {
