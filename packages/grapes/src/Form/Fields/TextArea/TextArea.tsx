@@ -11,7 +11,7 @@ export type TextAreaChangeEvent = Event & {
   target: HTMLTextAreaElement;
 };
 
-export interface TextAreaProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+export interface TextAreaProps extends FieldProps, Omit<JSX.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'name' | 'value'> {
   label?: JSX.Element;
   helperText?: JSX.Element;
 

@@ -11,7 +11,7 @@ export type InputOnChangeEvent = Event & {
   target: Element;
 };
 
-export interface InputProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+export interface InputProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
   type?: 'text' | 'number' | 'email' | 'password';
 
   label?: JSX.Element;
