@@ -10,8 +10,8 @@ import {
   Title,
 } from "solid-start";
 
-// import Demo from "./components/Demo/Demo";
-import DemoWithVerticalSteps from "./components/DemoWithVerticalSteps/DemoWithVerticalSteps";
+import Demo from "./components/Demo/Demo";
+// import DemoWithVerticalSteps from "./components/DemoWithVerticalSteps/DemoWithVerticalSteps";
 // import FieldsWithoutForms from "./components/FieldsWithoutForms/FieldsWithoutForms";
 
 export default function Root() {
@@ -26,8 +26,8 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             {/*<FieldsWithoutForms/>*/}
-            {/*<Demo/>*/}
-            <DemoWithVerticalSteps/>
+            <Demo/>
+            {/*<DemoWithVerticalSteps/>*/}
           </ErrorBoundary>
         </Suspense>
         <Scripts />

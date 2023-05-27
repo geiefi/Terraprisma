@@ -1,0 +1,113 @@
+.datepicker-dropdown {
+  height: 320px;
+  width: 330px;
+  overflow: hidden;
+  background: transparent;
+
+  .datepicker-dropdown-inner {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: 2px solid var(--gray-4);
+    
+    cursor: default;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 2fr 8fr;
+
+    .dropdown-header,
+    .dropdown-content {
+      padding-inline: 15px;
+    }
+
+    .dropdown-header {
+      border-bottom: 2px solid var(--gray-4);
+      position: relative;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .selection-type-button-chooser {
+        width: fit-content;
+
+        .selection-type-button {
+          padding-inline: 15px;
+          padding-block: 5px;
+
+          &.active {
+            background: var(--primary);
+          }
+        }
+      }
+    }
+
+    .dropdown-content {
+      padding-block: 10px;
+
+      display: grid;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      button.active {
+        background: var(--primary);
+      }
+
+      & > * {
+        display: grid;
+
+        width: 100%;
+        height: 100%;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        & > .entry {
+          width: 100%;
+          height: 100%;
+
+          box-sizing: border-box;
+
+          display: flex !important;
+
+          justify-content: center;
+          align-items: center;
+
+          text-align: center;
+
+          * {
+            color: inherit !important;
+          }
+        }
+      }
+
+      .years-listing {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+        & > .entry button {
+          padding-inline: 10px;
+        }
+      }
+
+      .months-listing {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .days-listing {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+        .entry {
+          color: var(--text-0);
+
+          &.header,
+          &.outside-of-view {
+            color: var(--text-5);
+          }
+        }
+      }
+    }
+  }
+}

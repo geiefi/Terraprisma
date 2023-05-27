@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Typography, Title } from 'grapes/General/Typography';
 import { Stack, Container, Divisor } from 'grapes/Layout';
@@ -176,6 +176,23 @@ const Demo: Component = () => {
                         label='cvv'
                         placeholder='123'
                         type='number'
+                        validators={[Validators.required]}
+                      />
+                    </Col>
+
+                    <Col size={14}>
+                      <Input
+                        name='displayedName'
+                        label='nome impresso'
+                        type='number'
+                        validators={[Validators.required]}
+                      />
+                    </Col>
+
+                    <Col size={10}>
+                      <Datepicker
+                        name='expiresIn'
+                        label='validade'
                         validators={[Validators.required]}
                       />
                     </Col>
