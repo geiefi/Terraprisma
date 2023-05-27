@@ -11,3 +11,13 @@
 export function mergeClass(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+/**
+  * @description `Console.log`'s the `el` then returns it
+  *
+  * This function is inspired in Rust's `dbg!` macro.
+  */
+export function dbg<T=any>(el: T): T {
+  console.log(el);
+  return el;
+}
