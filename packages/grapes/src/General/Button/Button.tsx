@@ -11,6 +11,7 @@ export type ButtonProps = ParentProps<{
 
   disabled?: boolean,
 
+  ref?: (el: HTMLButtonElement) => any,
   style?: JSX.CSSProperties,
   class?: string,
   classList?: Record<string, boolean | undefined>,
@@ -52,6 +53,7 @@ const Button = (props: ButtonProps) => {
     <button
       class={props.class}
       type='button'
+      ref={props.ref}
       style={props.style}
       classList={{
         'primary': color() === 'primary',
