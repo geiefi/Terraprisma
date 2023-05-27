@@ -131,7 +131,11 @@ export function setupValidateFunction<
     if (typeof form !== 'undefined') {
       form.validate(props.name);
 
-      return form.getErrors(props.name);
+      const newErrors = form.getErrors(props.name)
+
+      setErrors(newErrors || []);
+
+      return newErrors;
     } else if (typeof props.validators !== 'undefined') {
       const newErrors = props.validators
         // we assert it to be truthy here since we filter(Boolean) after
