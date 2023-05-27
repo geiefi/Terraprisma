@@ -34,7 +34,7 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(1);
+  const [currentStep, setCurrentStep] = createSignal<number>(2);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({
@@ -151,9 +151,7 @@ const Demo: Component = () => {
 
             <Show when={paymentForm.values.paymentMethod === 'cartao-de-credito'}>
               <Box>
-                <Typography>
-                  <Title type={4}>Dados do cartão de crédito</Title>
-                </Typography>
+                <h4>Dados do cartão de crédito</h4>
 
                 <Form.Inner
                   identification='CreditCardDetails'
