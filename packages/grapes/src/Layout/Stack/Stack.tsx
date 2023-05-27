@@ -1,32 +1,38 @@
-import type { Component, JSX, ParentProps } from "solid-js";
+import { Component, JSX, ParentProps, splitProps } from "solid-js";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Stack.scss';
 
-export type StackProps = {
+export interface StackProps extends JSX.HTMLAttributes<HTMLDivElement> {
   spacing?: number;
-  align?: 'center' | 'start' | 'end' | 'space-between' 
-    | 'space-around' | 'space-evenly';
+  align?: 'center' | 'start' | 'end' | 'space-between'
+  | 'space-around' | 'space-evenly';
   direction?: 'horizontal' | 'vertical';
   fullWidth?: boolean;
-  class?: string;
-  classList?: Record<string, boolean | undefined>;
-  style?: JSX.CSSProperties;
-};
 
-const Stack: Component<ParentProps<StackProps>> = (props) => {
-  return <div 
-    class={mergeClass('stack', props.class)}
-    style={{ gap: `${props.spacing}px`, "justify-content": props.align, ...props.style }}
+  style?: JSX.CSSProperties;
+}
+
+const Stack: Component<ParentProps<StackProps>> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['spacing', 'align', 'direction', 'fullWidth']);
+
+  return <div
+    {...elProps}
+    class={mergeClass('stack', elProps.class)}
     classList={{
       'full-width': props.fullWidth,
-      'horizontal': props.direction === 'horizontal' 
+      'horizontal': props.direction === 'horizontal'
         || typeof props.direction === 'undefined',
       'vertical': props.direction === 'vertical',
-      ...props.classList
+      ...elProps.classList
+    }}
+    style={{
+      gap: `${props.spacing}px`,
+      "justify-content": props.align,
+      ...elProps.style
     }}
   >
-    {props.children}
+    {elProps.children}
   </div>;
 };
 

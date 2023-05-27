@@ -1,24 +1,22 @@
-import type { Component, JSX } from "solid-js";
+import { Component, JSX, splitProps } from "solid-js";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Divisor.scss';
 
-export type DivisorProps = {
+export interface DivisorProps extends JSX.HTMLAttributes<HTMLDivElement> {
   direction?: 'vertical' | 'horizontal';
-
-  style?: JSX.CSSProperties,
-  class?: string,
-  classList?: Record<string, boolean | undefined>
 };
 
-const Divisor: Component<DivisorProps> = (props) => {
+const Divisor: Component<DivisorProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['direction']);
+
   return <div 
-    class={mergeClass('divisor', props.class)} 
+    {...elProps}
+    class={mergeClass('divisor', elProps.class)} 
     classList={{
       'vertical': props.direction === 'vertical',
-      ...props.classList
+      ...elProps.classList
     }}
-    style={props.style}
   ></div>;
 };
 

@@ -10,21 +10,22 @@ import {
   createEffect,
   ParentProps,
   on,
-  Show,
+  splitProps,
 } from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import { KeyboardArrowDown } from '../../../Icons';
 
-import { FieldProps, setupField } from '../_Shared/Utilts';
+import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
 import { FieldValue } from '../../FormContext';
 
 import './Select.scss';
 import { Dropdown } from '../../../General';
+import { mergeClass } from '../../../_Shared/Utils';
 
-export interface SelectProps extends FieldProps, ParentProps {
+export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
@@ -34,7 +35,7 @@ export interface SelectProps extends FieldProps, ParentProps {
   onFocused?: () => any;
 }
 
-export interface OptionProps {
+export interface OptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
   value: FieldValue;
   children: JSX.Element;
 };
@@ -66,7 +67,12 @@ const Option: Component<OptionProps> = (props) => {
  * </Select>
  * ```
  */
-const Select = (props: SelectProps) => {
+const Select = (allProps: SelectProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocused']
+  );
+
   const {
     elementId: id,
     errorsStore: [errors, _setErrors],
@@ -93,7 +99,7 @@ const Select = (props: SelectProps) => {
     document.removeEventListener('click', onDocumentClick);
   });
 
-  const getChildren = accessChildren(() => props.children);
+  const getChildren = accessChildren(() => elProps.children);
   const options = createMemo<OptionProps[]>(() => {
     let childrenArr: (JSX.Element | OptionProps)[];
 
@@ -141,12 +147,17 @@ const Select = (props: SelectProps) => {
     helperText={props.helperText}
   >
     <InputContainer
+      {...elProps}
       id={id()}
       label={props.label}
       focused={focused()}
       color={props.color}
       disabled={disabled()}
-      onClick={() => {
+      onClick={(e) => {
+        if (typeof elProps.onClick === 'function') {
+          elProps.onClick(e);
+        }
+
         if (!disabled()) {
           setFocused(focused => !focused)
         }
@@ -161,7 +172,13 @@ const Select = (props: SelectProps) => {
         />
       }
       hasContent={hasContent()}
-      ref={setInputContainerRef}
+      ref={(ref) => {
+        if (typeof elProps.ref === 'function') {
+          elProps.ref(ref);
+        }
+
+        setInputContainerRef(ref);
+      }}
     >
       {optionLabelFromValue(value())}
     </InputContainer>
@@ -176,22 +193,31 @@ const Select = (props: SelectProps) => {
         'tertiary': props.color === 'tertiary'
       }}
     >
-      <For each={options()}>{(opt) => (
-        <div
-          class='option'
-          classList={{ 'active': opt.value === value() }}
-          onClick={() => {
+      <For each={options()}>{(optionAllProps) => {
+        const [optionProps, optionElProps] = splitProps(optionAllProps, ['value']);
+        return <div
+          {...optionElProps}
+          class={mergeClass('option', optionElProps.class)}
+          classList={{ 
+            active: optionProps.value === value(),
+            ...optionElProps.classList
+          }}
+          onClick={e => {
             if (props.onChange) {
-              props.onChange(opt.value);
+              props.onChange(optionProps.value);
+            }
+            
+            if (typeof optionElProps.onClick === 'function') {
+              optionElProps.onClick(e);
             }
 
-            setValue(opt.value);
+            setValue(optionProps.value);
             setFocused(false);
           }}
         >
-          {opt.children}
+          {optionElProps.children}
         </div>
-      )}</For>
+      }}</For>
     </Dropdown>
   </FieldInternalWrapper>;
 };

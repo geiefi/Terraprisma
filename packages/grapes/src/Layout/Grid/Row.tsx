@@ -1,28 +1,29 @@
-import type { Component, JSX, ParentProps } from "solid-js";
+import { Component, JSX, ParentProps, splitProps } from "solid-js";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Row.scss';
 
-export type RowProps = ParentProps<{
+export interface RowProps extends JSX.HTMLAttributes<HTMLDivElement> {
   gap?: string;
   rowGap?: string;
 
-  class?: string;
-  classList?: Record<string, boolean | undefined>;
   style?: JSX.CSSProperties;
-}>;
+};
 
-const Row: Component<RowProps> = (props) => {
+const Row: Component<RowProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['gap', 'rowGap']);
+
   return <div 
-    class={mergeClass('row', props.class)}
-    classList={props.classList}
+    {...elProps}
+    class={mergeClass('row', elProps.class)}
+    classList={elProps.classList}
     style={{ 
       gap: props.gap, 
       'row-gap': props.rowGap,
-      ...props.style
+      ...elProps.style
     }}
   >
-    {props.children}
+    {elProps.children}
   </div>;
 };
 

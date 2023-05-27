@@ -1,15 +1,16 @@
-import { Component, createMemo, JSX, ParentProps } from "solid-js";
+import { Component, createMemo, JSX, ParentProps, splitProps } from "solid-js";
+import { mergeClass } from "../../_Shared/Utils";
 
 import './Container.scss';
 
 export type LayoutWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export type ContainerProps = ParentProps<{
+export interface ContainerProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
   horizontalAlign?: 'center' | 'left' | 'right';
   verticalAlign?: 'center' | 'top' | 'bottom';
   style?: JSX.CSSProperties;
   maxWidth?: LayoutWidth | number;
-}>;
+}
 
 export const layoutWidths: Record<LayoutWidth, string> = {
   'xs': '576px',
@@ -23,7 +24,9 @@ function isPredefinedLayoutWidth(maxWidth: any): maxWidth is LayoutWidth {
   return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth);
 }
 
-const Container: Component<ContainerProps> = (props) => {
+const Container: Component<ContainerProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['horizontalAlign', 'verticalAlign', 'style', 'maxWidth']);
+
   const maxWidthPx = createMemo<string>(() => {
     const maxWidth = props.maxWidth || 'lg';
 
@@ -39,7 +42,8 @@ const Container: Component<ContainerProps> = (props) => {
   });
 
   return <div 
-    class='container'
+    {...elProps}
+    class={mergeClass('container', elProps.class)}
     style={{
       'justify-content': props.verticalAlign,
       'align-items': props.horizontalAlign,
@@ -47,7 +51,7 @@ const Container: Component<ContainerProps> = (props) => {
       ...props.style
     }}
   >
-    {props.children}
+    {elProps.children}
   </div>;
 };
 

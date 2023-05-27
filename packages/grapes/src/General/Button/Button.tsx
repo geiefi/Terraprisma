@@ -1,28 +1,26 @@
-import { Component, createMemo, JSX, ParentProps } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
+import { Component, createMemo, JSX, ParentProps, splitProps } from "solid-js";
+import { dbg, mergeClass } from "../../_Shared/Utils";
 import { useDepth } from "../Box/Box";
 import Ripple from "../Ripple/Ripple";
 
 import './Button.scss';
 
-export type ButtonProps = ParentProps<{
+export interface ButtonProps extends ParentProps, JSX.HTMLAttributes<HTMLButtonElement> {
   color?: 'primary' | 'secondary' | 'tertiary' | 'transparent',
   size?: 'small' | 'medium' | 'large',
 
   disabled?: boolean,
 
-  ref?: (el: HTMLButtonElement) => any,
-  style?: JSX.CSSProperties,
-  class?: string,
-  classList?: Record<string, boolean | undefined>,
-
   rippleColor?: string,
   rippleClass?: string,
+};
 
-  onClick?: (event: MouseEvent) => any,
-}>;
+const Button = (allProps: ButtonProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    ['color', 'size', 'disabled', 'rippleColor', 'rippleClass', 'onClick']
+  );
 
-const Button = (props: ButtonProps) => {
   const depth = useDepth() || (() => 0);
 
   const color = createMemo(() => props.color || 'primary');
@@ -35,26 +33,25 @@ const Button = (props: ButtonProps) => {
   );
 
   return <Ripple
+    noRipple={props.disabled}
     onClick={(event) => {
-      if (props.onClick && !props.disabled) {
-        props.onClick(event);
+      if (props.onClick && typeof props.onClick === 'function' && !props.disabled) {
+        props.onClick(event as any);
       }
     }}
-    noRipple={props.disabled}
+    class={props.rippleClass}
     classList={{
       'small': props.size === 'small',
       'medium': props.size === 'medium' || typeof props.size === 'undefined',
       'large': props.size === 'large',
     }}
     color={rippleColor()}
-    class={props.rippleClass}
     style={{ display: 'inline-block' }}
   >
     <button
-      class={props.class}
       type='button'
-      ref={props.ref}
-      style={props.style}
+      {...elProps}
+      class={elProps.class}
       classList={{
         'primary': color() === 'primary',
         'secondary': color() === 'secondary',
@@ -72,9 +69,9 @@ const Button = (props: ButtonProps) => {
         'medium': props.size === 'medium' || typeof props.size === 'undefined',
         'large': props.size === 'large',
 
-        ...props.classList
+        ...elProps.classList,
       }}
-    >{props.children}</button>
+    >{elProps.children}</button>
   </Ripple>;
 }
 
@@ -107,7 +104,7 @@ const IconButton: Component<ButtonProps> = (props) => {
   return <RoundedButton 
     {...props}
     class={mergeClass('icon', props.class)}
-  ></RoundedButton>;
+  >{props.children}</RoundedButton>;
 };
 
 Button.Rounded = RoundedButton;

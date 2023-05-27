@@ -1,24 +1,25 @@
-import { Component, createEffect, createMemo, createSignal, For, Index, Match, on, onCleanup, onMount, Show, Switch } from 'solid-js';
+import { Component, createEffect, createMemo, createSignal, For, Index, JSX, Match, on, onCleanup, onMount, splitProps, Switch } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { Box, Button, Dropdown, Ripple } from '../../../General';
-import { ArrowDropDown, ArrowLeft, ArrowRight, CalendarMonth, EditCalendar, ModeNight, ViewWeek } from '../../../Icons';
-import { Col, Row } from '../../../Layout/Grid';
+import { Box, Button, Dropdown } from '../../../General';
+import { ArrowLeft, ArrowRight, CalendarMonth } from '../../../Icons';
+import { Row } from '../../../Layout/Grid';
 import { dbg } from '../../../_Shared/Utils';
 import { FieldValue, FormValue } from '../../FormContext';
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
-import Select from '../Select/Select';
 import { InputContainer } from '../_Shared';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
-import { FieldProps, setupField } from '../_Shared/Utilts';
+import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
 import './Datepicker.scss';
 
-export interface DatepickerProps extends FieldProps {
+export interface DatepickerProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: string;
   helperText?: string;
 
   color?: 'primary' | 'secondary' | 'tertiary';
+
+  style?: JSX.CSSProperties;
 
   onChange?: (newValue: FieldValue) => any;
   onFocused?: () => any;
@@ -79,15 +80,14 @@ const DatepickerInternalDayPicker: Component<{
       }
 
       const lastDay = days[days.length - 1];
-      if (lastDay.weekday !== 0) {
-        for (let i = 1; i < 7 - lastDay.weekday; i++) {
-          const date = new Date(year, month, lastDay.day + i);
-          days.push({
-            day: date.getDate(),
-            weekday: date.getDay() as any,
-            dateAtDay: date,
-          });
-        }
+      const daysMissingTo42 = 42 - days.length;
+      for (let i = 0; i < daysMissingTo42; i++) {
+        const date = new Date(year, month, lastDay.day + i + 1);
+        days.push({
+          day: date.getDate(),
+          weekday: date.getDay() as any,
+          dateAtDay: date,
+        });
       }
 
       return days;
@@ -191,7 +191,12 @@ const DatepickerIntenralYearPicker: Component<{
   </div>;
 };
 
-const Datepicker: Component<DatepickerProps> = (props) => {
+const Datepicker: Component<DatepickerProps> = (allProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocused']
+  );
+
   const {
     elementId: id,
     errorsStore: [errors, _setErrors],
@@ -253,9 +258,9 @@ const Datepicker: Component<DatepickerProps> = (props) => {
   const handleNext = () => {
     switch (datepickerSelectionType()) {
       case 'day':
-        if (viewedMonth() === 0) {
+        if (viewedMonth() === 11) {
           setViewedYear(year => year + 1);
-          setViewedMonth(11);
+          setViewedMonth(0);
         } else {
           setViewedMonth(month => month + 1);
         }
@@ -317,17 +322,23 @@ const Datepicker: Component<DatepickerProps> = (props) => {
     helperText={props.helperText}
   >
     <InputContainer
+      {...elProps}
       id={id()}
       label={props.label}
       focused={focused()}
       color={props.color}
       style={{
-        cursor: disabled() === false ? 'pointer' : 'default'
+        cursor: disabled() === false ? 'pointer' : 'default',
+        ...elProps.style
       }}
       disabled={disabled()}
-      onClick={() => {
+      onClick={e => {
         if (!disabled()) {
           setFocused(focused => !focused)
+
+          if (typeof elProps.onClick === 'function') {
+            elProps.onClick(e);
+          }
         }
       }}
       icon={
@@ -336,7 +347,13 @@ const Datepicker: Component<DatepickerProps> = (props) => {
         />
       }
       hasContent={hasContent()}
-      ref={setInputContainerRef}
+      ref={(ref) => {
+        if (typeof elProps.ref === 'function') {
+          elProps.ref(ref);
+        }
+
+        setInputContainerRef(ref);
+      }}
     >
       {displayDate()}
     </InputContainer>

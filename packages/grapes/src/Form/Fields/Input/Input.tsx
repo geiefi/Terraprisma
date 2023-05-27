@@ -1,20 +1,20 @@
-import { Component, JSX } from 'solid-js';
+import { Component, JSX, splitProps } from 'solid-js';
 
 import './Input.scss';
-import { FieldProps, setupField } from '../_Shared/Utilts';
+import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import { dbg } from '../../../_Shared/Utils';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
   target: Element;
 };
 
-export interface InputProps extends FieldProps {
+export interface InputProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
   type?: 'text' | 'number' | 'email' | 'password';
 
   label?: JSX.Element;
-  placeholder?: string;
   helperText?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -23,7 +23,12 @@ export interface InputProps extends FieldProps {
   onFocus?: () => any,
 }
 
-const Input: Component<InputProps> = (props) => {
+const Input: Component<InputProps> = (allProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    [...FieldPropKeys, 'type', 'label', 'helperText', 'color', 'onChange', 'onFocus']
+  );
+
   const {
     elementId: id,
     errorsStore: [errors, _setErrors],
@@ -53,15 +58,22 @@ const Input: Component<InputProps> = (props) => {
       label={props.label}
     >
       <input
+        {...elProps}
         id={id()}
         value={(value() || '').toString()}
+
         type={props.type || 'text'}
         disabled={disabled()}
-        placeholder={props.placeholder}
+
+        class={elProps.class}
         classList={{
           'no-label': typeof props.label === 'undefined',
         }}
+
         onInput={(event) => {
+          if (typeof elProps.onInput === 'function') {
+            elProps.onInput(event);
+          }
           if (props.onChange) {
             props.onChange(event.currentTarget.value, event);
           }
@@ -74,7 +86,10 @@ const Input: Component<InputProps> = (props) => {
           }
           setFocused(true);
         }}
-        onBlur={() => {
+        onBlur={(event) => {
+          if (typeof elProps.onBlur === 'function') {
+            elProps.onBlur(event);
+          }
           validate(value());
           setFocused(false);
         }}

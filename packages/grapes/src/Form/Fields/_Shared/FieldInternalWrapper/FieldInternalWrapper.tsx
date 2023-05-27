@@ -1,25 +1,17 @@
-import { Component, createMemo, JSX, ParentProps, Show } from "solid-js";
+import { Component, createMemo, JSX, Show, splitProps } from "solid-js";
 import { mergeClass } from "../../../../_Shared/Utils";
 
 import './FieldInternalWrapper.scss';
 
-export type FieldInternalWrapperProps = ParentProps<{
+export interface FieldInternalWrapperProps extends JSX.HTMLAttributes<HTMLDivElement> {
   name: string;
   errors: string[] | undefined,
 
   isDisabled: boolean | undefined;
 
   helperText: JSX.Element | undefined;
-
   renderHelperText?: boolean;
-
-  id?: string;
-  class?: string;
-  style?: JSX.CSSProperties;
-  classList?: Record<string, boolean | undefined>;
-
-  onClick?: (event: MouseEvent) => any;
-}>;
+};
 
 /**
  * @description A integral GrapeS wrapper component that helps with handling 
@@ -28,23 +20,27 @@ export type FieldInternalWrapperProps = ParentProps<{
  * If there are no errors it just wraps the field's internals and 
  * adds its helper text bellow.
  */
-const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (props) => {
+const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (allProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    ['name', 'errors', 'isDisabled', 'helperText', 'renderHelperText']
+  );
+
   const hasErrors = createMemo(
     // doing it like this to track the first errors
     () => props.errors && Array.isArray(props.errors) && typeof props.errors[0] !== 'undefined'
   );
 
   return <div
-    id={props.id}
-    class={mergeClass('field', props.class)}
-    style={props.style}
-    onClick={props.onClick}
+    {...elProps}
+    class={mergeClass('field', elProps.class)}
     classList={{
       error: hasErrors(),
-      ...props.classList
+      ...elProps.classList
     }}
   >
-    {props.children}
+    {elProps.children}
+
     <Show when={typeof props.renderHelperText === 'undefined' || props.renderHelperText === true}>
       <div class='helper-text'>
         <Show

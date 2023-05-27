@@ -4,6 +4,15 @@ import { createStore } from "solid-js/store";
 import { useForm } from "../../Form";
 import { FieldValidator, FieldValue, FormProviderValue, FormValue, Store } from "../../FormContext";
 
+export const FieldPropKeys: (keyof FieldProps)[] = [
+  'name',
+  'manuallyControlled',
+  'value',
+  'validators',
+  'disabled',
+  'errorsStore'
+];
+
 /**
   * The field props that are required for all of the fields used in conjunction with the `<Form />`
   * component

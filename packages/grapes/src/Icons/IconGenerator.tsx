@@ -1,14 +1,12 @@
-import type { Component, JSX } from 'solid-js';
+import { Component, JSX, splitProps } from 'solid-js';
 import { mergeClass } from '../_Shared/Utils';
 
-export type IconProps = {
+export interface IconProps extends JSX.HTMLAttributes<HTMLSpanElement> {
   /**
    * Outlined by default
    */
   variant?: 'outlined' | 'rounded' | 'sharp',
 
-  class?: string,
-  classList?: Record<string, boolean | undefined>,
   style?: JSX.CSSProperties,
 };
 
@@ -16,18 +14,21 @@ export type IconComponent = Component<IconProps>;
 
 // not a decorator
 export function createIconComponent(iconName: string): IconComponent {
-  return (props) => {
+  return (allProps) => {
+    const [props, elProps] = splitProps(allProps, ['variant']);
+
     return <span 
-      class={mergeClass(`material-symbols-${props.variant || 'outlined'}`, props.class)}
+      {...elProps}
+      class={mergeClass(`material-symbols-${props.variant || 'outlined'}`, elProps.class)}
+      classList={elProps.classList}
       style={{
         'font-size': 'inherit',
         'scale': '1.4',
         'display': 'flex',
         'justify-content': 'center',
         'align-items': 'center',
-        ...props.style
+        ...elProps.style
       }}
-      classList={props.classList}
     >
       {iconName}
     </span>;

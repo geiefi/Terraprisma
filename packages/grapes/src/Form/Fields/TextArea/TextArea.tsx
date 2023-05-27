@@ -1,6 +1,6 @@
-import { Component, JSX } from 'solid-js';
+import { Component, JSX, splitProps } from 'solid-js';
 
-import { FieldProps, setupField } from '../_Shared/Utilts';
+import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
@@ -11,21 +11,22 @@ export type TextAreaChangeEvent = Event & {
   target: HTMLTextAreaElement;
 };
 
-export interface TextAreaProps extends FieldProps {
+export interface TextAreaProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
   label?: JSX.Element;
-  placeholder?: string;
   helperText?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
-
-  rows?: number;
-  cols?: number;
 
   onChange?: (newValue: string, event?: TextAreaChangeEvent) => any,
   onFocus?: () => any,
 }
 
-const TextArea: Component<TextAreaProps> = (props) => {
+const TextArea: Component<TextAreaProps> = (allProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocus']
+  );
+
   const {
     elementId: id,
     errorsStore: [errors, _setErrors],
@@ -55,14 +56,14 @@ const TextArea: Component<TextAreaProps> = (props) => {
       label={props.label}
     >
       <textarea
+        {...elProps}
         id={id()}
         value={(value() || '').toString()}
         disabled={disabled()}
-        placeholder={props.placeholder}
-        rows={props.rows}
-        cols={props.cols}
+        class={elProps.class}
         classList={{ 
           'no-label': typeof props.label === 'undefined',
+          ...elProps.classList
         }}
         onInput={(event) => {
           event.target.style.height = "0px";
@@ -86,7 +87,11 @@ const TextArea: Component<TextAreaProps> = (props) => {
           }
           setFocused(true);
         }}
-        onBlur={() => {
+        onBlur={(e) => {
+          if (typeof elProps.onBlur === 'function') {
+            elProps.onBlur(e);
+          }
+
           validate(value());
           setFocused(false);
         }}

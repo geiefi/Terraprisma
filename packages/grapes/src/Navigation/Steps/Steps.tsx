@@ -9,6 +9,7 @@ import {
   JSX,
   ParentProps,
   Show,
+  splitProps,
   useContext
 } from "solid-js";
 
@@ -19,16 +20,19 @@ import { Check } from "../../Icons";
 import './Steps.scss';
 import { mergeClass } from "../../_Shared/Utils";
 
-export type StepProps = {
+export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
   description?: string | JSX.Element,
-  children: JSX.Element
+
+  style?: JSX.CSSProperties;
 };
 
 export const Step: Component<StepProps> = (props) => {
   return props as unknown as JSX.Element;
 };
 
-const InternalStep: Component<{ index: number } & StepProps> = (props) => {
+const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['description', 'index']);
+
   const [current, _count] = useSteps()!;
 
   const [descriptionPRef, setDescriptionPRef] = createSignal<HTMLParagraphElement>();
@@ -54,16 +58,20 @@ const InternalStep: Component<{ index: number } & StepProps> = (props) => {
   });
 
   return <div
-    class='step'
+    {...elProps}
+    class={mergeClass('step', elProps.class)}
     classList={{
       'current-step': current() === props.index,
-      'done-step': current() > props.index
+      'done-step': current() > props.index,
+      ...elProps.classList
     }}
     style={{ 
       '--step-content-width': contentWidth(),
       '--step-content-height': contentHeight(),
 
-      '--description-offset': descriptionOffset()
+      '--description-offset': descriptionOffset(),
+      
+      ...elProps.style
     }}
   >
     <span class='step-content' ref={setContentRef}>
@@ -74,7 +82,7 @@ const InternalStep: Component<{ index: number } & StepProps> = (props) => {
       </span>
 
       <span class='step-info' ref={setStepInfoRef}>
-        <p class='step-title'>{props.children}</p>
+        <p class='step-title'>{elProps.children}</p>
 
         <Show when={props.description}>
           <p class='step-description' ref={setDescriptionPRef}>{props.description}</p>
@@ -88,23 +96,21 @@ function isElementAStepProps(el: unknown): el is StepProps {
   return typeof el === 'object' && Object.hasOwn(el || {}, 'children');
 }
 
-export type StepsProps = ParentProps<{
+export interface StepsProps extends JSX.HTMLAttributes<HTMLDivElement> {
   identification: string,
   current: number,
 
   direction?: 'horizontal' | 'vertical',
 
-  style?: JSX.CSSProperties,
-  class?: string,
-  classList?: Record<string, boolean | undefined>,
-
   onFinish?: () => void,
-}>;
+};
 
 export class StepsError extends Error { }
 
-function Steps(props: StepsProps) {
-  const childrenAccessor = accessChildren(() => props.children);
+function Steps(allProps: StepsProps) {
+  const [props, elProps] = splitProps(allProps, ['identification', 'current', 'direction', 'onFinish']);
+
+  const childrenAccessor = accessChildren(() => elProps.children);
   const steps: Accessor<StepProps[]> = createMemo(() => {
     const children = childrenAccessor() as JSX.Element[];
     return children.filter(child => isElementAStepProps(child)) as unknown as StepProps[];
@@ -128,13 +134,13 @@ function Steps(props: StepsProps) {
     stepsCount
   ]}>
     <div
-      class={mergeClass('steps-container', props.class)}
+      {...elProps}
+      class={mergeClass('steps-container', elProps.class)}
       classList={{
         'vertical': props.direction === 'vertical',
         'horizontal': props.direction === 'horizontal' || typeof props.direction === 'undefined',
-        ...props.classList
+        ...elProps.classList
       }}
-      style={props.style}
     >
       <For each={steps()}>{(step, i) => (
         <InternalStep {...step} index={i()} />

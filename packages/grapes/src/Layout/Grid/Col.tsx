@@ -1,24 +1,23 @@
-import type { Component, JSX, ParentProps } from "solid-js";
+import { Component, JSX, ParentProps, splitProps } from "solid-js";
 
-export type ColProps = ParentProps<{
+export interface ColProps extends JSX.HTMLAttributes<HTMLDivElement> {
   size: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21
     | 22 | 23 | 24;
 
-  class?: string;
-  classList?: Record<string, boolean | undefined>;
   style?: JSX.CSSProperties;
-}>;
+};
 
-const Col: Component<ColProps> = (props) => {
+const Col: Component<ColProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['size']);
+
   return <div 
-    class={props.class}
-    classList={props.classList}
+    {...elProps}
     style={{ 
       width: `${props.size / 24 * 100}%`,
-      ...props.style
+      ...elProps.style
     }}
   >
-    {props.children}
+    {elProps.children}
   </div>;
 };
 

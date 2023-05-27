@@ -1,26 +1,24 @@
-import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For, Show } from "solid-js";
+import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For, Show, splitProps } from "solid-js";
 import Button, { ButtonProps } from "../../../General/Button/Button";
 import { mergeClass } from "../../../_Shared/Utils";
 import { FieldValue } from "../../FormContext";
 import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
 
-import { FieldProps, setupField } from "../_Shared/Utilts";
+import { FieldPropKeys, FieldProps, setupField } from "../_Shared/Utilts";
 
 import "./ButtonChooser.scss";
 
-export interface ButtonChooserProps extends FieldProps, ParentProps {
+export interface ButtonChooserProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
   helperText?: JSX.Element;
 
-  class?: string;
-  classList?: Record<string, boolean | undefined>;
   style?: JSX.CSSProperties;
 
   onChange?: (newValue: FieldValue) => any;
 }
 
-export interface OptionProps extends ParentProps, ButtonProps {
+export interface OptionProps extends ButtonProps {
   value: string;
 }
 
@@ -28,7 +26,12 @@ const Option: Component<OptionProps> = (props) => {
   return props as unknown as JSX.Element;
 };
 
-const ButtonChooser = (props: ButtonChooserProps) => {
+const ButtonChooser = (allProps: ButtonChooserProps) => {
+  const [props, elProps] = splitProps(
+    allProps, 
+    [...FieldPropKeys, 'label', 'color', 'helperText', 'onChange']
+  );
+
   const {
     elementId: id,
     errorsStore: [errors, _setErrors],
@@ -37,7 +40,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
     validate,
   } = setupField(props);
 
-  const getChildren = accessChildren(() => props.children);
+  const getChildren = accessChildren(() => elProps.children);
   const options = createMemo<OptionProps[]>(() => {
     let childrenArr: (JSX.Element | OptionProps)[];
 
@@ -69,6 +72,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
   const color = createMemo(() => props.color || 'primary');
 
   return <FieldInternalWrapper
+    {...elProps}
     id={id()}
     isDisabled={disabled()}
     errors={errors}
@@ -79,11 +83,10 @@ const ButtonChooser = (props: ButtonChooserProps) => {
       || typeof props.helperText !== 'undefined'
     }
     helperText={props.helperText}
-    class={mergeClass('button-chooser', props.class)}
-    classList={props.classList}
+    class={mergeClass('button-chooser', elProps.class)}
     style={{
       height: 'fit-content',
-      ...props.style
+      ...elProps.style
     }}
   >
     <Show when={props.label}>
@@ -96,6 +99,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
           color={color()}
           disabled={disabled()}
           {...opt}
+          class={opt.class}
           classList={{
             'active': opt.value === value(),
             ...opt.classList
@@ -107,7 +111,7 @@ const ButtonChooser = (props: ButtonChooserProps) => {
               props.onChange(opt.value);
             }
 
-            if (opt.onClick) {
+            if (typeof opt.onClick === 'function') {
               opt.onClick(event);
             }
           }}

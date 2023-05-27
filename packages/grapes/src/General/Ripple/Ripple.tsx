@@ -1,20 +1,16 @@
-import { Component, createSignal, For, JSX, ParentProps } from "solid-js";
+import { Component, createSignal, For, JSX, ParentProps, splitProps } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Ripple.scss';
 
-export type RippleProps = ParentProps<{
-  onClick?: (event: MouseEvent) => any,
+export interface RippleProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
   /**
    * Disabled the ripple effect but still propagates clicks through
    */
   noRipple?: boolean,
-  classList?: Record<string, boolean | undefined>,
-  class?: string,
   color?: string,
-  style?: JSX.CSSProperties
-}>;
+};
 
 interface RippleConfig {
   diameter: number;
@@ -22,7 +18,12 @@ interface RippleConfig {
   top: number;
 }
 
-const Ripple: Component<RippleProps> = (props) => {
+const Ripple: Component<RippleProps> = (allProps) => {
+  const [props, elProps] = splitProps(
+    allProps,
+    ['noRipple', 'color']
+  );
+
   const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
   const createRipple = (element: HTMLElement, globalPositionX: number, globalPositionY: number) => {
@@ -52,14 +53,13 @@ const Ripple: Component<RippleProps> = (props) => {
   const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
 
   return <div
-    class={mergeClass('ripple-container', props.class)}
+    {...elProps}
+    class={mergeClass('ripple-container', elProps.class)}
     ref={setRippleContainer}
-    style={props.style}
-    classList={props.classList}
     onClick={(event) => {
       createRipple(rippleContainer()!, event.x, event.y);
-      if (typeof props.onClick !== 'undefined') {
-        props.onClick(event);
+      if (typeof elProps.onClick !== 'undefined' && typeof elProps.onClick === 'function') {
+        elProps.onClick(event);
       }
     }}
   >
@@ -78,7 +78,7 @@ const Ripple: Component<RippleProps> = (props) => {
       )}
     </For>
 
-    {props.children}
+    {elProps.children}
   </div>;
 }
 

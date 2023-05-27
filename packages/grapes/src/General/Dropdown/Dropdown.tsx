@@ -1,11 +1,11 @@
-import { Component, createEffect, createSignal, JSX, ParentProps, Show, useTransition } from 'solid-js';
+import { Component, JSX, ParentProps, Show, splitProps } from 'solid-js';
 
 import { Transition } from 'solid-transition-group';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Dropdown.scss';
 
-export interface DropdownProps extends ParentProps {
+export interface DropdownProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
   /**
    * @description The element the Dropdown will be anchored to.
    *
@@ -37,29 +37,28 @@ export interface DropdownProps extends ParentProps {
    * @default 5px
    */
   offsetFromAnchor?: JSX.CSSProperties['top'];
-  
-  ref?: (el: HTMLDivElement) => void,
+
   style?: JSX.CSSProperties;
-  class?: string;
-  classList?: Record<string, boolean | undefined>;
 }
 
-const Dropdown: Component<DropdownProps> = (props) => {
+const Dropdown: Component<DropdownProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['for', 'visible', 'offsetFromAnchor']);
+
   return <Transition name="grow-fade">
     <Show when={props.visible}>
       <div
-        class={mergeClass('dropdown', props.class)}
-        classList={props.classList}
-        ref={props.ref}
+        {...elProps}
+        class={mergeClass('dropdown', elProps.class)}
         style={{
           '--anchor-left': `${props.for.offsetLeft}px`,
           '--anchor-top': `${props.for.offsetTop}px`,
           '--anchor-width': `${props.for.clientWidth}px`,
           '--anchor-height': `${props.for.clientHeight}px`,
 
-          '--offset-from-anchor': props.offsetFromAnchor || '5px'
+          '--offset-from-anchor': props.offsetFromAnchor || '5px',
+          ...elProps.style
         }}
-      >{props.children}</div>
+      >{elProps.children}</div>
     </Show>
   </Transition>;
 };

@@ -1,4 +1,4 @@
-import { Accessor, Component, createContext, createMemo, JSX, ParentProps, useContext } from "solid-js";
+import { Accessor, Component, createContext, createMemo, JSX, ParentProps, splitProps, useContext } from "solid-js";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Box.scss';
@@ -11,7 +11,7 @@ export type Depth = 0 | 1 | 2 | 3 | 4;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
-export type BoxProps = ParentProps<{
+export interface BoxProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
   /**
    * @description The depth of the current Box.
    *
@@ -20,11 +20,7 @@ export type BoxProps = ParentProps<{
    * is set automatically based on the context the Box is found on.
    */
   depth?: Depth,
-
-  style?: JSX.CSSProperties,
-  class?: string,
-  classList?: Record<string, boolean | undefined>
-}>;
+};
 
 /**
  * @description A component used for having a kind of box, this Box creates a context automatically 
@@ -42,7 +38,9 @@ export type BoxProps = ParentProps<{
  * </Box>
  * ```
  */
-const Box: Component<BoxProps> = (props) => {
+const Box: Component<BoxProps> = (allProps) => {
+  const [props, elProps] = splitProps(allProps, ['depth']);
+
   const oldDepth = useContext(BoxContext);
   const depth = createMemo(() => {
     if (typeof props.depth !== 'undefined') return props.depth;
@@ -54,17 +52,18 @@ const Box: Component<BoxProps> = (props) => {
 
   return <BoxContext.Provider value={depth}>
     <div 
-      class={mergeClass('box', props.class)} 
+      {...elProps}
+      class={mergeClass('box', elProps.class)} 
       classList={{
         'gray-1': depth() === 1,
         'gray-2': depth() === 2,
         'gray-3': depth() === 3,
         'bordered': (oldDepth || (() => 0))() === 3,
-        ...props.classList
+        ...elProps.classList
       }}
-      style={props.style}
+      style={elProps.style}
     >
-      {props.children}
+      {elProps.children}
     </div>
   </BoxContext.Provider>;
 };
