@@ -6,8 +6,7 @@ $disabled-text-color: color-mix(in srgb, var(--text-0), transparent 80%);
 
 // Need to make the ripple container round as well
 // to avoid weird square ripples
-.ripple-container.rounded,
-.ripple-container.icon {
+.ripple-container.rounded {
   &.small {
     border-radius: 18px;
   }
@@ -48,7 +47,7 @@ button {
     cursor: pointer;
   }
 
-  &.primary:not(.disabled):not(.empty):not(.icon) {
+  &.primary:not(.disabled):not(.empty) {
     background: var(--primary);
     color: var(--text-primary);
 
@@ -57,7 +56,7 @@ button {
     }
   }
 
-  &.secondary:not(.disabled):not(.empty):not(.icon) {
+  &.secondary:not(.disabled):not(.empty) {
     background: var(--secondary);
     color: var(--text-secondary);
 
@@ -66,7 +65,7 @@ button {
     }
   }
 
-  &.tertiary:not(.disabled):not(.empty):not(.icon) {
+  &.tertiary:not(.disabled):not(.empty) {
     background: var(--tertiary);
     color: var(--text-tertiary);
 
@@ -75,24 +74,34 @@ button {
     }
   }
 
+  &.transparent:not(.disabled):not(.empty) {
+    background: transparent;
+    transition: background .2s;
+
+    &:hover {
+      // generates a opaque version of the text-0 color
+      background: color-mix(in srgb, var(--text-0), transparent 85%);
+    }
+  }
+
   &:hover:not(.disabled) {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   }
 
-  &.small:not(.rounded):not(.icon) {
+  &.small:not(.rounded) {
     padding-block: 5px;
     padding-inline: 15px;
     font-size: 12px;
   }
 
-  &.medium:not(.rounded):not(.icon) {
+  &.medium:not(.rounded) {
     padding-block: 9px;
     padding-inline: 21px;
     font-size: 14px;
     font-weight: 700;
   }
 
-  &.large:not(.rounded):not(.icon) {
+  &.large:not(.rounded) {
     padding-block: 10px;
     padding-inline: 43px;
     font-size: 16px;
@@ -100,12 +109,17 @@ button {
     font-weight: bolder;
   }
 
-  &.rounded,
-  &.icon {
+  &.rounded {
     justify-content: center;
     text-align: center;
     padding-inline: 16px;
     color: var(--text-0);
+
+    &.icon {
+      padding: 0;
+    }
+
+    width: max-content;
 
     &.small {
       min-width: 36px;
@@ -136,17 +150,6 @@ button {
       span[class^="material-symbols-"] {
         font-size: 22px !important;
       }
-    }
-  }
-
-  &.icon {
-    background: transparent;
-    padding: 0;
-    transition: background .2s;
-
-    &:hover {
-      // generates a opaque version of the text-0 color
-      background: color-mix(in srgb, var(--text-0), transparent 85%);
     }
   }
 

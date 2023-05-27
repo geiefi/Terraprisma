@@ -5,7 +5,7 @@ import Ripple from "../Ripple/Ripple";
 import './Button.scss';
 
 export type ButtonProps = ParentProps<{
-  color?: 'primary' | 'secondary' | 'tertiary',
+  color?: 'primary' | 'secondary' | 'tertiary' | 'transparent',
   size?: 'small' | 'medium' | 'large',
 
   disabled?: boolean,
@@ -24,6 +24,13 @@ const Button = (props: ButtonProps) => {
   const depth = useDepth() || (() => 0);
 
   const color = createMemo(() => props.color || 'primary');
+  const rippleColor = createMemo(
+    () => props.rippleColor || (
+      color() === 'transparent'
+        ? 'var(--text-0)'
+        : `var(--text-${color()})`
+    )
+  );
 
   return <Ripple
     onClick={(event) => {
@@ -37,7 +44,7 @@ const Button = (props: ButtonProps) => {
       'medium': props.size === 'medium' || typeof props.size === 'undefined',
       'large': props.size === 'large',
     }}
-    color={props.rippleColor || `var(--text-${color()})`}
+    color={rippleColor()}
     class={props.rippleClass}
     style={{ display: 'inline-block' }}
   >
@@ -49,6 +56,7 @@ const Button = (props: ButtonProps) => {
         'primary': color() === 'primary',
         'secondary': color() === 'secondary',
         'tertiary': color() === 'tertiary',
+        'transparent': color() === 'transparent',
 
         'disabled': props.disabled,
 
@@ -68,24 +76,11 @@ const Button = (props: ButtonProps) => {
 }
 
 const RoundedButton: Component<ButtonProps> = (props) => {
-  const color = createMemo(() => props.color || 'primary');
-
   return <Button
     rippleClass='rounded'
-    rippleColor={`var(--text-${color()})`}
+    color='transparent'
     {...props}
     class={'rounded ' + (props.class || '')}
-  >
-    {props.children}
-  </Button>;
-};
-
-const IconButton: Component<ButtonProps> = (props) => {
-  return <Button
-    rippleClass='icon'
-    rippleColor='var(--text-0)'
-    {...props}
-    class={"icon " + (props.class || '')}
   >
     {props.children}
   </Button>;
@@ -95,7 +90,9 @@ const EmptyButton: Component<ButtonProps> = (props) => {
   const color = createMemo(() => props.color || 'primary');
 
   return <Button
-    rippleColor={`var(--${color()})`}
+    rippleColor={color() === 'transparent'
+      ? undefined
+      : `var(--${color()})`}
     {...props}
     class={'empty ' + (props.class || '')}
   >
@@ -103,7 +100,12 @@ const EmptyButton: Component<ButtonProps> = (props) => {
   </Button>;
 };
 
+const IconButton: Component<ButtonProps> = (props) => {
+  return <RoundedButton class='icon' {...props}></RoundedButton>;
+};
+
 Button.Rounded = RoundedButton;
-Button.Empty = EmptyButton;
 Button.Icon = IconButton;
+Button.Empty = EmptyButton;
+
 export default Button;
