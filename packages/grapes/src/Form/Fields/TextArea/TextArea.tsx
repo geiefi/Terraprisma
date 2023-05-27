@@ -40,6 +40,11 @@ const TextArea: Component<TextAreaProps> = (props) => {
     name={props.name} 
     isDisabled={disabled()}
     errors={errors}
+    renderHelperText={
+      (typeof props.validators !== 'undefined' 
+        && props.validators.length !== 0) 
+      || typeof props.helperText !== 'undefined'
+    }
     helperText={props.helperText}
   >
     <InputContainer

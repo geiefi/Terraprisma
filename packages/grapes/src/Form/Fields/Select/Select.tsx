@@ -133,6 +133,11 @@ const Select = (props: SelectProps) => {
     style={{
       cursor: disabled() === false ? 'pointer' : 'default'
     }}
+    renderHelperText={
+      (typeof props.validators !== 'undefined' 
+        && props.validators.length !== 0) 
+      || typeof props.helperText !== 'undefined'
+    }
     helperText={props.helperText}
   >
     <InputContainer

@@ -38,6 +38,11 @@ const Input: Component<InputProps> = (props) => {
     name={props.name}
     errors={errors}
     helperText={props.helperText}
+    renderHelperText={
+      (typeof props.validators !== 'undefined' 
+        && props.validators.length !== 0) 
+      || typeof props.helperText !== 'undefined'
+    }
     isDisabled={disabled()}
   >
     <InputContainer
