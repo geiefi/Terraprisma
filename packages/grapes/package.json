@@ -16,6 +16,7 @@
   "dependencies": {
     "material-symbols": "^0.5.5",
     "solid-js": "^1.7.2",
+    "solid-transition-group": "^0.2.2",
     "tinycolor2": "^1.6.0"
   },
   "publishConfig": {

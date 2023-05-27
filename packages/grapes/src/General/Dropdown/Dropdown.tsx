@@ -1,4 +1,6 @@
-import { Component, JSX, ParentProps, Show } from 'solid-js';
+import { Component, createEffect, createSignal, JSX, ParentProps, Show, useTransition } from 'solid-js';
+
+import { Transition } from 'solid-transition-group';
 
 import './Dropdown.scss';
 
@@ -42,8 +44,8 @@ export interface DropdownProps extends ParentProps {
 }
 
 const Dropdown: Component<DropdownProps> = (props) => {
-  return <Show when={props.visible === true}>
-    <div
+  return <Transition name="grow-fade">
+    {props.visible && <div
       class={`dropdown ${props.class || ''}`}
       classList={props.classList}
       ref={props.ref}
@@ -55,8 +57,8 @@ const Dropdown: Component<DropdownProps> = (props) => {
 
         '--offset-from-anchor': props.offsetFromAnchor || '5px'
       }}
-    >{props.children}</div>
-  </Show>;
+    >{props.children}</div>}
+  </Transition>;
 };
 
 export default Dropdown;
