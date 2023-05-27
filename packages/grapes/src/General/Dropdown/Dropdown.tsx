@@ -46,19 +46,21 @@ export interface DropdownProps extends ParentProps {
 
 const Dropdown: Component<DropdownProps> = (props) => {
   return <Transition name="grow-fade">
-    {props.visible && <div
-      class={mergeClass('dropdown', props.class)}
-      classList={props.classList}
-      ref={props.ref}
-      style={{
-        '--anchor-left': `${props.for.offsetLeft}px`,
-        '--anchor-top': `${props.for.offsetTop}px`,
-        '--anchor-width': `${props.for.clientWidth}px`,
-        '--anchor-height': `${props.for.clientHeight}px`,
+    <Show when={props.visible}>
+      <div
+        class={mergeClass('dropdown', props.class)}
+        classList={props.classList}
+        ref={props.ref}
+        style={{
+          '--anchor-left': `${props.for.offsetLeft}px`,
+          '--anchor-top': `${props.for.offsetTop}px`,
+          '--anchor-width': `${props.for.clientWidth}px`,
+          '--anchor-height': `${props.for.clientHeight}px`,
 
-        '--offset-from-anchor': props.offsetFromAnchor || '5px'
-      }}
-    >{props.children}</div>}
+          '--offset-from-anchor': props.offsetFromAnchor || '5px'
+        }}
+      >{props.children}</div>
+    </Show>
   </Transition>;
 };
 
