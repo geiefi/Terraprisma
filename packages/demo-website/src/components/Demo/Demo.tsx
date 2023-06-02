@@ -1,5 +1,5 @@
-import { Component, createSignal, Show } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { Accessor, Component, createEffect, createMemo, createSignal, Setter, Show } from 'solid-js';
+import { createStore, SetStoreFunction } from 'solid-js/store';
 
 import { GrapeS } from 'grapes';
 
@@ -12,6 +12,8 @@ import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
+import { splitTupleAccessor } from 'grapes/Helpers/splitTupleAccessor';
+import { FormProviderValue, FormValue } from 'grapes/Form/FormContext';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -33,13 +35,15 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(2);
+  const [currentStep, setCurrentStep] = createSignal<number>(0);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({
     paymentMethod: 'cartao-de-credito'
   }));
   const [paymentForm, _setPaymentForm] = paymentFormStore;
+
+  const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
 
   return (<GrapeS defaultThemeId='dark'>
     <Container
@@ -70,7 +74,7 @@ const Demo: Component = () => {
         <Divisor />
 
         <Show when={currentStep() === 0}>
-          <Form formStore={addressFormStore} indentification='EnderecoDeEntrega'>
+          <Form formStore={addressFormStore} ref={setCurrenForm} indentification='EnderecoDeEntrega'>
             <Row>
               <Col size={16}>
                 <Input
@@ -131,7 +135,7 @@ const Demo: Component = () => {
           </Form>
         </Show>
         <Show when={currentStep() === 1}>
-          <Form formStore={paymentFormStore} indentification='DadosDePagamento'>
+          <Form formStore={paymentFormStore} ref={setCurrenForm} indentification='DadosDePagamento'>
             <ButtonChooser
               name='paymentMethod'
               label='Método de pagamento'
@@ -144,7 +148,7 @@ const Demo: Component = () => {
                 <BarcodeScanner /> Boleto
               </ButtonChooser.Option>
               <ButtonChooser.Option value='pix'>
-                <QrCode/> Pix
+                <QrCode /> Pix
               </ButtonChooser.Option>
             </ButtonChooser>
 
@@ -218,8 +222,13 @@ const Demo: Component = () => {
             style={{
               "border-radius": '7px',
             }}
-            onClick={() => setCurrentStep(currentStep() + 1)}
-            disabled={currentStep() === 2}
+            onClick={() => {
+              const isValid = currentForm()?.validateAll();
+              if (isValid) {
+                setCurrentStep(currentStep() + 1)
+              }
+            }}
+            disabled={currentStep() === 2 || currentForm()?.isInvalid()}
           >Next</Button>
         </Stack>
       </Box>
