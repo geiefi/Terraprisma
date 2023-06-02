@@ -3,13 +3,12 @@ import { createStore } from 'solid-js/store';
 
 import { GrapeS } from 'grapes';
 
-import { BarcodeScanner, CreditCard } from 'grapes/Icons';
+import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
 import { Input, Select, ButtonChooser, Datepicker } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
-import { Typography, Title } from 'grapes/General/Typography';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
@@ -145,7 +144,7 @@ const Demo: Component = () => {
                 <BarcodeScanner /> Boleto
               </ButtonChooser.Option>
               <ButtonChooser.Option value='pix'>
-                Pix
+                <QrCode/> Pix
               </ButtonChooser.Option>
             </ButtonChooser>
 
