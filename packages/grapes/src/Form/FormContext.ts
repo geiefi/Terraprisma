@@ -7,7 +7,7 @@ export type FieldValue = string | string[] | number | boolean | Date | Record<st
 
 export type FormValue = Record<string, FieldValue>;
 
-export type FieldValidator<ValueType = FieldValue> = (value: ValueType) => string | undefined;
+export type FieldValidator<ValueType = FieldValue> = (value: ValueType) => string | string[] | undefined;
 
 /**
  * A type of validation that is agnostic with relation to which field it validates, meaning
@@ -44,15 +44,11 @@ export class FormStore<Values extends FormValue> {
 
 export type Store<T> = [get: T, set: SetStoreFunction<T>];
 
-type FormValueChangeListener<T extends FormValue> = (newValues: T) => any;
-
 /**
   * This is going to be the value that comes from the `useForm()` call to get the data
   * and access to some actions related to the context Form.
   */
 export class FormProviderValue<Values extends FormValue> {
-  private onFormValueChangeListeners: FormValueChangeListener<Values>[];
-
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;
 
@@ -61,8 +57,6 @@ export class FormProviderValue<Values extends FormValue> {
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
   ) {
-    this.onFormValueChangeListeners = [];
-
     this.form = store[0];
     this.setForm = store[1];
   }
@@ -130,7 +124,7 @@ export class FormProviderValue<Values extends FormValue> {
       this.setForm(produce(form => {
         const validators = form.validators[name] || [];
         const value = form.values[name];
-        const errors = validators.map(validator => validator(value)!).filter(Boolean);
+        const errors = validators.map(validator => validator(value)!).flat().filter(Boolean);
         form.errors[name] = errors;
       }));
     }
@@ -150,7 +144,7 @@ export class FormProviderValue<Values extends FormValue> {
 
         const validators = form.validators[field]!;
         const value = form.values[field];
-        const caughtErrors = validators.map(validator => validator(value)!).filter(Boolean);
+        const caughtErrors = validators.map(validator => validator(value)!).flat().filter(Boolean);
         errors[field] = caughtErrors;
       });
 
@@ -236,16 +230,10 @@ export class FormProviderValue<Values extends FormValue> {
     return value;
   }
 
-  onChange(effect: FormValueChangeListener<Values>): void {
-    this.onFormValueChangeListeners.push(effect);
-  }
-
   update(name: keyof Values, newValue: Values[keyof Values]): void {
     this.setForm(produce(form => {
       form.values[name] = newValue;
     }));
-
-    this.onFormValueChangeListeners.forEach(listener => listener(this.form.values));
   }
 };
 

@@ -1,4 +1,4 @@
-import { createEffect, JSX, on, onCleanup, onMount, ParentProps, Ref, useContext } from "solid-js";
+import { createEffect, createMemo, JSX, on, onMount, ParentProps, useContext } from "solid-js";
 import { createStore, produce, SetStoreFunction } from "solid-js/store";
 
 import {
@@ -105,12 +105,18 @@ const innerForm = (props: ParentProps<{
     props.identification,
   );
 
+  const allErrors = createMemo(
+    () => Object.values(innerFormStore.errors).flat().filter(Boolean) as string[]
+  );
+
   onMount(() => {
     if (typeof form.valueFor(props.name) !== 'undefined') {
       form.cleanUp(props.name);
     }
 
-    form.init(props.name, [], innerFormStore.values as any);
+    form.init(props.name, [
+      (_) => innerForm.validateAll() ? [] : allErrors()
+    ], innerFormStore.values as any);
   });
 
   if (typeof props.ref !== 'undefined') {
@@ -120,8 +126,12 @@ const innerForm = (props: ParentProps<{
     });
   }
 
-  innerForm.onChange(newValues => {
+  createEffect(() => {
+    const newValues = form.valueFor(props.name);
     form.update(props.name, newValues);
+    form.store[1](produce(form => {
+      form.errors[props.name] = allErrors();
+    }));
   });
 
   createEffect(on(
