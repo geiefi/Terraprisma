@@ -1,4 +1,4 @@
-import { createEffect, JSX, on, onCleanup, onMount, ParentProps, useContext } from "solid-js";
+import { createEffect, JSX, on, onCleanup, onMount, ParentProps, Ref, useContext } from "solid-js";
 import { createStore, produce, SetStoreFunction } from "solid-js/store";
 
 import {
@@ -40,6 +40,8 @@ const Form = (props: ParentProps<{
   indentification: string,
   formStore: [get: FormStore<any>, set: SetStoreFunction<FormStore<any>>],
   agnosticValidators?: AgnosticValidator[],
+
+  ref?: (val: FormProviderValue<FormValue>) => void,
 }>): JSX.Element => {
   const [form, setForm] = props.formStore;
 
@@ -49,11 +51,22 @@ const Form = (props: ParentProps<{
     }));
   });
 
-  return <FormContext.Provider value={new FormProviderValue(
+  const providerValue = new FormProviderValue(
     [form, setForm],
     props.agnosticValidators || [],
     props.indentification
-  )}>
+  );
+
+  if (typeof props.ref !== 'undefined') {
+    createEffect(() => {
+      providerValue.track();
+      props.ref!(providerValue);
+    });
+  }
+
+  return <FormContext.Provider
+    value={providerValue}
+  >
     {props.children}
   </FormContext.Provider>;
 }
@@ -71,6 +84,8 @@ const innerForm = (props: ParentProps<{
    */
   name: string,
   agnosticValidators?: AgnosticValidator[],
+
+  ref?: (val: FormProviderValue<FormValue>) => void,
 }>) => {
   const form = useForm();
 
@@ -98,6 +113,13 @@ const innerForm = (props: ParentProps<{
     form.init(props.name, [], innerFormStore.values as any);
   });
 
+  if (typeof props.ref !== 'undefined') {
+    createEffect(() => {
+      innerForm.track();
+      props.ref!(innerForm);
+    });
+  }
+
   innerForm.onChange(newValues => {
     form.update(props.name, newValues);
   });
@@ -113,7 +135,9 @@ const innerForm = (props: ParentProps<{
     }
   ));
 
-  return <FormContext.Provider value={innerForm}>
+  return <FormContext.Provider
+    value={innerForm}
+  >
     {props.children}
   </FormContext.Provider>;
 };
