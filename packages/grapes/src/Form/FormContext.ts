@@ -1,5 +1,7 @@
 import { createContext, Setter } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
+import { deeplyTrack } from "../Helpers/deeplyTrack";
+import { dbg } from "../_Shared/Utils";
 
 export type FieldValue = string | string[] | number | boolean | Date | Record<string, any> | undefined;
 
@@ -69,6 +71,10 @@ export class FormProviderValue<Values extends FormValue> {
     return this._identification;
   }
 
+  track(): void {
+    deeplyTrack(this, ['onFormValueChangeListeners', 'setForm']);
+  }
+
   /**
     * @description Initializes the field inside of the formStore 
     * using the `validators` and the initial `value`.
@@ -134,7 +140,7 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Validates all of the fields and then uses all of the agnostic
     * validators associated with the form.
     */
-  validateAll(): void {
+  validateAll(): boolean {
     this.setForm(produce(form => {
       const fields: (keyof Values)[] = Object.keys(form.validators);
       const errors: Partial<Record<keyof Values, string[]>> = {};
@@ -166,6 +172,8 @@ export class FormProviderValue<Values extends FormValue> {
 
       form.errors = errors;
     }));
+
+    return this.isValid();
   }
 
   isDisabled(name: keyof Values): boolean {
@@ -183,18 +191,17 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Checks weather or not the form is valid.
     */
   isValid(): boolean {
-    const fieldsWithErrorObject: (keyof Values)[] = Object.keys(this.form.errors);
-    return fieldsWithErrorObject.reduce(
-      (accumulator, key) => accumulator + this.form.errors[key]!.length,
-      0
-    ) === 0;
+    return !this.isInvalid();
   }
 
   /**
     * @description Checks weather or not the form is invalid.
     */
   isInvalid(): boolean {
-    return !this.isValid();
+    const fieldsWithErrorObject: (keyof Values)[] = Object.keys(this.form.errors);
+    return fieldsWithErrorObject.some(
+      (key) => this.form.errors[key]!.length > 0,
+    );
   }
 
   /**
@@ -202,9 +209,9 @@ export class FormProviderValue<Values extends FormValue> {
     * `name`.
     */
   firstErrorFor(name: keyof Values): string | undefined {
-    return Object.keys(this.form.errors).includes(name.toString())
-      ? this.form.errors[name]![0]
-      : undefined;
+    if (typeof this.form.errors[name] !== 'undefined') {
+      return this.form.errors[name]![0];
+    }
   }
 
   getErrors(name: keyof Values): string[] | undefined {
@@ -212,19 +219,21 @@ export class FormProviderValue<Values extends FormValue> {
 
     // traverses through the errors so that Solid tracks them
     // and the return value of this method is reactive
-    for (const _error of this.form.errors[name]!) {}
+    deeplyTrack(this.form.errors[name]);
 
     return this.form.errors[name];
   }
- 
+
   hasErrors(name: keyof Values): boolean {
     return typeof this.form.errors[name] !== 'undefined'
-      ? this.form.errors[name]!.length > 0
+      ? typeof this.form.errors[name]![0].length !== 'undefined'
       : false;
   }
 
   valueFor(name: keyof Values): Values[keyof Values] | undefined {
-    return this.form.values[name];
+    const value = this.form.values[name];
+    deeplyTrack(value);
+    return value;
   }
 
   onChange(effect: FormValueChangeListener<Values>): void {
