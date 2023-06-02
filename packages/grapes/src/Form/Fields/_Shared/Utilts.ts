@@ -136,13 +136,17 @@ export function setupValidateFunction<
   T extends FieldProps,
   K extends FormValue = FormValue
 >(props: T, setErrors: Setter<string[]>, form: FormProviderValue<K> | undefined): FieldInternalValidate {
+  if (typeof form !== 'undefined') {
+    createEffect(() => {
+      setErrors(form.getErrors(props.name) || []);
+    });
+  }
+
   return (value: FieldValue) => {
     if (typeof form !== 'undefined') {
       form.validate(props.name);
 
       const newErrors = form.getErrors(props.name)
-
-      setErrors(newErrors || []);
 
       return newErrors;
     } else if (typeof props.validators !== 'undefined') {
