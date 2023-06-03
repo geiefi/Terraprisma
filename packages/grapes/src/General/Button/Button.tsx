@@ -1,5 +1,5 @@
 import { Component, createMemo, JSX, ParentProps, splitProps } from "solid-js";
-import { dbg, mergeClass } from "../../_Shared/Utils";
+import { mergeClass } from "../../_Shared/Utils";
 import { useDepth } from "../Box/Box";
 import Ripple from "../Ripple/Ripple";
 
@@ -13,7 +13,7 @@ export interface ButtonProps extends ParentProps, JSX.HTMLAttributes<HTMLButtonE
 
   rippleColor?: string,
   rippleClass?: string,
-};
+}
 
 const Button = (allProps: ButtonProps) => {
   const [props, elProps] = splitProps(

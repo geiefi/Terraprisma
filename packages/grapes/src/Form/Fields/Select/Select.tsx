@@ -8,7 +8,6 @@ import {
   onMount,
   For,
   createEffect,
-  ParentProps,
   on,
   splitProps,
 } from 'solid-js';
@@ -23,7 +22,7 @@ import { FieldValue } from '../../FormContext';
 
 import './Select.scss';
 import { Dropdown } from '../../../General';
-import { dbg, mergeClass } from '../../../_Shared/Utils';
+import { mergeClass } from '../../../_Shared/Utils';
 
 export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
@@ -38,7 +37,7 @@ export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivEleme
 export interface OptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
   value: FieldValue;
   children: JSX.Element;
-};
+}
 
 const Option: Component<OptionProps> = (props) => {
   return props as unknown as JSX.Element;
@@ -75,8 +74,8 @@ const Select = (allProps: SelectProps) => {
 
   const {
     elementId: id,
-    errorsStore: [errors, _setErrors],
-    disabledSignal: [disabled, _setDisabled],
+    errorsStore: [errors],
+    disabledSignal: [disabled],
     focusedSignal: [focused, setFocused],
     valueSignal: [value, setValue],
     validate,

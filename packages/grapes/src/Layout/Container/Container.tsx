@@ -20,8 +20,8 @@ export const layoutWidths: Record<LayoutWidth, string> = {
   'xl': '1920px'
 };
 
-function isPredefinedLayoutWidth(maxWidth: any): maxWidth is LayoutWidth {
-  return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth);
+function isPredefinedLayoutWidth(maxWidth: LayoutWidth | number): maxWidth is LayoutWidth {
+  return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth.toString());
 }
 
 const Container: Component<ContainerProps> = (allProps) => {

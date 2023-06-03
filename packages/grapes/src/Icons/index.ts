@@ -2,12 +2,12 @@ import 'material-symbols';
 
 import { icons, iconsPascalCase } from './Icons';
 
-import { createIconComponent, IconComponent } from './IconGenerator';
+import { createIconComponent, IconComponent } from './IconTemplate';
 
 const iconComponents: Record<string, IconComponent> = {} as any;
 
 for (const [index, iconName] of Object.entries(icons)) {
-  let pascalCasedIconName = iconsPascalCase[parseInt(index)];
+  const pascalCasedIconName = iconsPascalCase[parseInt(index)];
 
   iconComponents[pascalCasedIconName] = createIconComponent(iconName);
 }

@@ -20,7 +20,7 @@ export interface BoxProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement
    * is set automatically based on the context the Box is found on.
    */
   depth?: Depth,
-};
+}
 
 /**
  * @description A component used for having a kind of box, this Box creates a context automatically 

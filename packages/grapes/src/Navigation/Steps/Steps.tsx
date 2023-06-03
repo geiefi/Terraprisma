@@ -7,7 +7,6 @@ import {
   createSignal,
   For,
   JSX,
-  ParentProps,
   Show,
   splitProps,
   useContext
@@ -24,7 +23,7 @@ export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
   description?: string | JSX.Element,
 
   style?: JSX.CSSProperties;
-};
+}
 
 export const Step: Component<StepProps> = (props) => {
   return props as unknown as JSX.Element;
@@ -33,7 +32,7 @@ export const Step: Component<StepProps> = (props) => {
 const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['description', 'index']);
 
-  const [current, _count] = useSteps()!;
+  const [current] = useSteps()!;
 
   const [descriptionPRef, setDescriptionPRef] = createSignal<HTMLParagraphElement>();
   const [stepInfoRef, setStepInfoRef] = createSignal<HTMLSpanElement>();
@@ -103,7 +102,7 @@ export interface StepsProps extends JSX.HTMLAttributes<HTMLDivElement> {
   direction?: 'horizontal' | 'vertical',
 
   onFinish?: () => void,
-};
+}
 
 export class StepsError extends Error { }
 

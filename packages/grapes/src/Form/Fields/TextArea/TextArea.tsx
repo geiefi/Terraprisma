@@ -29,8 +29,8 @@ const TextArea: Component<TextAreaProps> = (allProps) => {
 
   const {
     elementId: id,
-    errorsStore: [errors, _setErrors],
-    disabledSignal: [disabled, _setDisabled],
+    errorsStore: [errors],
+    disabledSignal: [disabled],
     focusedSignal: [focused, setFocused],
     valueSignal: [value, setValue],
     validate,

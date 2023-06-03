@@ -5,7 +5,7 @@ import './Divisor.scss';
 
 export interface DivisorProps extends JSX.HTMLAttributes<HTMLDivElement> {
   direction?: 'vertical' | 'horizontal';
-};
+}
 
 const Divisor: Component<DivisorProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['direction']);

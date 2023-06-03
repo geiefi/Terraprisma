@@ -1,6 +1,6 @@
 import { FieldValue } from "./FormContext";
 
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 /**
   * A object containing some useful and predefined validators

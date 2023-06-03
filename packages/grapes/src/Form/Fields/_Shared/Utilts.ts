@@ -120,10 +120,9 @@ export function setupFieldsValueSignal<
     return [value, setValue];
   } else {
     const signal = createSignal<ValueType>();
-    const [_value, setValue] = signal;
 
     createEffect(on(() => props.value, () => {
-      setValue(props.value as any);
+      signal[1](props.value as any);
     }));
 
     return signal;
@@ -153,7 +152,8 @@ export function setupValidateFunction<
       const newErrors = props.validators
         // we assert it to be truthy here since we filter(Boolean) after
         .map(validator => validator(value)!)
-        .filter(Boolean);
+        .filter(Boolean)
+        .flat();
 
       setErrors(newErrors);
 
@@ -181,10 +181,8 @@ export function setupFieldsDisabledSignal<
     signal = createSignal<boolean>(false);
   }
 
-  const [_disabled, setDisabled] = signal;
-
   createEffect(on(() => props.disabled, () => {
-    setDisabled(props.disabled || false);
+    signal[1](props.disabled || false);
   }));
 
   return signal;
@@ -206,7 +204,7 @@ export interface FieldSetupResult<
   hasContent: Accessor<boolean>,
 
   validate: FieldInternalValidate,
-};
+}
 
 export function setupField<
   T extends FieldProps,

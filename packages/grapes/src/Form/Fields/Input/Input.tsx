@@ -18,8 +18,8 @@ export interface InputProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTM
 
   color?: 'primary' | 'secondary' | 'tertiary';
 
-  onChange?: (value: string, event?: InputOnChangeEvent) => any,
-  onFocus?: () => any,
+  onChange?: (value: string, event?: InputOnChangeEvent) => void,
+  onFocus?: () => void,
 }
 
 const Input: Component<InputProps> = (allProps) => {
@@ -30,8 +30,8 @@ const Input: Component<InputProps> = (allProps) => {
 
   const {
     elementId: id,
-    errorsStore: [errors, _setErrors],
-    disabledSignal: [disabled, _setDisabled],
+    errorsStore: [errors],
+    disabledSignal: [disabled],
     focusedSignal: [focused, setFocused],
     valueSignal: [value, setValue],
     validate,

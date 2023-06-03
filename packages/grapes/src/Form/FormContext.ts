@@ -1,7 +1,6 @@
 import { createContext, Setter } from "solid-js";
 import { produce, SetStoreFunction } from "solid-js/store";
 import { deeplyTrack } from "../Helpers/deeplyTrack";
-import { dbg } from "../_Shared/Utils";
 
 export type FieldValue = string | string[] | number | boolean | Date | Record<string, any> | undefined;
 
@@ -235,6 +234,6 @@ export class FormProviderValue<Values extends FormValue> {
       form.values[name] = newValue;
     }));
   }
-};
+}
 
 export const FormContext = createContext<FormProviderValue<FormValue>>();

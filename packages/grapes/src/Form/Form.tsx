@@ -115,7 +115,7 @@ const innerForm = (props: ParentProps<{
     }
 
     form.init(props.name, [
-      (_) => innerForm.validateAll() ? [] : allErrors()
+      () => innerForm.validateAll() ? [] : allErrors()
     ], innerFormStore.values as any);
   });
 

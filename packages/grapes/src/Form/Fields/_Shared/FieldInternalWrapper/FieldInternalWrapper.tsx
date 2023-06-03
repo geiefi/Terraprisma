@@ -11,7 +11,7 @@ export interface FieldInternalWrapperProps extends JSX.HTMLAttributes<HTMLDivEle
 
   helperText: JSX.Element | undefined;
   renderHelperText?: boolean;
-};
+}
 
 /**
  * @description A integral GrapeS wrapper component that helps with handling 

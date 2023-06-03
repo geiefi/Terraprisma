@@ -13,11 +13,11 @@ export function mergeClass(...classes: (string | undefined)[]) {
 }
 
 /**
-  * @description `Console.log`'s the `el` then returns it
+  * @description `console.log`'s the `el` then returns it
   *
   * This function is inspired in Rust's `dbg!` macro.
   */
-export function dbg<T=any>(el: T): T {
+export function dbg<T = any>(el: T): T {
   console.log(el);
   return el;
 }

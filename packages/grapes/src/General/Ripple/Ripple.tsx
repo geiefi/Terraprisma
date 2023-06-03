@@ -10,7 +10,7 @@ export interface RippleProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElem
    */
   noRipple?: boolean,
   color?: string,
-};
+}
 
 interface RippleConfig {
   diameter: number;

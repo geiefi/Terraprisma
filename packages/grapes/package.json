@@ -8,13 +8,20 @@
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "clean": "tsc --build --clean tsconfig.build.json",
-    "watch": "tsc --build -w tsconfig.build.json"
+    "watch": "tsc --build -w tsconfig.build.json",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "devDependencies": {
-    "@types/tinycolor2": "^1.4.3"
+    "@types/tinycolor2": "^1.4.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "eslint": "^8.41.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8"
   },
   "dependencies": {
     "material-symbols": "^0.5.5",
+    "sass": "^1.62.1",
     "solid-js": "^1.7.2",
     "solid-transition-group": "^0.2.2",
     "tinycolor2": "^1.6.0"

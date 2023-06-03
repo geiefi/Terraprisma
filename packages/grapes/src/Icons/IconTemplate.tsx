@@ -8,7 +8,7 @@ export interface IconProps extends JSX.HTMLAttributes<HTMLSpanElement> {
   variant?: 'outlined' | 'rounded' | 'sharp',
 
   style?: JSX.CSSProperties,
-};
+}
 
 export type IconComponent = Component<IconProps>;
 

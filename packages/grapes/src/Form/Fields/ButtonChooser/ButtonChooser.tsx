@@ -1,4 +1,4 @@
-import { Component, createMemo, children as accessChildren, JSX, on, ParentProps, createEffect, For, Show, splitProps } from "solid-js";
+import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from "solid-js";
 import Button, { ButtonProps } from "../../../General/Button/Button";
 import { mergeClass } from "../../../_Shared/Utils";
 import { FieldValue } from "../../FormContext";
@@ -34,8 +34,8 @@ const ButtonChooser = (allProps: ButtonChooserProps) => {
 
   const {
     elementId: id,
-    errorsStore: [errors, _setErrors],
-    disabledSignal: [disabled, _setDisabled],
+    errorsStore: [errors],
+    disabledSignal: [disabled],
     valueSignal: [value, setValue],
     validate,
   } = setupField(props);

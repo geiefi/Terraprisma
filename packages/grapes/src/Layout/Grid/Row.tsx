@@ -1,4 +1,4 @@
-import { Component, JSX, ParentProps, splitProps } from "solid-js";
+import { Component, JSX, splitProps } from "solid-js";
 import { mergeClass } from "../../_Shared/Utils";
 
 import './Row.scss';
@@ -8,7 +8,7 @@ export interface RowProps extends JSX.HTMLAttributes<HTMLDivElement> {
   rowGap?: string;
 
   style?: JSX.CSSProperties;
-};
+}
 
 const Row: Component<RowProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['gap', 'rowGap']);
