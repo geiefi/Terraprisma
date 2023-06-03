@@ -44,6 +44,8 @@ const Slider: Component<SliderProps> = (allProps) => {
     if (props.onChange) {
       props.onChange(newValue);
     }
+
+    return newValue;
   };
 
   const handleMouseDown = (e: MouseEvent) => {
@@ -53,8 +55,9 @@ const Slider: Component<SliderProps> = (allProps) => {
   };
   const handleMouseUp = (e: MouseEvent) => {
     if (focused()) {
-      updateValueBasedOnMouseX(e.x);
+      const newValue = updateValueBasedOnMouseX(e.x);
       setFocused(false);
+      validate(newValue);
     }
   };
   const handleMouseMove = (e: MouseEvent) => {
