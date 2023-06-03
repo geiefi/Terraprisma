@@ -1,3 +1,4 @@
+import { dbg } from "../_Shared/Utils";
 import { FieldValue } from "./FormContext";
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -33,7 +34,26 @@ const Validators = {
     (value: FieldValue) => value !== expectedValue
       ? `This is expected to be ${expectedValue}!`
       : undefined
-  )
+
+  ),
+  /**
+    * Validates weather or not the current value of the field is >= than a given `minimum`.
+    */
+  minEq: (minimum: number) => 
+    (value: FieldValue) => (typeof dbg(value) === 'number') 
+      ? (value! >= minimum
+          ? undefined
+          : `The minimmum value for this is ${minimum}!`)
+      : undefined,
+  /**
+    * Validates weather or not the current value of the field is <= than a given `maximum`.
+    */
+  maxEq: (maximum: number) => 
+    (value: FieldValue) => (typeof value === 'number') 
+      ? (value <= maximum
+          ? undefined
+          : `The maximum value for this is ${maximum}!`)
+      : undefined,
 }
 
 export default Validators;
