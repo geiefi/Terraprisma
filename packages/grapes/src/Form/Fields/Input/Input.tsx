@@ -4,6 +4,7 @@ import './Input.scss';
 import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import { mergeClass } from '../../../_Shared/Utils';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -64,7 +65,7 @@ const Input: Component<InputProps> = (allProps) => {
         type={props.type || 'text'}
         disabled={disabled()}
 
-        class={elProps.class}
+        class={mergeClass('input', elProps.class)}
         classList={{
           'no-label': typeof props.label === 'undefined',
         }}
