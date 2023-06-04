@@ -1,5 +1,5 @@
 import { Accessor, createEffect, createMemo, createSignal, on, onCleanup, onMount, Setter, Signal } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createStore, produce } from "solid-js/store";
 
 import { useForm } from "../../Form";
 import { FieldValidator, FieldValue, FormProviderValue, FormValue, Store } from "../../FormContext";
@@ -84,7 +84,9 @@ export function setupCommunicationWithFormContext<
   if (form) {
     onMount(() => {
       if (typeof form!.valueFor(props.name) !== 'undefined') {
-        form!.cleanUp(props.name);
+        form!.store[1](produce(form => {
+          form.errors[props.name as keyof K] = [];
+        }));
       }
 
       form!.init(
