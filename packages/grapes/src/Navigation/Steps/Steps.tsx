@@ -10,14 +10,14 @@ import {
   Show,
   splitProps,
   useContext
-} from "solid-js";
+} from 'solid-js';
 
-import { StepsContext } from "./StepsContext";
+import { StepsContext } from './StepsContext';
 
-import { Check } from "../../Icons";
+import { Check } from '../../Icons';
 
 import './Steps.scss';
-import { mergeClass } from "../../_Shared/Utils";
+import { mergeClass } from '../../_Shared/Utils';
 
 export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
   description?: string | JSX.Element,
@@ -73,18 +73,18 @@ const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
       ...elProps.style
     }}
   >
-    <span class='step-content' ref={setContentRef}>
+    <span class="step-content" ref={setContentRef}>
       <span class="step-circle">
         <Show when={current() <= props.index} fallback={<Check />}>
           {props.index + 1}
         </Show>
       </span>
 
-      <span class='step-info' ref={setStepInfoRef}>
-        <p class='step-title'>{elProps.children}</p>
+      <span class="step-info" ref={setStepInfoRef}>
+        <p class="step-title">{elProps.children}</p>
 
         <Show when={props.description}>
-          <p class='step-description' ref={setDescriptionPRef}>{props.description}</p>
+          <p class="step-description" ref={setDescriptionPRef}>{props.description}</p>
         </Show>
       </span>
     </span>

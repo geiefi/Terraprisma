@@ -1,5 +1,5 @@
-import { Accessor, Component, createContext, createMemo, JSX, ParentProps, splitProps, useContext } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
+import { Accessor, Component, createContext, createMemo, JSX, ParentProps, splitProps, useContext } from 'solid-js';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Box.scss';
 

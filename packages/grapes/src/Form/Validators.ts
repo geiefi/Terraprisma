@@ -1,5 +1,5 @@
-import { dbg } from "../_Shared/Utils";
-import { FieldValue } from "./FormContext";
+import { dbg } from '../_Shared/Utils';
+import { FieldValue } from './FormContext';
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 

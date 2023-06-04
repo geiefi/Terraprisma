@@ -1,4 +1,4 @@
-import tinycolor2 from "tinycolor2";
+import tinycolor2 from 'tinycolor2';
 
 /**
  * A class that uses the `tinycolor2` library to parse and 

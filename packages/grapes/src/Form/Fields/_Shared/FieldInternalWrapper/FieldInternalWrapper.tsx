@@ -1,5 +1,5 @@
-import { Component, createMemo, JSX, Show, splitProps } from "solid-js";
-import { mergeClass } from "../../../../_Shared/Utils";
+import { Component, createMemo, JSX, Show, splitProps } from 'solid-js';
+import { mergeClass } from '../../../../_Shared/Utils';
 
 import './FieldInternalWrapper.scss';
 
@@ -42,7 +42,7 @@ const FieldInternalWrapper: Component<FieldInternalWrapperProps> = (allProps) =>
     {elProps.children}
 
     <Show when={typeof props.renderHelperText === 'undefined' || props.renderHelperText === true}>
-      <div class='helper-text'>
+      <div class="helper-text">
         <Show
           when={hasErrors() && !props.isDisabled}
           fallback={props.helperText}

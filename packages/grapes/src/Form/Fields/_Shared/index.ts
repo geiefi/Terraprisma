@@ -1,4 +1,4 @@
-import FieldInternalWrapper from "./FieldInternalWrapper/FieldInternalWrapper";
-import InputContainer from "./InputContainer/InputContainer";
+import FieldInternalWrapper from './FieldInternalWrapper/FieldInternalWrapper';
+import InputContainer from './InputContainer/InputContainer';
 
 export { FieldInternalWrapper, InputContainer };

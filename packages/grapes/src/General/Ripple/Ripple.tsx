@@ -1,6 +1,6 @@
-import { Component, createSignal, For, JSX, ParentProps, Show, splitProps } from "solid-js";
-import { createStore, produce } from "solid-js/store";
-import { mergeClass } from "../../_Shared/Utils";
+import { Component, createSignal, For, JSX, ParentProps, Show, splitProps } from 'solid-js';
+import { createStore, produce } from 'solid-js/store';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Ripple.scss';
 
@@ -67,7 +67,7 @@ const Ripple: Component<RippleProps> = (allProps) => {
       {(ripple) => (
         <Show when={ripple}>
           <span
-            class='ripple'
+            class="ripple"
             style={{
               width: `${ripple.diameter}px`,
               height: `${ripple.diameter}px`,

@@ -1,3 +1,3 @@
-import Steps, { Step } from "./Steps/Steps"
+import Steps, { Step } from './Steps/Steps'
 
 export { Steps, Step };

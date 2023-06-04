@@ -1,8 +1,8 @@
-import { Component, JSX, Show, splitProps } from "solid-js";
+import { Component, JSX, Show, splitProps } from 'solid-js';
 
-import { useDepth } from "../../../../General/Box/Box";
-import { mergeClass } from "../../../../_Shared/Utils";
-import Label from "../Label/Label";
+import { useDepth } from '../../../../General/Box/Box';
+import { mergeClass } from '../../../../_Shared/Utils';
+import Label from '../Label/Label';
 
 import './InputContainer.scss';
 
@@ -54,7 +54,7 @@ const InputContainer: Component<InputContainerProps> = (allProps) => {
 
     {elProps.children}
 
-    <span class='input-container-icon'>{props.icon}</span>
+    <span class="input-container-icon">{props.icon}</span>
   </div>;
 };
 

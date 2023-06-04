@@ -95,24 +95,24 @@ const DatepickerInternalDayPicker: Component<{
     }
   });
 
-  return <div class='days-listing'>
-    <span class='entry header'>S</span>
-    <span class='entry header'>M</span>
-    <span class='entry header'>T</span>
-    <span class='entry header'>W</span>
-    <span class='entry header'>T</span>
-    <span class='entry header'>F</span>
-    <span class='entry header'>S</span>
+  return <div class="days-listing">
+    <span class="entry header">S</span>
+    <span class="entry header">M</span>
+    <span class="entry header">T</span>
+    <span class="entry header">W</span>
+    <span class="entry header">T</span>
+    <span class="entry header">F</span>
+    <span class="entry header">S</span>
 
     <For each={daysToShow()}>{
       (day) => <span
-        class='entry'
+        class="entry"
         classList={{
           'outside-of-view': day.dateAtDay.getMonth() !== props.month,
         }}
       >
         <Button.Icon
-          size='small'
+          size="small"
           classList={{
             'active': props.selectedDate.getMonth() === day.dateAtDay.getMonth()
               && props.selectedDate.getDate() === day.dateAtDay.getDate()
@@ -136,12 +136,12 @@ const DatepickerInternalMonthPicker: Component<{
 
   onMonthClicked: (month: number) => any,
 }> = (props) => {
-  return <div class='months-listing'>
+  return <div class="months-listing">
     <Index each={props.monthNames}>{
       (month, monthNumber) => (
-        <span class='entry'>
+        <span class="entry">
           <Button.Rounded
-            size='small'
+            size="small"
             classList={{
               active: monthNumber === props.selectedDate.getMonth()
                 && props.year === props.selectedDate.getFullYear()
@@ -172,12 +172,12 @@ const DatepickerIntenralYearPicker: Component<{
     return result;
   });
 
-  return <div class='years-listing'>
+  return <div class="years-listing">
     <Index each={years()}>{
       (year) => (
-        <span class='entry'>
+        <span class="entry">
           <Button.Rounded
-            size='small'
+            size="small"
             classList={{
               active: props.month === props.selectedDate.getMonth()
                 && year() === props.selectedDate.getFullYear()
@@ -298,8 +298,8 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
   }));
 
   const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
   const displayDate = createMemo(() => {
@@ -345,7 +345,7 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
       }}
       icon={
         <CalendarMonth
-          variant='rounded'
+          variant="rounded"
         />
       }
       hasContent={hasContent()}
@@ -363,22 +363,22 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
     <Dropdown
       for={inputContainerRef()!}
       visible={focused()}
-      class='datepicker-dropdown'
+      class="datepicker-dropdown"
       ref={setDropdownRef}
     >
-      <Box depth={0} class='datepicker-dropdown-inner'>
-        <div class='dropdown-header'>
+      <Box depth={0} class="datepicker-dropdown-inner">
+        <div class="dropdown-header">
           <Button.Icon
-            size='small'
-            class='arrow-previous'
+            size="small"
+            class="arrow-previous"
             onClick={handlePrevious}
           >
             <ArrowLeft />
           </Button.Icon>
 
           <ButtonChooser
-            name='dateSelectionType'
-            class='selection-type-button-chooser'
+            name="dateSelectionType"
+            class="selection-type-button-chooser"
             value={datepickerSelectionType()}
             manuallyControlled
             onChange={(v) => {
@@ -390,29 +390,29 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
             }}
           >
             <ButtonChooser.Option
-              size='medium'
-              class='selection-type-button'
-              value='month'
+              size="medium"
+              class="selection-type-button"
+              value="month"
             >
               {monthNames[viewedMonth()]}
             </ButtonChooser.Option>
             <ButtonChooser.Option
-              size='medium'
-              class='selection-type-button'
-              value='year'
+              size="medium"
+              class="selection-type-button"
+              value="year"
             >{viewedYear()}</ButtonChooser.Option>
           </ButtonChooser>
 
           <Button.Icon
-            size='small'
-            class='arrow-next'
+            size="small"
+            class="arrow-next"
             onClick={handleNext}
           >
             <ArrowRight />
           </Button.Icon>
         </div>
 
-        <Row class='dropdown-content'>
+        <Row class="dropdown-content">
           <Switch>
             <Match when={datepickerSelectionType() === 'day'}>
               <DatepickerInternalDayPicker

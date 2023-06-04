@@ -1,13 +1,13 @@
-import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from "solid-js";
-import Button, { ButtonProps } from "../../../General/Button/Button";
-import { mergeClass } from "../../../_Shared/Utils";
-import { FieldValue } from "../../FormContext";
-import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
-import Label from "../_Shared/Label/Label";
+import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from 'solid-js';
+import Button, { ButtonProps } from '../../../General/Button/Button';
+import { mergeClass } from '../../../_Shared/Utils';
+import { FieldValue } from '../../FormContext';
+import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import Label from '../_Shared/Label/Label';
 
-import { FieldPropKeys, FieldProps, setupField } from "../_Shared/Utilts";
+import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
-import "./ButtonChooser.scss";
+import './ButtonChooser.scss';
 
 export interface ButtonChooserProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;

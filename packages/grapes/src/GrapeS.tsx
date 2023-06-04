@@ -8,11 +8,11 @@ import {
   ParentProps,
   Signal,
   useContext
-} from "solid-js";
+} from 'solid-js';
 
-import "./GrapeS.scss";
+import './GrapeS.scss';
 
-import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from "./Themes";
+import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './Themes';
 
 export type GrapeSThemesProviderValue = {
   themes: Accessor<Theme[]>;
@@ -80,17 +80,17 @@ export const GrapeS: Component<ParentProps<{
         '--text-5': currentTheme().textColors[5].toRGBA(),
 
         '--primary': currentTheme().primary.toRGBA(),
-        "--text-primary": currentTheme().textColors.primary.toRGBA(),
+        '--text-primary': currentTheme().textColors.primary.toRGBA(),
         '--lightened-primary': (currentTheme().lightnedPrimary
           || currentTheme().primary.withAlpha(0.32)).toRGBA(),
 
         '--secondary': currentTheme().secondary.toRGBA(),
-        "--text-secondary": currentTheme().textColors.secondary.toRGBA(),
+        '--text-secondary': currentTheme().textColors.secondary.toRGBA(),
         '--lightened-secondary': (currentTheme().lightnedSecondary
           || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
 
         '--tertiary': currentTheme().tertiary.toRGBA(),
-        "--text-tertiary": currentTheme().textColors.tertiary.toRGBA(),
+        '--text-tertiary': currentTheme().textColors.tertiary.toRGBA(),
         '--lightened-tertiary': (currentTheme().lightnedTertiary
           || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 

@@ -1,7 +1,7 @@
-import { Component, createMemo, JSX, ParentProps, splitProps } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
-import { useDepth } from "../Box/Box";
-import Ripple from "../Ripple/Ripple";
+import { Component, createMemo, JSX, ParentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../_Shared/Utils';
+import { useDepth } from '../Box/Box';
+import Ripple from '../Ripple/Ripple';
 
 import './Button.scss';
 
@@ -49,7 +49,7 @@ const Button = (allProps: ButtonProps) => {
     style={{ display: 'inline-block' }}
   >
     <button
-      type='button'
+      type="button"
       {...elProps}
       class={elProps.class}
       classList={{
@@ -77,8 +77,8 @@ const Button = (allProps: ButtonProps) => {
 
 const RoundedButton: Component<ButtonProps> = (props) => {
   return <Button
-    rippleClass='rounded'
-    color='transparent'
+    rippleClass="rounded"
+    color="transparent"
     {...props}
     class={mergeClass('rounded', props.class)}
   >

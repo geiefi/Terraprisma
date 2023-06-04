@@ -69,7 +69,7 @@ const TextArea: Component<TextAreaProps> = (allProps) => {
           ...elProps.classList
         }}
         onInput={(event) => {
-          event.target.style.height = "0px";
+          event.target.style.height = '0px';
           const scrollHeight = Math.max(
             event.target.scrollHeight, 
             54

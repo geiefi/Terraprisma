@@ -1,4 +1,4 @@
-import { Color, Theme } from "./Theme";
+import { Color, Theme } from './Theme';
 
 export const GrapeSDarkTheme: Theme = {
   id: 'dark',
@@ -13,9 +13,9 @@ export const GrapeSDarkTheme: Theme = {
   },
 
   textColors: {
-    primary: new Color("#FFFFFF"),
-    secondary: new Color("#FFFFFF"),
-    tertiary: new Color("#ffffff"),
+    primary: new Color('#FFFFFF'),
+    secondary: new Color('#FFFFFF'),
+    tertiary: new Color('#ffffff'),
 
     0: new Color('#ffffff'),
     1: new Color('#dcdcdc').withAlpha(0.77),

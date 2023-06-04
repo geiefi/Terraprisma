@@ -1,4 +1,4 @@
-import { Accessor, createContext } from "solid-js";
+import { Accessor, createContext } from 'solid-js';
 
 export type StepsContextProviderValue = [
   current: Accessor<number>,

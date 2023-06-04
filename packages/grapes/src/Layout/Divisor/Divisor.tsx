@@ -1,5 +1,5 @@
-import { Component, JSX, splitProps } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
+import { Component, JSX, splitProps } from 'solid-js';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Divisor.scss';
 

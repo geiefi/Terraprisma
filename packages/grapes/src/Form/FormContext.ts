@@ -1,6 +1,6 @@
-import { createContext, Setter } from "solid-js";
-import { produce, SetStoreFunction } from "solid-js/store";
-import { deeplyTrack } from "../Helpers/deeplyTrack";
+import { createContext, Setter } from 'solid-js';
+import { produce, SetStoreFunction } from 'solid-js/store';
+import { deeplyTrack } from '../Helpers/deeplyTrack';
 
 export type FieldValue = string | string[] | number | boolean | Date | Record<string, any> | undefined;
 

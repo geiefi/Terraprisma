@@ -166,8 +166,8 @@ const Select = (allProps: SelectProps) => {
       }}
       icon={
         <KeyboardArrowDown
-          variant='rounded'
-          class='select-icon'
+          variant="rounded"
+          class="select-icon"
           classList={{
             'open': focused()
           }}
@@ -187,7 +187,7 @@ const Select = (allProps: SelectProps) => {
 
     <Dropdown
       for={inputContainerRef()!}
-      class='select-dropdown'
+      class="select-dropdown"
       visible={focused()}
       classList={{
         'primary': props.color === 'primary' || typeof props.color === 'undefined',

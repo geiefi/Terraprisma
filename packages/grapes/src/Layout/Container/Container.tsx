@@ -1,5 +1,5 @@
-import { Component, createMemo, JSX, ParentProps, splitProps } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
+import { Component, createMemo, JSX, ParentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Container.scss';
 
@@ -47,7 +47,7 @@ const Container: Component<ContainerProps> = (allProps) => {
     style={{
       'justify-content': props.verticalAlign,
       'align-items': props.horizontalAlign,
-      "max-width": maxWidthPx(),
+      'max-width': maxWidthPx(),
       ...props.style
     }}
   >

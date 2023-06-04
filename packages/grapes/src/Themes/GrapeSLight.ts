@@ -1,4 +1,4 @@
-import { Color, Theme } from "./Theme";
+import { Color, Theme } from './Theme';
 
 export const GrapeSLightTheme: Theme = {
   id: 'light',
@@ -13,9 +13,9 @@ export const GrapeSLightTheme: Theme = {
   },
 
   textColors: {
-    primary: new Color("#FFFFFF"),
-    secondary: new Color("#FFFFFF"),
-    tertiary: new Color("#ffffff"),
+    primary: new Color('#FFFFFF'),
+    secondary: new Color('#FFFFFF'),
+    tertiary: new Color('#ffffff'),
 
     0: new Color('#1E1E1E'),
     1: new Color('#535353'),

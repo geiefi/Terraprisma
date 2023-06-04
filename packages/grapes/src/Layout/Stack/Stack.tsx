@@ -1,5 +1,5 @@
-import { Component, JSX, ParentProps, splitProps } from "solid-js";
-import { mergeClass } from "../../_Shared/Utils";
+import { Component, JSX, ParentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Stack.scss';
 
@@ -28,7 +28,7 @@ const Stack: Component<ParentProps<StackProps>> = (allProps) => {
     }}
     style={{
       gap: `${props.spacing}px`,
-      "justify-content": props.align,
+      'justify-content': props.align,
       ...elProps.style
     }}
   >

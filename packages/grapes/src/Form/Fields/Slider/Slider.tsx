@@ -99,7 +99,7 @@ const Slider: Component<SliderProps> = (allProps) => {
     </Show>
 
     <div
-      class='slider'
+      class="slider"
       ref={slider}
       draggable={false}
       classList={{
@@ -116,15 +116,15 @@ const Slider: Component<SliderProps> = (allProps) => {
       }}
     >
       <span
-        class='trunk'
+        class="trunk"
         draggable={false}
       />
       <span
-        class='rail'
+        class="rail"
         draggable={false}
       />
       <span
-        class='thumb'
+        class="thumb"
         draggable={false}
       >
         <input
@@ -137,7 +137,7 @@ const Slider: Component<SliderProps> = (allProps) => {
           id={id()}
           value={(value() || '').toString()}
 
-          type='range'
+          type="range"
           disabled={disabled()}
         />
       </span>

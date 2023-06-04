@@ -1,8 +1,8 @@
-import { Accessor, createEffect, createMemo, createSignal, on, onCleanup, onMount, Setter, Signal } from "solid-js";
-import { createStore, produce } from "solid-js/store";
+import { Accessor, createEffect, createMemo, createSignal, on, onCleanup, onMount, Setter, Signal } from 'solid-js';
+import { createStore, produce } from 'solid-js/store';
 
-import { useForm } from "../../Form";
-import { FieldValidator, FieldValue, FormProviderValue, FormValue, Store } from "../../FormContext";
+import { useForm } from '../../Form';
+import { FieldValidator, FieldValue, FormProviderValue, FormValue, Store } from '../../FormContext';
 
 export const FieldPropKeys: (keyof FieldProps)[] = [
   'name',

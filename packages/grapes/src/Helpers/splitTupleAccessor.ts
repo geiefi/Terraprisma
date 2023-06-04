@@ -1,4 +1,4 @@
-import { Accessor } from "solid-js";
+import { Accessor } from 'solid-js';
 
 type ApparentTuple<T, Size extends number> = [T, ...T[]] & { length: Size }
 

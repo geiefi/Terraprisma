@@ -18,7 +18,7 @@ const Label: Component<LabelProps> = (allProps) => {
   return <label
     for={props.for}
     {...elProps}
-    class={mergeClass("label", elProps.class)}
+    class={mergeClass('label', elProps.class)}
     classList={{
       error: props.hasErrors,
       ...elProps.classList
