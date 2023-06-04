@@ -35,6 +35,7 @@ const TextArea: Component<TextAreaProps> = (allProps) => {
     valueSignal: [value, setValue],
     validate,
     hasContent,
+    hasErrors
   } = setupField(props);
 
   return <FieldInternalWrapper 
@@ -49,6 +50,8 @@ const TextArea: Component<TextAreaProps> = (allProps) => {
     helperText={props.helperText}
   >
     <InputContainer
+      labelFor={id()}
+      hasErrors={hasErrors()}
       hasContent={hasContent()}
       focused={focused()}
       disabled={disabled()}

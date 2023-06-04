@@ -1,4 +1,4 @@
-import { Component, JSX, onCleanup, onMount, Show, splitProps } from 'solid-js';
+import { Component, createMemo, JSX, onCleanup, onMount, Show, splitProps } from 'solid-js';
 
 import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
@@ -6,6 +6,7 @@ import { FieldInternalWrapper } from '../_Shared';
 
 import './Slider.scss';
 import { FormValue } from '../../FormContext';
+import Label from '../_Shared/Label/Label';
 
 export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
   label?: JSX.Element;
@@ -30,6 +31,7 @@ const Slider: Component<SliderProps> = (allProps) => {
     focusedSignal: [focused, setFocused],
     valueSignal: [value, setValue],
     validate,
+    hasErrors,
   } = setupField<SliderProps, FormValue, number>(props, 0);
 
   // eslint-disable-next-line prefer-const
@@ -89,7 +91,10 @@ const Slider: Component<SliderProps> = (allProps) => {
     isDisabled={disabled()}
   >
     <Show when={props.label}>
-      <label for={id()} class="label">{props.label}</label>
+      <Label
+        for={id()}
+        hasErrors={hasErrors()}
+      >{props.label}</Label>
     </Show>
 
     <div
@@ -109,15 +114,15 @@ const Slider: Component<SliderProps> = (allProps) => {
         '--slider-value': `${value() || 0}%`,
       }}
     >
-      <span 
-        class='trunk' 
+      <span
+        class='trunk'
         draggable={false}
       />
-      <span 
-        class='rail' 
+      <span
+        class='rail'
         draggable={false}
       />
-      <span 
+      <span
         class='thumb'
         draggable={false}
       >

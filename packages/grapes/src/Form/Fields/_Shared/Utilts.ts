@@ -202,6 +202,7 @@ export interface FieldSetupResult<
   focusedSignal: Signal<boolean>,
 
   hasContent: Accessor<boolean>,
+  hasErrors: Accessor<boolean>,
 
   validate: FieldInternalValidate,
 }
@@ -227,6 +228,7 @@ export function setupField<
   );
 
   const hasContent = createMemo(() => (value() || '').toString().length > 0);
+  const hasErrors = createMemo(() => errors && Array.isArray(errors) && typeof errors[0] !== 'undefined');
 
   return {
     elementId: id,
@@ -239,6 +241,7 @@ export function setupField<
     focusedSignal,
 
     hasContent,
+    hasErrors,
 
     validate,
   };

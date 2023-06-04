@@ -37,6 +37,7 @@ const Input: Component<InputProps> = (allProps) => {
     valueSignal: [value, setValue],
     validate,
     hasContent,
+    hasErrors
   } = setupField(props);
 
   return <FieldInternalWrapper
@@ -51,6 +52,8 @@ const Input: Component<InputProps> = (allProps) => {
     isDisabled={disabled()}
   >
     <InputContainer
+      labelFor={id()}
+      hasErrors={hasErrors()}
       hasContent={hasContent()}
       focused={focused()}
       color={props.color}

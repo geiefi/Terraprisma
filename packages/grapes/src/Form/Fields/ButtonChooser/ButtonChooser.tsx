@@ -3,6 +3,7 @@ import Button, { ButtonProps } from "../../../General/Button/Button";
 import { mergeClass } from "../../../_Shared/Utils";
 import { FieldValue } from "../../FormContext";
 import FieldInternalWrapper from "../_Shared/FieldInternalWrapper/FieldInternalWrapper";
+import Label from "../_Shared/Label/Label";
 
 import { FieldPropKeys, FieldProps, setupField } from "../_Shared/Utilts";
 
@@ -38,6 +39,7 @@ const ButtonChooser = (allProps: ButtonChooserProps) => {
     disabledSignal: [disabled],
     valueSignal: [value, setValue],
     validate,
+    hasErrors
   } = setupField(props);
 
   const getChildren = accessChildren(() => elProps.children);
@@ -73,7 +75,6 @@ const ButtonChooser = (allProps: ButtonChooserProps) => {
 
   return <FieldInternalWrapper
     {...elProps}
-    id={id()}
     isDisabled={disabled()}
     errors={errors}
     name={props.name}
@@ -90,10 +91,13 @@ const ButtonChooser = (allProps: ButtonChooserProps) => {
     }}
   >
     <Show when={props.label}>
-      <label for={id()} class="label">{props.label}</label>
+      <Label
+        for={id()}
+        hasErrors={hasErrors()}
+      >{props.label}</Label>
     </Show>
 
-    <div class="buttons">
+    <div id={id()} class="buttons">
       <For each={options()}>{(opt) => (
         <Button.Empty
           color={color()}

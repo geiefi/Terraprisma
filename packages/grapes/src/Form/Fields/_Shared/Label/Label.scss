@@ -1,0 +1,9 @@
+.label {
+  user-select: none;
+  pointer-events: none;
+  transition: .2s ease-in-out;
+
+  &.error {
+    color: var(--error) !important;
+  }
+}

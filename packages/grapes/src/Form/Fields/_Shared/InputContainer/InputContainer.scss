@@ -40,17 +40,6 @@
     pointer-events: none;
   }
 
-  label {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    user-select: none;
-    pointer-events: none;
-    transform: translateY(-50%);
-    transform-origin: top left;
-    transition: .2s ease-in-out;
-  }
-
   // these are the default values
   --text-color: var(--text-0);
   --label-color: var(--text-1);
@@ -89,14 +78,18 @@
 
   label {
     color: var(--label-color);
+
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: top left;
   }
 
   &.focused label,
   &.has-content label {
     color: var(--focused-label-color);
   }
-
-
 
   &:hover:not(.focused) {
     filter: brightness(94%);
@@ -155,10 +148,6 @@
 .error .input-container,
 .error.input-container {
   border-bottom: 3px solid var(--error);
-
-  label {
-    color: var(--error) !important;
-  }
 
   &::after {
     transition: .2s width ease-out,

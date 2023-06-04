@@ -2,11 +2,12 @@ import { Component, JSX, Show, splitProps } from "solid-js";
 
 import { useDepth } from "../../../../General/Box/Box";
 import { mergeClass } from "../../../../_Shared/Utils";
+import Label from "../Label/Label";
 
 import './InputContainer.scss';
 
 export interface InputContainerProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  id?: string;
+  labelFor: string;
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary',
@@ -14,11 +15,15 @@ export interface InputContainerProps extends JSX.HTMLAttributes<HTMLDivElement> 
 
   focused: boolean,
   hasContent: boolean,
+  hasErrors: boolean;
   disabled: boolean,
 }
 
 const InputContainer: Component<InputContainerProps> = (allProps) => {
-  const [props, elProps] = splitProps(allProps, ['id', 'label', 'color', 'icon', 'focused', 'hasContent', 'disabled']);
+  const [props, elProps] = splitProps(
+    allProps, 
+    ['labelFor', 'label', 'color', 'icon', 'focused', 'hasContent', 'hasErrors', 'disabled']
+  );
 
   const depth = useDepth() || (() => 0);
 
@@ -41,7 +46,10 @@ const InputContainer: Component<InputContainerProps> = (allProps) => {
     }}
   >
     <Show when={props.label}>
-      <label for={props.id}>{props.label}</label>
+      <Label
+        for={props.labelFor}
+        hasErrors={props.hasErrors}
+      >{props.label}</Label>
     </Show>
 
     {elProps.children}

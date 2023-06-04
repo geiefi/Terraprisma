@@ -80,6 +80,7 @@ const Select = (allProps: SelectProps) => {
     valueSignal: [value, setValue],
     validate,
     hasContent,
+    hasErrors
   } = setupField(props);
 
   const [inputContainerRef, setInputContainerRef] = createSignal<HTMLDivElement>();
@@ -148,6 +149,8 @@ const Select = (allProps: SelectProps) => {
     <InputContainer
       {...elProps}
       id={id()}
+      labelFor={id()}
+      hasErrors={hasErrors()}
       label={props.label}
       focused={focused()}
       color={props.color}

@@ -204,6 +204,7 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
     valueSignal: [value, setValue],
     validate,
     hasContent,
+    hasErrors,
   } = setupField<DatepickerProps, FormValue, Date>(props, new Date());
 
   const [inputContainerRef, setInputContainerRef] = createSignal<HTMLDivElement>();
@@ -323,6 +324,8 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
     <InputContainer
       {...elProps}
       id={id()}
+      labelFor={id()}
+      hasErrors={hasErrors()}
       label={props.label}
       focused={focused()}
       color={props.color}
@@ -363,7 +366,7 @@ const Datepicker: Component<DatepickerProps> = (allProps) => {
       class='datepicker-dropdown'
       ref={setDropdownRef}
     >
-      <Box depth={3} class='datepicker-dropdown-inner'>
+      <Box depth={0} class='datepicker-dropdown-inner'>
         <div class='dropdown-header'>
           <Button.Icon
             size='small'
