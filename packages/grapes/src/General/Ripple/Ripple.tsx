@@ -1,4 +1,4 @@
-import { Component, createSignal, For, JSX, ParentProps, splitProps } from "solid-js";
+import { Component, createSignal, For, JSX, ParentProps, Show, splitProps } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { mergeClass } from "../../_Shared/Utils";
 
@@ -65,16 +65,18 @@ const Ripple: Component<RippleProps> = (allProps) => {
   >
     <For each={ripples}>
       {(ripple) => (
-        ripple && <span
-          class='ripple'
-          style={{
-            width: `${ripple.diameter}px`,
-            height: `${ripple.diameter}px`,
-            left: `${ripple.left}px`,
-            top: `${ripple.top}px`,
-            ...(props.color ? { 'background-color': props.color } : {})
-          }}
-        ></span>
+        <Show when={ripple}>
+          <span
+            class='ripple'
+            style={{
+              width: `${ripple.diameter}px`,
+              height: `${ripple.diameter}px`,
+              left: `${ripple.left}px`,
+              top: `${ripple.top}px`,
+              ...(props.color ? { 'background-color': props.color } : {})
+            }}
+          />
+        </Show>
       )}
     </For>
 

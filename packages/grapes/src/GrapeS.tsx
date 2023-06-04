@@ -1,13 +1,13 @@
-import { 
-  Accessor, 
-  Component, 
-  createContext, 
-  createEffect, 
-  createMemo, 
-  createSignal, 
-  ParentProps, 
-  Signal, 
-  useContext 
+import {
+  Accessor,
+  Component,
+  createContext,
+  createEffect,
+  createMemo,
+  createSignal,
+  ParentProps,
+  Signal,
+  useContext
 } from "solid-js";
 
 import "./GrapeS.scss";
@@ -15,7 +15,7 @@ import "./GrapeS.scss";
 import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from "./Themes";
 
 export type GrapeSThemesProviderValue = {
-  themes: Theme[];
+  themes: Accessor<Theme[]>;
   currentTheme: Accessor<Theme>;
   currentThemeIdSignal: Signal<string>;
 };
@@ -36,20 +36,22 @@ export const GrapeS: Component<ParentProps<{
 }>> = (props) => {
   const hasCustomThemes = createMemo(() => props.themes && props.themes.length >= 1);
 
-  const currentThemeIdSignal = createSignal<string>(props.defaultThemeId || (
+  const [themeId, setThemeId] = createSignal<string>(props.defaultThemeId || (
+    // eslint-disable-next-line solid/reactivity
     hasCustomThemes()
+      // eslint-disable-next-line solid/reactivity
       ? props.themes![0].id
       : GrapeSLightTheme.id
   ));
 
-  const themes = hasCustomThemes()
+  const themes = createMemo(() => hasCustomThemes()
     ? props.themes!
     : [
       GrapeSLightTheme,
       GrapeSDarkTheme
-    ];
+    ]);
 
-  const currentTheme = createMemo(() => themes.find(t => t.id === currentThemeIdSignal[0]())!);
+  const currentTheme = createMemo(() => themes().find(t => t.id === themeId())!);
 
   createEffect(() => {
     document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
@@ -58,43 +60,46 @@ export const GrapeS: Component<ParentProps<{
   return <GrapeSContext.Provider value={{
     themes,
     currentTheme,
-    currentThemeIdSignal
+    currentThemeIdSignal: [themeId, setThemeId]
   }}>
-    <div id="fox-pox-app" style={{
-      '--gray-0': currentTheme().grays[0].toRGBA(),
-      '--gray-1': currentTheme().grays[1].toRGBA(),
-      '--gray-2': currentTheme().grays[2].toRGBA(),
-      '--gray-3': currentTheme().grays[3].toRGBA(),
-      '--gray-4': currentTheme().grays[4].toRGBA(),
-      '--gray-5': currentTheme().grays[5].toRGBA(),
+    <div 
+      id="grapes-app"
+      style={{
+        '--gray-0': currentTheme().grays[0].toRGBA(),
+        '--gray-1': currentTheme().grays[1].toRGBA(),
+        '--gray-2': currentTheme().grays[2].toRGBA(),
+        '--gray-3': currentTheme().grays[3].toRGBA(),
+        '--gray-4': currentTheme().grays[4].toRGBA(),
+        '--gray-5': currentTheme().grays[5].toRGBA(),
 
-      '--text-0': currentTheme().textColors[0].toRGBA(),
-      '--text-1': currentTheme().textColors[1].toRGBA(),
-      '--text-2': currentTheme().textColors[2].toRGBA(),
-      '--text-3': currentTheme().textColors[3].toRGBA(),
-      '--text-4': currentTheme().textColors[4].toRGBA(),
-      '--text-5': currentTheme().textColors[5].toRGBA(),
+        '--text-0': currentTheme().textColors[0].toRGBA(),
+        '--text-1': currentTheme().textColors[1].toRGBA(),
+        '--text-2': currentTheme().textColors[2].toRGBA(),
+        '--text-3': currentTheme().textColors[3].toRGBA(),
+        '--text-4': currentTheme().textColors[4].toRGBA(),
+        '--text-5': currentTheme().textColors[5].toRGBA(),
 
-      '--primary': currentTheme().primary.toRGBA(),
-      "--text-primary": currentTheme().textColors.primary.toRGBA(),
-      '--lightened-primary': (currentTheme().lightnedPrimary
-        || currentTheme().primary.withAlpha(0.32)).toRGBA(),
+        '--primary': currentTheme().primary.toRGBA(),
+        "--text-primary": currentTheme().textColors.primary.toRGBA(),
+        '--lightened-primary': (currentTheme().lightnedPrimary
+          || currentTheme().primary.withAlpha(0.32)).toRGBA(),
 
-      '--secondary': currentTheme().secondary.toRGBA(),
-      "--text-secondary": currentTheme().textColors.secondary.toRGBA(),
-      '--lightened-secondary': (currentTheme().lightnedSecondary
-        || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
+        '--secondary': currentTheme().secondary.toRGBA(),
+        "--text-secondary": currentTheme().textColors.secondary.toRGBA(),
+        '--lightened-secondary': (currentTheme().lightnedSecondary
+          || currentTheme().secondary.withAlpha(0.32)).toRGBA(),
 
-      '--tertiary': currentTheme().tertiary.toRGBA(),
-      "--text-tertiary": currentTheme().textColors.tertiary.toRGBA(),
-      '--lightened-tertiary': (currentTheme().lightnedTertiary
-        || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
+        '--tertiary': currentTheme().tertiary.toRGBA(),
+        "--text-tertiary": currentTheme().textColors.tertiary.toRGBA(),
+        '--lightened-tertiary': (currentTheme().lightnedTertiary
+          || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 
-      '--error': currentTheme().error.toRGBA(),
+        '--error': currentTheme().error.toRGBA(),
 
-      '--lightened-primary-2': (currentTheme().lightnedPrimary2
-        || currentTheme().primary.withAlpha(0.20)).toRGBA(),
-    }}>
+        '--lightened-primary-2': (currentTheme().lightnedPrimary2
+          || currentTheme().primary.withAlpha(0.20)).toRGBA(),
+      }}
+    >
       {props.children}
     </div>
   </GrapeSContext.Provider>;

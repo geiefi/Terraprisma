@@ -1,4 +1,4 @@
-import { Component, createMemo, JSX, onCleanup, onMount, Show, splitProps } from 'solid-js';
+import { Component, JSX, onCleanup, onMount, Show, splitProps } from 'solid-js';
 
 import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
@@ -13,6 +13,7 @@ export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HT
   helperText?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: number) => void,
   onFocus?: () => void,

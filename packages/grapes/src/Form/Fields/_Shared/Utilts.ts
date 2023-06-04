@@ -90,7 +90,7 @@ export function setupCommunicationWithFormContext<
       }
 
       form!.init(
-        props.name, 
+        props.name,
         props.validators || [],
         (form!.valueFor(props.name) || initialValue) as K[keyof K]
       );
@@ -121,13 +121,13 @@ export function setupFieldsValueSignal<
 
     return [value, setValue];
   } else {
-    const signal = createSignal<ValueType>();
+    const [get, set] = createSignal<ValueType>();
 
     createEffect(on(() => props.value, () => {
-      signal[1](props.value as any);
+      set(props.value as any);
     }));
 
-    return signal;
+    return [get, set];
   }
 }
 
@@ -180,14 +180,17 @@ export function setupFieldsDisabledSignal<
 
     signal = [disabled, setDisabled];
   } else {
+    // eslint-disable-next-line solid/reactivity
     signal = createSignal<boolean>(false);
   }
 
+  const [disabled, setDisabled] = signal;
+
   createEffect(on(() => props.disabled, () => {
-    signal[1](props.disabled || false);
+    setDisabled(props.disabled || false);
   }));
 
-  return signal;
+  return [disabled, setDisabled];
 }
 
 export interface FieldSetupResult<
@@ -214,14 +217,13 @@ export function setupField<
   K extends FormValue = FormValue,
   ValueType extends FieldValue = FieldValue
 >(props: T, initialValue: FieldValue = ''): FieldSetupResult<K, ValueType> {
+  // eslint-disable-next-line solid/reactivity
   const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
   const form = setupCommunicationWithFormContext<T, K>(props, initialValue);
   const [value, setValue] = setupFieldsValueSignal<T, K, ValueType>(props, form);
   const disabledSignal = setupFieldsDisabledSignal(props, form);
   const validate = setupValidateFunction(props, setErrors, form);
-
-  const focusedSignal = createSignal<boolean>(false);
 
   const id = createMemo(() =>
     form
@@ -240,7 +242,8 @@ export function setupField<
 
     valueSignal: [value, setValue],
     disabledSignal,
-    focusedSignal,
+    // eslint-disable-next-line solid/reactivity
+    focusedSignal: createSignal<boolean>(false),
 
     hasContent,
     hasErrors,
@@ -248,3 +251,4 @@ export function setupField<
     validate,
   };
 }
+

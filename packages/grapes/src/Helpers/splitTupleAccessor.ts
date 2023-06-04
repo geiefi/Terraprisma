@@ -1,4 +1,4 @@
-import { Accessor, createMemo } from "solid-js";
+import { Accessor } from "solid-js";
 
 type ApparentTuple<T, Size extends number> = [T, ...T[]] & { length: Size }
 
@@ -34,7 +34,7 @@ export function splitTupleAccessor<
 ): ApparentTuple<Accessor<any | undefined>, Size> {
   const arr: Accessor<any>[] = [];
   for (let partIndex = 0; partIndex < partsToSplitInto; partIndex++) {
-    arr.push(createMemo(() => {
+    arr.push(() => {
       const currentValue = accessor();
 
       if (Array.isArray(currentValue)) {
@@ -42,7 +42,7 @@ export function splitTupleAccessor<
       } else {
         return undefined;
       }
-    }));
+    });
   }
   return arr as unknown as ApparentTuple<Accessor<any | undefined>, Size>;
 }

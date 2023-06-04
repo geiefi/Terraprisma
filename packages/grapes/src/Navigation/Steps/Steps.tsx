@@ -128,8 +128,10 @@ function Steps(allProps: StepsProps) {
     }
   });
 
+  const current = createMemo(() => props.current);
+
   return <StepsContext.Provider value={[
-    () => props.current,
+    current,
     stepsCount
   ]}>
     <div

@@ -101,6 +101,7 @@ export class FormProviderValue<Values extends FormValue> {
     * are associated with the field identified by `name` except for its value.
     */
   cleanUp(name: keyof Values): void {
+    console.log(name);
     this.setForm(produce(form => {
       // delete form.values[name];
       delete form.errors[name];

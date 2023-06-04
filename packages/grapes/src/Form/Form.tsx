@@ -1,4 +1,4 @@
-import { createEffect, createMemo, JSX, on, onMount, ParentProps, useContext } from "solid-js";
+import { createEffect, createMemo, JSX, on, onCleanup, onMount, ParentProps, useContext } from "solid-js";
 import { createStore, produce, SetStoreFunction } from "solid-js/store";
 
 import {
@@ -43,6 +43,7 @@ const Form = (props: ParentProps<{
 
   ref?: (val: FormProviderValue<FormValue>) => void,
 }>): JSX.Element => {
+  // eslint-disable-next-line solid/reactivity
   const [form, setForm] = props.formStore;
 
   onMount(() => {
@@ -53,16 +54,20 @@ const Form = (props: ParentProps<{
 
   const providerValue = new FormProviderValue(
     [form, setForm],
+    // eslint-disable-next-line solid/reactivity
     props.agnosticValidators || [],
+    // eslint-disable-next-line solid/reactivity
     props.indentification
   );
 
-  if (typeof props.ref !== 'undefined') {
-    createEffect(() => {
-      providerValue.track();
-      props.ref!(providerValue);
-    });
-  }
+  onMount(() => {
+    if (typeof props.ref !== 'undefined') {
+      createEffect(() => {
+        providerValue.track();
+        props.ref!(providerValue);
+      });
+    }
+  });
 
   return <FormContext.Provider
     value={providerValue}
@@ -89,19 +94,24 @@ const innerForm = (props: ParentProps<{
 }>) => {
   const form = useForm();
 
-  if (typeof form === 'undefined') {
-    throw new FormError(
-      `Error with the <Form.Inner> called "${props.identification}": ` +
-      'Cannot have a <Form.Inner> component if it is not inside a <Form> component!'
-    );
-  }
+  onMount(() => {
+    if (typeof form === 'undefined') {
+      throw new FormError(
+        `Error with the <Form.Inner> called "${props.identification}": ` +
+        'Cannot have a <Form.Inner> component if it is not inside a <Form> component!'
+      );
+    }
+  });
 
   const [innerFormStore, setInnerFormStore] = createStore<FormStore<any>>(
+    // eslint-disable-next-line solid/reactivity
     new FormStore(form.valueFor(props.name) as any || {})
   );
   const innerForm = new FormProviderValue(
     [innerFormStore, setInnerFormStore],
+    // eslint-disable-next-line solid/reactivity
     props.agnosticValidators || [],
+    // eslint-disable-next-line solid/reactivity
     props.identification,
   );
 
@@ -115,16 +125,21 @@ const innerForm = (props: ParentProps<{
     }
 
     form.init(props.name, [
+      // eslint-disable-next-line solid/reactivity
       () => innerForm.validateAll() ? [] : allErrors()
     ], innerFormStore.values as any);
+
+    if (typeof props.ref !== 'undefined') {
+      createEffect(() => {
+        innerForm.track();
+        props.ref!(innerForm);
+      });
+    }
   });
 
-  if (typeof props.ref !== 'undefined') {
-    createEffect(() => {
-      innerForm.track();
-      props.ref!(innerForm);
-    });
-  }
+  onCleanup(() => {
+    form.cleanUp(props.name);
+  });
 
   createEffect(() => {
     const newValues = form.valueFor(props.name);

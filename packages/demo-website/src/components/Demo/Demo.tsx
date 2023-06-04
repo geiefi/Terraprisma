@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker, Slider } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
@@ -129,6 +129,14 @@ const Demo: Component = () => {
                   placeholder='99999-999'
                   label='CEP'
                   validators={[Validators.required]}
+                />
+              </Col>
+              <Col size={24}>
+                <Slider
+                  label='Slider example'
+                  color='primary'
+                  name='sliderValue'
+                  validators={[Validators.minEq(20)]}
                 />
               </Col>
             </Row>

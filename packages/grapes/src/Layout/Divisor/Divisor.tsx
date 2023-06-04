@@ -17,7 +17,7 @@ const Divisor: Component<DivisorProps> = (allProps) => {
       'vertical': props.direction === 'vertical',
       ...elProps.classList
     }}
-  ></div>;
+  />;
 };
 
 export default Divisor;
