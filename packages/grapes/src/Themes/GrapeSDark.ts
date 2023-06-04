@@ -29,5 +29,5 @@ export const GrapeSDarkTheme: Theme = {
   secondary: new Color('#1cb88e'),
   tertiary: new Color('#bd462b'),
 
-  error: new Color('#BC5C5C'),
+  error: new Color('#d66565'),
 };
