@@ -1,4 +1,4 @@
-import { createEffect, createMemo, JSX, on, onCleanup, onMount, ParentProps, useContext } from 'solid-js';
+import { createEffect, createMemo, createRoot, JSX, on, onCleanup, onMount, ParentProps, useContext } from 'solid-js';
 import { createStore, produce, SetStoreFunction } from 'solid-js/store';
 
 import {
@@ -43,6 +43,8 @@ const Form = (props: ParentProps<{
 
   ref?: (val: FormProviderValue<FormValue>) => void,
 }>): JSX.Element => {
+  let disposeChildren: () => void;
+
   // eslint-disable-next-line solid/reactivity
   const [form, setForm] = props.formStore;
 
@@ -60,7 +62,16 @@ const Form = (props: ParentProps<{
     props.indentification
   );
 
+  onCleanup(() => {
+    providerValue.isCleaningUp = true;
+
+    disposeChildren && disposeChildren(); // we need to manually dispose here so that the clean up of the fields
+                          // persists their values
+  });
+
   onMount(() => {
+    providerValue.isCleaningUp = false;
+
     if (typeof props.ref !== 'undefined') {
       createEffect(() => {
         providerValue.track();
@@ -69,11 +80,17 @@ const Form = (props: ParentProps<{
     }
   });
 
-  return <FormContext.Provider
-    value={providerValue}
-  >
-    {props.children}
-  </FormContext.Provider>;
+  return (
+    <FormContext.Provider
+      value={providerValue}
+    >
+      {createRoot(rootDispose => {
+        disposeChildren = rootDispose;
+
+        return props.children;
+      })}
+    </FormContext.Provider>
+  );
 }
 
 /**
@@ -92,6 +109,8 @@ const innerForm = (props: ParentProps<{
 
   ref?: (val: FormProviderValue<FormValue>) => void,
 }>) => {
+  let disposeChildren: () => void;
+
   const form = useForm();
 
   onMount(() => {
@@ -129,6 +148,8 @@ const innerForm = (props: ParentProps<{
       () => innerForm.validateAll() ? [] : allErrors()
     ], innerFormStore.values as any);
 
+    innerForm.isCleaningUp = false;
+
     if (typeof props.ref !== 'undefined') {
       createEffect(() => {
         innerForm.track();
@@ -139,6 +160,10 @@ const innerForm = (props: ParentProps<{
 
   onCleanup(() => {
     form.cleanUp(props.name);
+
+    innerForm.isCleaningUp = true;
+
+    disposeChildren && disposeChildren();
   });
 
   createEffect(() => {
@@ -163,7 +188,10 @@ const innerForm = (props: ParentProps<{
   return <FormContext.Provider
     value={innerForm}
   >
-    {props.children}
+    {createRoot(rootDispose => {
+      disposeChildren = rootDispose;
+      return props.children;
+    })}
   </FormContext.Provider>;
 };
 

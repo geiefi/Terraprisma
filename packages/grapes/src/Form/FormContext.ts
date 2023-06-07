@@ -51,6 +51,9 @@ export class FormProviderValue<Values extends FormValue> {
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;
 
+  // this doesn't really need to be reactive
+  private __isCleaningUp: boolean;
+
   constructor(
     public store: Store<FormStore<Values>>,
     public agnosticValidators: AgnosticValidator[],
@@ -58,6 +61,22 @@ export class FormProviderValue<Values extends FormValue> {
   ) {
     this.form = store[0];
     this.setForm = store[1];
+
+    this.__isCleaningUp = false;
+  }
+
+  /**
+    * @description Weather or not the form context this belongs to is being cleaned up.
+    * 
+    * This is used so that the values of the fields are persisted once the Form is being cleaned up
+    * but are removed if the Form is not being cleaned up.
+    */
+  get isCleaningUp() {
+    return this.__isCleaningUp;
+  }
+
+  set isCleaningUp(cleaningUp: boolean) {
+    this.__isCleaningUp = cleaningUp;
   }
 
   identification(): string {
@@ -103,7 +122,9 @@ export class FormProviderValue<Values extends FormValue> {
   cleanUp(name: keyof Values): void {
     console.log(name);
     this.setForm(produce(form => {
-      // delete form.values[name];
+      if (!this.isCleaningUp) {
+        delete form.values[name];
+      }
       delete form.errors[name];
       delete form.validators[name];
     }));
