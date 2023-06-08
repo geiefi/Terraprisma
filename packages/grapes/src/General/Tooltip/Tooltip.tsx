@@ -1,5 +1,4 @@
-import { Accessor, Component, createEffect, createMemo, createSignal, JSX, mergeProps, on, onCleanup, onMount, Show, splitProps } from 'solid-js';
-import { ArrowDropDown } from '../../Icons';
+import { Component, createMemo, JSX, on, Show, splitProps } from 'solid-js';
 import { GrowFade } from '../../Transitions';
 import { mergeClass } from '../../_Shared/Utils';
 
