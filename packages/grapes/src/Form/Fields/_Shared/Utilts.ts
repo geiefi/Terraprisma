@@ -110,10 +110,12 @@ export function setupFieldsValueSignal<
   T extends FieldProps,
   K extends FormValue = FormValue,
   ValueType extends FieldValue = FieldValue
->(props: T, form: FormProviderValue<K> | undefined): Signal<ValueType | undefined> {
+>(props: T, form: FormProviderValue<K> | undefined, initialValue: ValueType = '' as any): Signal<ValueType | undefined> {
   if (typeof form !== 'undefined') {
     const value: Accessor<ValueType | undefined> = createMemo<ValueType>(
-      () => form.valueFor(props.name) || '' as any
+      () => typeof form.valueFor(props.name) !== 'undefined' 
+        ? form.valueFor(props.name) as ValueType
+        : initialValue
     );
     const setValue: Setter<ValueType | undefined> = (
       (v: K[keyof K]) => form.update(props.name, v)
@@ -216,12 +218,12 @@ export function setupField<
   T extends FieldProps,
   K extends FormValue = FormValue,
   ValueType extends FieldValue = FieldValue
->(props: T, initialValue: FieldValue = ''): FieldSetupResult<K, ValueType> {
+>(props: T, initialValue: ValueType = '' as any): FieldSetupResult<K, ValueType> {
   // eslint-disable-next-line solid/reactivity
   const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
   const form = setupCommunicationWithFormContext<T, K>(props, initialValue);
-  const [value, setValue] = setupFieldsValueSignal<T, K, ValueType>(props, form);
+  const [value, setValue] = setupFieldsValueSignal<T, K, ValueType>(props, form, initialValue);
   const disabledSignal = setupFieldsDisabledSignal(props, form);
   const validate = setupValidateFunction(props, setErrors, form);
 
