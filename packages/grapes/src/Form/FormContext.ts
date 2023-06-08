@@ -1,18 +1,14 @@
 import { createContext, Setter } from 'solid-js';
-import { produce, SetStoreFunction } from 'solid-js/store';
+import { produce } from 'solid-js/store';
+
 import { deeplyTrack } from '../Helpers/deeplyTrack';
+1
+import { Store } from '../Helpers/Types/Store';
 
-export type FieldValue = string | string[] | number | boolean | Date | Record<string, any> | undefined;
-
-export type FormValue = Record<string, FieldValue>;
-
-export type FieldValidator<ValueType = FieldValue> = (value: ValueType) => string | string[] | undefined;
-
-/**
- * A type of validation that is agnostic with relation to which field it validates, meaning
- * it can validate all of the fields at the same time.
- */
-export type AgnosticValidator = (value: FormValue) => Record<string, string[]>;
+import { AgnosticValidator } from './Types/AgnosticValidator';
+import { FieldValidator } from './Types/FieldValidator';
+import { FormFieldValue } from './Types/FormFieldValue';
+import { FormValue } from './Types/FormValue';
 
 export class FormError extends Error { }
 
@@ -31,7 +27,7 @@ export class FormStore<Values extends FormValue> {
     */
   disabled: Partial<Record<keyof Values, boolean>>;
   errors: Partial<Record<keyof Values, string[]>>;
-  validators: Partial<Record<keyof Values, FieldValidator<FieldValue>[]>>;
+  validators: Partial<Record<keyof Values, FieldValidator<FormFieldValue>[]>>;
 
   constructor(values: Values) {
     this.values = values;
@@ -40,8 +36,6 @@ export class FormStore<Values extends FormValue> {
     this.errors = {};
   }
 }
-
-export type Store<T> = [get: T, set: SetStoreFunction<T>];
 
 /**
   * This is going to be the value that comes from the `useForm()` call to get the data

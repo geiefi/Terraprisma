@@ -2,13 +2,14 @@ import { createEffect, createMemo, createRoot, JSX, on, onCleanup, onMount, Pare
 import { createStore, produce, SetStoreFunction } from 'solid-js/store';
 
 import {
-  AgnosticValidator,
   FormContext,
   FormError,
   FormProviderValue,
   FormStore,
-  FormValue
 } from './FormContext';
+
+import { AgnosticValidator } from './Types/AgnosticValidator';
+import { FormValue } from './Types/FormValue';
 
 /**
  * @description A component used for managing the values of the form through the provided Store,

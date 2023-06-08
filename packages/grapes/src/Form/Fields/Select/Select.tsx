@@ -12,18 +12,20 @@ import {
   splitProps,
 } from 'solid-js';
 
+import { setupField } from '../_Shared/setupField';
+
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+import { Dropdown } from '../../../General';
+import { GrowFade } from '../../../Transitions';
 import { KeyboardArrowDown } from '../../../Icons';
 
-import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
+import { mergeClass } from '../../../_Shared/Utils';
 
-import { FieldValue } from '../../FormContext';
+import { FormFieldValue } from '../../Types/FormFieldValue';
+import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './Select.scss';
-import { Dropdown } from '../../../General';
-import { mergeClass } from '../../../_Shared/Utils';
-import { GrowFade } from '../../../Transitions';
 
 export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
@@ -31,12 +33,12 @@ export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivEleme
 
   color?: 'primary' | 'secondary' | 'tertiary';
 
-  onChange?: (newValue: FieldValue) => any;
+  onChange?: (newValue: FormFieldValue) => any;
   onFocused?: () => any;
 }
 
 export interface OptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  value: FieldValue;
+  value: FormFieldValue;
   children: JSX.Element;
 }
 
@@ -119,7 +121,7 @@ const Select = (allProps: SelectProps) => {
     }) as OptionProps[];
   });
 
-  const optionLabelFromValue = (value: FieldValue | undefined) => {
+  const optionLabelFromValue = (value: FormFieldValue | undefined) => {
     return options().find(opt => opt.value === value)?.children || '';
   };
 

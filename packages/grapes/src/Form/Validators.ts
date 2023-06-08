@@ -1,4 +1,4 @@
-import { FieldValue } from './FormContext';
+import { FormFieldValue } from './Types/FormFieldValue';
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
@@ -11,7 +11,7 @@ const Validators = {
     * Validates weather or not the field is undefined, null, empty when trimmed 
     * or if being an array is also empty.
     */
-  required: (value: FieldValue) => (typeof value === 'undefined')
+  required: (value: FormFieldValue) => (typeof value === 'undefined')
     || (value === null)
     || (typeof value === 'string' && value.trim().length === 0)
     || (Array.isArray(value) && value.length === 0)
@@ -23,14 +23,14 @@ const Validators = {
     * 
     * Regex: `/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g`
     */
-  email: (value: FieldValue) => (typeof value === 'undefined')
+  email: (value: FormFieldValue) => (typeof value === 'undefined')
     || (value === null)
     || emailRegex.test(value.toString().trim())
     ? 'This is not a valid email!'
     : undefined,
 
-  isEqual: (expectedValue: FieldValue) => (
-    (value: FieldValue) => value !== expectedValue
+  isEqual: (expectedValue: FormFieldValue) => (
+    (value: FormFieldValue) => value !== expectedValue
       ? `This is expected to be ${expectedValue}!`
       : undefined
 
@@ -39,7 +39,7 @@ const Validators = {
     * Validates weather or not the current value of the field is >= than a given `minimum`.
     */
   minEq: (minimum: number) => 
-    (value: FieldValue) => (typeof value === 'number') 
+    (value: FormFieldValue) => (typeof value === 'number') 
       ? (value! >= minimum
           ? undefined
           : `The minimmum value for this is ${minimum}!`)
@@ -48,7 +48,7 @@ const Validators = {
     * Validates weather or not the current value of the field is <= than a given `maximum`.
     */
   maxEq: (maximum: number) => 
-    (value: FieldValue) => (typeof value === 'number') 
+    (value: FormFieldValue) => (typeof value === 'number') 
       ? (value <= maximum
           ? undefined
           : `The maximum value for this is ${maximum}!`)

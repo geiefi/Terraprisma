@@ -1,14 +1,17 @@
 import { Component, createEffect, createMemo, createSignal, JSX, on, onCleanup, Show, splitProps } from 'solid-js';
 
-import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
+import { setupField } from '../_Shared/setupField';
 
-import { FieldInternalWrapper } from '../_Shared';
-
-import './Slider.scss';
-import { FormValue } from '../../FormContext';
 import Label from '../_Shared/Label/Label';
+import { FieldInternalWrapper } from '../_Shared';
 import { Tooltip } from '../../../General';
 import { GrowFade } from '../../../Transitions';
+
+import { FormValue } from '../../Types/FormValue';
+
+import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+
+import './Slider.scss';
 
 export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
   label?: JSX.Element;

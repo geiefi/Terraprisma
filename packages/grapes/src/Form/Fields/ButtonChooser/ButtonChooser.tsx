@@ -1,11 +1,15 @@
 import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from 'solid-js';
 import Button, { ButtonProps } from '../../../General/Button/Button';
-import { mergeClass } from '../../../_Shared/Utils';
-import { FieldValue } from '../../FormContext';
+
+import { setupField } from '../_Shared/setupField';
+
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import Label from '../_Shared/Label/Label';
 
-import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
+import { mergeClass } from '../../../_Shared/Utils';
+
+import { FormFieldValue } from '../../Types/FormFieldValue';
+import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './ButtonChooser.scss';
 
@@ -16,7 +20,7 @@ export interface ButtonChooserProps extends FieldProps, JSX.HTMLAttributes<HTMLD
 
   style?: JSX.CSSProperties;
 
-  onChange?: (newValue: FieldValue) => any;
+  onChange?: (newValue: FormFieldValue) => any;
 }
 
 export interface OptionProps extends ButtonProps {
@@ -29,7 +33,7 @@ const Option: Component<OptionProps> = (props) => {
 
 const ButtonChooser = (allProps: ButtonChooserProps) => {
   const [props, elProps] = splitProps(
-    allProps, 
+    allProps,
     [...FieldPropKeys, 'label', 'color', 'helperText', 'onChange']
   );
 
@@ -79,8 +83,8 @@ const ButtonChooser = (allProps: ButtonChooserProps) => {
     errors={errors}
     name={props.name}
     renderHelperText={
-      (typeof props.validators !== 'undefined' 
-        && props.validators.length !== 0) 
+      (typeof props.validators !== 'undefined'
+        && props.validators.length !== 0)
       || typeof props.helperText !== 'undefined'
     }
     helperText={props.helperText}

@@ -1,8 +1,11 @@
 import { Component, JSX, splitProps } from 'solid-js';
 
-import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
+import { setupField } from '../_Shared/setupField';
+
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+
+import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './TextArea.scss';
 

@@ -1,10 +1,15 @@
 import { Component, JSX, splitProps } from 'solid-js';
 
-import './Input.scss';
-import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
+import { setupField } from '../_Shared/setupField';
+
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
+
 import { mergeClass } from '../../../_Shared/Utils';
+
+import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+
+import './Input.scss';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
