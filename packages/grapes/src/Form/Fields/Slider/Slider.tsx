@@ -1,4 +1,4 @@
-import { Component, createEffect, createMemo, createSignal, JSX, on, onCleanup, Show, splitProps } from 'solid-js';
+import { Component, createEffect, createMemo, createSignal, JSX, Match, on, onCleanup, Show, splitProps, Switch } from 'solid-js';
 
 import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
@@ -17,6 +17,9 @@ export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HT
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
 
+  showTooltip?: boolean;
+  renderTooltipContent?: (value: number) => JSX.Element;
+
   onChange?: (value: number) => void,
   onFocus?: () => void,
 }
@@ -24,7 +27,7 @@ export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HT
 const Slider: Component<SliderProps> = (allProps) => {
   const [props, elProps] = splitProps(
     allProps,
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange', 'onFocus']
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'showTooltip', 'renderTooltipContent', 'size', 'onChange', 'onFocus']
   );
 
   const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
@@ -39,7 +42,7 @@ const Slider: Component<SliderProps> = (allProps) => {
     valueSignal: [value, setValue],
     validate,
     hasErrors,
-  // eslint-disable-next-line solid/reactivity
+    // eslint-disable-next-line solid/reactivity
   } = setupField<SliderProps, FormValue, number>(props, min());
 
   // eslint-disable-next-line prefer-const
@@ -61,9 +64,12 @@ const Slider: Component<SliderProps> = (allProps) => {
 
   const handleMouseDown = (e: MouseEvent) => {
     if (!slider.contains(e.target as HTMLElement) && slider !== e.target) return;
+    if (disabled()) return;
+
     setFocused(true);
     updateValueBasedOnMouseX(e.x);
   };
+
   const handleMouseUp = (e: MouseEvent) => {
     if (focused()) {
       const newValue = updateValueBasedOnMouseX(e.x);
@@ -71,6 +77,7 @@ const Slider: Component<SliderProps> = (allProps) => {
       validate(newValue);
     }
   };
+
   const handleMouseMove = (e: MouseEvent) => {
     if (focused()) {
       updateValueBasedOnMouseX(e.x);
@@ -131,6 +138,7 @@ const Slider: Component<SliderProps> = (allProps) => {
       draggable={false}
       classList={{
         focused: focused(),
+        disabled: disabled(),
 
         'has-label': typeof props.label !== 'undefined',
 
@@ -175,16 +183,22 @@ const Slider: Component<SliderProps> = (allProps) => {
       </span>
     </div>
 
-    <GrowFade>
-      <Tooltip
-        for={thumbBoundingBox()!}
-        visible={focused()}
-        style={{
-          background: `var(--${color()})`,
-          color: `var(--text-${color()})`
-        }}
-      >{value()}</Tooltip>
-    </GrowFade>
+    <Show when={typeof props.showTooltip === 'undefined' ? true : props.showTooltip}>
+      <GrowFade>
+        <Tooltip
+          for={thumbBoundingBox()!}
+          visible={focused()}
+          style={{
+            background: `var(--${color()})`,
+            color: `var(--text-${color()})`
+          }}
+        >
+          <Show when={props.renderTooltipContent} fallback={value()}>
+             {props.renderTooltipContent!(value() || min())}
+          </Show>
+        </Tooltip>
+      </GrowFade>
+    </Show>
   </FieldInternalWrapper>;
 };
 

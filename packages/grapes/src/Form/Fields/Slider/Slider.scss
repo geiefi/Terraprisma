@@ -6,6 +6,10 @@
 
   position: relative;
 
+  &:not(.disabled) {
+    cursor: pointer;
+  }
+
   &.small {
     --height: 4px;
     --thumb-diameter: 10px;
@@ -43,14 +47,21 @@
     border-radius: calc(var(--height) / 3);
   }
 
-  &.primary > .trunk {
-    background: var(--primary);
+  &.primary {
+    --color: var(--primary);
   }
-  &.secondary > .trunk {
-    background: var(--secondary);
+  &.secondary {
+    --color: var(--secondary);
   }
-  &.tertiary > .trunk {
-    background: var(--tertiary);
+  &.tertiary {
+    --color: var(--tertiary);
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    filter: brightness(95%);
+
+    --color: var(--gray-5);
   }
 
   & > .trunk {
@@ -62,8 +73,9 @@
     transform: translateY(-50%);
 
     width: var(--value-percentage);
-    border-radius: calc(var(--height) * 2 / 3);
     height: var(--height);
+    border-radius: calc(var(--height) * 2 / 3);
+    background: var(--color);
   }
 
   &::after {
@@ -94,16 +106,6 @@
     background: var(--lightened-tertiary);
   }
 
-  &.primary > .thumb {
-    background: var(--primary);
-  }
-  &.secondary > .thumb {
-    background: var(--secondary);
-  }
-  &.tertiary > .thumb {
-    background: var(--tertiary);
-  }
-
   & > .thumb {
     position: absolute;
 
@@ -112,9 +114,9 @@
     left: var(--value-percentage);
     top: 50%;
     transform: translate(-50%, -50%);
+    background: var(--color);
 
     border-radius: 50%;
-    cursor: pointer;
 
     & > input {
       width: 100%;
