@@ -2,8 +2,6 @@ import { Component, JSX, ParentProps, Show, splitProps } from 'solid-js';
 
 import { mergeClass } from '../../_Shared/Utils';
 
-import GrowFade from '../../Transitions/GrowFade/GrowFade';
-
 import './Dropdown.scss';
 
 export interface DropdownProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
