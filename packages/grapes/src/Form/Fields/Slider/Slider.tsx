@@ -181,6 +181,7 @@ const Slider: Component<SliderProps> = (allProps) => {
         visible={focused()}
         style={{
           background: `var(--${color()})`,
+          color: `var(--text-${color()})`
         }}
       >{value()}</Tooltip>
     </GrowFade>
