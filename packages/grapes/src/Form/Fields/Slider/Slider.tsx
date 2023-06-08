@@ -1,4 +1,4 @@
-import { Component, JSX, onCleanup, onMount, Show, splitProps } from 'solid-js';
+import { Component, createEffect, createMemo, createSignal, JSX, on, onCleanup, onMount, Show, splitProps } from 'solid-js';
 
 import { FieldPropKeys, FieldProps, setupField } from '../_Shared/Utilts';
 
@@ -7,6 +7,7 @@ import { FieldInternalWrapper } from '../_Shared';
 import './Slider.scss';
 import { FormValue } from '../../FormContext';
 import Label from '../_Shared/Label/Label';
+import { Tooltip } from '../../../General';
 
 export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
   label?: JSX.Element;
@@ -25,6 +26,10 @@ const Slider: Component<SliderProps> = (allProps) => {
     [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocus']
   );
 
+  const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
+  const min = createMemo(() => parseFloat((elProps.min || 0).toString()));
+  const max = createMemo(() => parseFloat((elProps.min || 100).toString()));
+
   const {
     elementId: id,
     errorsStore: [errors],
@@ -33,7 +38,8 @@ const Slider: Component<SliderProps> = (allProps) => {
     valueSignal: [value, setValue],
     validate,
     hasErrors,
-  } = setupField<SliderProps, FormValue, number>(props, 0);
+  // eslint-disable-next-line solid/reactivity
+  } = setupField<SliderProps, FormValue, number>(props, min());
 
   // eslint-disable-next-line prefer-const
   let slider: HTMLDivElement = undefined as any;
@@ -41,7 +47,8 @@ const Slider: Component<SliderProps> = (allProps) => {
   const updateValueBasedOnMouseX = (mouseX: number) => {
     const mouseRelativeX = mouseX - slider.getBoundingClientRect().x;
 
-    const newValue = Math.max(Math.min(mouseRelativeX / slider.clientWidth * 100, 100), 0);
+    let newValue = Math.max(Math.min(mouseRelativeX / slider.clientWidth * max(), max()), min());
+    newValue = Math.floor(newValue / step()) * step();
     setValue(newValue);
 
     if (props.onChange) {
@@ -68,17 +75,34 @@ const Slider: Component<SliderProps> = (allProps) => {
       updateValueBasedOnMouseX(e.x);
     }
   };
-  onMount(() => {
-    slider.addEventListener('mousedown', handleMouseDown, { passive: true });
+
+  createEffect(() => {
+    const tempSlider = slider;
+    tempSlider.addEventListener('mousedown', handleMouseDown, { passive: true });
     document.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseup', handleMouseUp);
+
+    onCleanup(() => {
+      tempSlider.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    });
   });
 
-  onCleanup(() => {
-    slider.removeEventListener('mousedown', handleMouseDown);
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  });
+  const [thumb, setThumb] = createSignal<HTMLSpanElement>();
+
+  const [thumbBoundingBox, setThumbBoundingBox] = createSignal<DOMRect>();
+
+  createEffect(on(
+    value,
+    () => {
+      if (thumb()) {
+        setThumbBoundingBox(thumb()?.getBoundingClientRect());
+      }
+    }
+  ));
+
+  const valuePercentageToMaxFromMin = createMemo(() => (value() || min() - min()) / max() * 100)
 
   return <FieldInternalWrapper
     name={props.name}
@@ -112,7 +136,7 @@ const Slider: Component<SliderProps> = (allProps) => {
         tertiary: props.color === 'tertiary'
       }}
       style={{
-        '--slider-value': `${value() || 0}%`,
+        '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
       }}
     >
       <span
@@ -125,14 +149,15 @@ const Slider: Component<SliderProps> = (allProps) => {
       />
       <span
         class="thumb"
+        ref={setThumb}
         draggable={false}
       >
         <input
-          min={0}
-          max={100}
-          step={1}
-
           {...elProps}
+
+          min={min()}
+          max={max()}
+          step={step()}
 
           id={id()}
           value={(value() || '').toString()}
@@ -142,6 +167,11 @@ const Slider: Component<SliderProps> = (allProps) => {
         />
       </span>
     </div>
+
+    <Tooltip
+      for={thumbBoundingBox()!}
+      visible={true}
+    >{value()}</Tooltip>
   </FieldInternalWrapper>;
 };
 
