@@ -40,7 +40,7 @@ const Validators = {
     * Validates weather or not the current value of the field is >= than a given `minimum`.
     */
   minEq: (minimum: number) => 
-    (value: FieldValue) => (typeof dbg(value) === 'number') 
+    (value: FieldValue) => (typeof value === 'number') 
       ? (value! >= minimum
           ? undefined
           : `The minimmum value for this is ${minimum}!`)
