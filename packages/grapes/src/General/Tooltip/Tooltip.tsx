@@ -27,6 +27,8 @@ export interface TooltipProps extends JSX.HTMLAttributes<HTMLDivElement> {
    * @description The position relative to the `anchor`.
    */
   position?: 'left' | 'top' | 'right' | 'bottom';
+
+  style?: JSX.CSSProperties;
 }
 
 const Tooltip: Component<TooltipProps> = (allProps) => {
@@ -63,6 +65,8 @@ const Tooltip: Component<TooltipProps> = (allProps) => {
         '--anchor-height': `${boundingRect()?.height}px`,
 
         '--offset-from-anchor': props.offsetFromAnchor || '5px',
+
+        ...elProps.style,
       }}
       classList={{
         'top': props.position === 'top' || typeof props.position === 'undefined',
