@@ -17,20 +17,4 @@
   border-radius: 2px;
 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  &.grow-fade-enter-active,
-  &.grow-fade-exit-active {
-    transition: opacity .2s, transform .2s;
-    transform-origin: top;
-  }
-
-  &.grow-fade-exit-to {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-
-  &.grow-fade-enter {
-    transform: scale(0.8);
-    opacity: 0;
-  }
 }

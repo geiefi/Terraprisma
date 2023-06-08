@@ -1,0 +1,20 @@
+.tooltip {
+  position: absolute;
+  width: fit-content;
+  z-index: 13;
+
+  pointer-events: none;
+  user-select: none;
+
+  border-radius: 5px;
+  background: var(--gray-0);
+
+  padding-inline: 12px;
+  padding-block: 8px;
+
+  &.top {
+    left: calc(var(--anchor-left) + var(--anchor-width) / 2);
+    top: var(--anchor-top);
+    transform: translate(-50%, calc(-100% - var(--offset-from-anchor)));
+  }
+}

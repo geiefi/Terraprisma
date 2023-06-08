@@ -1,7 +1,8 @@
 import { Component, JSX, ParentProps, Show, splitProps } from 'solid-js';
 
-import { Transition } from 'solid-transition-group';
 import { mergeClass } from '../../_Shared/Utils';
+
+import GrowFade from '../../Transitions/GrowFade/GrowFade';
 
 import './Dropdown.scss';
 
@@ -44,7 +45,7 @@ export interface DropdownProps extends ParentProps, JSX.HTMLAttributes<HTMLDivEl
 const Dropdown: Component<DropdownProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['for', 'visible', 'offsetFromAnchor']);
 
-  return <Transition name="grow-fade">
+  return <GrowFade>
     <Show when={props.visible}>
       <div
         {...elProps}
@@ -60,7 +61,7 @@ const Dropdown: Component<DropdownProps> = (allProps) => {
         }}
       >{elProps.children}</div>
     </Show>
-  </Transition>;
+  </GrowFade>;
 };
 
 export default Dropdown;
