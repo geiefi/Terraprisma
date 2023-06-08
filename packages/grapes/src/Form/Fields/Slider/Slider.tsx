@@ -23,7 +23,7 @@ export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HT
 const Slider: Component<SliderProps> = (allProps) => {
   const [props, elProps] = splitProps(
     allProps,
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocus']
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange', 'onFocus']
   );
 
   const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
@@ -130,6 +130,10 @@ const Slider: Component<SliderProps> = (allProps) => {
         focused: focused(),
 
         'has-label': typeof props.label !== 'undefined',
+
+        small: props.size === 'small',
+        medium: props.size === 'medium' || typeof props.size === 'undefined',
+        large: props.size === 'large',
 
         primary: props.color === 'primary' || typeof props.color === 'undefined',
         secondary: props.color === 'secondary',
