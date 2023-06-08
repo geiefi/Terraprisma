@@ -170,7 +170,7 @@ const Slider: Component<SliderProps> = (allProps) => {
 
     <Tooltip
       for={thumbBoundingBox()!}
-      visible={true}
+      visible={focused()}
     >{value()}</Tooltip>
   </FieldInternalWrapper>;
 };
