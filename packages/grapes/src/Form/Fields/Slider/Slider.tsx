@@ -105,6 +105,8 @@ const Slider: Component<SliderProps> = (allProps) => {
 
   const valuePercentageToMaxFromMin = createMemo(() => (value() || min() - min()) / max() * 100)
 
+  const color = createMemo(() => props.color || 'primary');
+
   return <FieldInternalWrapper
     name={props.name}
     errors={errors}
@@ -136,9 +138,9 @@ const Slider: Component<SliderProps> = (allProps) => {
         medium: props.size === 'medium' || typeof props.size === 'undefined',
         large: props.size === 'large',
 
-        primary: props.color === 'primary' || typeof props.color === 'undefined',
-        secondary: props.color === 'secondary',
-        tertiary: props.color === 'tertiary'
+        primary: color() === 'primary',
+        secondary: color() === 'secondary',
+        tertiary: color() === 'tertiary'
       }}
       style={{
         '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
@@ -177,6 +179,9 @@ const Slider: Component<SliderProps> = (allProps) => {
       <Tooltip
         for={thumbBoundingBox()!}
         visible={focused()}
+        style={{
+          background: `var(--${color()})`,
+        }}
       >{value()}</Tooltip>
     </GrowFade>
   </FieldInternalWrapper>;
