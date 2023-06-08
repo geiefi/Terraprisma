@@ -1,5 +1,4 @@
 import { Component, createMemo, JSX, on, Show, splitProps } from 'solid-js';
-import { GrowFade } from '../../Transitions';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Tooltip.scss';
@@ -53,32 +52,30 @@ const Tooltip: Component<TooltipProps> = (allProps) => {
     )
   );
 
-  return <GrowFade>
-    <Show when={props.visible}>
-      <div
-        {...elProps}
-        class={mergeClass('tooltip', elProps.class)}
-        style={{
-          '--anchor-left': `${boundingRect()?.x}px`,
-          '--anchor-top': `${boundingRect()?.y}px`,
-          '--anchor-width': `${boundingRect()?.width}px`,
-          '--anchor-height': `${boundingRect()?.height}px`,
+  return <Show when={props.visible}>
+    <div
+      {...elProps}
+      class={mergeClass('tooltip', elProps.class)}
+      style={{
+        '--anchor-left': `${boundingRect()?.x}px`,
+        '--anchor-top': `${boundingRect()?.y}px`,
+        '--anchor-width': `${boundingRect()?.width}px`,
+        '--anchor-height': `${boundingRect()?.height}px`,
 
-          '--offset-from-anchor': props.offsetFromAnchor || '5px',
-        }}
-        classList={{
-          'top': props.position === 'top' || typeof props.position === 'undefined',
-          'bottom': props.position === 'bottom',
-          'left': props.position === 'left',
-          'right': props.position === 'right',
-          ...elProps.classList
-        }}
-      >
-        {elProps.children}
-        {/*<ArrowDropDown variant="sharp" />*/}
-      </div>
-    </Show>
-  </GrowFade>;
+        '--offset-from-anchor': props.offsetFromAnchor || '5px',
+      }}
+      classList={{
+        'top': props.position === 'top' || typeof props.position === 'undefined',
+        'bottom': props.position === 'bottom',
+        'left': props.position === 'left',
+        'right': props.position === 'right',
+        ...elProps.classList
+      }}
+    >
+      {elProps.children}
+      {/*<ArrowDropDown variant="sharp" />*/}
+    </div>
+  </Show>;
 };
 
 export default Tooltip;

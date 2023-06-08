@@ -1,5 +1,5 @@
-import { Accessor, Component, createEffect, createMemo, createSignal, Setter, Show } from 'solid-js';
-import { createStore, SetStoreFunction } from 'solid-js/store';
+import { Component, createSignal, Show } from 'solid-js';
+import { createStore } from 'solid-js/store';
 
 import { GrapeS } from 'grapes';
 
@@ -12,7 +12,6 @@ import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
-import { splitTupleAccessor } from 'grapes/Helpers/splitTupleAccessor';
 import { FormProviderValue, FormValue } from 'grapes/Form/FormContext';
 
 export type AddressFormValue = Partial<{
@@ -37,7 +36,8 @@ export type PaymentFormValue = Partial<{
 const Demo: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<number>(0);
 
-  const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({}));
+  const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({
+  }));
   const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({
     paymentMethod: 'cartao-de-credito'
   }));
@@ -135,6 +135,7 @@ const Demo: Component = () => {
                 <Slider
                   label='Slider example'
                   color='primary'
+                  size='medium'
                   name='sliderValue'
                   validators={[Validators.minEq(20)]}
                 />

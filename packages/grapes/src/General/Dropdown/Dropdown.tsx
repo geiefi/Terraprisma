@@ -45,23 +45,21 @@ export interface DropdownProps extends ParentProps, JSX.HTMLAttributes<HTMLDivEl
 const Dropdown: Component<DropdownProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['for', 'visible', 'offsetFromAnchor']);
 
-  return <GrowFade>
-    <Show when={props.visible}>
-      <div
-        {...elProps}
-        class={mergeClass('dropdown', elProps.class)}
-        style={{
-          '--anchor-left': `${props.for.offsetLeft}px`,
-          '--anchor-top': `${props.for.offsetTop}px`,
-          '--anchor-width': `${props.for.clientWidth}px`,
-          '--anchor-height': `${props.for.clientHeight}px`,
+  return <Show when={props.visible}>
+    <div
+      {...elProps}
+      class={mergeClass('dropdown', elProps.class)}
+      style={{
+        '--anchor-left': `${props.for.offsetLeft}px`,
+        '--anchor-top': `${props.for.offsetTop}px`,
+        '--anchor-width': `${props.for.clientWidth}px`,
+        '--anchor-height': `${props.for.clientHeight}px`,
 
-          '--offset-from-anchor': props.offsetFromAnchor || '5px',
-          ...elProps.style
-        }}
-      >{elProps.children}</div>
-    </Show>
-  </GrowFade>;
+        '--offset-from-anchor': props.offsetFromAnchor || '5px',
+        ...elProps.style
+      }}
+    >{elProps.children}</div>
+  </Show>;
 };
 
 export default Dropdown;

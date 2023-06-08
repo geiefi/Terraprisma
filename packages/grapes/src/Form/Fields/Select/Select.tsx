@@ -23,6 +23,7 @@ import { FieldValue } from '../../FormContext';
 import './Select.scss';
 import { Dropdown } from '../../../General';
 import { mergeClass } from '../../../_Shared/Utils';
+import { GrowFade } from '../../../Transitions';
 
 export interface SelectProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
   label?: JSX.Element;
@@ -68,7 +69,7 @@ const Option: Component<OptionProps> = (props) => {
  */
 const Select = (allProps: SelectProps) => {
   const [props, elProps] = splitProps(
-    allProps, 
+    allProps,
     [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocused']
   );
 
@@ -140,8 +141,8 @@ const Select = (allProps: SelectProps) => {
       cursor: disabled() === false ? 'pointer' : 'default'
     }}
     renderHelperText={
-      (typeof props.validators !== 'undefined' 
-        && props.validators.length !== 0) 
+      (typeof props.validators !== 'undefined'
+        && props.validators.length !== 0)
       || typeof props.helperText !== 'undefined'
     }
     helperText={props.helperText}
@@ -185,42 +186,44 @@ const Select = (allProps: SelectProps) => {
       {optionLabelFromValue(value())}
     </InputContainer>
 
-    <Dropdown
-      for={inputContainerRef()!}
-      class="select-dropdown"
-      visible={focused()}
-      classList={{
-        'primary': props.color === 'primary' || typeof props.color === 'undefined',
-        'secondary': props.color === 'secondary',
-        'tertiary': props.color === 'tertiary'
-      }}
-    >
-      <For each={options()}>{(optionAllProps) => {
-        const [optionProps, optionElProps] = splitProps(optionAllProps, ['value']);
-        return <div
-          {...optionElProps}
-          class={mergeClass('option', optionElProps.class)}
-          classList={{ 
-            active: optionProps.value === value(),
-            ...optionElProps.classList
-          }}
-          onClick={e => {
-            if (props.onChange) {
-              props.onChange(optionProps.value);
-            }
-            
-            if (typeof optionElProps.onClick === 'function') {
-              optionElProps.onClick(e);
-            }
+    <GrowFade>
+      <Dropdown
+        for={inputContainerRef()!}
+        class="select-dropdown"
+        visible={focused()}
+        classList={{
+          'primary': props.color === 'primary' || typeof props.color === 'undefined',
+          'secondary': props.color === 'secondary',
+          'tertiary': props.color === 'tertiary'
+        }}
+      >
+        <For each={options()}>{(optionAllProps) => {
+          const [optionProps, optionElProps] = splitProps(optionAllProps, ['value']);
+          return <div
+            {...optionElProps}
+            class={mergeClass('option', optionElProps.class)}
+            classList={{
+              active: optionProps.value === value(),
+              ...optionElProps.classList
+            }}
+            onClick={e => {
+              if (props.onChange) {
+                props.onChange(optionProps.value);
+              }
 
-            setValue(optionProps.value);
-            setFocused(false);
-          }}
-        >
-          {optionElProps.children}
-        </div>
-      }}</For>
-    </Dropdown>
+              if (typeof optionElProps.onClick === 'function') {
+                optionElProps.onClick(e);
+              }
+
+              setValue(optionProps.value);
+              setFocused(false);
+            }}
+          >
+            {optionElProps.children}
+          </div>
+        }}</For>
+      </Dropdown>
+    </GrowFade>
   </FieldInternalWrapper>;
 };
 

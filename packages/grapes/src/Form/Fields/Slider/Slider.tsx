@@ -8,6 +8,7 @@ import './Slider.scss';
 import { FormValue } from '../../FormContext';
 import Label from '../_Shared/Label/Label';
 import { Tooltip } from '../../../General';
+import { GrowFade } from '../../../Transitions';
 
 export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
   label?: JSX.Element;
@@ -172,10 +173,12 @@ const Slider: Component<SliderProps> = (allProps) => {
       </span>
     </div>
 
-    <Tooltip
-      for={thumbBoundingBox()!}
-      visible={focused()}
-    >{value()}</Tooltip>
+    <GrowFade>
+      <Tooltip
+        for={thumbBoundingBox()!}
+        visible={focused()}
+      >{value()}</Tooltip>
+    </GrowFade>
   </FieldInternalWrapper>;
 };
 
