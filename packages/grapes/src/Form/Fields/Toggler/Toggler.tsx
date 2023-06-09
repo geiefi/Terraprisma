@@ -11,18 +11,21 @@ import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './Toggler.scss';
 
-export interface TogglerProps extends FieldProps, JSX.HTMLAttributes<HTMLInputElement> {
+export interface TogglerProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
+
+  onChange?: (value: boolean, event: MouseEvent) => any;
+  value?: boolean;
 }
 
 const Toggler: Component<TogglerProps> = (allProps) => {
   const [props, elProps] = splitProps(
     allProps,
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'size']
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange']
   );
 
   const {
@@ -78,9 +81,13 @@ const Toggler: Component<TogglerProps> = (allProps) => {
         }}
 
         value={value() ? 'on' : 'off'}
-        onClick={() => {
+        onClick={(event) => {
           if (!disabled()) {
             const newValue = !value();
+
+            if (typeof props.onChange !== 'undefined') {
+              props.onChange(newValue, event);
+            }
 
             setValue(newValue);
             validate(newValue);
