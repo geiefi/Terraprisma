@@ -136,7 +136,7 @@ const Demo: Component = () => {
                 <Toggler
                   name='toggledValue'
                   label='Toggler example'
-                  validators={[Validators.required]}
+                  validators={[Validators.isEqual(true)]}
                 />
               </Col>
             </Row>

@@ -1,6 +1,6 @@
 import { Component, createEffect, createMemo, createSignal, JSX, on, onCleanup, Show, splitProps } from 'solid-js';
 
-import { setupField } from '../_Shared/setupField';
+import { setupField } from '../_Shared/Setups/setupField';
 
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';

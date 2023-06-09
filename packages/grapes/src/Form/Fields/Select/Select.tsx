@@ -12,7 +12,7 @@ import {
   splitProps,
 } from 'solid-js';
 
-import { setupField } from '../_Shared/setupField';
+import { setupField } from '../_Shared/Setups/setupField';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';

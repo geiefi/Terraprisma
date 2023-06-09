@@ -1,6 +1,6 @@
 import { Component, createEffect, createMemo, createSignal, For, Index, JSX, Match, on, onCleanup, onMount, splitProps, Switch } from 'solid-js';
 
-import { setupField } from '../_Shared/setupField';
+import { setupField } from '../_Shared/Setups/setupField';
 
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';

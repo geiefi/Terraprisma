@@ -1,7 +1,7 @@
 import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from 'solid-js';
 import Button, { ButtonProps } from '../../../General/Button/Button';
 
-import { setupField } from '../_Shared/setupField';
+import { setupField } from '../_Shared/Setups/setupField';
 
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import Label from '../_Shared/Label/Label';

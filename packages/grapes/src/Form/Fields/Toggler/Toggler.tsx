@@ -1,6 +1,6 @@
 import { Component, JSX, splitProps, Show } from 'solid-js';
 
-import { setupField } from '../_Shared/setupField';
+import { setupField } from '../_Shared/Setups/setupField';
 
 import { FieldInternalWrapper } from '../_Shared';
 import Label from '../_Shared/Label/Label';
