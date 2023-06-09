@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker, Slider } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker, Slider, Toggler } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
@@ -140,6 +140,15 @@ const Demo: Component = () => {
                   validators={[Validators.minEq(20)]}
                 />
               </Col>
+              <Col size={24}>
+                <Toggler
+                  label='Toggle example'
+                  color='primary'
+                  name='toggled'
+                  validators={[Validators.isEqual(true)]}
+                  // disabled
+                />
+              </Col>
             </Row>
           </Form>
         </Show>
@@ -220,17 +229,17 @@ const Demo: Component = () => {
         <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
           <Button
             size='medium'
-            style={{
-              "border-radius": '7px',
-            }}
+            // style={{
+            //   "border-radius": '7px',
+            // }}
             onClick={() => setCurrentStep(currentStep() - 1)}
             disabled={currentStep() === 0}
           >Previous</Button>
           <Button
             size='medium'
-            style={{
-              "border-radius": '7px',
-            }}
+            // style={{
+            //   "border-radius": '7px',
+            // }}
             onClick={() => {
               const isValid = currentForm()?.validateAll();
               if (isValid) {

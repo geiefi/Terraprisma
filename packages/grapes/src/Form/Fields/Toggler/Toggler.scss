@@ -1,0 +1,62 @@
+@function add-transparency($color, $percentage) {
+  @return color-mix(in srgb, $color, transparent $percentage);
+}
+
+.toggler {
+  & > input {
+    &.on {
+      --color: var(--primary);
+    }
+
+    &.off {
+      --color: var(--gray-4);
+    }
+
+    &.disabled {
+      opacity: 0.3;
+      --color: var(--gray-5);
+      filter: brightness(95%);
+    }
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    background: add-transparency(var(--color), 40%);
+    transition: background .2s ease-in-out;
+    border-radius: 16px;
+
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+
+    height: 16px;
+    width: 32px;
+    display: block;
+
+    position: relative;
+    margin-block: 5px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      background: var(--color);
+
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+
+      transition: left .2s ease-in-out,
+        background .2s ease-in-out;
+    }
+
+    &.on::after {
+      left: 100%;
+      top: 50%;
+    }
+    &.off::after {
+      left: 0%;
+      top: 50%;
+    }
+  }
+}
