@@ -229,17 +229,17 @@ const Demo: Component = () => {
         <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
           <Button
             size='medium'
-            // style={{
-            //   "border-radius": '7px',
-            // }}
+            style={{
+              "border-radius": '7px',
+            }}
             onClick={() => setCurrentStep(currentStep() - 1)}
             disabled={currentStep() === 0}
           >Previous</Button>
           <Button
             size='medium'
-            // style={{
-            //   "border-radius": '7px',
-            // }}
+            style={{
+              "border-radius": '7px',
+            }}
             onClick={() => {
               const isValid = currentForm()?.validateAll();
               if (isValid) {

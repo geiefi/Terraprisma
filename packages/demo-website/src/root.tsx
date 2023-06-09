@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from "solid-js";
+import { onMount, Suspense } from "solid-js";
 import {
   Body,
   ErrorBoundary,
@@ -14,7 +14,15 @@ import Demo from "./components/Demo/Demo";
 // import DemoWithVerticalSteps from "./components/DemoWithVerticalSteps/DemoWithVerticalSteps";
 // import FieldsWithoutForms from "./components/FieldsWithoutForms/FieldsWithoutForms";
 
+import { onLCP, onFID, onCLS } from 'web-vitals';
+
 export default function Root() {
+  onMount(() => {
+    onCLS(console.log);
+    onFID(console.log);
+    onLCP(console.log);
+  });
+
   return (
     <Html lang="pt-br">
       <Head>
@@ -26,7 +34,7 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             {/*<FieldsWithoutForms/>*/}
-            <Demo/>
+            <Demo />
             {/*<DemoWithVerticalSteps/>*/}
           </ErrorBoundary>
         </Suspense>

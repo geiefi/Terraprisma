@@ -13,6 +13,8 @@ export interface ButtonProps extends ParentProps, JSX.HTMLAttributes<HTMLButtonE
 
   rippleColor?: string,
   rippleClass?: string,
+
+  style?: JSX.CSSProperties,
 }
 
 const Button = (allProps: ButtonProps) => {
@@ -46,7 +48,10 @@ const Button = (allProps: ButtonProps) => {
       'large': props.size === 'large',
     }}
     color={rippleColor()}
-    style={{ display: 'inline-block' }}
+    style={{ 
+      display: 'inline-block',
+      'border-radius': elProps.style?.['border-radius']
+    }}
   >
     <button
       type="button"
