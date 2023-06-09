@@ -7,12 +7,13 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker, Slider, Toggler } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker, Toggler } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
-import { FormProviderValue, FormValue } from 'grapes/Form/FormContext';
+import { FormProviderValue } from 'grapes/Form/FormContext';
+import { FormValue } from 'grapes/Form/Types/FormValue';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -131,22 +132,11 @@ const Demo: Component = () => {
                   validators={[Validators.required]}
                 />
               </Col>
-              <Col size={24}>
-                <Slider
-                  label='Slider example'
-                  color='primary'
-                  size='medium'
-                  name='sliderValue'
-                  validators={[Validators.minEq(20)]}
-                />
-              </Col>
-              <Col size={24}>
+              <Col size={8}>
                 <Toggler
-                  label='Toggle example'
-                  color='primary'
-                  name='toggled'
-                  validators={[Validators.isEqual(true)]}
-                  // disabled
+                  name='toggledValue'
+                  label='Toggler example'
+                  validators={[Validators.required]}
                 />
               </Col>
             </Row>
@@ -228,7 +218,6 @@ const Demo: Component = () => {
 
         <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
           <Button
-            size='medium'
             style={{
               "border-radius": '7px',
             }}
@@ -236,7 +225,6 @@ const Demo: Component = () => {
             disabled={currentStep() === 0}
           >Previous</Button>
           <Button
-            size='medium'
             style={{
               "border-radius": '7px',
             }}

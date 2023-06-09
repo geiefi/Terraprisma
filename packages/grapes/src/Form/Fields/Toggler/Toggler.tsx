@@ -5,8 +5,6 @@ import { setupField } from '../_Shared/setupField';
 import { FieldInternalWrapper } from '../_Shared';
 import Label from '../_Shared/Label/Label';
 
-import { mergeClass } from '../../../_Shared/Utils';
-
 import { FormValue } from '../../Types/FormValue';
 
 import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
@@ -16,22 +14,23 @@ import './Toggler.scss';
 export interface TogglerProps extends FieldProps, JSX.HTMLAttributes<HTMLInputElement> {
   label?: JSX.Element;
   helperText?: JSX.Element;
+
+  color?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'small' | 'medium' | 'large';
 }
 
 const Toggler: Component<TogglerProps> = (allProps) => {
   const [props, elProps] = splitProps(
     allProps,
-    [...FieldPropKeys, 'label', 'helperText']
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'size']
   );
 
   const {
     elementId: id,
     errorsStore: [errors],
     disabledSignal: [disabled],
-    focusedSignal: [focused, setFocused],
     valueSignal: [value, setValue],
     validate,
-    hasContent,
     hasErrors
   } = setupField<TogglerProps, FormValue, boolean>(props, false);
 
@@ -44,7 +43,7 @@ const Toggler: Component<TogglerProps> = (allProps) => {
         && props.validators.length !== 0)
       || typeof props.helperText !== 'undefined'
     }
-    class="toggler"
+    class="toggler-container"
     isDisabled={disabled()}
   >
     <Show when={props.label}>
@@ -54,31 +53,41 @@ const Toggler: Component<TogglerProps> = (allProps) => {
       >{props.label}</Label>
     </Show>
 
-    <input
-      {...elProps}
+    <div class="toggler">
+      <input
+        {...elProps}
 
-      id={id()}
-      type="checkbox"
-      class={elProps.class}
-      classList={{
-        on: value() === true,
-        off: value() === false,
+        id={id()}
+        type="checkbox"
+        class={elProps.class}
+        classList={{
+          on: value() === true,
+          off: value() === false,
 
-        disabled: disabled(),
+          disabled: disabled(),
 
-        ...elProps.classList
-      }}
+          primary: props.color === 'primary' || typeof props.color === 'undefined',
+          secondary: props.color === 'secondary',
+          tertiary: props.color === 'tertiary',
 
-      value={value() ? 'on' : 'off'}
-      onClick={() => {
-        if (!disabled()) {
-          const newValue = !value();
+          small: props.size === 'small',
+          medium: props.size === 'medium' || typeof props.size === 'undefined',
+          large: props.size === 'large',
 
-          setValue(newValue);
-          validate(newValue);
-        }
-      }}
-    />
+          ...elProps.classList
+        }}
+
+        value={value() ? 'on' : 'off'}
+        onClick={() => {
+          if (!disabled()) {
+            const newValue = !value();
+
+            setValue(newValue);
+            validate(newValue);
+          }
+        }}
+      />
+    </div>
   </FieldInternalWrapper>;
 };
 
