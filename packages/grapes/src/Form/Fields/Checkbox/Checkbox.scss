@@ -1,0 +1,53 @@
+.checkbox {
+  --size: 20px;
+  --color: var(--primary);
+
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  &:not(.disabled) > * {
+    cursor: pointer;
+  }
+
+  & > input {
+    display: block;
+    appearance: none;
+
+    width: var(--size);
+    height: var(--size);
+
+    margin: 0;
+    padding: 0;
+
+    transition: background .2s ease-in-out;
+    border-radius: 2px;
+
+    &:not(.checked) {
+      background: transparent;
+      border: 2px solid var(--gray-5);
+    }
+
+    &.checked {
+      border: 2px solid var(--color);
+      background: var(--color);
+    }
+  }
+
+  .checked-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: var(--size);
+    height: var(--size);
+    scale: 1 !important;
+    margin: 0;
+
+    font-size: var(--size);
+    user-select: none;
+    user-drag: none;
+
+    transform: translate(-50%, -50%);
+  }
+}

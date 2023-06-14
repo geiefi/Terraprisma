@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker, Toggler } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker, Toggler, CHeckbox } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
@@ -137,6 +137,12 @@ const Demo: Component = () => {
                   name='toggledValue'
                   label='Toggler example'
                   validators={[Validators.isEqual(true)]}
+                />
+              </Col>
+              <Col size={8}>
+                <CHeckbox
+                  name='checkboxValue'
+                  label='Checkbox example'
                 />
               </Col>
             </Row>
