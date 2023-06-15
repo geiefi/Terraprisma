@@ -157,8 +157,6 @@ const Demo: Component = () => {
                 <Radio
                   name='radioValue'
                   label='Radio example'
-                  color='secondary'
-                  size='large'
                   disabled={false}
                 />
               </Col>
