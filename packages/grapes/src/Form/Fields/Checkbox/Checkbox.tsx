@@ -22,7 +22,7 @@ export interface CheckboxProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLI
   value?: boolean;
 }
 
-const CHeckbox: Component<CheckboxProps> = (allProps) => {
+const Checkbox: Component<CheckboxProps> = (allProps) => {
   const [props, elProps] = splitProps(
     allProps,
     [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange']
@@ -102,4 +102,4 @@ const CHeckbox: Component<CheckboxProps> = (allProps) => {
   </FieldInternalWrapper>;
 }
 
-export default CHeckbox;
+export default Checkbox;
