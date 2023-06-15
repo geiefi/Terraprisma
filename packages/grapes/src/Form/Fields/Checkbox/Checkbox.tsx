@@ -57,13 +57,24 @@ const CHeckbox: Component<CheckboxProps> = (allProps) => {
 
     <div
       class="checkbox"
-      onClick={(e) => {
-        const newValue = !value();
-        setValue(newValue);
-        validate(newValue);
+      classList={{
+        primary: typeof props.color === 'undefined' || props.color === 'primary',
+        secondary: props.color === 'secondary',
+        tertiary: props.color === 'tertiary',
 
-        if (props.onChange) {
-          props.onChange(newValue, e);
+        small: props.size === 'small',
+        medium: typeof props.size === 'undefined' || props.size === 'medium',
+        large: props.size === 'large',
+      }}
+      onClick={(e) => {
+        if (!disabled()) {
+          const newValue = !value();
+          setValue(newValue);
+          validate(newValue);
+
+          if (props.onChange) {
+            props.onChange(newValue, e);
+          }
         }
       }}
     >
@@ -74,7 +85,6 @@ const CHeckbox: Component<CheckboxProps> = (allProps) => {
         type="checkbox"
         classList={{
           checked: value() === true,
-
           disabled: disabled(),
 
           ...elProps.classList
