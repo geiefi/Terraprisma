@@ -17,14 +17,17 @@
 
   &.primary {
     --color: var(--primary);
+    --check-color: var(--text-primary);
   }
 
   &.secondary {
     --color: var(--secondary);
+    --check-color: var(--text-secondary);
   }
 
   &.tertiary {
     --color: var(--tertiary);
+    --check-color: var(--text-tertiary);
   }
 
   & > input {
@@ -42,7 +45,8 @@
     margin: 0;
     padding: 0;
 
-    transition: background .2s ease-in-out;
+    transition: background .2s ease-in-out
+      border .2s ease-in-out;
     border-radius: 2px;
 
     &:not(.checked) {
@@ -62,6 +66,7 @@
 
       width: var(--size);
       height: var(--size);
+      color: var(--check-color);
       scale: 1 !important;
       margin: 0;
 
