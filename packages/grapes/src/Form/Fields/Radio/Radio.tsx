@@ -1,4 +1,4 @@
-import { Component, JSX, Show, splitProps } from 'solid-js';
+import { Component, JSX, Show, createMemo, createSignal, splitProps } from 'solid-js';
 
 import { setupField } from '../_Shared/Setups/setupField';
 
@@ -9,7 +9,8 @@ import { FieldInternalWrapper } from '../_Shared';
 import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './Radio.scss';
-import { Ripple } from '../../../General';
+import { ClickableSignalizer, Ripple } from '../../../General';
+import { mergeCallbacks } from '../../../Helpers';
 
 export interface RadioProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: JSX.Element;
@@ -32,12 +33,16 @@ const Radio: Component<RadioProps> = (allProps) => {
     errorsStore: [errors],
     disabledSignal: [disabled],
     valueSignal: [value, setValue],
+    focusedSignal: [focused, setFocused],
     validate,
     hasErrors
   } = setupField<RadioProps, FormValue, boolean>(props, false);
 
+  const color = createMemo(() => props.color || 'primary');
+
   return <FieldInternalWrapper
     name={props.name}
+    class="radio-container"
     errors={errors}
     helperText={props.helperText}
     renderHelperText={
@@ -50,9 +55,9 @@ const Radio: Component<RadioProps> = (allProps) => {
     <div
       class="radio"
       classList={{
-        primary: typeof props.color === 'undefined' || props.color === 'primary',
-        secondary: props.color === 'secondary',
-        tertiary: props.color === 'tertiary',
+        primary: color() === 'primary',
+        secondary: color() === 'secondary',
+        tertiary: color() === 'tertiary',
 
         small: props.size === 'small',
         medium: typeof props.size === 'undefined' || props.size === 'medium',
@@ -72,22 +77,44 @@ const Radio: Component<RadioProps> = (allProps) => {
           }
         }
       }}
+      onMouseEnter={() => setFocused(true)}
+      onMouseLeave={() => setFocused(false)}
+
     >
-      <input
-        {...elProps}
+      <ClickableSignalizer
+        color={value() ? `var(--${color()})` : undefined}
+        show={focused()}
+      >
+        <Ripple class="radio-internal" center>
+          <input
+            {...elProps}
 
-        id={id()}
-        type="radio"
-        value={value() ? 'on' : 'off'}
-      />
+            id={id()}
+            type="radio"
+            value={value() ? 'on' : 'off'}
 
-      <Show when={props.label}>
-        <Label
-          for={id()}
-          hasErrors={hasErrors()}
-        >{props.label}</Label>
-      </Show>
+            onBlur={mergeCallbacks<() => void>(
+              // eslint-disable-next-line solid/reactivity
+              elProps.onBlur as any,
+              () => setFocused(false)
+            )}
+
+            onFocus={mergeCallbacks<() => void>(
+              // eslint-disable-next-line solid/reactivity
+              elProps.onFocus as any,
+              () => setFocused(true)
+            )}
+          />
+        </Ripple>
+      </ClickableSignalizer>
     </div>
+
+    <Show when={props.label}>
+      <Label
+        for={id()}
+        hasErrors={hasErrors()}
+      >{props.label}</Label>
+    </Show>
   </FieldInternalWrapper>;
 }
 
