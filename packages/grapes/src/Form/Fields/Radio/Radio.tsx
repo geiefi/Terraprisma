@@ -1,4 +1,4 @@
-import { Component, JSX, Show, createMemo, createSignal, splitProps } from 'solid-js';
+import { Component, JSX, Show, createMemo, splitProps } from 'solid-js';
 
 import { setupField } from '../_Shared/Setups/setupField';
 

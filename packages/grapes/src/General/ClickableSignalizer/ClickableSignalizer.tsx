@@ -2,7 +2,7 @@ import { Component, ComponentProps, ParentProps, Show, createEffect } from 'soli
 
 import { forwardNativeElementProps } from '../../Helpers/forwardElementProps';
 import { mergeClass } from '../../_Shared/Utils';
-import { Fade, GrowFade } from '../../Transitions';
+import { GrowFade } from '../../Transitions';
 
 import './ClickableSignalizer.scss';
 

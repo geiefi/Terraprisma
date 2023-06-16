@@ -187,7 +187,7 @@ const Slider: Component<SliderProps> = (allProps) => {
     </div>
 
     <Show when={typeof props.showTooltip === 'undefined' ? true : props.showTooltip}>
-      <GrowFade>
+      <GrowFade growingOrigin="bottom">
         <Tooltip
           for={thumbBoundingBox()!}
           visible={focused()}
