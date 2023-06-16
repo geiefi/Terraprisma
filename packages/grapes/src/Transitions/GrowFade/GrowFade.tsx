@@ -1,10 +1,14 @@
-import type { Component, ParentProps } from 'solid-js';
+import { type Component, type JSX, type ParentProps } from 'solid-js';
 import { Transition, TransitionProps } from 'solid-transition-group';
 
 import './GrowFade.scss';
 
-const GrowFade: Component<ParentProps<Omit<TransitionProps, 'name'>>> = (props) => (
-  <Transition name="grow-fade" {...props}>
+export interface GrowFadeProps extends Omit<TransitionProps, 'name'>, ParentProps {
+  growingOrigin?: JSX.CSSProperties['transform-origin'];
+}
+
+const GrowFade: Component<GrowFadeProps> = (props) => (
+  <Transition name={`grow-fade-${props.growingOrigin || 'center'}`} {...props}>
     {props.children}
   </Transition>
 );
