@@ -1,4 +1,4 @@
-import { Component, JSX, Show, splitProps } from 'solid-js';
+import { Component, JSX, Show, createMemo, splitProps } from 'solid-js';
 
 import { setupField } from '../_Shared/Setups/setupField';
 
@@ -11,8 +11,12 @@ import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 import './Checkbox.scss';
 import { Check } from '../../../Icons';
 import { GrowFade } from '../../../Transitions';
+import { ClickableSignalizer, Ripple } from '../../../General';
+import { mergeCallbacks } from '../../../Helpers';
 
-export interface CheckboxProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+export interface CheckboxProps
+  extends FieldProps,
+  Omit<JSX.HTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: JSX.Element;
   helperText?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -23,83 +27,105 @@ export interface CheckboxProps extends FieldProps, Omit<JSX.HTMLAttributes<HTMLI
 }
 
 const Checkbox: Component<CheckboxProps> = (allProps) => {
-  const [props, elProps] = splitProps(
-    allProps,
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange']
-  );
+  const [props, elProps] = splitProps(allProps, [
+    ...FieldPropKeys,
+    'label',
+    'helperText',
+    'color',
+    'size',
+    'onChange',
+  ]);
 
   const {
     elementId: id,
     errorsStore: [errors],
     disabledSignal: [disabled],
     valueSignal: [value, setValue],
+    focusedSignal: [focused, setFocused],
     validate,
-    hasErrors
+    hasErrors,
   } = setupField<CheckboxProps, FormValue, boolean>(props, false);
 
-  return <FieldInternalWrapper
-    name={props.name}
-    errors={errors}
-    helperText={props.helperText}
-    renderHelperText={
-      (typeof props.validators !== 'undefined'
-        && props.validators.length !== 0)
-      || typeof props.helperText !== 'undefined'
-    }
-    isDisabled={disabled()}
-  >
-    <Show when={props.label}>
-      <Label
-        for={id()}
-        hasErrors={hasErrors()}
-      >{props.label}</Label>
-    </Show>
+  const color = createMemo(() => props.color || 'primary');
 
-    <div
-      class="checkbox"
-      classList={{
-        primary: typeof props.color === 'undefined' || props.color === 'primary',
-        secondary: props.color === 'secondary',
-        tertiary: props.color === 'tertiary',
-
-        small: props.size === 'small',
-        medium: typeof props.size === 'undefined' || props.size === 'medium',
-        large: props.size === 'large',
-      }}
-      onClick={(e) => {
-        if (!disabled()) {
-          const newValue = !value();
-          setValue(newValue);
-          validate(newValue);
-
-          if (props.onChange) {
-            props.onChange(newValue, e);
-          }
-        }
-      }}
+  return (
+    <FieldInternalWrapper
+      name={props.name}
+      errors={errors}
+      helperText={props.helperText}
+      renderHelperText={
+        (typeof props.validators !== 'undefined' &&
+          props.validators.length !== 0) ||
+        typeof props.helperText !== 'undefined'
+      }
+      isDisabled={disabled()}
     >
-      <input
-        {...elProps}
+      <Show when={props.label}>
+        <Label for={id()} hasErrors={hasErrors()}>
+          {props.label}
+        </Label>
+      </Show>
 
-        id={id()}
-        type="checkbox"
+      <div
+        class="checkbox"
         classList={{
+          primary: color() === 'primary',
+          secondary: color() === 'secondary',
+          tertiary: color() === 'tertiary',
+
+          small: props.size === 'small',
+          medium: typeof props.size === 'undefined' || props.size === 'medium',
+          large: props.size === 'large',
+
           checked: value() === true,
           disabled: disabled(),
-
-          ...elProps.classList
         }}
+        onClick={(e) => {
+          if (!disabled()) {
+            const newValue = !value();
+            setValue(newValue);
+            validate(newValue);
 
-        value={value() ? 'on' : 'off'}
-      />
+            if (props.onChange) {
+              props.onChange(newValue, e);
+            }
+          }
+        }}
+        onMouseEnter={() => setFocused(true)}
+        onMouseLeave={() => setFocused(false)}
+      >
+        <ClickableSignalizer
+          show={focused()}
+          color={value() ? `var(--${color()})` : undefined}
+        >
+          <Ripple class="checkbox-internal">
+            <input
+              {...elProps}
+              id={id()}
+              type="checkbox"
+              onBlur={mergeCallbacks<() => void>(
+                // eslint-disable-next-line solid/reactivity
+                elProps.onBlur as any,
+                () => setFocused(false)
+              )}
+              onFocus={mergeCallbacks<() => void>(
+                // eslint-disable-next-line solid/reactivity
+                elProps.onFocus as any,
+                () => setFocused(true)
+              )}
+              value={value() ? 'on' : 'off'}
+            />
 
-      <GrowFade>
-        <Show when={value() === true}>
-          <Check class="checked-icon" variant="rounded" />
-        </Show>
-      </GrowFade>
-    </div>
-  </FieldInternalWrapper>;
-}
+            <GrowFade>
+              <Show when={value()}>
+                <Check class="checked-icon" variant="rounded" />
+              </Show>
+            </GrowFade>
+          </Ripple>
+        </ClickableSignalizer>
+      </div>
+    </FieldInternalWrapper>
+  );
+};
 
 export default Checkbox;
