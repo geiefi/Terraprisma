@@ -98,7 +98,7 @@ const Checkbox: Component<CheckboxProps> = (allProps) => {
           show={focused()}
           color={value() ? `var(--${color()})` : undefined}
         >
-          <Ripple class="checkbox-internal">
+          <Ripple class="checkbox-internal" color={color()} center>
             <input
               {...elProps}
               id={id()}
@@ -117,7 +117,7 @@ const Checkbox: Component<CheckboxProps> = (allProps) => {
             />
 
             <GrowFade>
-              <Show when={value()}>
+              <Show when={value() === true}>
                 <Check class="checked-icon" variant="rounded" />
               </Show>
             </GrowFade>
