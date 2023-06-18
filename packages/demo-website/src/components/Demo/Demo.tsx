@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker, Toggler, Checkbox, Slider } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Datepicker, Toggler, Checkbox, Slider, RadioGroup } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
@@ -152,13 +152,16 @@ const Demo: Component = () => {
                   label='Slider example'
                 />
               </Col>
-              {/* <Col size={8}> */}
-              {/*   <Radio */}
-              {/*     name='radioValue' */}
-              {/*     label='Radio example' */}
-              {/*     disabled={false} */}
-              {/*   /> */}
-              {/* </Col> */}
+              <Col size={8}>
+                <RadioGroup
+                  name='bestGame'
+                  label='What is the best game?'
+                  validators={[Validators.isEqual('terraria')]}
+                >
+                  <RadioGroup.Option value='terraria'>Terraria</RadioGroup.Option>
+                  <RadioGroup.Option value='minecraft'>Minecraft</RadioGroup.Option>
+                </RadioGroup>
+              </Col>
             </Row>
           </Form>
         </Show>

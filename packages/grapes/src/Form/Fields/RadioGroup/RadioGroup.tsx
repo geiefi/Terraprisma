@@ -30,6 +30,7 @@ export interface RadioGroupOptionProps extends ParentProps {
 
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
 
   onClick?: (e: MouseEvent) => void;
 }
@@ -44,20 +45,27 @@ const RadioInternal = forwardNativeElementProps<
   (props, elProps) => {
     const {
       elementId: groupId,
-      valueS: [value],
-      disabledS: [disabled],
+      valueS: [groupValue],
+      disabledS: [groupDisabled],
 
       hasErrors,
-    } = useField()!;
+    } = useField<string>()!;
 
     const id = createMemo(() => `${groupId()}-${props.value}`);
 
     const [isRadioFocused, setRadioToFocused] = createSignal(false);
 
+    const isDisabled = createMemo(() => props.disabled || groupDisabled());
+    const isChecked = createMemo(() => props.value === groupValue());
+
     return (
-      <div 
-        class="radio-container" 
-        onClick={props.onClick} 
+      <div
+        class="radio-container"
+        onClick={(e) => {
+          if (props.onClick && !isDisabled()) {
+            props.onClick(e);
+          }
+        }}
       >
         <div
           class="radio"
@@ -70,22 +78,22 @@ const RadioInternal = forwardNativeElementProps<
             medium: props.size === 'medium',
             large: props.size === 'large',
 
-            checked: value() === true,
-            disabled: disabled(),
+            checked: isChecked(),
+            disabled: isDisabled(),
           }}
           onMouseEnter={() => setRadioToFocused(true)}
           onMouseLeave={() => setRadioToFocused(false)}
         >
           <ClickableSignalizer
-            color={value() ? `var(--${props.color})` : undefined}
-            show={isRadioFocused()}
+            color={isChecked() ? `var(--${props.color})` : undefined}
+            show={isRadioFocused() && !isDisabled()}
           >
-            <Ripple class="radio-internal" color={props.color} center>
+            <Ripple class="radio-internal" noRipple={isDisabled()} color={props.color} center>
               <input
                 {...elProps}
                 id={id()}
                 type="radio"
-                value={value() ? 'on' : 'off'}
+                value={groupValue()}
                 onFocus={mergeCallbacks(
                   elProps.onFocus as any,
                   () => setRadioToFocused(true)
@@ -107,7 +115,7 @@ const RadioInternal = forwardNativeElementProps<
       </div>
     );
   },
-  ['value', 'children', 'onClick']
+  ['value', 'children', 'color', 'disabled', 'size', 'onClick']
 );
 
 export interface RadioGroupProps extends FieldProps, ParentProps {
@@ -118,7 +126,7 @@ export interface RadioGroupProps extends FieldProps, ParentProps {
   size?: 'small' | 'medium' | 'large';
   radiosDirection?: StackProps['direction'];
 
-  onChange?: (value: boolean, event: MouseEvent) => any;
+  onChange?: (value: string, event: MouseEvent) => any;
   value?: string;
 }
 
@@ -130,12 +138,13 @@ const RadioGroup = setupFieldComponent(
         elementId: id,
 
         disabledS: [disabled],
-        valueS: [value, setValue],
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        valueS: [_value, setValue],
 
         hasErrors,
 
         validate,
-      } = useField()!;
+      } = useField<string>()!;
 
       const getChildren = accessChildren(() => props.children);
       const options = createMemo<RadioGroupOptionProps[]>(() => {
@@ -163,18 +172,25 @@ const RadioGroup = setupFieldComponent(
           {...elProps}
           class={mergeClass('radio-group', elProps.class)}
         >
+          <Show when={props.label}>
+            <Label for={id()} hasErrors={hasErrors()}>
+              {props.label}
+            </Label>
+          </Show>
+
           <Stack spacing={10} direction={props.radiosDirection}>
             <For each={options()}>
-              {(optionProps) => (
+              {(optionProps, i) => (
                 <RadioInternal
-                  color={color()}
-                  size={props.size || 'medium'}
                   {...optionProps}
+                  tabindex={i()}
+                  color={optionProps.color || color()}
+                  size={optionProps.size || props.size || 'medium'}
                   onClick={mergeCallbacks(
                     optionProps.onClick,
                     (e) => {
                       if (!disabled()) {
-                        const newValue = !value();
+                        const newValue = optionProps.value;
                         setValue(newValue);
                         validate(newValue);
 
@@ -188,12 +204,6 @@ const RadioGroup = setupFieldComponent(
               )}
             </For>
           </Stack>
-
-          <Show when={props.label}>
-            <Label for={id()} hasErrors={hasErrors()}>
-              {props.label}
-            </Label>
-          </Show>
         </FieldInternalWrapper>
       );
     },
