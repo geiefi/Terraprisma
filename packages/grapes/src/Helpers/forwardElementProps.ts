@@ -1,11 +1,11 @@
 import { Component, splitProps } from 'solid-js';
 import { JSX } from 'solid-js/jsx-runtime';
 
-export function forwardNativeElementProps<Props extends Record<string, any>, ElementType extends HTMLElement>(
-  componentFunc: (props: Props, elProps: Omit<JSX.HTMLAttributes<ElementType>, keyof Props>) => JSX.Element | JSX.Element[],
+export function forwardNativeElementProps<Props extends Record<string, any>, ElementType extends HTMLElement, ElementProps = JSX.HTMLAttributes<ElementType>>(
+  componentFunc: (props: Props, elProps: Omit<ElementProps, keyof Props>) => JSX.Element | JSX.Element[],
   componentPropNames: [keyof Props] | (keyof Props)[],
-): Component<Props & JSX.HTMLAttributes<ElementType>> {
-  return (allProps: Props & JSX.HTMLAttributes<ElementType>) => componentFunc(
+): Component<Props & ElementProps> {
+  return (allProps: Props & ElementProps) => componentFunc(
     ...splitProps(allProps, componentPropNames)
   );
 }

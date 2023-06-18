@@ -1,3 +1,4 @@
+import { JSX } from 'solid-js/jsx-runtime';
 import { Store } from '../../../Helpers/Types/Store';
 
 import { FieldValidator } from '../../Types/FieldValidator';
@@ -9,6 +10,7 @@ export const FieldPropKeys: (keyof FieldProps)[] = [
   'value',
   'validators',
   'disabled',
+  'helperText',
   'errorsStore'
 ];
 
@@ -69,5 +71,7 @@ export interface FieldProps {
    * be set in other better ways.
    */
   value?: FormFieldValue;
+
+  helperText?: JSX.Element
 }
 

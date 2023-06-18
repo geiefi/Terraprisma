@@ -6,6 +6,6 @@ import Datepicker from './Datepicker/Datepicker';
 import Slider from './Slider/Slider';
 import Toggler from './Toggler/Toggler';
 import Checkbox from './Checkbox/Checkbox';
-import Radio from './Radio/Radio';
+import RadioGroup from './RadioGroup/RadioGroup';
 
-export { Input, Slider, Select, ButtonChooser, Radio, TextArea, Datepicker, Toggler, Checkbox };
+export { Input, Slider, Select, ButtonChooser, RadioGroup, TextArea, Datepicker, Toggler, Checkbox };

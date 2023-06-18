@@ -1,7 +1,15 @@
-import { Component, createMemo, children as accessChildren, JSX, on, createEffect, For, Show, splitProps } from 'solid-js';
+import {
+  Component,
+  createMemo,
+  children as accessChildren,
+  JSX,
+  on,
+  createEffect,
+  For,
+  Show,
+  ComponentProps,
+} from 'solid-js';
 import Button, { ButtonProps } from '../../../General/Button/Button';
-
-import { setupField } from '../_Shared/Setups/setupField';
 
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 import Label from '../_Shared/Label/Label';
@@ -12,8 +20,11 @@ import { FormFieldValue } from '../../Types/FormFieldValue';
 import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
 
 import './ButtonChooser.scss';
+import { useField } from '../_Shared/FieldHelpers/FieldContext';
+import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
-export interface ButtonChooserProps extends FieldProps, JSX.HTMLAttributes<HTMLDivElement> {
+export interface ButtonChooserProps extends FieldProps {
   label?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
   helperText?: JSX.Element;
@@ -31,102 +42,102 @@ const Option: Component<OptionProps> = (props) => {
   return props as unknown as JSX.Element;
 };
 
-const ButtonChooser = (allProps: ButtonChooserProps) => {
-  const [props, elProps] = splitProps(
-    allProps,
-    [...FieldPropKeys, 'label', 'color', 'helperText', 'onChange']
-  );
+const ButtonChooser = setupFieldComponent(
+  forwardNativeElementProps<ButtonChooserProps, HTMLDivElement>(
+    (props, elProps) => {
+      const {
+        elementId: id,
+        disabledS: [disabled],
+        valueS: [value, setValue],
+        validate,
+        hasErrors,
+      } = useField()!;
 
-  const {
-    elementId: id,
-    errorsStore: [errors],
-    disabledSignal: [disabled],
-    valueSignal: [value, setValue],
-    validate,
-    hasErrors
-  } = setupField(props);
+      const getChildren = accessChildren(() => elProps.children);
+      const options = createMemo<OptionProps[]>(() => {
+        let childrenArr: (JSX.Element | OptionProps)[];
 
-  const getChildren = accessChildren(() => elProps.children);
-  const options = createMemo<OptionProps[]>(() => {
-    let childrenArr: (JSX.Element | OptionProps)[];
+        const children = getChildren();
+        if (Array.isArray(children)) {
+          childrenArr = children;
+        } else {
+          childrenArr = [children];
+        }
 
-    const children = getChildren();
-    if (Array.isArray(children)) {
-      childrenArr = children;
-    } else {
-      childrenArr = [children];
-    }
+        return childrenArr.filter((child) => {
+          return (
+            child !== null &&
+            typeof child === 'object' &&
+            Object.hasOwn(child, 'value') &&
+            Object.hasOwn(child, 'children')
+          );
+        }) as OptionProps[];
+      });
 
-    return childrenArr.filter(child => {
-      return child !== null
-        && typeof child === 'object'
-        && Object.hasOwn(child, 'value')
-        && Object.hasOwn(child, 'children');
-    }) as OptionProps[];
-  });
+      createEffect(
+        on(
+          value,
+          (newValue) => {
+            validate(newValue);
+          },
+          { defer: true }
+        )
+      );
 
-  createEffect(
-    on(
-      value,
-      (newValue) => {
-        validate(newValue);
-      },
-      { defer: true }
-    )
-  );
+      const color = createMemo(() => props.color || 'primary');
 
-  const color = createMemo(() => props.color || 'primary');
-
-  return <FieldInternalWrapper
-    {...elProps}
-    isDisabled={disabled()}
-    errors={errors}
-    name={props.name}
-    renderHelperText={
-      (typeof props.validators !== 'undefined'
-        && props.validators.length !== 0)
-      || typeof props.helperText !== 'undefined'
-    }
-    helperText={props.helperText}
-    class={mergeClass('button-chooser', elProps.class)}
-    style={{
-      height: 'fit-content',
-      ...elProps.style
-    }}
-  >
-    <Show when={props.label}>
-      <Label
-        for={id()}
-        hasErrors={hasErrors()}
-      >{props.label}</Label>
-    </Show>
-
-    <div id={id()} class="buttons">
-      <For each={options()}>{(opt) => (
-        <Button.Empty
-          color={color()}
-          disabled={disabled()}
-          {...opt}
-          class={opt.class}
-          classList={{
-            'active': opt.value === value(),
-            ...opt.classList
+      return (
+        <FieldInternalWrapper
+          {...elProps}
+          class={mergeClass('button-chooser', elProps.class)}
+          style={{
+            height: 'fit-content',
+            ...props.style,
           }}
-          onClick={(event) => {
-            setValue(opt.value);
+        >
+          <Show when={props.label}>
+            <Label for={id()} hasErrors={hasErrors()}>
+              {props.label}
+            </Label>
+          </Show>
 
-            if (props.onChange) {
-              props.onChange(opt.value);
-            }
+          <div id={id()} class="buttons">
+            <For each={options()}>
+              {(opt) => (
+                <Button.Empty
+                  color={color()}
+                  disabled={disabled()}
+                  {...opt}
+                  class={opt.class}
+                  classList={{
+                    active: opt.value === value(),
+                    ...opt.classList,
+                  }}
+                  onClick={(event) => {
+                    setValue(opt.value);
 
-            if (typeof opt.onClick === 'function') {
-              opt.onClick(event);
-            }
-          }}
-        >{opt.children}</Button.Empty>
-      )}</For>
-    </div>
-  </FieldInternalWrapper>;
+                    if (props.onChange) {
+                      props.onChange(opt.value);
+                    }
+
+                    if (typeof opt.onClick === 'function') {
+                      opt.onClick(event);
+                    }
+                  }}
+                >
+                  {opt.children}
+                </Button.Empty>
+              )}
+            </For>
+          </div>
+        </FieldInternalWrapper>
+      );
+    },
+    [...FieldPropKeys, 'label', 'color', 'helperText', 'onChange', 'style']
+  )
+) as {
+  (props: ButtonChooserProps & ComponentProps<'div'>): JSX.Element;
+  Option(props: OptionProps): JSX.Element;
 };
 
 ButtonChooser.Option = Option;

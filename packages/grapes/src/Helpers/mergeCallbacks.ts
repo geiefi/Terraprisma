@@ -1,4 +1,6 @@
-type Func = (...args: any[]) => any;
+type Func = ((...args: any[]) => any) & {
+  (...args: any[]): any
+};
 
 export function mergeCallbacks<Callback extends Func>(...callbacks: [...(Callback | undefined)[], Callback]): Callback {
   return ((...args: any[]) => {

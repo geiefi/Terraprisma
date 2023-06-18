@@ -1,4 +1,4 @@
-import { Component, ComponentProps, ParentProps, Show, createEffect } from 'solid-js';
+import { Component, ComponentProps, ParentProps, Show } from 'solid-js';
 
 import { forwardNativeElementProps } from '../../Helpers/forwardElementProps';
 import { mergeClass } from '../../_Shared/Utils';
@@ -16,10 +16,6 @@ const ClickableSignalizer: Component<ClickableSignalizerProps> = forwardNativeEl
   ClickableSignalizerProps, HTMLDivElement
 >(
   (props, elProps) => {
-    createEffect(() => {
-      console.log(props.show);
-    });
-
     return <div
       {...elProps}
       class={mergeClass('clickable-signalizer-container', elProps.class)}

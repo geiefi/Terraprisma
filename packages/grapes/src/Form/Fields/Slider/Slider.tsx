@@ -1,21 +1,28 @@
-import { Component, createEffect, createMemo, createSignal, JSX, on, onCleanup, Show, splitProps } from 'solid-js';
-
-import { setupField } from '../_Shared/Setups/setupField';
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  JSX,
+  on,
+  onCleanup,
+  Show,
+} from 'solid-js';
 
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 import { Tooltip } from '../../../General';
 import { GrowFade } from '../../../Transitions';
 
-import { FormValue } from '../../Types/FormValue';
-
 import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+
+import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
+import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import './Slider.scss';
 
-export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'name' | 'value'> {
+export interface SliderProps extends FieldProps {
   label?: JSX.Element;
-  helperText?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
@@ -23,186 +30,189 @@ export interface SliderProps extends FieldProps, Omit<JSX.InputHTMLAttributes<HT
   showTooltip?: boolean;
   renderTooltipContent?: (value: number) => JSX.Element;
 
-  onChange?: (value: number) => void,
-  onFocus?: () => void,
+  onChange?: (value: number) => void;
 }
 
-const Slider: Component<SliderProps> = (allProps) => {
-  const [props, elProps] = splitProps(
-    allProps,
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'showTooltip', 'renderTooltipContent', 'size', 'onChange', 'onFocus']
-  );
+const Slider = setupFieldComponent(
+  forwardNativeElementProps<SliderProps, HTMLInputElement, JSX.InputHTMLAttributes<HTMLInputElement>>(
+    (props, elProps) => {
+      const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
+      const min = createMemo(() => parseFloat((elProps.min || 0).toString()));
+      const max = createMemo(() => parseFloat((elProps.max || 100).toString()));
 
-  const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
-  const min = createMemo(() => parseFloat((elProps.min || 0).toString()));
-  const max = createMemo(() => parseFloat((elProps.min || 100).toString()));
+      const {
+        elementId: id,
+        disabledS: [disabled],
+        focusedS: [focused, setFocused],
+        valueS: [value, setValue],
+        validate,
+        hasErrors,
+        // eslint-disable-next-line solid/reactivity
+      } = useField<number>()!;
 
-  const {
-    elementId: id,
-    errorsStore: [errors],
-    disabledSignal: [disabled],
-    focusedSignal: [focused, setFocused],
-    valueSignal: [value, setValue],
-    validate,
-    hasErrors,
-    // eslint-disable-next-line solid/reactivity
-  } = setupField<SliderProps, FormValue, number>(props, min());
+      // eslint-disable-next-line prefer-const
+      let slider: HTMLDivElement = undefined as any;
 
-  // eslint-disable-next-line prefer-const
-  let slider: HTMLDivElement = undefined as any;
+      const updateValueBasedOnMouseX = (mouseX: number) => {
+        const mouseRelativeX = mouseX - slider.getBoundingClientRect().x;
 
-  const updateValueBasedOnMouseX = (mouseX: number) => {
-    const mouseRelativeX = mouseX - slider.getBoundingClientRect().x;
+        let newValue = Math.max(
+          Math.min((mouseRelativeX / slider.clientWidth) * max(), max()),
+          min()
+        );
+        newValue = Math.floor(newValue / step()) * step();
+        setValue(newValue);
 
-    let newValue = Math.max(Math.min(mouseRelativeX / slider.clientWidth * max(), max()), min());
-    newValue = Math.floor(newValue / step()) * step();
-    setValue(newValue);
+        if (props.onChange) {
+          props.onChange(newValue);
+        }
 
-    if (props.onChange) {
-      props.onChange(newValue);
-    }
+        return newValue;
+      };
 
-    return newValue;
-  };
+      const handleMouseDown = (e: MouseEvent) => {
+        if (!slider.contains(e.target as HTMLElement) && slider !== e.target)
+          return;
+        if (disabled()) return;
 
-  const handleMouseDown = (e: MouseEvent) => {
-    if (!slider.contains(e.target as HTMLElement) && slider !== e.target) return;
-    if (disabled()) return;
+        setFocused(true);
+        updateValueBasedOnMouseX(e.x);
+      };
 
-    setFocused(true);
-    updateValueBasedOnMouseX(e.x);
-  };
+      const handleMouseUp = (e: MouseEvent) => {
+        if (focused()) {
+          const newValue = updateValueBasedOnMouseX(e.x);
+          setFocused(false);
+          validate(newValue);
+        }
+      };
 
-  const handleMouseUp = (e: MouseEvent) => {
-    if (focused()) {
-      const newValue = updateValueBasedOnMouseX(e.x);
-      setFocused(false);
-      validate(newValue);
-    }
-  };
+      const handleMouseMove = (e: MouseEvent) => {
+        if (focused()) {
+          updateValueBasedOnMouseX(e.x);
+        }
+      };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (focused()) {
-      updateValueBasedOnMouseX(e.x);
-    }
-  };
+      createEffect(() => {
+        const tempSlider = slider;
+        tempSlider.addEventListener('mousedown', handleMouseDown, {
+          passive: true,
+        });
+        document.addEventListener('mousemove', handleMouseMove, {
+          passive: true,
+        });
+        document.addEventListener('mouseup', handleMouseUp);
 
-  createEffect(() => {
-    const tempSlider = slider;
-    tempSlider.addEventListener('mousedown', handleMouseDown, { passive: true });
-    document.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseup', handleMouseUp);
+        onCleanup(() => {
+          tempSlider.removeEventListener('mousedown', handleMouseDown);
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+        });
+      });
 
-    onCleanup(() => {
-      tempSlider.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    });
-  });
+      const [thumb, setThumb] = createSignal<HTMLSpanElement>();
 
-  const [thumb, setThumb] = createSignal<HTMLSpanElement>();
+      const [thumbBoundingBox, setThumbBoundingBox] = createSignal<DOMRect>();
 
-  const [thumbBoundingBox, setThumbBoundingBox] = createSignal<DOMRect>();
+      createEffect(
+        on(value, () => {
+          if (thumb()) {
+            setThumbBoundingBox(thumb()?.getBoundingClientRect());
+          }
+        })
+      );
 
-  createEffect(on(
-    value,
-    () => {
-      if (thumb()) {
-        setThumbBoundingBox(thumb()?.getBoundingClientRect());
-      }
-    }
-  ));
+      const valuePercentageToMaxFromMin = createMemo(
+        () => ((value() || min() - min()) / max()) * 100
+      );
 
-  const valuePercentageToMaxFromMin = createMemo(() => (value() || min() - min()) / max() * 100)
+      const color = createMemo(() => props.color || 'primary');
 
-  const color = createMemo(() => props.color || 'primary');
-
-  return <FieldInternalWrapper
-    name={props.name}
-    errors={errors}
-    helperText={props.helperText}
-    renderHelperText={
-      (typeof props.validators !== 'undefined'
-        && props.validators.length !== 0)
-      || typeof props.helperText !== 'undefined'
-    }
-    isDisabled={disabled()}
-  >
-    <Show when={props.label}>
-      <Label
-        for={id()}
-        hasErrors={hasErrors()}
-      >{props.label}</Label>
-    </Show>
-
-    <div
-      class="slider"
-      ref={slider}
-      draggable={false}
-      classList={{
-        focused: focused(),
-        disabled: disabled(),
-
-        'has-label': typeof props.label !== 'undefined',
-
-        small: props.size === 'small',
-        medium: props.size === 'medium' || typeof props.size === 'undefined',
-        large: props.size === 'large',
-
-        primary: color() === 'primary',
-        secondary: color() === 'secondary',
-        tertiary: color() === 'tertiary'
-      }}
-      style={{
-        '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
-      }}
-    >
-      <span
-        class="trunk"
-        draggable={false}
-      />
-      <span
-        class="rail"
-        draggable={false}
-      />
-      <span
-        class="thumb"
-        ref={setThumb}
-        draggable={false}
-      >
-        <input
-          {...elProps}
-
-          min={min()}
-          max={max()}
-          step={step()}
-
-          id={id()}
-          value={(value() || '').toString()}
-
-          type="range"
-          disabled={disabled()}
-        />
-      </span>
-    </div>
-
-    <Show when={typeof props.showTooltip === 'undefined' ? true : props.showTooltip}>
-      <GrowFade growingOrigin="bottom">
-        <Tooltip
-          for={thumbBoundingBox()!}
-          visible={focused()}
-          style={{
-            background: `var(--${color()})`,
-            color: `var(--text-${color()})`
-          }}
-        >
-          <Show when={props.renderTooltipContent} fallback={value()}>
-             {props.renderTooltipContent!(value() || min())}
+      return (
+        <FieldInternalWrapper>
+          <Show when={props.label}>
+            <Label for={id()} hasErrors={hasErrors()}>
+              {props.label}
+            </Label>
           </Show>
-        </Tooltip>
-      </GrowFade>
-    </Show>
-  </FieldInternalWrapper>;
-};
+
+          <div
+            class="slider"
+            ref={slider}
+            draggable={false}
+            classList={{
+              focused: focused(),
+              disabled: disabled(),
+
+              'has-label': typeof props.label !== 'undefined',
+
+              small: props.size === 'small',
+              medium:
+                props.size === 'medium' || typeof props.size === 'undefined',
+              large: props.size === 'large',
+
+              primary: color() === 'primary',
+              secondary: color() === 'secondary',
+              tertiary: color() === 'tertiary',
+            }}
+            style={{
+              '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
+            }}
+          >
+            <span class="trunk" draggable={false} />
+            <span class="rail" draggable={false} />
+            <span class="thumb" ref={setThumb} draggable={false}>
+              <input
+                {...elProps}
+                min={min()}
+                max={max()}
+                step={step()}
+                id={id()}
+                value={(value() || '').toString()}
+                type="range"
+                disabled={disabled()}
+              />
+            </span>
+          </div>
+
+          <Show
+            when={
+              typeof props.showTooltip === 'undefined'
+                ? true
+                : props.showTooltip
+            }
+          >
+            <GrowFade growingOrigin="bottom">
+              <Tooltip
+                for={thumbBoundingBox()!}
+                visible={focused()}
+                style={{
+                  background: `var(--${color()})`,
+                  color: `var(--text-${color()})`,
+                }}
+              >
+                <Show when={props.renderTooltipContent} fallback={value()}>
+                  {props.renderTooltipContent!(value() || min())}
+                </Show>
+              </Tooltip>
+            </GrowFade>
+          </Show>
+        </FieldInternalWrapper>
+      );
+    },
+    [
+      ...FieldPropKeys,
+      'label',
+      'helperText',
+      'color',
+      'showTooltip',
+      'renderTooltipContent',
+      'size',
+      'onChange',
+    ]
+  ),
+  // eslint-disable-next-line solid/reactivity
+  (props: SliderProps & JSX.InputHTMLAttributes<HTMLInputElement>) => props.min || 0
+);
 
 export default Slider;
