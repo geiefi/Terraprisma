@@ -7,15 +7,15 @@
 
   & > .clickable-signalizer {
     position: absolute;
-    left: 50%;
+    left: calc(50% - 1px);
     top: 50%;
     pointer-events: none;
-    transform: translate(-50%, -50%);
 
     z-index: 1;
 
     width: calc(100% + 15px);
     height: calc(100% + 15px);
+    transform: translate(-50%, -50%);
 
     background: var(--color);
     opacity: 0.32;
