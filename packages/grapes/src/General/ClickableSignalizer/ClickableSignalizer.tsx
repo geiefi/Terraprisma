@@ -2,7 +2,7 @@ import { Component, ComponentProps, ParentProps, Show } from 'solid-js';
 
 import { forwardNativeElementProps } from '../../Helpers/forwardElementProps';
 import { mergeClass } from '../../_Shared/Utils';
-import { GrowFade } from '../../Transitions';
+import { Fade } from '../../Transitions';
 
 import './ClickableSignalizer.scss';
 
@@ -22,7 +22,7 @@ const ClickableSignalizer: Component<ClickableSignalizerProps> = forwardNativeEl
     >
       {props.children}
 
-      <GrowFade growingOrigin="center">
+      <Fade>
         <Show when={props.show}>
           <span 
             {...props.clickableSignalizerProps} 
@@ -32,7 +32,7 @@ const ClickableSignalizer: Component<ClickableSignalizerProps> = forwardNativeEl
             }}
           />
         </Show>
-      </GrowFade>
+      </Fade>
     </div>;
   },
   ['children', 'show', 'color', 'clickableSignalizerProps']
