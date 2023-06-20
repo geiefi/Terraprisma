@@ -32,21 +32,16 @@ const TextArea = setupFieldComponent(
 
         disabledS: [disabled],
         valueS: [value, setValue],
-        hasContent,
 
-        focusedS: [focused, setFocused],
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        focusedS: [_focused, setFocused],
         validate,
-        hasErrors,
       } = useField<string>()!;
 
       return (
         <FieldInternalWrapper>
           <InputContainer
             labelFor={id()}
-            hasErrors={hasErrors()}
-            hasContent={hasContent()}
-            focused={focused()}
-            disabled={disabled()}
             color={props.color}
             label={props.label}
           >

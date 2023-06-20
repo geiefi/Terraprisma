@@ -34,22 +34,17 @@ const Input = setupFieldComponent(
       const {
         elementId: id,
         disabledS: [disabled],
-        focusedS: [focused, setFocused],
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        focusedS: [_focused, setFocused],
         valueS: [value, setValue],
         validate,
-        hasContent,
-        hasErrors,
       } = useField()!;
 
       return (
         <FieldInternalWrapper>
           <InputContainer
             labelFor={id()}
-            hasErrors={hasErrors()}
-            hasContent={hasContent()}
-            focused={focused()}
             color={props.color}
-            disabled={disabled()}
             label={props.label}
           >
             <input

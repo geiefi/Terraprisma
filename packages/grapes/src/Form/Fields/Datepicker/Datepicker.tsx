@@ -236,8 +236,6 @@ const Datepicker = setupFieldComponent(
         focusedS: [focused, setFocused],
         valueS: [value, setValue],
         validate,
-        hasContent,
-        hasErrors,
       } = useField<Date>()!;
 
       const [inputContainerRef, setInputContainerRef] =
@@ -376,15 +374,12 @@ const Datepicker = setupFieldComponent(
             {...elProps}
             id={id()}
             labelFor={id()}
-            hasErrors={hasErrors()}
             label={props.label}
-            focused={focused()}
             color={props.color}
             style={{
               cursor: disabled() === false ? 'pointer' : 'default',
               ...props.style,
             }}
-            disabled={disabled()}
             onClick={mergeCallbacks(
               elProps.onClick as any,
               () => {
@@ -394,7 +389,6 @@ const Datepicker = setupFieldComponent(
               }
             )}
             icon={<CalendarMonth variant="rounded" />}
-            hasContent={hasContent()}
             ref={(ref) => {
               if (typeof elProps.ref === 'function') {
                 elProps.ref(ref);

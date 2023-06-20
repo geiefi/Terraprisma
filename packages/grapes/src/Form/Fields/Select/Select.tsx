@@ -79,8 +79,6 @@ const Select = setupFieldComponent(
         focusedS: [focused, setFocused],
         valueS: [value, setValue],
         validate,
-        hasContent,
-        hasErrors,
       } = useField()!;
 
       const [inputContainerRef, setInputContainerRef] =
@@ -151,11 +149,8 @@ const Select = setupFieldComponent(
             {...elProps}
             id={id()}
             labelFor={id()}
-            hasErrors={hasErrors()}
             label={props.label}
-            focused={focused()}
             color={props.color}
-            disabled={disabled()}
             onClick={(e) => {
               if (typeof elProps.onClick === 'function') {
                 elProps.onClick(e);
@@ -174,7 +169,6 @@ const Select = setupFieldComponent(
                 }}
               />
             }
-            hasContent={hasContent()}
             ref={(ref) => {
               if (typeof elProps.ref === 'function') {
                 elProps.ref(ref);
