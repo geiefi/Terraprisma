@@ -22,10 +22,10 @@ import { KeyboardArrowDown } from '../../../Icons';
 import { mergeClass } from '../../../_Shared/Utils';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './Select.scss';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { mergeCallbacks } from '../../../Helpers';

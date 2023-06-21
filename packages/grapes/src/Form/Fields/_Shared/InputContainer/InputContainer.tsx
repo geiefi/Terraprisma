@@ -5,7 +5,7 @@ import { mergeClass } from '../../../../_Shared/Utils';
 import Label from '../Label/Label';
 
 import './InputContainer.scss';
-import { forwardNativeElementProps } from '../../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../../Helpers';
 import { useField } from '../FieldHelpers/FieldContext';
 
 export interface InputContainerProps {

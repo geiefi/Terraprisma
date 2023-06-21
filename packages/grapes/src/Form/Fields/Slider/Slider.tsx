@@ -13,9 +13,9 @@ import { FieldInternalWrapper } from '../_Shared';
 import { Tooltip } from '../../../General';
 import { GrowFade } from '../../../Transitions';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 

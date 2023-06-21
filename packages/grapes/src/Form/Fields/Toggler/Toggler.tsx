@@ -4,12 +4,12 @@ import { JSX, Show } from 'solid-js';
 import { FieldInternalWrapper } from '../_Shared';
 import Label from '../_Shared/Label/Label';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './Toggler.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 
 export interface TogglerProps extends FieldProps {
   label?: JSX.Element;

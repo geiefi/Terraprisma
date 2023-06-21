@@ -1,6 +1,6 @@
 import { Component, ComponentProps, ParentProps, Show } from 'solid-js';
 
-import { forwardNativeElementProps } from '../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 import { Fade } from '../../Transitions';
 

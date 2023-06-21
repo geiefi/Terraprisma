@@ -17,11 +17,11 @@ import Label from '../_Shared/Label/Label';
 import { mergeClass } from '../../../_Shared/Utils';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './ButtonChooser.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
 export interface ButtonChooserProps extends FieldProps {

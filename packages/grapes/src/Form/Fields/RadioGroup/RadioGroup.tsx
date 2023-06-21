@@ -14,12 +14,12 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './RadioGroup.scss';
 import { ClickableSignalizer, Ripple } from '../../../General';
 import { mergeCallbacks } from '../../../Helpers';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { mergeClass } from '../../../_Shared/Utils';
 import { Stack } from '../../../Layout';

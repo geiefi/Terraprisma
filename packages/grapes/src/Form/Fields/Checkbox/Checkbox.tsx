@@ -4,10 +4,10 @@ import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import { Check } from '../../../Icons';
 import { GrowFade } from '../../../Transitions';

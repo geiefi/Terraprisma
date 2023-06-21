@@ -1,14 +1,16 @@
 import { JSX } from 'solid-js';
 
+import { createInputMask } from '@solid-primitives/input-mask';
+
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
 import { mergeClass } from '../../../_Shared/Utils';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { MaskedFieldPropsKeys, MaskedFieldProps } from '../_Shared/Types/MaskedFieldProps';
 
 import './Input.scss';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
@@ -18,7 +20,7 @@ export type InputOnChangeEvent = Event & {
   target: Element;
 };
 
-export interface InputProps extends FieldProps {
+export interface InputProps extends MaskedFieldProps {
   type?: 'text' | 'number' | 'email' | 'password';
 
   label?: JSX.Element;
@@ -57,16 +59,17 @@ const Input = setupFieldComponent(
               classList={{
                 'no-label': typeof props.label === 'undefined',
               }}
-              onInput={(event) => {
-                if (typeof elProps.onInput === 'function') {
-                  elProps.onInput(event);
-                }
-                if (props.onChange) {
-                  props.onChange(event.currentTarget.value, event);
-                }
+              onInput={mergeCallbacks(
+                elProps.onInput as any,
+                props.mask ? createInputMask(props.mask) : undefined,
+                (event: InputEvent & { target: HTMLInputElement, currentTarget: HTMLInputElement }) => {
+                  if (props.onChange) {
+                    props.onChange(event.currentTarget.value, event);
+                  }
 
-                setValue(event.currentTarget.value);
-              }}
+                  setValue(event.currentTarget.value);
+                }
+              )}
               onFocus={mergeCallbacks(elProps.onFocus as any, () =>
                 setFocused(true)
               )}
@@ -79,7 +82,7 @@ const Input = setupFieldComponent(
         </FieldInternalWrapper>
       );
     },
-    [...FieldPropKeys, 'type', 'label', 'helperText', 'color', 'onChange']
+    ['type', 'mask', 'label', 'helperText', 'color', 'onChange', ...MaskedFieldPropsKeys]
   )
 );
 

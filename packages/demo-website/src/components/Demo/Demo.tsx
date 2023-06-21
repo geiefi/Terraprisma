@@ -129,6 +129,7 @@ const Demo: Component = () => {
                 <Input
                   name='cep'
                   placeholder='99999-999'
+                  mask='99999-999'
                   label='CEP'
                   validators={[Validators.required]}
                 />

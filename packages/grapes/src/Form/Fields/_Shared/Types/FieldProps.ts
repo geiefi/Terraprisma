@@ -1,8 +1,8 @@
 import { JSX } from 'solid-js/jsx-runtime';
-import { Store } from '../../../Helpers/Types/Store';
+import { Store } from '../../../../Helpers/Types/Store';
 
-import { FieldValidator } from '../../Types/FieldValidator';
-import { FormFieldValue } from '../../Types/FormFieldValue';
+import { FieldValidator } from '../../../Types/FieldValidator';
+import { FormFieldValue } from '../../../Types/FormFieldValue';
 
 export const FieldPropKeys: (keyof FieldProps)[] = [
   'name',

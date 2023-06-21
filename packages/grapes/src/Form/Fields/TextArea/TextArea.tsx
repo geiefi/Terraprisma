@@ -1,13 +1,15 @@
 import { JSX } from 'solid-js';
 
+import { createInputMask } from '@solid-primitives/input-mask';
+
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { MaskedFieldPropsKeys, MaskedFieldProps } from '../_Shared/Types/MaskedFieldProps';
 
 import './TextArea.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { mergeCallbacks } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
@@ -16,7 +18,7 @@ export type TextAreaChangeEvent = Event & {
   target: HTMLTextAreaElement;
 };
 
-export interface TextAreaProps extends FieldProps {
+export interface TextAreaProps extends MaskedFieldProps {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -55,19 +57,23 @@ const TextArea = setupFieldComponent(
                 'no-label': typeof props.label === 'undefined',
                 ...elProps.classList,
               }}
-              onInput={(event) => {
-                event.target.style.height = '0px';
-                const scrollHeight = Math.max(event.target.scrollHeight, 54);
-                event.target.style.height = `${scrollHeight}px`;
+              onInput={mergeCallbacks(
+                elProps.onInput as any,
+                props.mask ? createInputMask(props.mask) : undefined,
+                (event: InputEvent & { target: HTMLTextAreaElement, currentTarget: HTMLTextAreaElement }) => {
+                  event.target.style.height = '0px';
+                  const scrollHeight = Math.max(event.target.scrollHeight, 54);
+                  event.target.style.height = `${scrollHeight}px`;
 
-                event.target.parentElement!.style.height = `${scrollHeight}px`;
+                  event.target.parentElement!.style.height = `${scrollHeight}px`;
 
-                if (props.onChange) {
-                  props.onChange(event.currentTarget.value, event);
+                  if (props.onChange) {
+                    props.onChange(event.currentTarget.value, event);
+                  }
+
+                  setValue(event.currentTarget.value);
                 }
-
-                setValue(event.currentTarget.value);
-              }}
+              )}
               onFocus={mergeCallbacks(elProps.onFocus as any, () => {
                 setFocused(true);
               })}
@@ -80,7 +86,7 @@ const TextArea = setupFieldComponent(
         </FieldInternalWrapper>
       );
     },
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange']
+    [...MaskedFieldPropsKeys, 'label', 'helperText', 'color', 'onChange']
   )
 );
 

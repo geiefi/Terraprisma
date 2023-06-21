@@ -23,11 +23,11 @@ import { GrowFade } from '../../../Transitions';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/FieldProps';
+import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './Datepicker.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { mergeCallbacks } from '../../../Helpers';
 

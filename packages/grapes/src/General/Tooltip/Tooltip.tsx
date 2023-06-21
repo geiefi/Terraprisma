@@ -9,7 +9,7 @@ import {
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Tooltip.scss';
-import { forwardNativeElementProps } from '../../Helpers/forwardElementProps';
+import { forwardNativeElementProps } from '../../Helpers';
 
 export interface TooltipProps extends ParentProps {
   /**

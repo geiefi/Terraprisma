@@ -12,7 +12,7 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FieldContext } from './FieldContext';
 import { FormValue } from '../../../Types/FormValue';
 
-import { FieldPropKeys, FieldProps } from '../FieldProps';
+import { FieldPropKeys, FieldProps } from '../Types/FieldProps';
 
 import { setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
