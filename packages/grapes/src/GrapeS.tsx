@@ -22,6 +22,21 @@ export type GrapeSThemesProviderValue = {
 
 const GrapeSContext = createContext<GrapeSThemesProviderValue>();
 
+declare global {
+  function dbg<T = any>(el: T): T;
+}
+
+const _global = (window /* browser */ || global /* node */) as any
+/**
+  * @description `console.log`'s the `el` then returns it
+  *
+  * This function is inspired in Rust's `dbg!` macro.
+  */
+_global.dbg = function<T = any>(el: T): T {
+  console.log(el);
+  return el;
+}
+
 /**
  * A component that creates the `<GrapeSContext>` with the themes defined and creates
  * the signal that will hold the current theme.

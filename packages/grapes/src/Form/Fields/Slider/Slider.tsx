@@ -184,7 +184,7 @@ const Slider = setupFieldComponent(
           >
             <GrowFade growingOrigin="bottom">
               <Tooltip
-                for={thumbBoundingBox()!}
+                anchor={thumbBoundingBox()!}
                 visible={focused()}
                 style={{
                   background: `var(--${color()})`,

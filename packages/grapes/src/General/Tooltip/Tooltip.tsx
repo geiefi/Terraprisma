@@ -1,6 +1,9 @@
 import {
   Component,
+  createEffect,
   createMemo,
+  createRenderEffect,
+  createSignal,
   JSX,
   on,
   ParentProps,
@@ -10,6 +13,7 @@ import { mergeClass } from '../../_Shared/Utils';
 
 import './Tooltip.scss';
 import { forwardNativeElementProps } from '../../Helpers';
+import { ArrowDropDown } from '../../Icons';
 
 export interface TooltipProps extends ParentProps {
   /**
@@ -23,8 +27,19 @@ export interface TooltipProps extends ParentProps {
    * For example the `<Slider>` component uses this and it has an effect to reset
    * the bounding box signal every time its value changes.
    */
-  for: HTMLElement | DOMRect;
+  anchor: HTMLElement | DOMRect;
+
   visible?: boolean;
+
+  // /**
+  //  * @description Weather or not the tooltip should make itself visible once hovered.
+  //  *
+  //  * Only works if the {@link anchor anchor} is a ref and not a DOMRect.
+  //  * This automatically adds MouseEnter and MouseLeave listeners to the {@link anchor anchor}.
+  //  *
+  //  * @default false
+  //  */
+  // visibleOnHover?: boolean;
 
   /**
    * @description The CSS distance between the anchor and the tooltip.
@@ -32,7 +47,7 @@ export interface TooltipProps extends ParentProps {
   offsetFromAnchor?: JSX.CSSProperties['top'];
 
   /**
-   * @description The position relative to the `anchor`.
+   * @description The position relative to the {@link anchor anchor}.
    */
   position?: 'left' | 'top' | 'right' | 'bottom';
 
@@ -44,20 +59,58 @@ const Tooltip: Component<TooltipProps> = forwardNativeElementProps<
   HTMLDivElement
 >(
   (props, elProps) => {
-    const boundingRect = createMemo(
-      on([() => props.visible, () => props.for], () => {
-        if (props.for instanceof HTMLElement) {
-          return props.for.getBoundingClientRect();
+    const [visible, setVisible] = createSignal(props.visible);
+
+    let mutationObserver: MutationObserver | undefined = undefined;
+
+    const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
+
+    
+
+    createEffect(
+      on([() => visible(), () => props.anchor], () => {
+        if (props.anchor instanceof HTMLElement) {
+          return props.anchor.getBoundingClientRect();
         } else {
-          return props.for;
+          return props.anchor;
         }
       })
     );
 
+    const mouseEnterForVisibleOnHover = () => setVisible(true);
+    const mouseLeaveForVisibleOnHover = () => setVisible(false);
+    createRenderEffect(() => {
+      if (props.anchor instanceof HTMLElement) {
+        if (props.visibleOnHover) {
+          props.anchor.addEventListener(
+            'mouseenter',
+            mouseEnterForVisibleOnHover
+          );
+          props.anchor.addEventListener(
+            'mouseleave',
+            mouseLeaveForVisibleOnHover
+          );
+        } else {
+          props.anchor.removeEventListener(
+            'mouseenter',
+            mouseEnterForVisibleOnHover
+          );
+          props.anchor.removeEventListener(
+            'mouseleave',
+            mouseLeaveForVisibleOnHover
+          );
+        }
+      }
+    });
+
+    createEffect(() => {
+      setVisible(props.visible);
+    });
+
     let tooltipEl: HTMLDivElement;
 
     return (
-      <Show when={props.visible}>
+      <Show when={visible()}>
         <div
           {...elProps}
           class={mergeClass('tooltip', elProps.class)}
@@ -82,11 +135,15 @@ const Tooltip: Component<TooltipProps> = forwardNativeElementProps<
           }}
         >
           {props.children}
+
+          <div class="icon">
+            <ArrowDropDown class="icon" style={tooltipEl} />
+          </div>
         </div>
       </Show>
     );
   },
-  ['for', 'visible', 'offsetFromAnchor', 'position', 'children', 'style']
+  ['anchor', 'visible', 'offsetFromAnchor', 'position', 'children', 'style']
 );
 
 export default Tooltip;

@@ -8,12 +8,13 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
 import { Input, Select, ButtonChooser, Datepicker, Toggler, Checkbox, Slider, RadioGroup } from 'grapes/Form/Fields';
-import { Box, Button } from 'grapes/General';
+import { Box, Button, Tooltip } from 'grapes/General';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
 import { FormProviderValue } from 'grapes/Form/FormContext';
 import { FormValue } from 'grapes/Form/Types/FormValue';
+import { GrowFade } from 'grapes/Transitions';
 
 export type AddressFormValue = Partial<{
   cidade: string;
@@ -46,6 +47,9 @@ const Demo: Component = () => {
   const [paymentForm] = paymentFormStore;
 
   const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
+
+  const [cepInput, setCEPInput] = createSignal<HTMLElement>();
+  const [hoveringCEPInput, setHoveringCEPInput] = createSignal(false);
 
   return (<GrapeS defaultThemeId='dark'>
     <Container
@@ -127,12 +131,24 @@ const Demo: Component = () => {
               </Col>
               <Col size={8}>
                 <Input
+                  ref={setCEPInput}
                   name='cep'
                   placeholder='99999-999'
                   mask='99999-999'
                   label='CEP'
+                  onMouseEnter={() => setHoveringCEPInput(true)}
+                  onMouseLeave={() => setHoveringCEPInput(false)}
                   validators={[Validators.required]}
                 />
+
+                <GrowFade growingOrigin='left'>
+                  <Tooltip 
+                    anchor={cepInput()!} 
+                    position='bottom'
+                    visibleOnHover
+                    // visible={hoveringCEPInput()}
+                  >Porfavor, use um CEP valido</Tooltip>
+                </GrowFade>
               </Col>
             </Row>
           </Form>

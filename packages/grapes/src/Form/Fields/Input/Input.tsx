@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, Ref } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 

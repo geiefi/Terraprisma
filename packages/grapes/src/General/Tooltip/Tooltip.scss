@@ -35,4 +35,11 @@
     top: calc(var(--anchor-top) + var(--anchor-height) + var(--offset-from-anchor));
     transform: translateX(-50%);
   }
+
+  & > .icon {
+    position: relative;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+  }
 }
