@@ -134,35 +134,6 @@ const Demo: Component = () => {
                   validators={[Validators.required]}
                 />
               </Col>
-              <Col size={8}>
-                <Toggler
-                  name='toggledValue'
-                  label='Toggler example'
-                  validators={[Validators.isEqual(true)]}
-                />
-              </Col>
-              <Col size={8}>
-                <Checkbox
-                  name='checkboxValue'
-                  label='Checkbox example'
-                />
-              </Col>
-              <Col size={8}>
-                <Slider
-                  name='sliderValue'
-                  label='Slider example'
-                />
-              </Col>
-              <Col size={8}>
-                <RadioGroup
-                  name='bestGame'
-                  label='What is the best game?'
-                  validators={[Validators.isEqual('terraria')]}
-                >
-                  <RadioGroup.Option value='terraria'>Terraria</RadioGroup.Option>
-                  <RadioGroup.Option value='minecraft'>Minecraft</RadioGroup.Option>
-                </RadioGroup>
-              </Col>
             </Row>
           </Form>
         </Show>
@@ -198,7 +169,7 @@ const Demo: Component = () => {
                         name='number'
                         label='número do cartão'
                         placeholder='0000 0000 0000 0000'
-                        type='number'
+                        mask='9999 9999 9999 9999'
                         validators={[Validators.required]}
                       />
                     </Col>
@@ -208,6 +179,7 @@ const Demo: Component = () => {
                         name='cvv'
                         label='cvv'
                         placeholder='123'
+                        mask='999'
                         type='number'
                         validators={[Validators.required]}
                       />
