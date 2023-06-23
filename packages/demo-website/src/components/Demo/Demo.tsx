@@ -1,4 +1,4 @@
-import { Component, createSignal, Show } from 'solid-js';
+import { Component, on, createEffect, createSignal, Show } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 import { GrapeS } from 'grapes';
@@ -50,6 +50,21 @@ const Demo: Component = () => {
 
   const [cepInput, setCEPInput] = createSignal<HTMLElement>();
   const [hoveringCEPInput, setHoveringCEPInput] = createSignal(false);
+  const [cepInputTooltipPosition, setCepInputTooltipPosition] = createSignal('bottom');
+
+  createEffect(on(hoveringCEPInput, () => {
+    const rng = Math.random();
+
+    if (rng < 0.25) {
+      setCepInputTooltipPosition('left');
+    } else if (rng < 0.5) {
+      setCepInputTooltipPosition('top');
+    } else if (rng < 0.75) {
+      setCepInputTooltipPosition('right');
+    } else if (rng < 1) {
+      setCepInputTooltipPosition('bottom');
+    }
+  }));
 
   return (<GrapeS defaultThemeId='dark'>
     <Container
@@ -130,6 +145,11 @@ const Demo: Component = () => {
                 />
               </Col>
               <Col size={8}>
+                <Slider
+                  name='sliderValue'
+                />
+              </Col>
+              <Col size={8}>
                 <Input
                   ref={setCEPInput}
                   name='cep'
@@ -143,10 +163,10 @@ const Demo: Component = () => {
 
                 <GrowFade growingOrigin='left'>
                   <Tooltip 
+                    identification='CEP tooltip'
                     anchor={cepInput()!} 
-                    position='bottom'
-                    visibleOnHover
-                    // visible={hoveringCEPInput()}
+                    position={cepInputTooltipPosition() as any}
+                    visible={hoveringCEPInput()}
                   >Porfavor, use um CEP valido</Tooltip>
                 </GrowFade>
               </Col>

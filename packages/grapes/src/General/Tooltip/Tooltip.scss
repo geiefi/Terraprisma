@@ -16,30 +16,58 @@
     left: calc(var(--anchor-left) + var(--anchor-width) / 2);
     top: var(--anchor-top);
     transform: translate(-50%, calc(-100% - var(--offset-from-anchor)));
+
+    & > .tooltip-content > .icon {
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, -25%);
+    }
   }
 
   &.left {
     left: var(--anchor-left);
     top: calc(var(--anchor-top) + var(--anchor-height) / 2);
     transform: translate(calc(-100% - var(--offset-from-anchor)), -50%);
+
+    & > .tooltip-content > .icon {
+      top: 50%;
+      left: 100%;
+      transform: translate(-5%, -50%) rotate(-90deg);
+    }
   }
 
   &.right {
     left: calc(var(--anchor-left) + var(--anchor-width) + var(--offset-from-anchor));
     top: calc(var(--anchor-top) + var(--anchor-height) / 2);
     transform: translateY(-50%);
+
+    & > .tooltip-content > .icon {
+      top: 50%;
+      left: 0%;
+      transform: translate(-95%, -50%) rotate(90deg);
+    }
   }
 
   &.bottom {
     left: calc(var(--anchor-left) + var(--anchor-width) / 2);
     top: calc(var(--anchor-top) + var(--anchor-height) + var(--offset-from-anchor));
     transform: translateX(-50%);
+
+    & > .tooltip-content > .icon {
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -75%) rotate(180deg);
+    }
   }
 
-  & > .icon {
+  & > .tooltip-content {
     position: relative;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, 100%);
+
+    & > .icon {
+      position: absolute;
+      font-size: 36px;
+      color: var(--gray-0);
+      transform-origin: center;
+    }
   }
 }

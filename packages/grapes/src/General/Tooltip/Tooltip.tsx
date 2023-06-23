@@ -105,7 +105,7 @@ export function createTooltip(identification: string) {
                 '--anchor-width': `${boundingRect()?.width}px`,
                 '--anchor-height': `${boundingRect()?.height}px`,
 
-                '--offset-from-anchor': props.offsetFromAnchor || '5px',
+                '--offset-from-anchor': props.offsetFromAnchor || '12px',
 
                 ...props.style,
               }}
@@ -118,10 +118,10 @@ export function createTooltip(identification: string) {
                 ...elProps.classList,
               }}
             >
-              {props.children}
+              <div class="tooltip-content">
+                {props.children}
 
-              <div class="icon">
-                <ArrowDropDown />
+                <span class="icon"><ArrowDropDown /></span>
               </div>
             </div>
           </Show>
