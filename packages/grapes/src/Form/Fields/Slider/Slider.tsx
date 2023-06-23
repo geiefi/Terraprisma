@@ -178,9 +178,10 @@ const Slider = setupFieldComponent(
             <GrowFade growingOrigin="bottom">
               <Tooltip
                 visible={focused()}
+                class="slider-value-tooltip"
                 style={{
-                  background: `var(--${color()})`,
-                  color: `var(--text-${color()})`,
+                  '--color': `var(--${color()})`,
+                  '--text-color': `var(--text-${color()})`,
                 }}
               >
                 <Show when={props.renderTooltipContent} fallback={value()}>
