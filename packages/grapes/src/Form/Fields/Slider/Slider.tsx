@@ -1,7 +1,6 @@
 import {
   createEffect,
   createMemo,
-  createSignal,
   JSX,
   on,
   onCleanup,
@@ -10,7 +9,6 @@ import {
 
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
-import { Tooltip } from '../../../General';
 import { GrowFade } from '../../../Transitions';
 
 import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
@@ -20,6 +18,7 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import './Slider.scss';
+import { createTooltip } from '../../../General/Tooltip/Tooltip';
 
 export interface SliderProps extends FieldProps {
   label?: JSX.Element;
@@ -110,23 +109,17 @@ const Slider = setupFieldComponent(
         });
       });
 
-      const [thumb, setThumb] = createSignal<HTMLSpanElement>();
-
-      const [thumbBoundingBox, setThumbBoundingBox] = createSignal<DOMRect>();
-
-      createEffect(
-        on(value, () => {
-          if (thumb()) {
-            setThumbBoundingBox(thumb()?.getBoundingClientRect());
-          }
-        })
-      );
+      const { setAnchor, updateBoundingBox, Tooltip } = createTooltip(`${id()}-SliderValueTooltip`);
 
       const valuePercentageToMaxFromMin = createMemo(
         () => ((value() || min() - min()) / max()) * 100
       );
 
       const color = createMemo(() => props.color || 'primary');
+
+      createEffect(on(value, () => {
+        updateBoundingBox();
+      }));
 
       return (
         <FieldInternalWrapper>
@@ -161,7 +154,7 @@ const Slider = setupFieldComponent(
           >
             <span class="trunk" draggable={false} />
             <span class="rail" draggable={false} />
-            <span class="thumb" ref={setThumb} draggable={false}>
+            <span class="thumb" ref={setAnchor} draggable={false}>
               <input
                 {...elProps}
                 min={min()}
@@ -184,7 +177,6 @@ const Slider = setupFieldComponent(
           >
             <GrowFade growingOrigin="bottom">
               <Tooltip
-                anchor={thumbBoundingBox()!}
                 visible={focused()}
                 style={{
                   background: `var(--${color()})`,

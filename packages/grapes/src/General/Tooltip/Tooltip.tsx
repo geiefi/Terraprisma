@@ -1,8 +1,6 @@
 import {
-  Component,
+  ComponentProps,
   createEffect,
-  createMemo,
-  createRenderEffect,
   createSignal,
   JSX,
   on,
@@ -16,19 +14,6 @@ import { forwardNativeElementProps } from '../../Helpers';
 import { ArrowDropDown } from '../../Icons';
 
 export interface TooltipProps extends ParentProps {
-  /**
-   * @description The element or bounding box the Tooltip will be anchored to.
-   *
-   * This is required because it is used to position the tooltip correctly.
-   *
-   * The bounding box can be used when there is a need to reactively update the
-   * positioning of the tooltip based on the anchor and the ref doesn't really update.
-   *
-   * For example the `<Slider>` component uses this and it has an effect to reset
-   * the bounding box signal every time its value changes.
-   */
-  anchor: HTMLElement | DOMRect;
-
   visible?: boolean;
 
   // /**
@@ -54,96 +39,114 @@ export interface TooltipProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Tooltip: Component<TooltipProps> = forwardNativeElementProps<
-  TooltipProps,
-  HTMLDivElement
->(
-  (props, elProps) => {
-    const [visible, setVisible] = createSignal(props.visible);
+/**
+ * @description The same as a Tooltip component but rather creates the Tooltip component when this is called
+ * and then you need to render the returning component.
+ *
+ * @param identification The identification of the Tooltip. This is important because it makes
+ * it much easier to find where errors and warnings are.
+ *
+ * @see {@link Tooltip}
+ */
+export function createTooltip(identification: string) {
+  const [anchorRef, setAnchorRef] = createSignal<HTMLElement>();
 
-    let mutationObserver: MutationObserver | undefined = undefined;
+  let updateBoundingBox: (() => void) | undefined = undefined;
 
-    const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
-
-    
-
-    createEffect(
-      on([() => visible(), () => props.anchor], () => {
-        if (props.anchor instanceof HTMLElement) {
-          return props.anchor.getBoundingClientRect();
-        } else {
-          return props.anchor;
-        }
-      })
-    );
-
-    const mouseEnterForVisibleOnHover = () => setVisible(true);
-    const mouseLeaveForVisibleOnHover = () => setVisible(false);
-    createRenderEffect(() => {
-      if (props.anchor instanceof HTMLElement) {
-        if (props.visibleOnHover) {
-          props.anchor.addEventListener(
-            'mouseenter',
-            mouseEnterForVisibleOnHover
-          );
-          props.anchor.addEventListener(
-            'mouseleave',
-            mouseLeaveForVisibleOnHover
-          );
-        } else {
-          props.anchor.removeEventListener(
-            'mouseenter',
-            mouseEnterForVisibleOnHover
-          );
-          props.anchor.removeEventListener(
-            'mouseleave',
-            mouseLeaveForVisibleOnHover
-          );
-        }
+  return {
+    setAnchor: setAnchorRef,
+    updateBoundingBox: () => {
+      if (updateBoundingBox) {
+        updateBoundingBox();
+      } else {
+        console.warn(`Tooltip ${identification}: Could not call updateBoundingBox manually due to missing Tooltip in the DOM.
+        Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
-    });
+    },
+    Tooltip: forwardNativeElementProps<
+      TooltipProps,
+      HTMLDivElement
+    >(
+      (props, elProps) => {
+        const [visible, setVisible] = createSignal(props.visible);
 
-    createEffect(() => {
-      setVisible(props.visible);
-    });
+        const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
 
-    let tooltipEl: HTMLDivElement;
+        // eslint-disable-next-line solid/reactivity
+        updateBoundingBox = () => {
+          const anchor = anchorRef();
+          if (anchor) {
+            setBoundingRect(anchor.getBoundingClientRect());
+          } else {
+            console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
+            Are your forgetting to call setAnchor for it?`);
+          }
+        }
 
-    return (
-      <Show when={visible()}>
-        <div
-          {...elProps}
-          class={mergeClass('tooltip', elProps.class)}
-          ref={tooltipEl!}
-          style={{
-            '--anchor-left': `${boundingRect()?.x}px`,
-            '--anchor-top': `${boundingRect()?.y}px`,
-            '--anchor-width': `${boundingRect()?.width}px`,
-            '--anchor-height': `${boundingRect()?.height}px`,
+        createEffect(
+          on([visible, anchorRef], () => updateBoundingBox!())
+        );
 
-            '--offset-from-anchor': props.offsetFromAnchor || '5px',
+        createEffect(() => {
+          setVisible(props.visible);
+        });
 
-            ...props.style,
-          }}
-          classList={{
-            top:
-              props.position === 'top' || typeof props.position === 'undefined',
-            bottom: props.position === 'bottom',
-            left: props.position === 'left',
-            right: props.position === 'right',
-            ...elProps.classList,
-          }}
-        >
-          {props.children}
+        let tooltipEl: HTMLDivElement;
 
-          <div class="icon">
-            <ArrowDropDown class="icon" style={tooltipEl} />
-          </div>
-        </div>
-      </Show>
-    );
-  },
-  ['anchor', 'visible', 'offsetFromAnchor', 'position', 'children', 'style']
-);
+        return (
+          <Show when={visible()}>
+            <div
+              {...elProps}
+              class={mergeClass('tooltip', elProps.class)}
+              ref={tooltipEl!}
+              style={{
+                '--anchor-left': `${boundingRect()?.x}px`,
+                '--anchor-top': `${boundingRect()?.y}px`,
+                '--anchor-width': `${boundingRect()?.width}px`,
+                '--anchor-height': `${boundingRect()?.height}px`,
 
-export default Tooltip;
+                '--offset-from-anchor': props.offsetFromAnchor || '5px',
+
+                ...props.style,
+              }}
+              classList={{
+                top:
+                  props.position === 'top' || typeof props.position === 'undefined',
+                bottom: props.position === 'bottom',
+                left: props.position === 'left',
+                right: props.position === 'right',
+                ...elProps.classList,
+              }}
+            >
+              {props.children}
+
+              <div class="icon">
+                <ArrowDropDown />
+              </div>
+            </div>
+          </Show>
+        );
+      },
+      ['visible', 'offsetFromAnchor', 'position', 'children', 'style']
+    )
+  };
+}
+
+/**
+ * @description A tooltip component, a small box that appears at a certain specified offset from an anchor
+ * when it is visible. 
+ *
+ * There is a also a {@link createTooltip} pattern for when you need to update the positioning of the
+ * Tooltip in a data driven way.
+ */
+const Tooltip = (props: TooltipProps & { identification: string; anchor: HTMLElement; } & ComponentProps<'div'>) => {
+  // eslint-disable-next-line solid/reactivity
+  const { setAnchor, Tooltip: Comp } = createTooltip(props.identification);
+
+  createEffect(() => setAnchor(props.anchor));
+
+  return <><Comp {...props} /></>;
+};
+
+export default Tooltip
+
