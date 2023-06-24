@@ -20,26 +20,6 @@
   transition: .2s filter linear,
     .2s background-color linear;
 
-  .input-container-icon {
-    --icon-font-size: 16px;
-
-    position: absolute;
-    width: min-content;
-    height: min-content;
-    left: calc(100% - var(--icon-font-size) - 8px);
-    top: calc(50% - var(--icon-font-size) / 2);
-
-    box-sizing: content-box;
-    padding: 0;
-    margin: 0;
-
-    color: var(--text-3);
-    font-size: var(--icon-font-size);
-
-    user-select: none;
-    pointer-events: none;
-  }
-
   // these are the default values
   --text-color: var(--text-0);
   --label-color: var(--text-1);
@@ -71,10 +51,35 @@
     --border-color: var(--gray-5);
   }
 
+  &.error {
+    --label-color: var(--error);
+    --text-color: var(--error);
+  }
+
   // sets the colors based on the variables created above
   background: var(--background-color);
   border-bottom: 2px solid var(--border-color);
   color: var(--text-color);
+
+  .input-container-icon {
+    --icon-font-size: 16px;
+
+    position: absolute;
+    width: min-content;
+    height: min-content;
+    left: calc(100% - var(--icon-font-size) - 8px);
+    top: calc(50% - var(--icon-font-size) / 2);
+
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+
+    color: var(--label-color);
+    font-size: var(--icon-font-size);
+
+    user-select: none;
+    pointer-events: none;
+  }
 
   label {
     color: var(--label-color);

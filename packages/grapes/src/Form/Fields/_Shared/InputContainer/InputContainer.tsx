@@ -42,6 +42,7 @@ const InputContainer = forwardNativeElementProps<
         focused: focused(),
         'has-content': hasContent(),
         disabled: disabled(),
+        error: hasErrors(),
 
         'gray-2': depth() === 1 || depth() === 3,
         'gray-3': depth() === 2,
