@@ -23,6 +23,12 @@
     }
   }
 
+  &.compact {
+    td, th {
+      padding-block: 4px;
+      padding-inline: 10px;
+    }
+  }
 
   tr {
     &:not(:first-of-type) {

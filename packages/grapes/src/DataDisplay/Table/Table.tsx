@@ -10,6 +10,7 @@ import { mergeClass } from '../../_Shared/Utils';
 export interface TableProps extends ParentProps {
   identification: string;
 
+  compact?: boolean;
   boxed?: boolean;
 }
 
@@ -22,6 +23,7 @@ const Table = forwardNativeElementProps<TableProps, HTMLTableElement>(
       class={mergeClass('grapes-table', elProps.class)}
       classList={{
         boxed: props.boxed,
+        compact: props.compact,
         ...elProps.classList
       }}
     >
@@ -35,7 +37,7 @@ const Table = forwardNativeElementProps<TableProps, HTMLTableElement>(
       </Show>
     </TableContext.Provider>;
   },
-  ['identification', 'boxed', 'children']
+  ['identification', 'boxed', 'compact', 'children']
 ) as {
   (props: TableProps & ComponentProps<'table'>): JSX.Element,
   Row(props: TableRowProps & ComponentProps<'tr'>): JSX.Element,
