@@ -41,7 +41,7 @@ export interface BoxProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement
 const Box: Component<BoxProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, ['depth']);
 
-  const oldDepth = useContext(BoxContext);
+  const oldDepth = useDepth();
   const depth = createMemo(() => {
     if (typeof props.depth !== 'undefined') return props.depth;
 

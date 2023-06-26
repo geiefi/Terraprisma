@@ -8,7 +8,8 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
 import { Input, Select, ButtonChooser, Datepicker, Slider } from 'grapes/Form/Fields';
-import { Box, Button, Tooltip } from 'grapes/General';
+import { Box, Button } from 'grapes/General';
+import { Table, Tooltip } from 'grapes/DataDisplay';
 import { Stack, Container, Divisor } from 'grapes/Layout';
 import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
@@ -36,7 +37,7 @@ export type PaymentFormValue = Partial<{
 }>;
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(0);
+  const [currentStep, setCurrentStep] = createSignal<number>(1);
 
   const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({
     // radioValue: true,
@@ -194,6 +195,20 @@ const Demo: Component = () => {
             <Show when={paymentForm.values.paymentMethod === 'cartao-de-credito'}>
               <Box>
                 <h4>Dados do cartão de crédito</h4>
+
+                <Table identification='TableTest' boxed>
+                  <Table.Row headRow>
+                    <Table.Column>Estado</Table.Column>
+                    <Table.Column>País</Table.Column>
+                    <Table.Column align='center'>População</Table.Column>
+                  </Table.Row>
+
+                  <Table.Row>
+                    <Table.Column>Pernambuco</Table.Column>
+                    <Table.Column>Brasil</Table.Column>
+                    <Table.Column align='center'>10310328019238019823</Table.Column>
+                  </Table.Row>
+                </Table>
 
                 <Form.Inner
                   identification='CreditCardDetails'

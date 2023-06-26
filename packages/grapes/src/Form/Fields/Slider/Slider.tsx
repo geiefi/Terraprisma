@@ -10,6 +10,7 @@ import {
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 import { GrowFade } from '../../../Transitions';
+import { createTooltip } from '../../../DataDisplay';
 
 import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
@@ -18,7 +19,6 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import './Slider.scss';
-import { createTooltip } from '../../../General/Tooltip/Tooltip';
 
 export interface SliderProps extends FieldProps {
   label?: JSX.Element;

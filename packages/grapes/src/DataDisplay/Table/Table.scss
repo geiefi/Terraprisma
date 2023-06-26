@@ -1,0 +1,62 @@
+.grapes-table-box {
+  padding: 0;
+  margin-block: 15px;
+
+  border: 1px solid var(--gray-5);
+  border-radius: 5px;
+}
+
+.grapes-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  appearance: none;
+  box-sizing: border-box;
+  margin-block: 15px;
+
+  &.boxed {
+    margin: 0;
+
+    tr, th, td {
+      border: 1px solid var(--gray-5);
+    }
+  }
+
+
+  tr {
+    &:not(:first-of-type) {
+      border-top: 1px solid var(--gray-5);
+    }
+
+    td {
+      padding-block: 15px;
+
+      color: var(--text-0);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    th {
+      padding-block: 12px;
+
+      color: var(--text-1);
+      font-weight: bolder;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding-inline: 12px;
+
+      &.align-left {
+        text-align: left;
+      }
+      &.align-right {
+        text-align: right;
+      }
+      &.align-center {
+        text-align: center;
+      }
+    }
+  }
+}
