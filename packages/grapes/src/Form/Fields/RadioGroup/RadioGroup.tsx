@@ -24,6 +24,7 @@ import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { mergeClass } from '../../../_Shared/Utils';
 import { Stack } from '../../../Layout';
 import { StackProps } from '../../../Layout/Stack/Stack';
+import { Key } from '../../../_Shared/Types/Key';
 
 export interface RadioGroupOptionProps extends ParentProps {
   value: string;
@@ -118,7 +119,7 @@ const RadioInternal = forwardNativeElementProps<
   ['value', 'children', 'color', 'disabled', 'size', 'onClick']
 );
 
-export interface RadioGroupProps extends FieldProps, ParentProps {
+export interface RadioGroupProps<T extends Key> extends FieldProps<T>, ParentProps {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
@@ -131,7 +132,7 @@ export interface RadioGroupProps extends FieldProps, ParentProps {
 }
 
 const RadioGroup = setupFieldComponent(
-  forwardNativeElementProps<RadioGroupProps, HTMLDivElement>(
+  forwardNativeElementProps<RadioGroupProps<string>, HTMLDivElement>(
     (props, elProps) => {
       const color = createMemo(() => props.color || 'primary');
       const {
@@ -219,7 +220,7 @@ const RadioGroup = setupFieldComponent(
     ]
   )
 ) as {
-  (props: RadioGroupProps & ComponentProps<'div'>): JSX.Element;
+  <T extends Key>(props: RadioGroupProps<T> & ComponentProps<'div'>): JSX.Element;
   Option(props: RadioGroupOptionProps & ComponentProps<'input'>): JSX.Element;
 };
 

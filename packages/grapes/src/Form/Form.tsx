@@ -1,5 +1,5 @@
-import { createEffect, createMemo, createRoot, JSX, on, onCleanup, onMount, ParentProps, useContext } from 'solid-js';
-import { createStore, produce, SetStoreFunction } from 'solid-js/store';
+import { JSX, ParentProps, createEffect, createMemo, createRoot, on, onCleanup, onMount, useContext } from 'solid-js';
+import { SetStoreFunction, createStore, produce } from 'solid-js/store';
 
 import {
   FormContext,
@@ -10,6 +10,36 @@ import {
 
 import { AgnosticValidator } from './Types/AgnosticValidator';
 import { FormValue } from './Types/FormValue';
+import { ButtonChooser, Datepicker, Checkbox, Input, RadioGroup, Select, Slider, TextArea, Toggler } from './Fields';
+
+export interface FormProps extends ParentProps {
+  indentification: string,
+  formStore: [get: FormStore<any>, set: SetStoreFunction<FormStore<any>>],
+  agnosticValidators?: AgnosticValidator[],
+
+  ref?: (val: FormProviderValue<FormValue>) => void,
+}
+
+export function createForm<Value extends FormValue>(indentification: string) {
+  const form = (props: Omit<FormProps, 'identification'>) => {
+    return <Form 
+      {...props}
+      indentification={indentification} 
+    />;
+  };
+
+  form.Input = Input<keyof Value>;
+  form.Slider = Slider<keyof Value>;
+  form.Select = Select<keyof Value>;
+  form.ButtonChooser = ButtonChooser<keyof Value>;
+  form.RadioGroup = RadioGroup<keyof Value>;
+  form.TextArea = TextArea<keyof Value>;
+  form.Datepicker = Datepicker<keyof Value>;
+  form.Toggler = Toggler<keyof Value>;
+  form.Checkbox = Checkbox<keyof Value>;
+
+  return form;
+}
 
 /**
  * @description A component used for managing the values of the form through the provided Store,
@@ -37,13 +67,7 @@ import { FormValue } from './Types/FormValue';
  * };
  * ```
  */
-const Form = (props: ParentProps<{
-  indentification: string,
-  formStore: [get: FormStore<any>, set: SetStoreFunction<FormStore<any>>],
-  agnosticValidators?: AgnosticValidator[],
-
-  ref?: (val: FormProviderValue<FormValue>) => void,
-}>): JSX.Element => {
+const Form = (props: FormProps): JSX.Element => {
   let disposeChildren: () => void;
 
   // eslint-disable-next-line solid/reactivity

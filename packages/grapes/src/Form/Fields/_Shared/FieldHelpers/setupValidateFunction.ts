@@ -4,12 +4,12 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldProps } from '../FieldProps';
+import { FieldProps } from '../Types/FieldProps';
 
 export type FieldInternalValidate = (value: FormFieldValue) => string[] | undefined;
 
 export function setupValidateFunction<
-  T extends FieldProps,
+  T extends FieldProps<keyof K>,
   K extends FormValue = FormValue
 >(props: T, setErrors: Setter<string[]>, form: FormProviderValue<K> | undefined): FieldInternalValidate {
   if (typeof form !== 'undefined') {

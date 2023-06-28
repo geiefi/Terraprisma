@@ -18,16 +18,17 @@ import { setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
+import { Key } from '../../../../_Shared/Types/Key';
 
 export function setupFieldComponent<
-  Props extends FieldProps,
+  Props extends FieldProps<keyof OwnerFormValue>,
   OwnerFormValue extends FormValue = FormValue,
   ValueType extends FormFieldValue = FormFieldValue
 >(
   componentFunc: Component<Props>,
   initialValueParam: ValueType | ((props: Props) => ValueType) = '' as any
-): Component<Props> {
-  return (props) => {
+) {
+  return <FieldPropKeys extends Key = string>(props: Props & FieldProps<FieldPropKeys>) => {
     // eslint-disable-next-line solid/reactivity
     const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
@@ -50,8 +51,8 @@ export function setupFieldComponent<
 
     const id = createMemo(() =>
       form
-        ? `field-${form.identification()}-${props.name}`
-        : `field-${props.name}`
+        ? `field-${form.identification()}-${props.name.toString()}`
+        : `field-${props.name.toString()}`
     );
 
     const hasContent = createMemo(() => (value() || '').toString().length > 0);
@@ -75,7 +76,7 @@ export function setupFieldComponent<
           fieldProps: splitProps(
             props,
             FieldPropKeys
-          )[0] as unknown as FieldProps,
+          )[0] as unknown as FieldProps<FieldPropKeys>,
 
           hasContent,
           hasErrors,

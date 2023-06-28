@@ -10,8 +10,9 @@ import './Toggler.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { forwardNativeElementProps } from '../../../Helpers';
+import { Key } from '../../../_Shared/Types/Key';
 
-export interface TogglerProps extends FieldProps {
+export interface TogglerProps<T extends Key> extends FieldProps<T> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -22,7 +23,7 @@ export interface TogglerProps extends FieldProps {
 }
 
 const Toggler = setupFieldComponent(
-  forwardNativeElementProps<TogglerProps, HTMLInputElement>(
+  forwardNativeElementProps<TogglerProps<string>, HTMLInputElement>(
     (props, elProps) => {
       const {
         elementId: id,

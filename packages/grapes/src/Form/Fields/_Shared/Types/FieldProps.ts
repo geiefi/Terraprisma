@@ -3,8 +3,9 @@ import { Store } from '../../../../Helpers/Types/Store';
 
 import { FieldValidator } from '../../../Types/FieldValidator';
 import { FormFieldValue } from '../../../Types/FormFieldValue';
+import { Key } from '../../../../_Shared/Types/Key';
 
-export const FieldPropKeys: (keyof FieldProps)[] = [
+export const FieldPropKeys: (keyof FieldProps<Key>)[] = [
   'name',
   'manuallyControlled',
   'value',
@@ -18,14 +19,14 @@ export const FieldPropKeys: (keyof FieldProps)[] = [
   * The field props that are required for all of the fields used in conjunction with the `<Form />`
   * component
   */
-export interface FieldProps {
+export interface FieldProps<FormFieldKeys extends Key> {
   /**
     * @description This is the identification of the field basically. If it is inside a `<Form>`
     * it is used to identify the field's value, field's errors and field's validators inside of it.
     *
     * Currently it is not used if it is outside a `<Form>` but is still important for errors.
     */
-  name: string;
+  name: FormFieldKeys;
 
   /**
     * @description Defines weather or not the state of the field is communicated across to the nearest `<Form>` or be manually controlled.

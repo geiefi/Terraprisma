@@ -7,10 +7,10 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldProps } from '../FieldProps';
+import { FieldProps } from '../Types/FieldProps';
 
 export function setupCommunicationWithFormContext<
-  T extends FieldProps,
+  T extends FieldProps<keyof K>,
   K extends FormValue = FormValue
 >(props: T, initialValue: FormFieldValue = ''): FormProviderValue<K> | undefined {
   let form: FormProviderValue<K> | undefined = useForm<K>();

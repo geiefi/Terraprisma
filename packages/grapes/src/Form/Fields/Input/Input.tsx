@@ -1,4 +1,4 @@
-import { JSX, Ref } from 'solid-js';
+import { JSX } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -14,13 +14,14 @@ import { forwardNativeElementProps } from '../../../Helpers';
 import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
+import { Key } from '../../../_Shared/Types/Key';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
   target: Element;
 };
 
-export interface InputProps extends MaskedFieldProps {
+export interface InputProps<FormFieldKeys extends Key> extends MaskedFieldProps<FormFieldKeys> {
   type?: 'text' | 'number' | 'email' | 'password';
 
   label?: JSX.Element;
@@ -31,7 +32,7 @@ export interface InputProps extends MaskedFieldProps {
 }
 
 const Input = setupFieldComponent(
-  forwardNativeElementProps<InputProps, HTMLInputElement, JSX.InputHTMLAttributes<HTMLInputElement>>(
+  forwardNativeElementProps<InputProps<string>, HTMLInputElement, JSX.InputHTMLAttributes<HTMLInputElement>>(
     (props, elProps) => {
       const {
         elementId: id,

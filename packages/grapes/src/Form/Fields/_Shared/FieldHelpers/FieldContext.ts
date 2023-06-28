@@ -3,12 +3,13 @@ import { Accessor, Signal, createContext, useContext } from 'solid-js';
 import { Store } from '../../../../Helpers';
 import { FieldInternalValidate } from './setupValidateFunction';
 import { FormFieldValue } from '../../../Types/FormFieldValue';
-import { FieldProps } from '../FieldProps';
+import { FieldProps } from '../Types/FieldProps';
+import { Key } from '../../../../_Shared/Types/Key';
 
 export interface FieldProviderValue<
   ValueType extends FormFieldValue = FormFieldValue
 > {
-  fieldProps: FieldProps;
+  fieldProps: FieldProps<Key>;
 
   elementId: Accessor<string>;
 

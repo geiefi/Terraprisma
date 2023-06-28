@@ -4,10 +4,10 @@ import { FormProviderValue } from '../../../FormContext';
 import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 
-import { FieldProps } from '../FieldProps';
+import { FieldProps } from '../Types/FieldProps';
 
 export function setupFieldsValueSignal<
-  T extends FieldProps,
+  T extends FieldProps<keyof K>,
   K extends FormValue = FormValue,
   ValueType extends FormFieldValue = FormFieldValue
 >(props: T, form: FormProviderValue<K> | undefined, initialValue: ValueType = '' as any): Signal<ValueType | undefined> {

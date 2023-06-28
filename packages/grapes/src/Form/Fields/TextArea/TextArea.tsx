@@ -12,13 +12,14 @@ import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { forwardNativeElementProps } from '../../../Helpers';
 import { mergeCallbacks } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
+import { Key } from '../../../_Shared/Types/Key';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
   target: HTMLTextAreaElement;
 };
 
-export interface TextAreaProps extends MaskedFieldProps {
+export interface TextAreaProps<T extends Key> extends MaskedFieldProps<T> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -27,7 +28,7 @@ export interface TextAreaProps extends MaskedFieldProps {
 }
 
 const TextArea = setupFieldComponent(
-  forwardNativeElementProps<TextAreaProps, HTMLTextAreaElement, JSX.InputHTMLAttributes<HTMLTextAreaElement>>(
+  forwardNativeElementProps<TextAreaProps<string>, HTMLTextAreaElement, JSX.InputHTMLAttributes<HTMLTextAreaElement>>(
     (props, elProps) => {
       const {
         elementId: id,

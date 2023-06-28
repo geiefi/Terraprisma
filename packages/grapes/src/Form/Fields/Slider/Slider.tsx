@@ -19,8 +19,9 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import './Slider.scss';
+import { Key } from '../../../_Shared/Types/Key';
 
-export interface SliderProps extends FieldProps {
+export interface SliderProps<T extends Key> extends FieldProps<T> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -33,7 +34,7 @@ export interface SliderProps extends FieldProps {
 }
 
 const Slider = setupFieldComponent(
-  forwardNativeElementProps<SliderProps, HTMLInputElement, JSX.InputHTMLAttributes<HTMLInputElement>>(
+  forwardNativeElementProps<SliderProps<string>, HTMLInputElement, JSX.InputHTMLAttributes<HTMLInputElement>>(
     (props, elProps) => {
       const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
       const min = createMemo(() => parseFloat((elProps.min || 0).toString()));
@@ -205,7 +206,7 @@ const Slider = setupFieldComponent(
     ]
   ),
   // eslint-disable-next-line solid/reactivity
-  (props: SliderProps & JSX.InputHTMLAttributes<HTMLInputElement>) => props.min || 0
+  (props: SliderProps<string> & JSX.InputHTMLAttributes<HTMLInputElement>) => props.min || 0
 );
 
 export default Slider;

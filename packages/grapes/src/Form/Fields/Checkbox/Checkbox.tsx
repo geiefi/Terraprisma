@@ -14,8 +14,9 @@ import { GrowFade } from '../../../Transitions';
 import { ClickableSignalizer, Ripple } from '../../../General';
 
 import './Checkbox.scss';
+import { Key } from '../../../_Shared/Types/Key';
 
-export interface CheckboxProps extends FieldProps {
+export interface CheckboxProps<T extends Key> extends FieldProps<T> {
   label?: JSX.Element;
   helperText?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -26,7 +27,7 @@ export interface CheckboxProps extends FieldProps {
 }
 
 const Checkbox = setupFieldComponent(
-  forwardNativeElementProps<CheckboxProps, HTMLInputElement>(
+  forwardNativeElementProps<CheckboxProps<string>, HTMLInputElement>(
     (props, elProps) => {
       const {
         elementId: id,
