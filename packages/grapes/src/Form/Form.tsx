@@ -11,6 +11,7 @@ import {
 import { AgnosticValidator } from './Types/AgnosticValidator';
 import { FormValue } from './Types/FormValue';
 import { ButtonChooser, Datepicker, Checkbox, Input, RadioGroup, Select, Slider, TextArea, Toggler } from './Fields';
+import { Key } from '../_Shared/Types/Key';
 
 export interface FormProps extends ParentProps {
   indentification: string,
@@ -20,13 +21,26 @@ export interface FormProps extends ParentProps {
   ref?: (val: FormProviderValue<FormValue>) => void,
 }
 
-export function createForm<Value extends FormValue>(indentification: string) {
-  const form = (props: Omit<FormProps, 'identification'>) => {
-    return <Form 
+/**
+ * @description This is a Form pattern of usage that makes it possible to have typesafe fields
+ * based on their field names. 
+ * This creates Solid's component functions procedurally with the type parameter of the names.
+ * This also makes it simpler to use in the end since you don't to create the store for the form's state.
+ */
+export function createForm<Value extends FormValue>(
+  indentification: string, 
+  initialValue: Partial<Value> = {}
+) {
+  // eslint-disable-next-line solid/reactivity
+  const formStore = createStore(new FormStore<Partial<Value>>(initialValue));
+
+  const form = (props: Omit<FormProps, 'identification' | 'formStore'>) => (
+    <Form 
       {...props}
+      formStore={formStore}
       indentification={indentification} 
-    />;
-  };
+    />
+  );
 
   form.Input = Input<keyof Value>;
   form.Slider = Slider<keyof Value>;
@@ -37,6 +51,10 @@ export function createForm<Value extends FormValue>(indentification: string) {
   form.Datepicker = Datepicker<keyof Value>;
   form.Toggler = Toggler<keyof Value>;
   form.Checkbox = Checkbox<keyof Value>;
+
+  form.Inner = Form.Inner<keyof Value>;
+
+  form.store = formStore;
 
   return form;
 }
@@ -123,13 +141,13 @@ const Form = (props: FormProps): JSX.Element => {
  * but is made to be used inside of a <Form> and it acts as a proxy between the fields
  * and an object field inside the values of the <Form>.
  */
-const innerForm = (props: ParentProps<{
+const innerForm = <FormFieldKey extends Key = string>(props: ParentProps<{
   identification: string,
   /**
    * This name is **NOT** the identification of the component, it rather is the field name inside
    * of the values of the parent <Form>
    */
-  name: string,
+  name: FormFieldKey,
   agnosticValidators?: AgnosticValidator[],
 
   ref?: (val: FormProviderValue<FormValue>) => void,
@@ -149,7 +167,7 @@ const innerForm = (props: ParentProps<{
 
   const [innerFormStore, setInnerFormStore] = createStore<FormStore<any>>(
     // eslint-disable-next-line solid/reactivity
-    new FormStore(form.valueFor(props.name) as any || {})
+    new FormStore(form.valueFor(props.name.toString()) as any || {})
   );
   const innerForm = new FormProviderValue(
     [innerFormStore, setInnerFormStore],
@@ -164,11 +182,11 @@ const innerForm = (props: ParentProps<{
   );
 
   onMount(() => {
-    if (typeof form.valueFor(props.name) !== 'undefined') {
-      form.cleanUp(props.name);
+    if (typeof form.valueFor(props.name.toString()) !== 'undefined') {
+      form.cleanUp(props.name.toString());
     }
 
-    form.init(props.name, [
+    form.init(props.name.toString(), [
       // eslint-disable-next-line solid/reactivity
       () => innerForm.validateAll() ? [] : allErrors()
     ], innerFormStore.values as any);
@@ -184,7 +202,7 @@ const innerForm = (props: ParentProps<{
   });
 
   onCleanup(() => {
-    form.cleanUp(props.name);
+    form.cleanUp(props.name.toString());
 
     innerForm.isCleaningUp = true;
 
@@ -192,17 +210,17 @@ const innerForm = (props: ParentProps<{
   });
 
   createEffect(() => {
-    const newValues = form.valueFor(props.name);
-    form.update(props.name, newValues);
+    const newValues = form.valueFor(props.name.toString());
+    form.update(props.name.toString(), newValues);
     form.store[1](produce(form => {
-      form.errors[props.name] = allErrors();
+      form.errors[props.name.toString()] = allErrors();
     }));
   });
 
   createEffect(on(
-    () => form.valueFor(props.name),
+    () => form.valueFor(props.name.toString()),
     () => {
-      const newValuesFromParent = form.valueFor(props.name);
+      const newValuesFromParent = form.valueFor(props.name.toString());
 
       setInnerFormStore(produce(innerFormStore => {
         innerFormStore.values = newValuesFromParent;
