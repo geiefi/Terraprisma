@@ -1,9 +1,8 @@
-import { JSX, ParentProps, createEffect, createMemo, createRoot, on, onCleanup, onMount, useContext } from 'solid-js';
+import { JSX, ParentProps, createEffect, createRoot, onCleanup, onMount, useContext } from 'solid-js';
 import { SetStoreFunction, createStore, produce } from 'solid-js/store';
 
 import {
   FormContext,
-  FormError,
   FormProviderValue,
   FormStore,
 } from './FormContext';
@@ -11,10 +10,10 @@ import {
 import { AgnosticValidator } from './Types/AgnosticValidator';
 import { FormValue } from './Types/FormValue';
 import { ButtonChooser, Datepicker, Checkbox, Input, RadioGroup, Select, Slider, TextArea, Toggler } from './Fields';
-import { Key } from '../_Shared/Types/Key';
+import { LeavesOfObject } from './Types/LeavesOfObject';
 
 export interface FormProps extends ParentProps {
-  indentification: string,
+  identification: string,
   formStore: [get: FormStore<any>, set: SetStoreFunction<FormStore<any>>],
   agnosticValidators?: AgnosticValidator[],
 
@@ -27,7 +26,7 @@ export interface FormProps extends ParentProps {
  * This creates Solid's component functions procedurally with the type parameter of the names.
  * This also makes it simpler to use in the end since you don't to create the store for the form's state.
  */
-export function createForm<Value extends FormValue>(
+export function createForm<Value extends FormValue, Leaves extends LeavesOfObject<Value> = LeavesOfObject<Value>>(
   indentification: string, 
   initialValue: Partial<Value> = {}
 ) {
@@ -38,21 +37,19 @@ export function createForm<Value extends FormValue>(
     <Form 
       {...props}
       formStore={formStore}
-      indentification={indentification} 
+      identification={indentification} 
     />
   );
 
-  form.Input = Input<keyof Value>;
-  form.Slider = Slider<keyof Value>;
-  form.Select = Select<keyof Value>;
-  form.ButtonChooser = ButtonChooser<keyof Value>;
-  form.RadioGroup = RadioGroup<keyof Value>;
-  form.TextArea = TextArea<keyof Value>;
-  form.Datepicker = Datepicker<keyof Value>;
-  form.Toggler = Toggler<keyof Value>;
-  form.Checkbox = Checkbox<keyof Value>;
-
-  form.Inner = Form.Inner<keyof Value>;
+  form.Input = Input<Leaves>;
+  form.Slider = Slider<Leaves>;
+  form.Select = Select<Leaves>;
+  form.ButtonChooser = ButtonChooser<Leaves>;
+  form.RadioGroup = RadioGroup<Leaves>;
+  form.TextArea = TextArea<Leaves>;
+  form.Datepicker = Datepicker<Leaves>;
+  form.Toggler = Toggler<Leaves>;
+  form.Checkbox = Checkbox<Leaves>;
 
   form.store = formStore;
 
@@ -102,7 +99,7 @@ const Form = (props: FormProps): JSX.Element => {
     // eslint-disable-next-line solid/reactivity
     props.agnosticValidators || [],
     // eslint-disable-next-line solid/reactivity
-    props.indentification
+    props.identification
   );
 
   onCleanup(() => {
@@ -135,110 +132,6 @@ const Form = (props: FormProps): JSX.Element => {
     </FormContext.Provider>
   );
 }
-
-/**
- * @description Does basically the same as the <Form> component,
- * but is made to be used inside of a <Form> and it acts as a proxy between the fields
- * and an object field inside the values of the <Form>.
- */
-const innerForm = <FormFieldKey extends Key = string>(props: ParentProps<{
-  identification: string,
-  /**
-   * This name is **NOT** the identification of the component, it rather is the field name inside
-   * of the values of the parent <Form>
-   */
-  name: FormFieldKey,
-  agnosticValidators?: AgnosticValidator[],
-
-  ref?: (val: FormProviderValue<FormValue>) => void,
-}>) => {
-  let disposeChildren: () => void;
-
-  const form = useForm();
-
-  onMount(() => {
-    if (typeof form === 'undefined') {
-      throw new FormError(
-        `Error with the <Form.Inner> called "${props.identification}": ` +
-        'Cannot have a <Form.Inner> component if it is not inside a <Form> component!'
-      );
-    }
-  });
-
-  const [innerFormStore, setInnerFormStore] = createStore<FormStore<any>>(
-    // eslint-disable-next-line solid/reactivity
-    new FormStore(form.valueFor(props.name.toString()) as any || {})
-  );
-  const innerForm = new FormProviderValue(
-    [innerFormStore, setInnerFormStore],
-    // eslint-disable-next-line solid/reactivity
-    props.agnosticValidators || [],
-    // eslint-disable-next-line solid/reactivity
-    props.identification,
-  );
-
-  const allErrors = createMemo(
-    () => Object.values(innerFormStore.errors).flat().filter(Boolean) as string[]
-  );
-
-  onMount(() => {
-    if (typeof form.valueFor(props.name.toString()) !== 'undefined') {
-      form.cleanUp(props.name.toString());
-    }
-
-    form.init(props.name.toString(), [
-      // eslint-disable-next-line solid/reactivity
-      () => innerForm.validateAll() ? [] : allErrors()
-    ], innerFormStore.values as any);
-
-    innerForm.isCleaningUp = false;
-
-    if (typeof props.ref !== 'undefined') {
-      createEffect(() => {
-        innerForm.track();
-        props.ref!(innerForm);
-      });
-    }
-  });
-
-  onCleanup(() => {
-    form.cleanUp(props.name.toString());
-
-    innerForm.isCleaningUp = true;
-
-    disposeChildren && disposeChildren();
-  });
-
-  createEffect(() => {
-    const newValues = form.valueFor(props.name.toString());
-    form.update(props.name.toString(), newValues);
-    form.store[1](produce(form => {
-      form.errors[props.name.toString()] = allErrors();
-    }));
-  });
-
-  createEffect(on(
-    () => form.valueFor(props.name.toString()),
-    () => {
-      const newValuesFromParent = form.valueFor(props.name.toString());
-
-      setInnerFormStore(produce(innerFormStore => {
-        innerFormStore.values = newValuesFromParent;
-      }));
-    }
-  ));
-
-  return <FormContext.Provider
-    value={innerForm}
-  >
-    {createRoot(rootDispose => {
-      disposeChildren = rootDispose;
-      return props.children;
-    })}
-  </FormContext.Provider>;
-};
-
-Form.Inner = innerForm;
 
 /**
  * Gets a reference to the context of the parent form, this is mainly going

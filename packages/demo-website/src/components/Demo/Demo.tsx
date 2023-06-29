@@ -7,7 +7,7 @@ import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 
 import { Form, FormStore } from 'grapes/Form';
 import Validators from 'grapes/Form/Validators';
-import { Input, Select, ButtonChooser, Datepicker, Slider } from 'grapes/Form/Fields';
+import { Input, Select, ButtonChooser, Slider } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
 import { Table, Tooltip } from 'grapes/DataDisplay';
 import { Stack, Container, Divisor } from 'grapes/Layout';
@@ -16,17 +16,18 @@ import { Steps, Step } from 'grapes/Navigation';
 import { FormProviderValue } from 'grapes/Form/FormContext';
 import { FormValue } from 'grapes/Form/Types/FormValue';
 import { GrowFade } from 'grapes/Transitions';
+import { createForm } from 'grapes/Form/Form';
 
-export type AddressFormValue = Partial<{
+export type AddressFormValue = {
   cidade: string;
   rua: string;
   uf: string;
   numero: number;
   cep: string;
   bairro: string;
-}>;
+};
 
-export type PaymentFormValue = Partial<{
+export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';
   creditCardDetails?: {
     number: string;
@@ -34,18 +35,16 @@ export type PaymentFormValue = Partial<{
     displayedName: string;
     expiresIn: Date;
   };
-}>;
+};
 
 const Demo: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<number>(1);
 
-  const addressFormStore = createStore<FormStore<AddressFormValue>>(new FormStore({
-    // radioValue: true,
+  const addressFormStore = createStore<FormStore<Partial<AddressFormValue>>>(new FormStore({
   }));
-  const paymentFormStore = createStore<FormStore<PaymentFormValue>>(new FormStore({
+  const PaymentForm = createForm<PaymentFormValue>('paymenyForm', {
     paymentMethod: 'cartao-de-credito'
-  }));
-  const [paymentForm] = paymentFormStore;
+  });
 
   const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
 
@@ -96,7 +95,7 @@ const Demo: Component = () => {
         <Divisor />
 
         <Show when={currentStep() === 0}>
-          <Form formStore={addressFormStore} ref={setCurrenForm} indentification='EnderecoDeEntrega'>
+          <Form formStore={addressFormStore} ref={setCurrenForm} identification='EnderecoDeEntrega'>
             <Row>
               <Col size={16}>
                 <Input
@@ -175,24 +174,24 @@ const Demo: Component = () => {
           </Form>
         </Show>
         <Show when={currentStep() === 1}>
-          <Form formStore={paymentFormStore} ref={setCurrenForm} indentification='DadosDePagamento'>
-            <ButtonChooser
+          <PaymentForm ref={setCurrenForm}>
+            <PaymentForm.ButtonChooser
               name='paymentMethod'
               label='Método de pagamento'
               validators={[Validators.required]}
             >
-              <ButtonChooser.Option value='cartao-de-credito'>
+              <PaymentForm.ButtonChooser.Option value='cartao-de-credito'>
                 <CreditCard /> Cartão de crédito
-              </ButtonChooser.Option>
-              <ButtonChooser.Option value='boleto'>
+              </PaymentForm.ButtonChooser.Option>
+              <PaymentForm.ButtonChooser.Option value='boleto'>
                 <BarcodeScanner /> Boleto
-              </ButtonChooser.Option>
-              <ButtonChooser.Option value='pix'>
+              </PaymentForm.ButtonChooser.Option>
+              <PaymentForm.ButtonChooser.Option value='pix'>
                 <QrCode /> Pix
-              </ButtonChooser.Option>
-            </ButtonChooser>
+              </PaymentForm.ButtonChooser.Option>
+            </PaymentForm.ButtonChooser>
 
-            <Show when={paymentForm.values.paymentMethod === 'cartao-de-credito'}>
+            <Show when={PaymentForm.store[0].values.paymentMethod === 'cartao-de-credito'}>
               <Box>
                 <h4>Dados do cartão de crédito</h4>
 
@@ -210,53 +209,48 @@ const Demo: Component = () => {
                   </Table.Row>
                 </Table>
 
-                <Form.Inner
-                  identification='CreditCardDetails'
-                  name='creditCardDetails'
-                >
-                  <Row>
-                    <Col size={14}>
-                      <Input
-                        name='number'
-                        label='número do cartão'
-                        placeholder='0000 0000 0000 0000'
-                        mask='9999 9999 9999 9999'
-                        validators={[Validators.required]}
-                      />
-                    </Col>
+                <Row>
+                  <Col size={14}>
+                    <PaymentForm.Input
+                      name='creditCardDetails.number'
+                      label='número do cartão'
+                      placeholder='0000 0000 0000 0000'
+                      mask='9999 9999 9999 9999'
+                      validators={[Validators.required]}
+                    />
+                  </Col>
 
-                    <Col size={10}>
-                      <Input
-                        name='cvv'
-                        label='cvv'
-                        placeholder='123'
-                        mask='999'
-                        type='number'
-                        validators={[Validators.required]}
-                      />
-                    </Col>
+                  <Col size={10}>
+                    <PaymentForm.Input
+                      name='creditCardDetails.cvv'
+                      label='cvv'
+                      placeholder='123'
+                      mask='999'
+                      type='number'
+                      validators={[Validators.required]}
+                    />
+                  </Col>
 
-                    <Col size={14}>
-                      <Input
-                        name='displayedName'
-                        label='nome impresso'
-                        type='number'
-                        validators={[Validators.required]}
-                      />
-                    </Col>
+                  <Col size={14}>
+                    <PaymentForm.Input
+                      name='creditCardDetails.displayedName'
+                      label='nome impresso'
+                      type='number'
+                      validators={[Validators.required]}
+                    />
+                  </Col>
 
-                    <Col size={10}>
-                      <Datepicker
-                        name='expiresIn'
-                        label='validade'
-                        validators={[Validators.required]}
-                      />
-                    </Col>
-                  </Row>
-                </Form.Inner>
+                  <Col size={10}>
+                    <PaymentForm.Datepicker
+                      name='creditCardDetails.expiresIn'
+                      label='validade'
+                      validators={[Validators.required]}
+                    />
+                  </Col>
+                </Row>
               </Box>
             </Show>
-          </Form>
+          </PaymentForm>
         </Show>
 
         <Show when={currentStep() === 2}>

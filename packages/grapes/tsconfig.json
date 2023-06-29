@@ -1,4 +1,7 @@
 {
+  "compilerOptions": {
+    "disableSizeLimit": true
+  },
   "extends": "../../tsconfig.json",
   "include": ["src"]
 }

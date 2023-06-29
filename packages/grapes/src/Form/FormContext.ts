@@ -9,6 +9,8 @@ import { AgnosticValidator } from './Types/AgnosticValidator';
 import { FieldValidator } from './Types/FieldValidator';
 import { FormFieldValue } from './Types/FormFieldValue';
 import { FormValue } from './Types/FormValue';
+import { LeavesOfObject } from './Types/LeavesOfObject';
+import { DeepGet } from './Types/DeepGet';
 
 export class FormError extends Error { }
 
@@ -25,9 +27,9 @@ export class FormStore<Values extends FormValue> {
   /**
     * A array of field names that are currently disabled
     */
-  disabled: Partial<Record<keyof Values, boolean>>;
-  errors: Partial<Record<keyof Values, string[]>>;
-  validators: Partial<Record<keyof Values, FieldValidator<FormFieldValue>[]>>;
+  disabled: Partial<Record<LeavesOfObject<Values>, boolean>>;
+  errors: Partial<Record<LeavesOfObject<Values>, string[]>>;
+  validators: Partial<Record<LeavesOfObject<Values>, FieldValidator<FormFieldValue>[]>>;
 
   constructor(values: Values) {
     this.values = values;
@@ -37,11 +39,61 @@ export class FormStore<Values extends FormValue> {
   }
 }
 
+function getByPath(obj: any, path: string | string[]): any {
+  const pathArr = Array.isArray(path) ? path : path.split('.');
+  const cursorKey = pathArr[0];
+  if (typeof obj[cursorKey] === 'object' && path.length > 0) {
+    return getByPath(obj[cursorKey], pathArr.slice(1));
+  } else {
+    return obj[cursorKey];
+  }
+}
+
+function getLeaves(obj: any): string[] {
+  const resultingKeys = [];
+
+  for (const key of Object.keys(obj)) {
+    if (typeof obj[key] === 'object' && !(obj[key] instanceof Date)) {
+      resultingKeys.push(...getLeaves(obj[key]).map(l => `${key}.${l}`));
+    } else {
+      resultingKeys.push(key);
+    }
+  }
+
+  return resultingKeys;
+}
+
+function setByPath(obj: any, path: string | string[], value: any): void {
+  const pathArr = Array.isArray(path) ? path : path.split('.');
+  const cursorKey = pathArr[0];
+
+  if (typeof obj[cursorKey] === 'undefined' && path.length > 1) {
+    obj[cursorKey] = {};
+  }
+
+  if (typeof obj[cursorKey] === 'object' && path.length > 0) {
+    setByPath(obj[cursorKey], pathArr.slice(1), value);
+  } else {
+    obj[cursorKey] = value;
+  }
+}
+
+function deepDelete(obj: any, path: string | string[]): void {
+  const pathArr = Array.isArray(path) ? path : path.split('.');
+  const cursorKey = pathArr[0];
+
+  if (typeof obj[cursorKey] === 'object' && path.length > 0) {
+    deepDelete(obj[cursorKey], pathArr.slice(1));
+  } else {
+    delete obj[cursorKey];
+  }
+}
+
 /**
   * This is going to be the value that comes from the `useForm()` call to get the data
   * and access to some actions related to the context Form.
   */
-export class FormProviderValue<Values extends FormValue> {
+export class FormProviderValue<Values extends FormValue, Leaves extends LeavesOfObject<Values> = LeavesOfObject<Values>> {
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;
 
@@ -96,15 +148,19 @@ export class FormProviderValue<Values extends FormValue> {
     *
     * @param value Just the initial value of the field being initialized.
     */
-  init(name: keyof Values, validators: FieldValidator[], value: Values[keyof Values]): void {
-    if (document.querySelectorAll(`#field-${this.identification()}-${name.toString()}`).length > 1) {
+  init<Name extends Leaves>(
+    name: Name, 
+    validators: FieldValidator[], 
+    value: DeepGet<Values, Name>
+  ): void {
+    if (document.querySelectorAll(`#field-${this.identification()}-${name}`).length > 1) {
       throw new FormError(
-        `Error with the field "${name.toString()}" on the <Form> with identification "${this.identification()}": `
+        `Error with the field "${name}" on the <Form> with identification "${this.identification()}": `
         + 'You cannot have multiple fields defined on the same <Form> that have the same name!'
       );
     }
     this.setForm(produce(form => {
-      form.values[name] = value;
+      setByPath(form.values, name, value);
       form.validators[name] = validators;
     }));
   }
@@ -113,11 +169,12 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Removes all of the references inside of the formStore that
     * are associated with the field identified by `name` except for its value.
     */
-  cleanUp(name: keyof Values): void {
+  cleanUp(name: Leaves): void {
     this.setForm(produce(form => {
       if (!this.isCleaningUp) {
-        delete form.values[name];
+        deepDelete(form.values, name);
       }
+
       delete form.errors[name];
       delete form.validators[name];
     }));
@@ -127,17 +184,18 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Runs over all of the validators of the field with the specified
     * `name` and adds the errors to the field if necessary, thus making it invalid.
     */
-  validate(name: keyof Values): void {
+  validate(name: Leaves): void {
     if (this.isDisabled(name)) return;
 
-    const formValueKeys: (keyof Values)[] = Object.keys(this.form.values);
-    if (!formValueKeys.includes(name)) {
-      throw new FormError(`Cannot validate the field named ${name.toString()} inside of the form with id` +
-        ` ${this.identification()} because it does not exist!`);
+    const formValueKeys: string[] = getLeaves(this.form.values);
+    if (!dbg(formValueKeys).includes(name)) {
+      throw new FormError(`Cannot validate the field named "${name}" inside of the form with identification` +
+        ` ${this.identification()} because it does not exist! 
+Maybe you forgot to initialize it?`);
     } else {
       this.setForm(produce(form => {
         const validators = form.validators[name] || [];
-        const value = form.values[name];
+        const value = getByPath(form.values, name);
         const errors = validators.map(validator => validator(value)!).flat().filter(Boolean);
         form.errors[name] = errors;
       }));
@@ -150,22 +208,22 @@ export class FormProviderValue<Values extends FormValue> {
     */
   validateAll(): boolean {
     this.setForm(produce(form => {
-      const fields: (keyof Values)[] = Object.keys(form.validators);
+      const fields: string[] = getLeaves(form.validators);
       const errors: Partial<Record<keyof Values, string[]>> = {};
 
       fields.forEach(field => {
-        if (this.isDisabled(field)) return;
+        if (this.isDisabled(field as any)) return;
 
-        const validators = form.validators[field]!;
-        const value = form.values[field];
-        const caughtErrors = validators.map(validator => validator(value)!).flat().filter(Boolean);
-        errors[field] = caughtErrors;
+        const validators = (form.validators as any)[field]!;
+        const value = getByPath(form.values, field);
+        const caughtErrors = validators.map((validator: FieldValidator) => validator(value)!).flat().filter(Boolean);
+        (errors as any)[field] = caughtErrors;
       });
 
       if (this.agnosticValidators) {
         this.agnosticValidators.forEach(validator => {
-          const agnosticValidatorCaughtErrors: Partial<Record<keyof Values, string>> = validator(form.values) as any;
-          const fieldsWithErrorsCaughtByAgnosticValidator: (keyof Values)[] = Object.keys(agnosticValidatorCaughtErrors);
+          const agnosticValidatorCaughtErrors: Partial<Record<Leaves, string>> = validator(form.values) as any;
+          const fieldsWithErrorsCaughtByAgnosticValidator: Leaves[] = Object.keys(agnosticValidatorCaughtErrors) as Leaves[];
           fieldsWithErrorsCaughtByAgnosticValidator.forEach(field => {
             if (this.isDisabled(field)) return;
 
@@ -184,11 +242,11 @@ export class FormProviderValue<Values extends FormValue> {
     return this.isValid();
   }
 
-  isDisabled(name: keyof Values): boolean {
+  isDisabled(name: Leaves): boolean {
     return this.form.disabled[name] || false;
   }
 
-  setDisabled(name: keyof Values, disabled: boolean): void {
+  setDisabled(name: Leaves, disabled: boolean): void {
     this.setForm(produce(form => {
       form.disabled[name] = disabled;
       form.errors[name] = [];
@@ -206,7 +264,7 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Checks weather or not the form is invalid.
     */
   isInvalid(): boolean {
-    const fieldsWithErrorObject: (keyof Values)[] = Object.keys(this.form.errors);
+    const fieldsWithErrorObject: Leaves[] = Object.keys(this.form.errors) as Leaves[];
     return fieldsWithErrorObject.some(
       (key) => this.form.errors[key]!.length > 0,
     );
@@ -216,13 +274,13 @@ export class FormProviderValue<Values extends FormValue> {
     * @description Gets the first error for the field with the specified
     * `name`.
     */
-  firstErrorFor(name: keyof Values): string | undefined {
+  firstErrorFor(name: Leaves): string | undefined {
     if (typeof this.form.errors[name] !== 'undefined') {
       return this.form.errors[name]![0];
     }
   }
 
-  getErrors(name: keyof Values): string[] | undefined {
+  getErrors(name: Leaves): string[] | undefined {
     if (typeof this.form.errors[name] === 'undefined') return undefined;
 
     // traverses through the errors so that Solid tracks them
@@ -232,21 +290,21 @@ export class FormProviderValue<Values extends FormValue> {
     return this.form.errors[name];
   }
 
-  hasErrors(name: keyof Values): boolean {
+  hasErrors(name: Leaves): boolean {
     return typeof this.form.errors[name] !== 'undefined'
       ? typeof this.form.errors[name]![0].length !== 'undefined'
       : false;
   }
 
-  valueFor(name: keyof Values): Values[keyof Values] | undefined {
-    const value = this.form.values[name];
+  valueFor<Name extends Leaves>(name: Name): DeepGet<Values, Name> | undefined {
+    const value = getByPath(this.form.values, name);
     deeplyTrack(value);
     return value;
   }
 
-  update(name: keyof Values, newValue: Values[keyof Values]): void {
+  update<Name extends Leaves>(name: Name, newValue: DeepGet<Values, Name>): void {
     this.setForm(produce(form => {
-      form.values[name] = newValue;
+      setByPath(form.values, name, newValue);
     }));
   }
 }

@@ -8,9 +8,10 @@ import { FormValue } from '../../../Types/FormValue';
 import { FormProviderValue } from '../../../FormContext';
 
 import { FieldProps } from '../Types/FieldProps';
+import { LeavesOfObject } from '../../../Types/LeavesOfObject';
 
 export function setupCommunicationWithFormContext<
-  T extends FieldProps<keyof K>,
+  T extends FieldProps<LeavesOfObject<K>>,
   K extends FormValue = FormValue
 >(props: T, initialValue: FormFieldValue = ''): FormProviderValue<K> | undefined {
   let form: FormProviderValue<K> | undefined = useForm<K>();
@@ -22,14 +23,14 @@ export function setupCommunicationWithFormContext<
     onMount(() => {
       if (typeof form!.valueFor(props.name) !== 'undefined') {
         form!.store[1](produce(form => {
-          form.errors[props.name as keyof K] = [];
+          form.errors[props.name] = [];
         }));
       }
 
       form!.init(
         props.name,
         props.validators || [],
-        (form!.valueFor(props.name) || initialValue) as K[keyof K]
+        (form!.valueFor(props.name) || initialValue as any)
       );
     });
 

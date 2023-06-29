@@ -5,9 +5,10 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 
 import { FieldProps } from '../Types/FieldProps';
+import { LeavesOfObject } from '../../../Types/LeavesOfObject';
 
 export function setupFieldsValueSignal<
-  T extends FieldProps<keyof K>,
+  T extends FieldProps<LeavesOfObject<K>>,
   K extends FormValue = FormValue,
   ValueType extends FormFieldValue = FormFieldValue
 >(props: T, form: FormProviderValue<K> | undefined, initialValue: ValueType = '' as any): Signal<ValueType | undefined> {
@@ -18,7 +19,7 @@ export function setupFieldsValueSignal<
         : initialValue
     );
     const setValue: Setter<ValueType | undefined> = (
-      (v: K[keyof K]) => form.update(props.name, v)
+      (v: any) => form.update(props.name, v)
     ) as any;
 
     return [value, setValue];
