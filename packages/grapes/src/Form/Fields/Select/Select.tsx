@@ -40,12 +40,12 @@ export interface SelectProps<FormFieldKeys extends Key> extends FieldProps<FormF
   onFocus?: () => any;
 }
 
-export interface OptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface SelectOptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
   value: FormFieldValue;
   children: JSX.Element;
 }
 
-const Option: Component<OptionProps> = (props) =>
+const Option: Component<SelectOptionProps> = (props) =>
   props as unknown as JSX.Element;
 
 /**
@@ -100,8 +100,8 @@ const Select = setupFieldComponent(
       });
 
       const getChildren = accessChildren(() => elProps.children);
-      const options = createMemo<OptionProps[]>(() => {
-        let childrenArr: (JSX.Element | OptionProps)[];
+      const options = createMemo<SelectOptionProps[]>(() => {
+        let childrenArr: (JSX.Element | SelectOptionProps)[];
 
         const children = getChildren();
         if (Array.isArray(children)) {
@@ -117,7 +117,7 @@ const Select = setupFieldComponent(
             Object.hasOwn(child, 'value') &&
             Object.hasOwn(child, 'children')
           );
-        }) as OptionProps[];
+        }) as SelectOptionProps[];
       });
 
       const optionLabelFromValue = (value: FormFieldValue | undefined) => {
@@ -236,7 +236,7 @@ const Select = setupFieldComponent(
   )
 ) as {
   <FieldPropKeys extends Key>(props: SelectProps<FieldPropKeys> & ComponentProps<'div'>): JSX.Element;
-  Option(props: OptionProps): JSX.Element;
+  Option(props: SelectOptionProps): JSX.Element;
 };
 
 Select.Option = Option;

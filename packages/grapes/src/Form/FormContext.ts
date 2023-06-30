@@ -22,7 +22,7 @@ export class FormError extends Error { }
   * }))
   * ```
   */
-export class FormStore<Values extends FormValue> {
+export class FormStore<T extends FormValue, Values extends FormValue = Partial<T>> {
   values: Values;
   /**
     * A array of field names that are currently disabled
@@ -93,7 +93,11 @@ function deepDelete(obj: any, path: string | string[]): void {
   * This is going to be the value that comes from the `useForm()` call to get the data
   * and access to some actions related to the context Form.
   */
-export class FormProviderValue<Values extends FormValue, Leaves extends LeavesOfObject<Values> = LeavesOfObject<Values>> {
+export class FormProviderValue<
+T extends FormValue, 
+Values extends FormValue = Partial<T>,
+Leaves extends LeavesOfObject<Values> = LeavesOfObject<Values>,
+> {
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;
 
@@ -101,7 +105,7 @@ export class FormProviderValue<Values extends FormValue, Leaves extends LeavesOf
   private __isCleaningUp: boolean;
 
   constructor(
-    public store: Store<FormStore<Values>>,
+    public store: Store<FormStore<Partial<Values>>>,
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
   ) {

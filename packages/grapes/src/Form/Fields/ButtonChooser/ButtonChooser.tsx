@@ -35,11 +35,11 @@ export interface ButtonChooserProps<T extends Key> extends FieldProps<T> {
   onChange?: (newValue: FormFieldValue) => any;
 }
 
-export interface OptionProps extends ButtonProps {
+export interface ButtonChooserOptionProps extends ButtonProps {
   value: string;
 }
 
-const Option: Component<OptionProps> = (props) => {
+const Option: Component<ButtonChooserOptionProps> = (props) => {
   return props as unknown as JSX.Element;
 };
 
@@ -55,8 +55,8 @@ const ButtonChooser = setupFieldComponent(
       } = useField()!;
 
       const getChildren = accessChildren(() => elProps.children);
-      const options = createMemo<OptionProps[]>(() => {
-        let childrenArr: (JSX.Element | OptionProps)[];
+      const options = createMemo<ButtonChooserOptionProps[]>(() => {
+        let childrenArr: (JSX.Element | ButtonChooserOptionProps)[];
 
         const children = getChildren();
         if (Array.isArray(children)) {
@@ -72,7 +72,7 @@ const ButtonChooser = setupFieldComponent(
             Object.hasOwn(child, 'value') &&
             Object.hasOwn(child, 'children')
           );
-        }) as OptionProps[];
+        }) as ButtonChooserOptionProps[];
       });
 
       createEffect(
@@ -138,7 +138,7 @@ const ButtonChooser = setupFieldComponent(
   )
 ) as {
   <T extends Key>(props: ButtonChooserProps<T> & ComponentProps<'div'>): JSX.Element;
-  Option(props: OptionProps): JSX.Element;
+  Option(props: ButtonChooserOptionProps): JSX.Element;
 };
 
 ButtonChooser.Option = Option;
