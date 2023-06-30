@@ -79,7 +79,6 @@ const PaymentMethod: Component<{
               label='cvv'
               placeholder='123'
               mask='999'
-              type='number'
               validators={[Validators.required]}
             />
           </Col>
