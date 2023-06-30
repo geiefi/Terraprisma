@@ -7,7 +7,6 @@ import { Store } from '../Helpers/Types/Store';
 
 import { AgnosticValidator } from './Types/AgnosticValidator';
 import { FieldValidator } from './Types/FieldValidator';
-import { FormFieldValue } from './Types/FormFieldValue';
 import { FormValue } from './Types/FormValue';
 import { LeavesOfObject } from './Types/LeavesOfObject';
 import { DeepGet } from './Types/DeepGet';
@@ -22,14 +21,17 @@ export class FormError extends Error { }
   * }))
   * ```
   */
-export class FormStore<T extends FormValue, Values extends FormValue = Partial<T>> {
+export class FormStore<
+T extends FormValue, 
+Values extends FormValue = Partial<T>,
+> {
   values: Values;
   /**
     * A array of field names that are currently disabled
     */
-  disabled: Partial<Record<LeavesOfObject<Values>, boolean>>;
-  errors: Partial<Record<LeavesOfObject<Values>, string[]>>;
-  validators: Partial<Record<LeavesOfObject<Values>, FieldValidator<FormFieldValue>[]>>;
+  disabled: Partial<Record<string, boolean>>;
+  errors: Partial<Record<string, string[]>>;
+  validators: Partial<Record<string, FieldValidator[]>>;
 
   constructor(values: Values) {
     this.values = values;
@@ -192,7 +194,7 @@ Leaves extends LeavesOfObject<Values> = LeavesOfObject<Values>,
     if (this.isDisabled(name)) return;
 
     const formValueKeys: string[] = getLeaves(this.form.values);
-    if (!dbg(formValueKeys).includes(name)) {
+    if (!formValueKeys.includes(name)) {
       throw new FormError(`Cannot validate the field named "${name}" inside of the form with identification` +
         ` ${this.identification()} because it does not exist! 
 Maybe you forgot to initialize it?`);

@@ -1,4 +1,4 @@
-import Form, { useForm } from './Form';
+import { createForm, useForm } from './Form';
 import { FormStore } from './FormContext';
 
-export { Form, useForm, FormStore };
+export { createForm, useForm, FormStore };
