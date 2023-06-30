@@ -21,21 +21,21 @@ export function setupCommunicationWithFormContext<
 
   if (form) {
     onMount(() => {
-      if (typeof form!.valueFor(props.name) !== 'undefined') {
+      if (typeof form!.valueFor(props.name as any) !== 'undefined') {
         form!.store[1](produce(form => {
           form.errors[props.name] = [];
         }));
       }
 
       form!.init(
-        props.name,
+        props.name as any,
         props.validators || [],
-        (form!.valueFor(props.name) || initialValue as any)
+        (form!.valueFor(props.name as any) || initialValue as any)
       );
     });
 
     onCleanup(() => {
-      form!.cleanUp(props.name);
+      form!.cleanUp(props.name as any);
     });
 
     return form;

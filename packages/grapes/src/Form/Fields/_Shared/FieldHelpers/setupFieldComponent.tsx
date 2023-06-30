@@ -19,10 +19,12 @@ import { setupCommunicationWithFormContext } from './setupCommunicationWithFormC
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
 import { Key } from '../../../../_Shared/Types/Key';
+import { LeavesOfObject } from '../../../Types/LeavesOfObject';
 
 export function setupFieldComponent<
-  Props extends FieldProps<keyof OwnerFormValue>,
+  Props extends FieldProps<Leaves>,
   OwnerFormValue extends FormValue = FormValue,
+  Leaves extends LeavesOfObject<OwnerFormValue> = LeavesOfObject<OwnerFormValue>,
   ValueType extends FormFieldValue = FormFieldValue
 >(
   componentFunc: Component<Props>,
