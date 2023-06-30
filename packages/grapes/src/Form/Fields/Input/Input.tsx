@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -42,6 +42,12 @@ const Input = setupFieldComponent(
         valueS: [value, setValue],
         validate,
       } = useField()!;
+
+      createEffect(() => {
+        if (props.mask && typeof props.type !== 'undefined' && props.type === 'number') {
+          throw new Error(`Error with Input named ${props.name}: Cannot have a mask on a number input!`);
+        }
+      });
 
       return (
         <FieldInternalWrapper>

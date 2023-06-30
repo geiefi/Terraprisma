@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -40,6 +40,12 @@ const TextArea = setupFieldComponent(
         focusedS: [_focused, setFocused],
         validate,
       } = useField<string>()!;
+
+      createEffect(() => {
+        if (props.mask && typeof elProps.type !== 'undefined' && elProps.type === 'number') {
+          throw new Error(`Error with TextArea named ${props.name}: Cannot have a mask on a number text area!`);
+        }
+      });
 
       return (
         <FieldInternalWrapper>
