@@ -1,20 +1,12 @@
-import { Component, on, createEffect, createSignal, Show, Match, Switch } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import { Component, createSignal, Match, Switch } from 'solid-js';
 
 import { GrapeS } from 'grapes';
 
-import { Form, FormStore } from 'grapes/Form';
-import Validators from 'grapes/Form/Validators';
-import { Input, Select, Slider } from 'grapes/Form/Fields';
 import { Box, Button } from 'grapes/General';
-import { Tooltip } from 'grapes/DataDisplay';
 import { Stack, Container, Divisor } from 'grapes/Layout';
-import { Row, Col } from 'grapes/Layout/Grid';
 import { Steps, Step } from 'grapes/Navigation';
 import { FormProviderValue } from 'grapes/Form/FormContext';
 import { FormValue } from 'grapes/Form/Types/FormValue';
-import { GrowFade } from 'grapes/Transitions';
-import { createForm } from 'grapes/Form/Form';
 import PaymentMethod from './Steps/2-PaymentMethod';
 import Address from './Steps/1-Address';
 
