@@ -1,0 +1,15 @@
+.pagination-container {
+  width: 100%;
+
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+
+  margin-block: 5px;
+
+  button.rounded.small > span[class^="material-symbols-"], button {
+    font-size: 20px !important;
+    scale: 1 !important;
+    text-align: center;
+  }
+}
