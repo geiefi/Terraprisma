@@ -2,6 +2,6 @@ node_modules
 dist
 lib
 package-lock.json
-tsconfig.build.tsconfigbuildinfo
-*/tsconfig.build.tsconfigbuildinfo
-**/tsconfig.build.tsconfigbuildinfo
+tsconfig.build.tsbuildinfo
+*/tsconfig.build.tsbuildinfo
+**/tsconfig.build.tsbuildinfo
