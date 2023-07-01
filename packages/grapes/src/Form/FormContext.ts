@@ -98,7 +98,7 @@ function deepDelete(obj: any, path: string | string[]): void {
 export class FormProviderValue<
 T extends FormValue, 
 Values extends FormValue = Partial<T>,
-Leaves extends LeavesOfObject<Values> = LeavesOfObject<Values>,
+Leaves extends LeavesOfObject<T> = LeavesOfObject<T>,
 > {
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;

@@ -27,7 +27,7 @@ export interface FormProps<Value extends FormValue = FormValue> extends ParentPr
   formStore: [get: FormStore<Partial<Value>>, set: SetStoreFunction<FormStore<Partial<Value>>>],
   agnosticValidators?: AgnosticValidator[],
 
-  ref?: (val: FormProviderValue<Partial<Value>>) => void,
+  ref?: (val: FormProviderValue<Value>) => void,
 }
 
 export type Form<Value extends FormValue, Leaves extends LeavesOfObject<Value> = LeavesOfObject<Value>> = {
@@ -114,7 +114,7 @@ export function createForm<Value extends FormValue, Leaves extends LeavesOfObjec
   return form;
 }
 
-const Form = <Value extends FormValue = FormValue>(props: FormProps<Value>): JSX.Element => {
+const Form = <Value extends FormValue>(props: FormProps<Value>): JSX.Element => {
   let disposeChildren: () => void;
 
   // eslint-disable-next-line solid/reactivity
