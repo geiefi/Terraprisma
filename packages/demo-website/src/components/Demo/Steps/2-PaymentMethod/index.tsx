@@ -6,7 +6,7 @@ import { Box } from 'grapes/General';
 import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
 import { Col, Row } from 'grapes/Layout/Grid';
 import { Pagination } from 'grapes/Navigation';
-import { Component, Show } from 'solid-js';
+import { Component, Show, createSignal } from 'solid-js';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';
@@ -24,6 +24,8 @@ const PaymentMethod: Component<{
   const PaymentForm = createForm<PaymentFormValue>('PaymentForm', {
     paymentMethod: 'cartao-de-credito',
   });
+
+  const [page, setPage] = createSignal(5);
 
   return (
     <PaymentForm ref={props.ref}>
@@ -64,7 +66,7 @@ const PaymentMethod: Component<{
               </Table.Row>
             </Table>
 
-            <Pagination style={{ 'margin-left': 'auto' }} current={6} total={10} />
+            <Pagination style={{ 'margin-left': 'auto' }} current={page()} total={10} onChangePage={(newPage) => setPage(newPage)} />
           </Box>
 
           <Row>

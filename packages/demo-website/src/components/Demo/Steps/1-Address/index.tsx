@@ -1,11 +1,11 @@
-import { Component, on, createEffect, createSignal } from "solid-js";
+import { Component, on, createEffect, createSignal } from 'solid-js';
 
-import { createForm } from "grapes/Form/Form";
-import { FormProviderValue } from "grapes/Form/FormContext";
-import Validators from "grapes/Form/Validators";
-import { Col, Row } from "grapes/Layout/Grid";
-import { GrowFade } from "grapes/Transitions";
-import { Tooltip } from "grapes/DataDisplay";
+import { createForm } from 'grapes/Form/Form';
+import { FormProviderValue } from 'grapes/Form/FormContext';
+import Validators from 'grapes/Form/Validators';
+import { Col, Row } from 'grapes/Layout/Grid';
+import { GrowFade } from 'grapes/Transitions';
+import { Tooltip } from 'grapes/DataDisplay';
 
 export type AddressFormValue = {
   cidade: string;
@@ -19,25 +19,28 @@ export type AddressFormValue = {
 const Address: Component<{
   ref?: (formProviderValue: FormProviderValue<AddressFormValue>) => void;
 }> = (props) => {
-  const AddressForm = createForm<AddressFormValue>("AddressForm", {});
+  const AddressForm = createForm<AddressFormValue>('AddressForm', {});
 
   const [cepInput, setCEPInput] = createSignal<HTMLElement>();
   const [hoveringCEPInput, setHoveringCEPInput] = createSignal(false);
-  const [cepInputTooltipPosition, setCepInputTooltipPosition] = createSignal('bottom');
+  const [cepInputTooltipPosition, setCepInputTooltipPosition] =
+    createSignal('bottom');
 
-  createEffect(on(hoveringCEPInput, () => {
-    const rng = Math.random();
+  createEffect(
+    on(hoveringCEPInput, () => {
+      const rng = Math.random();
 
-    if (rng < 0.25) {
-      setCepInputTooltipPosition('left');
-    } else if (rng < 0.5) {
-      setCepInputTooltipPosition('top');
-    } else if (rng < 0.75) {
-      setCepInputTooltipPosition('right');
-    } else if (rng < 1) {
-      setCepInputTooltipPosition('bottom');
-    }
-  }));
+      if (rng < 0.25) {
+        setCepInputTooltipPosition('left');
+      } else if (rng < 0.5) {
+        setCepInputTooltipPosition('top');
+      } else if (rng < 0.75) {
+        setCepInputTooltipPosition('right');
+      } else if (rng < 1) {
+        setCepInputTooltipPosition('bottom');
+      }
+    })
+  );
 
   return (
     <AddressForm ref={props.ref}>
@@ -51,7 +54,11 @@ const Address: Component<{
           />
         </Col>
         <Col size={8}>
-          <AddressForm.Select name="uf" label="UF" validators={[Validators.required]}>
+          <AddressForm.Select
+            name="uf"
+            label="UF"
+            validators={[Validators.required]}
+          >
             <AddressForm.Select.Option value="pe">PE</AddressForm.Select.Option>
             <AddressForm.Select.Option value="mg">MG</AddressForm.Select.Option>
             <AddressForm.Select.Option value="pr">PR</AddressForm.Select.Option>
@@ -61,7 +68,11 @@ const Address: Component<{
         </Col>
 
         <Col size={16}>
-          <AddressForm.Input name="rua" label="Rua" validators={[Validators.required]} />
+          <AddressForm.Input
+            name="rua"
+            label="Rua"
+            validators={[Validators.required]}
+          />
         </Col>
         <Col size={8}>
           <AddressForm.Input

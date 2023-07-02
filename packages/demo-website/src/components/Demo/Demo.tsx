@@ -15,12 +15,12 @@ const Demo: Component = () => {
 
   const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
 
-  return (<GrapeS defaultThemeId='dark'>
+  return (<GrapeS defaultThemeId="dark">
     <Container
-      maxWidth='md'
+      maxWidth="md"
       style={{ height: '100vh' }}
-      horizontalAlign='center'
-      verticalAlign='center'
+      horizontalAlign="center"
+      verticalAlign="center"
     >
       <Box
         style={{
@@ -34,11 +34,11 @@ const Demo: Component = () => {
       >
         <Steps
           current={currentStep()}
-          identification='PassoAPassoDeCompra'
+          identification="PassoAPassoDeCompra"
         >
-          <Step description='endereço de entrega'>endereço</Step>
-          <Step description='dados de pagamento'>pagamento</Step>
-          <Step description='confirme a compra'>conclusão</Step>
+          <Step description="endereço de entrega">endereço</Step>
+          <Step description="dados de pagamento">pagamento</Step>
+          <Step description="confirme a compra">conclusão</Step>
         </Steps>
 
         <Divisor />
@@ -55,19 +55,20 @@ const Demo: Component = () => {
           </Match>
         </Switch>
 
-        <Stack style={{ 'margin-top': 'auto' }} direction='horizontal' align='space-between'>
+        <Stack style={{ 'margin-top': 'auto' }} direction="horizontal" align="space-between">
           <Button
             style={{
-              "border-radius": '7px',
+              'border-radius': '7px',
             }}
             onClick={() => setCurrentStep(currentStep() - 1)}
             disabled={currentStep() === 0}
           >Previous</Button>
           <Button
             style={{
-              "border-radius": '7px',
+              'border-radius': '7px',
             }}
             onClick={() => {
+              console.log(currentForm());
               const isValid = currentForm()?.validateAll();
               if (isValid) {
                 setCurrentStep(currentStep() + 1)
