@@ -3,7 +3,7 @@ import { For, Match, Show, Switch, createMemo } from 'solid-js';
 import { forwardNativeElementProps } from '../../Helpers';
 
 import { Button } from '../../General';
-import { ArrowBack, ArrowBackIos, ArrowBackIosNew, ArrowForward, ArrowForwardIos, MoreHoriz } from '../../Icons';
+import { ArrowBack, ArrowBackIos, ArrowBackIosNew, ArrowForward, ArrowForwardIos, AssignmentLate, MoreHoriz } from '../../Icons';
 
 import { mergeClass } from '../../_Shared/Utils';
 
@@ -26,14 +26,7 @@ export interface PaginationProps {
 
 const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
   (props, elProps) => {
-    const maximumAppearingChoices = createMemo(() => props.maximumAppearingChoices || 6);
-    const range = createMemo(() => {
-      const rng = [];
-      for (let i = 1; i <= maximumAppearingChoices() + 2; i++) {
-        rng.push(i);
-      }
-      return rng;
-    });
+    const maximumAppearingChoices = createMemo(() => props.maximumAppearingChoices || 5 - 2);
 
     const handleChangePage = (newPage: number, event: MouseEvent) => {
       if (typeof props.onChangePage === 'function') {
@@ -41,25 +34,39 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
       }
     };
 
-    const getIndexForCurrentPage = () => {
-      if (props.current < maximumAppearingChoices()) {
-        return props.current;
-      } else if (props.total - props.current < maximumAppearingChoices()) { // if its portion includes the first page
-        Return props.total - props.current;
-      } else {
-        return Math.floor(maximumAppearingChoices() / 2);
-      }
-    }
+    const range = createMemo(() => {
+      const pagesSurroundingCurrent: number[] = [];
+      const half = Math.floor(maximumAppearingChoices() / 2);
 
-    const PageNumber = (p: { index: number }) => (
+      for (let offset = -half; offset <= half; offset++) {
+        let pageNAtOffset = props.current + offset;
+
+        if (pageNAtOffset <= 0) {
+          pageNAtOffset = props.current + half + 1 - pageNAtOffset;
+        } else if (pageNAtOffset > props.total) {
+          pageNAtOffset = props.current - half - (pageNAtOffset - props.total);
+        }
+
+        if (pageNAtOffset > props.total || pageNAtOffset < 1) {
+          continue;
+        }
+
+        pagesSurroundingCurrent.push(pageNAtOffset);
+      }
+        return pagesSurroundingCurrent.sort((a,b) => a - b);
+    });
+
+    const PageNumber = (p: { pageN: number }) => (
       <Button.Icon
-        color={p.index === props.current ? 'primary' : undefined}
+        color={p.pageN === props.current ? 'primary' : undefined}
         size="small"
-        onClick={(e) => handleChangePage(p.index, e)}
+        onClick={(e) => handleChangePage(p.pageN, e)}
       >
-        {p.index}
+        {p.pageN}
       </Button.Icon>
     );
+
+    const Etc = () => <Button.Icon disabled size="small"> <MoreHoriz/> </Button.Icon>
 
     return <div {...elProps} class={mergeClass('pagination-container', elProps.class)}>
       <Button.Icon 
@@ -69,24 +76,22 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
         onClick={(e) => handleChangePage(props.current - 1, e)}
       > <ArrowBackIosNew /> </Button.Icon>
 
+      <Show when={!range().includes(1)}> <PageNumber pageN={1}/> </Show>
+
+      <Show when={!range().includes(2)}> <Etc/> </Show>
+
       <For each={range()}>{
-        (index) => (
-          <Switch>
-            <Match when={(!isInSamePortionAsCurrent(1) && index === 2) 
-              || (!isInSamePortionAsCurrent(props.total) && index === range().length - 1 )}>
-              <Button.Icon disabled size="small"> <MoreHoriz/> </Button.Icon>
-            </Match>
-            <Match when={isInSamePortionAsCurrent(index) || index === 1 || index === range().length}>
-              <PageNumber index={index}/>
-            </Match>
-          </Switch>
-        )
+        (pageN) => <PageNumber pageN={pageN}/>
       }</For>
+
+      <Show when={!range().includes(props.total - 1)}> <Etc/> </Show>
+
+      <Show when={!range().includes(props.total)}> <PageNumber pageN={props.total}/> </Show>
 
       <Button.Icon 
         class="next" 
         disabled={props.current === props.total}
-        onClick={(e) => handleChangePage(props.current - 1, e)}
+        onClick={(e) => handleChangePage(props.current + 1, e)}
         size="small"
       > <ArrowForwardIos /> </Button.Icon>
     </div>;
