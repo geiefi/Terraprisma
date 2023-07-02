@@ -1,9 +1,9 @@
-import { For, Match, Show, Switch, createMemo } from 'solid-js';
+import { For, Show, createMemo } from 'solid-js';
 
 import { forwardNativeElementProps } from '../../Helpers';
 
 import { Button } from '../../General';
-import { ArrowBack, ArrowBackIos, ArrowBackIosNew, ArrowForward, ArrowForwardIos, AssignmentLate, More, MoreHoriz } from '../../Icons';
+import { ArrowBackIosNew, ArrowForwardIos } from '../../Icons';
 
 import { mergeClass } from '../../_Shared/Utils';
 
@@ -17,7 +17,9 @@ export interface PaginationProps {
    * @description The maximum amount of page numbers that are visible at once.
    * These pages are shown based on the starting pages, ending pages and pages surrounding the current one.
    *
-   * @default 6 
+   * Mostly this should be a odd number since this component tries to center the current page.
+   *
+   * @default 5 
    */
   maximumAppearingChoices?: number;
 
