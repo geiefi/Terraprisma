@@ -3,7 +3,7 @@ import { For, Match, Show, Switch, createMemo } from 'solid-js';
 import { forwardNativeElementProps } from '../../Helpers';
 
 import { Button } from '../../General';
-import { ArrowBack, ArrowBackIos, ArrowBackIosNew, ArrowForward, ArrowForwardIos, AssignmentLate, MoreHoriz } from '../../Icons';
+import { ArrowBack, ArrowBackIos, ArrowBackIosNew, ArrowForward, ArrowForwardIos, AssignmentLate, More, MoreHoriz } from '../../Icons';
 
 import { mergeClass } from '../../_Shared/Utils';
 
@@ -41,10 +41,10 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
       for (let offset = -half; offset <= half; offset++) {
         let pageNAtOffset = props.current + offset;
 
-        if (pageNAtOffset <= 0) {
-          pageNAtOffset = props.current + half + 1 - pageNAtOffset;
-        } else if (pageNAtOffset > props.total) {
-          pageNAtOffset = props.current - half - (pageNAtOffset - props.total);
+        if (pageNAtOffset <= 1) {
+          pageNAtOffset = props.current + half + 2 - pageNAtOffset;
+        } else if (pageNAtOffset >= props.total) {
+          pageNAtOffset = props.current - half - 1 - (pageNAtOffset - props.total);
         }
 
         if (pageNAtOffset > props.total || pageNAtOffset < 1) {
@@ -66,7 +66,8 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
       </Button.Icon>
     );
 
-    const Etc = () => <Button.Icon disabled size="small"> <MoreHoriz/> </Button.Icon>
+    const Etc = () => 
+      <div class="etc-icon"> ... </div>;
 
     return <div {...elProps} class={mergeClass('pagination-container', elProps.class)}>
       <Button.Icon 

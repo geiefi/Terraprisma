@@ -7,6 +7,12 @@
 
   margin-block: 5px;
 
+  .etc-icon {
+    align-self: self-end;
+    padding-bottom: 6px;
+    user-select: none;
+  }
+
   button.rounded.small > span[class^="material-symbols-"], button {
     font-size: 20px !important;
     scale: 1 !important;
