@@ -61,6 +61,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
     const PageNumber = (p: { pageN: number }) => (
       <Button.Icon
         color={p.pageN === props.current ? 'primary' : undefined}
+        class="page-number"
         size="small"
         onClick={(e) => handleChangePage(p.pageN, e)}
       >

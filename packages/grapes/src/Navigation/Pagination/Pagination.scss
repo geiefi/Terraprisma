@@ -13,9 +13,14 @@
     user-select: none;
   }
 
-  button.rounded.small > span[class^="material-symbols-"], button {
-    font-size: 20px !important;
-    scale: 1 !important;
-    text-align: center;
+  button.page-number.rounded.small {
+    font-weight: 700;
+    font-size: 16px;
+
+    & > span[class^="material-symbols-"], button {
+      font-size: 20px !important;
+      scale: 1 !important;
+      text-align: center;
+    }
   }
 }
