@@ -66,7 +66,12 @@ const PaymentMethod: Component<{
               </Table.Row>
             </Table>
 
-            <Pagination style={{ 'margin-left': 'auto' }} current={page()} total={10} onChangePage={(newPage) => setPage(newPage)} />
+            <Pagination 
+              style={{ 'margin-left': 'auto' }} 
+              current={page()} 
+              total={10} 
+              onChangePage={(newPage) => setPage(newPage)} 
+            />
           </Box>
 
           <Row>

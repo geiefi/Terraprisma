@@ -214,8 +214,9 @@ Maybe you forgot to initialize it?`);
     */
   validateAll(): boolean {
     this.setForm(produce(form => {
-      const fields: string[] = getLeaves(form.validators);
-      const errors: Partial<Record<keyof Values, string[]>> = {};
+      // the validators just use the field paths for more usability
+      const fields = Object.keys(form.validators) as Leaves[];
+      const errors: Partial<Record<Leaves, string[]>> = {};
 
       fields.forEach(field => {
         if (this.isDisabled(field as any)) return;

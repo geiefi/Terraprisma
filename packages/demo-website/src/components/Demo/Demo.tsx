@@ -68,7 +68,6 @@ const Demo: Component = () => {
               'border-radius': '7px',
             }}
             onClick={() => {
-              console.log(currentForm());
               const isValid = currentForm()?.validateAll();
               if (isValid) {
                 setCurrentStep(currentStep() + 1)
