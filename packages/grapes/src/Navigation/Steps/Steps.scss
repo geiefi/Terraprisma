@@ -18,6 +18,7 @@
         max-width: 100%;
         font-size: 14px;
         margin: 0;
+        white-space: nowrap; 
         transition: .4s;
         color: var(--text-2);
       }
@@ -141,7 +142,7 @@
       content: '';
       position: absolute;
       top: 50%;
-      /*    this variable is set by SolidJS and then used here */
+        /*    this variable is set by SolidJS and then used here */
       left: calc(var(--step-content-width) + 10px);
       width: calc(100% - var(--step-content-width) - 20px);
       height: 3px;
