@@ -1,9 +1,8 @@
-<p align="center">
-  <h1 align="center">GrapeS</h1>
-  <span align="center">
-    When useful meets pleasant
-  </span>
-</p>
+<h1 align="center">GrapeS</h1>
+
+<span align="center">
+  When useful meets pleasant
+</span>
 
 <p align="center">
   <img 
