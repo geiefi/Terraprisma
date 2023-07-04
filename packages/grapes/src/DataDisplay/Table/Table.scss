@@ -1,5 +1,7 @@
-.grapes-table-box {
+.grapes-table-box.box {
   padding: 0;
+  padding-inline: 0;
+  padding-block: 0;
   margin-block: 15px;
 
   border: 1px solid var(--gray-5);
