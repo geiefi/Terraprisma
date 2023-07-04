@@ -1,6 +1,6 @@
 <p align="center">
   <img
-    src="./readme header.png"
+    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/readme%20header.png"
     alt="header"
   />
 </p>
