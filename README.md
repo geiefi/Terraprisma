@@ -1,9 +1,5 @@
 <h1 align="center">GrapeS</h1>
 
-<span align="center">
-  When useful meets pleasant
-</span>
-
 <p align="center">
   <img 
     src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png" 
