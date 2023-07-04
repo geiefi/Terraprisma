@@ -1,12 +1,12 @@
 import { Component, createSignal, Match, Switch } from 'solid-js';
 
-import { GrapeS } from 'grapes';
+import { GrapeS } from 'grapos';
 
-import { Box, Button } from 'grapes/General';
-import { Stack, Container, Divisor } from 'grapes/Layout';
-import { Steps, Step } from 'grapes/Navigation';
-import { FormProviderValue } from 'grapes/Form/FormContext';
-import { FormValue } from 'grapes/Form/Types/FormValue';
+import { Box, Button } from 'grapos/General';
+import { Stack, Container, Divisor } from 'grapos/Layout';
+import { Steps, Step } from 'grapos/Navigation';
+import { FormProviderValue } from 'grapos/Form/FormContext';
+import { FormValue } from 'grapos/Form/Types/FormValue';
 import PaymentMethod from './Steps/2-PaymentMethod';
 import Address from './Steps/1-Address';
 

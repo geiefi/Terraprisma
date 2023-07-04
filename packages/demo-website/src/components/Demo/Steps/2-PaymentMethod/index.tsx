@@ -1,11 +1,11 @@
-import { Table } from 'grapes/DataDisplay';
-import { createForm } from 'grapes/Form/Form';
-import { FormProviderValue } from 'grapes/Form/FormContext';
-import Validators from 'grapes/Form/Validators';
-import { Box } from 'grapes/General';
-import { BarcodeScanner, CreditCard, QrCode } from 'grapes/Icons';
-import { Col, Row } from 'grapes/Layout/Grid';
-import { Pagination } from 'grapes/Navigation';
+import { Table } from 'grapos/DataDisplay';
+import { createForm } from 'grapos/Form/Form';
+import { FormProviderValue } from 'grapos/Form/FormContext';
+import Validators from 'grapos/Form/Validators';
+import { Box } from 'grapos/General';
+import { BarcodeScanner, CreditCard, QrCode } from 'grapos/Icons';
+import { Col, Row } from 'grapos/Layout/Grid';
+import { Pagination } from 'grapos/Navigation';
 import { Component, Show, createSignal } from 'solid-js';
 
 export type PaymentFormValue = {

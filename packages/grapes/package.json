@@ -1,14 +1,20 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
-  "name": "grapes",
-  "version": "0.0.1",
+  "name": "grapos",
+  "version": "0.1.0-1",
   "type": "module",
   "main": "lib/index.js",
-  "description": "",
+  "description": "A flexible and fun to use Material Design-basd SolidJS component library",
   "license": "MIT",
+  "keywords": ["ui", "components", "solid", "solidjs", 
+    "solid-js", "typesafe", "material", "material design", "flexible components"],
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
     "lint": "eslint . --ext .ts,.tsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielmfern/grapes.git"
   },
   "devDependencies": {
     "@types/tinycolor2": "^1.4.3",
@@ -33,5 +39,10 @@
   "publishConfig": {
     "directory": "lib"
   },
+  "bugs": {
+    "url": "https://github.com/gabrielmfern/grapes/issues"
+  },
+  "readme": "https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/README.md",
+  "homepage": "https://github.com/gabrielmfern/grapes#readme",
   "author": "Gabriel Miranda"
 }
