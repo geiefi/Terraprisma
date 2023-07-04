@@ -18,8 +18,8 @@ const Row: Component<RowProps> = (allProps) => {
     class={mergeClass('row', elProps.class)}
     classList={elProps.classList}
     style={{ 
-      gap: props.gap, 
-      'row-gap': props.rowGap,
+      '--gap': props.gap, 
+      '--row-gap': props.rowGap,
       ...elProps.style
     }}
   >

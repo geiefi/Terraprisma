@@ -12,6 +12,7 @@ const Col: Component<ColProps> = (allProps) => {
 
   return <div 
     {...elProps}
+    class="col"
     style={{ 
       width: `${props.size / 24 * 100}%`,
       ...elProps.style

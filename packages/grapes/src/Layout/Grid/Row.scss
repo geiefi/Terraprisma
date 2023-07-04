@@ -2,4 +2,9 @@
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+
+  .col {
+    padding-block: var(--row-gap);
+    padding-inline: var(--gap);
+  }
 }
