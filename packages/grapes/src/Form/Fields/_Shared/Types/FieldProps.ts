@@ -11,6 +11,8 @@ export const FieldPropKeys: (keyof FieldProps<Key>)[] = [
   'value',
   'validators',
   'disabled',
+  'focused',
+  'validateOnStartup',
   'helperText',
   'errorsStore'
 ];
@@ -64,6 +66,21 @@ export interface FieldProps<FormFieldKeys extends Key> {
     * This is propagated above inside a Form so it is accessible through the Form's store.
     */
   disabled?: boolean;
+  
+  /**
+    * @description Weather or not the current field is focused. 
+    * For some fields this is currently ignored, since they can't really be focused.
+    *
+    * @default false
+    */
+  focused?: boolean;
+
+  /**
+    * @description Weather or not the validation should take place on startup of the field.
+    *
+    * @default false
+    */
+  validateOnStartup?: boolean;
 
   /**
    * @description Defines a value that will override the current value of the state of the Field.

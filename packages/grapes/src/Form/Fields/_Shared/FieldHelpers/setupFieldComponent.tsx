@@ -1,8 +1,10 @@
 import {
   Component,
   Signal,
+  createEffect,
   createMemo,
   createSignal,
+  onMount,
   splitProps,
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
@@ -63,7 +65,16 @@ export function setupFieldComponent<
     );
 
     const disabledSignal = setupFieldsDisabledSignal(props, form);
+    // eslint-disable-next-line solid/reactivity
     const [focused, setFocused] = createSignal<boolean>(false);
+
+    createEffect(() => setFocused(props.focused || false));
+
+    onMount(() => {
+      if (props.validateOnStartup) {
+        validate(value());
+      }
+    });
 
     return (
       <FieldContext.Provider

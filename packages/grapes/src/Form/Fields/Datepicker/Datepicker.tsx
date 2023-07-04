@@ -278,7 +278,7 @@ const Datepicker = setupFieldComponent(
               setDatepickerSelectionType('day');
             }
           },
-          { defer: true }
+          { defer: true } 
         )
       );
 
@@ -338,7 +338,7 @@ const Datepicker = setupFieldComponent(
       createEffect(
         on(value, () => {
           setFocused(false);
-        })
+        }, { defer: true })
       );
 
       const monthNames = [
@@ -458,6 +458,9 @@ const Datepicker = setupFieldComponent(
 
                 <Row class="dropdown-content">
                   <Switch>
+                    <Match when={typeof value() === 'undefined'}>
+                      ...
+                    </Match>
                     <Match when={datepickerSelectionType() === 'day'}>
                       <DatepickerInternalDayPicker
                         year={viewedYear()}
