@@ -1,5 +1,6 @@
 .stack {
   display: flex;
+  flex-wrap: wrap;
 
   &.full-width {
     width: 100%;
