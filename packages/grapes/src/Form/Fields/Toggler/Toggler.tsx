@@ -51,7 +51,7 @@ const Toggler = setupFieldComponent(
               class={elProps.class}
               classList={{
                 on: value() === true,
-                off: value() === false,
+                off: value() === false || typeof value() === 'undefined',
 
                 disabled: disabled(),
 
