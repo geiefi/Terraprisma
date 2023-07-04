@@ -1,11 +1,12 @@
-<p align="center">
-  <p align="center" style="font-size: 48px; margin: 0;">GrapeS</p>
-  <p align="center" style="color: #9b66d9; font-size: 8px; font-weight: bolder">When useful meets pleasant</p>
-</p>
+<h1 align="center">GrapeS</h1>
+
+<span align="center">
+  When useful meets pleasant
+</span>
 
 <p align="center">
   <img 
-    src="./Components showcase.png" 
+    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png" 
     style="border: 2px solid #5B5858; border-radius: 5px;" 
     width="600px" 
     alt="components showcase"
