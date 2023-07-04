@@ -15,8 +15,8 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "grapos": ["../grapes/src"],
-      "grapos/*": ["../grapes/src/*"],
+      "grapos": ["../grapos/src"],
+      "grapos/*": ["../grapos/src/*"],
       "~/*": ["./src/*"]
     }
   },
