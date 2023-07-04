@@ -22,6 +22,6 @@
   },
   "includes": ["src"],
   "references": [
-    { "path": "../grapes/tsconfig.build.json" }
+    { "path": "../grapos/tsconfig.build.json" }
   ]
 }
