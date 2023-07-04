@@ -18,7 +18,7 @@ const Demo: Component = () => {
   return (<GrapeS defaultThemeId="dark">
     <Container
       maxWidth="md"
-      style={{ height: '100vh' }}
+      style={{ 'min-height': '100vh' }}
       horizontalAlign="center"
       verticalAlign="center"
     >
