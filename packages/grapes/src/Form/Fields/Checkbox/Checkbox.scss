@@ -45,6 +45,17 @@
     background: var(--color);
   }
 
+  &.disabled .checkbox-internal {
+    opacity: 0.3;
+    --color: var(--gray-5);
+    filter: brightness(95%);
+    cursor: default;
+
+    & + .checked-icon {
+      color: var(--gray-0);
+    }
+  }
+
   & .checkbox-internal {
     display: block;
 
@@ -82,16 +93,6 @@
       user-drag: none;
 
       transform: translate(-50%, -50%);
-    }
-
-    &.disabled {
-      opacity: 0.3;
-      --color: var(--gray-5);
-      filter: brightness(95%);
-
-      & + .checked-icon {
-        color: var(--gray-0);
-      }
     }
   }
 }

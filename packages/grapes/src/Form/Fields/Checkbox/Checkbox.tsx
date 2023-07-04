@@ -78,7 +78,7 @@ const Checkbox = setupFieldComponent(
             onMouseLeave={() => setFocused(false)}
           >
             <ClickableSignalizer
-              show={focused()}
+              show={focused() && !disabled()}
               color={value() ? `var(--${color()})` : undefined}
             >
               <Ripple class="checkbox-internal" color={color()} center>

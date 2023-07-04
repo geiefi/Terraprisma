@@ -1,4 +1,4 @@
-import { JSX, createEffect, onMount } from 'solid-js';
+import { JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
