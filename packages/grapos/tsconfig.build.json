@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": "src",
-    "experimentalDecorators": true
+    "rootDir": "src"
   },
   "exclude": ["src/**/*.test.*"],
   "extends": "./tsconfig.json",

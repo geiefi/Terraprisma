@@ -3,7 +3,7 @@
   "name": "grapos",
   "version": "0.1.0-4",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "lib/index.jsx",
   "description": "A flexible and fun to use Material Design-basd SolidJS component library",
   "license": "MIT",
   "keywords": ["ui", "components", "solid", "solidjs", 

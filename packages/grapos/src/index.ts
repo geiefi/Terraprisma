@@ -1,2 +1,0 @@
-export { GrapeS } from './GrapeS';
-
