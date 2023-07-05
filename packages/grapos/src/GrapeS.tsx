@@ -26,7 +26,7 @@ declare global {
   function dbg<T = any>(el: T): T;
 }
 
-const _global = (window /* browser */ || global /* node */) as any
+const _global = typeof window !== 'undefined' ? window : global;
 /**
   * @description `console.log`'s the `el` then returns it
   *
