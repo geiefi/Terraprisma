@@ -1,21 +1,21 @@
 // @refresh reload
+import { GrapeS } from 'grapos';
 import { onMount, Suspense } from 'solid-js';
 import {
   Body,
   ErrorBoundary,
+  FileRoutes,
   Head,
   Html,
   Meta,
+  Routes,
   Scripts,
   Title,
 } from 'solid-start';
 
-import Demo from './components/Demo/Demo';
-import DesignShowcase from './components/DesignShowcase';
-// import DemoWithVerticalSteps from "./components/DemoWithVerticalSteps/DemoWithVerticalSteps";
-// import FieldsWithoutForms from "./components/FieldsWithoutForms/FieldsWithoutForms";
-
 import { onLCP, onFID, onCLS } from 'web-vitals';
+
+import '../../grapos/src/GrapeS.scss';
 
 export default function Root() {
   onMount(() => {
@@ -34,10 +34,11 @@ export default function Root() {
       <Body style={{ margin: 0 }}>
         <Suspense>
           <ErrorBoundary>
-            <DesignShowcase/>
-            {/*<FieldsWithoutForms/>*/}
-            {/* <Demo /> */}
-            {/*<DemoWithVerticalSteps/>*/}
+            <GrapeS defaultThemeId="dark">
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </GrapeS>
           </ErrorBoundary>
         </Suspense>
         <Scripts />

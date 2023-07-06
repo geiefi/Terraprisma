@@ -1,21 +1,20 @@
 import { Component, createSignal, Match, Switch } from 'solid-js';
 
-import { GrapeS } from 'grapos';
-
 import { Box, Button } from 'grapos/General';
 import { Stack, Container, Divisor } from 'grapos/Layout';
 import { Steps, Step } from 'grapos/Navigation';
 import { FormProviderValue } from 'grapos/Form/FormContext';
 import { FormValue } from 'grapos/Form/Types/FormValue';
-import PaymentMethod from './Steps/2-PaymentMethod';
-import Address from './Steps/1-Address';
+
+import Address from '../components/DemoSteps/1-Address';
+import PaymentMethod from '../components/DemoSteps/2-PaymentMethod';
 
 const Demo: Component = () => {
   const [currentStep, setCurrentStep] = createSignal<number>(1);
 
   const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
 
-  return (<GrapeS defaultThemeId="dark">
+  return (
     <Container
       maxWidth="md"
       style={{ 'min-height': '100vh' }}
@@ -78,7 +77,7 @@ const Demo: Component = () => {
         </Stack>
       </Box>
     </Container>
-  </GrapeS>);
+  );
 };
 
 export default Demo;
