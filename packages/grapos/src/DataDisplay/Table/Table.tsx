@@ -86,7 +86,8 @@ const Column = forwardNativeElementProps<TableColumnProps, HTMLTableCellElement>
         'align-right': props.align === 'right',
         'align-center': props.align === 'center',
       }}
-    >{props.children}</Dynamic>;
+      children={props.children}
+    />;
   },
   ['align', 'children']
 );

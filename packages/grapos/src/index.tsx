@@ -1,1 +1,3 @@
-export { GrapeS } from './GrapeS';
+import GrapeS, { useTheme } from './GrapeS';
+
+export { GrapeS, useTheme };

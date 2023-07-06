@@ -1,6 +1,5 @@
 import {
   Accessor,
-  Component,
   createContext,
   createEffect,
   createMemo,
@@ -45,10 +44,10 @@ _global.dbg = function<T = any>(el: T): T {
  *
  * If there is no default theme, the first custom theme is used or `GrapeSLightTheme` is used.
  */
-export const GrapeS: Component<ParentProps<{
+export default function GrapeS(props: ParentProps<{
   themes?: Theme[];
   defaultThemeId?: string;
-}>> = (props) => {
+}>) {
   const hasCustomThemes = createMemo(() => props.themes && props.themes.length >= 1);
 
   const [themeId, setThemeId] = createSignal<string>(props.defaultThemeId || (
@@ -118,7 +117,7 @@ export const GrapeS: Component<ParentProps<{
       {props.children}
     </div>
   </GrapeSContext.Provider>;
-};
+}
 
 /**
  * @description Gets access to the global metadata regarding the current theme
