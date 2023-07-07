@@ -10,7 +10,7 @@
     "solid-js", "typesafe", "material", "material design", "flexible components"],
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
-    "publish": "npm run build && npm publish",
+    "prepublish": "npm run build",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "repository": {
