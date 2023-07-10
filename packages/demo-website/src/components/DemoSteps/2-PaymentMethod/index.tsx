@@ -99,7 +99,6 @@ const PaymentMethod: Component<{
               <PaymentForm.Input
                 name="creditCardDetails.displayedName"
                 label="nome impresso"
-                type="number"
                 validators={[Validators.required]}
               />
             </Col>
