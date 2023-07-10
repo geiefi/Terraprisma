@@ -9,10 +9,13 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
+  ssr: {
+    noExternal: ['grapos'],
+  },
   resolve: {
     alias: {
       '~': resolve(__dirname, 'src'),
-      'grapos': resolve(__dirname, '../grapos/lib'),
+      'grapos': resolve(__dirname, '../grapos/src'),
     }
   }
 });

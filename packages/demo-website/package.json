@@ -23,9 +23,10 @@
     "web-vitals": "^3.3.2"
   },
   "dependencies": {
+    "@solid-devtools/overlay": "^0.27.3",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
-    "grapos": "^0.1.0-2",
+    "grapos": "^0.0.5",
     "solid-js": "^1.7.2",
     "solid-start": "^0.2.26",
     "undici": "^5.15.1"
