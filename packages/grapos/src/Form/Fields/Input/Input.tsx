@@ -22,8 +22,6 @@ export type InputOnChangeEvent = Event & {
 };
 
 export interface InputProps<FormFieldKeys extends Key> extends MaskedFieldProps<FormFieldKeys> {
-  type?: 'text' | 'number' | 'email' | 'password';
-
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -44,7 +42,7 @@ const Input = setupFieldComponent(
       } = useField()!;
 
       createEffect(() => {
-        if (props.mask && typeof props.type !== 'undefined' && props.type === 'number') {
+        if (props.mask && typeof elProps.type !== 'undefined' && elProps.type === 'number') {
           throw new Error(`Error with Input named ${props.name}: Cannot have a mask on a number input!`);
         }
       });
@@ -59,22 +57,24 @@ const Input = setupFieldComponent(
             <input
               {...elProps}
               id={id()}
-              value={(value() || '').toString()}
-              type={props.type || 'text'}
               disabled={disabled()}
               class={mergeClass('input', elProps.class)}
               classList={{
                 'no-label': typeof props.label === 'undefined',
               }}
+              value={(value() || '') as string}
               onInput={mergeCallbacks(
-                elProps.onInput as any,
+                elProps.onInput as any, 
                 props.mask ? createInputMask(props.mask) : undefined,
                 (event: InputEvent & { target: HTMLInputElement, currentTarget: HTMLInputElement }) => {
+                  const ref = event.currentTarget || event.target;
                   if (props.onChange) {
-                    props.onChange(event.currentTarget.value, event);
+                    props.onChange(ref.value, event);
                   }
 
-                  setValue(event.currentTarget.value);
+                  setValue(ref.value);
+                  // eslint-disable-next-line no-self-assign
+                  ref.value = ref.value;
                 }
               )}
               onFocus={mergeCallbacks(elProps.onFocus as any, () =>
@@ -89,7 +89,7 @@ const Input = setupFieldComponent(
         </FieldInternalWrapper>
       );
     },
-    ['type', 'mask', 'label', 'helperText', 'color', 'onChange', ...MaskedFieldPropsKeys]
+    ['mask', 'label', 'helperText', 'color', 'onChange', ...MaskedFieldPropsKeys]
   )
 );
 
