@@ -22,7 +22,7 @@ export type GrapeSThemesProviderValue = {
 const GrapeSContext = createContext<GrapeSThemesProviderValue>();
 
 declare global {
-  function dbg<T = any>(el: T): T;
+  function dbg<T = any>(el: T, context?: string): T;
 }
 
 const _global = typeof window !== 'undefined' ? window : global;
@@ -31,8 +31,8 @@ const _global = typeof window !== 'undefined' ? window : global;
   *
   * This function is inspired in Rust's `dbg!` macro.
   */
-_global.dbg = function<T = any>(el: T): T {
-  console.log(el);
+_global.dbg = function<T = any>(el: T, context?: string): T {
+  console.log(`${context}: ${el}`);
   return el;
 }
 
