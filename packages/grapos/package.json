@@ -1,13 +1,22 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "grapos",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "main": "index.jsx",
   "description": "A flexible and fun to use Material Design-basd SolidJS component library",
   "license": "MIT",
-  "keywords": ["ui", "components", "solid", "solidjs", 
-    "solid-js", "typesafe", "material", "material design", "flexible components"],
+  "keywords": [
+    "ui",
+    "components",
+    "solid",
+    "solidjs",
+    "solid-js",
+    "typesafe",
+    "material",
+    "material design",
+    "flexible components"
+  ],
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
     "prepublish": "npm run build && cp package.json lib/package.json",
@@ -33,7 +42,7 @@
     "@solid-primitives/input-mask": "^0.2.0",
     "@solid-primitives/mutation-observer": "^1.1.13",
     "material-symbols": "^0.5.5",
-    "solid-js": "^1.7.2",
+    "solid-js": "^1.7.8",
     "solid-transition-group": "^0.2.2",
     "tinycolor2": "^1.6.0"
   },
