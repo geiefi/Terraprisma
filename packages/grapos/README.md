@@ -1,16 +1,13 @@
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/readme%20header.png"
+    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/grapos.png"
     alt="header"
   />
 </p>
 
----
-
 <p align="center">
   <img 
     src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png" 
-    width="400px" 
     alt="components showcase"
   />
 </p>

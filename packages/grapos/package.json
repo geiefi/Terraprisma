@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "grapos",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "main": "index.jsx",
   "description": "A flexible and fun to use Material Design-basd SolidJS component library",
@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
-    "prepublish": "npm run build && cp package.json lib/package.json",
+    "prepublish": "npm run build && cp package.json lib/package.json && cp ../../README.md README.md",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "repository": {
