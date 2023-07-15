@@ -10,7 +10,7 @@ import { Tooltip } from 'grapos/DataDisplay';
 export type AddressFormValue = {
   cidade: string;
   rua: string;
-  uf: string;
+  uf: 'pe' | 'mg';
   numero: number;
   cep: string;
   bairro: string;

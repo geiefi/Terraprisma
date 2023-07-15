@@ -10,6 +10,7 @@ import { FieldValidator } from './Types/FieldValidator';
 import { FormValue } from './Types/FormValue';
 import { LeavesOfObject } from './Types/LeavesOfObject';
 import { DeepGet } from './Types/DeepGet';
+import { EmptyObj } from '../_Shared/Types/EmptyObj';
 
 export class FormError extends Error { }
 
@@ -98,7 +99,8 @@ function deepDelete(obj: any, path: string | string[]): void {
 export class FormProviderValue<
 T extends FormValue, 
 Values extends FormValue = Partial<T>,
-Leaves extends LeavesOfObject<T> | string = T extends {} ? string : LeavesOfObject<T>,
+Leaves extends T extends EmptyObj ? string : LeavesOfObject<T> 
+  = T extends EmptyObj ? string : LeavesOfObject<T>,
 > {
   private form: FormStore<Values>;
   private setForm: Setter<FormStore<Values>>;
