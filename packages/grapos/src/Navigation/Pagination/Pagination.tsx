@@ -63,7 +63,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
         color={p.pageN === props.current ? 'primary' : undefined}
         class="page-number"
         size="small"
-        onClick={(e) => handleChangePage(p.pageN, e)}
+        onClick={(e: MouseEvent) => handleChangePage(p.pageN, e)}
       >
         {p.pageN}
       </Button.Icon>
@@ -77,7 +77,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
         class="back" 
         disabled={props.current === 1}
         size="small"
-        onClick={(e) => handleChangePage(props.current - 1, e)}
+        onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
       > <ArrowBackIosNew /> </Button.Icon>
 
       <Show when={!range().includes(1)}> <PageNumber pageN={1}/> </Show>
@@ -95,7 +95,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
       <Button.Icon 
         class="next" 
         disabled={props.current === props.total}
-        onClick={(e) => handleChangePage(props.current + 1, e)}
+        onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
         size="small"
       > <ArrowForwardIos /> </Button.Icon>
     </div>;
@@ -104,4 +104,3 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
 )
 
 export default Pagination;
-

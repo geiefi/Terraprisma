@@ -2,19 +2,21 @@ import { Accessor, Signal, createContext, useContext } from 'solid-js';
 
 import { Store } from '../../../../Helpers';
 import { FieldInternalValidate } from './setupValidateFunction';
+import { FieldName, FieldProps } from '../Types/FieldProps';
+import { FormValue } from '../../../Types/FormValue';
+import { EmptyObj } from '../../../../_Shared/Types/EmptyObj';
 import { FormFieldValue } from '../../../Types/FormFieldValue';
-import { FieldProps } from '../Types/FieldProps';
-import { Key } from '../../../../_Shared/Types/Key';
 
 export interface FieldProviderValue<
-  ValueType extends FormFieldValue = FormFieldValue
+  Value extends FormFieldValue,
+  OwnerFormValue extends FormValue = FormValue,
 > {
-  fieldProps: FieldProps<Key>;
+  fieldProps: FieldProps<OwnerFormValue> & { name: FieldName<OwnerFormValue> };
 
   elementId: Accessor<string>;
 
   errorsT: Store<string[]>;
-  valueS: Signal<ValueType | undefined>;
+  valueS: Signal<Value | undefined>;
   disabledS: Signal<boolean>;
   focusedS: Signal<boolean>;
 
@@ -24,8 +26,11 @@ export interface FieldProviderValue<
   validate: FieldInternalValidate;
 }
 
-export const FieldContext = createContext<FieldProviderValue>();
+export const FieldContext = createContext<FieldProviderValue<any>>();
 
-export function useField<ValueType extends FormFieldValue = FormFieldValue>() {
-  return useContext(FieldContext) as FieldProviderValue<ValueType> | undefined;
+export function useField<
+  Value extends FormFieldValue = FormFieldValue,
+  OwnerFormValue extends FormValue = EmptyObj,
+>() {
+  return useContext(FieldContext) as FieldProviderValue<Value, OwnerFormValue> | undefined;
 }

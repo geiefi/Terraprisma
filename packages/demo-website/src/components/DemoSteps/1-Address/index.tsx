@@ -60,6 +60,7 @@ const Address: Component<{
           <AddressForm.Select
             name="uf"
             label="UF"
+            value="efwqfe"
             validators={[Validators.required]}
           >
             <AddressForm.Select.Option value="pe">PE</AddressForm.Select.Option>

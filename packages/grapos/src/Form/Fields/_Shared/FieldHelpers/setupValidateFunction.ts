@@ -9,9 +9,9 @@ import { FieldProps } from '../Types/FieldProps';
 export type FieldInternalValidate = (value: FormFieldValue) => string[] | undefined;
 
 export function setupValidateFunction<
-  T extends FieldProps<any, K>,
-  K extends FormValue = FormValue
->(props: T, setErrors: Setter<string[]>, form: FormProviderValue<K> | undefined): FieldInternalValidate {
+  Props extends FieldProps<OwnerFormValue>,
+  OwnerFormValue extends FormValue
+>(props: Props, setErrors: Setter<string[]>, form: FormProviderValue<OwnerFormValue> | undefined): FieldInternalValidate {
   if (typeof form !== 'undefined') {
     createEffect(() => {
       setErrors(form.getErrors(props.name) || []);

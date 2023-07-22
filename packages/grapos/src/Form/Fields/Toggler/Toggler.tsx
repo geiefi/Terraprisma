@@ -12,7 +12,7 @@ import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { forwardNativeElementProps } from '../../../Helpers';
 
-export interface TogglerProps<OwnerFormValue extends FormValue = {}> extends FieldProps<boolean, OwnerFormValue> {
+export interface TogglerProps<OwnerFormValue extends FormValue = FormValue> extends FieldProps<OwnerFormValue> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';

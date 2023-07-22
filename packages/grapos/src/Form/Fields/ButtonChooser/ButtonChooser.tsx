@@ -117,7 +117,7 @@ const ButtonChooser = setupFieldComponent(
                     active: opt.value === value(),
                     ...opt.classList,
                   }}
-                  onClick={(event) => {
+                  onClick={(event: MouseEvent) => {
                     setValue(opt.value);
 
                     if (props.onChange) {

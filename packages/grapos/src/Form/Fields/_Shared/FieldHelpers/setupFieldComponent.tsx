@@ -14,7 +14,7 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FieldContext } from './FieldContext';
 import { FormValue } from '../../../Types/FormValue';
 
-import { FieldPropKeys, FieldProps } from '../Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../Types/FieldProps';
 
 import { setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
@@ -22,20 +22,24 @@ import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
 
 export function setupFieldComponent<
-  MProps extends FieldProps,
-  AllowedValues extends FormFieldValue = FormFieldValue,
+  BaseValueType extends FormFieldValue,
+
+  MProps extends FieldProps<OwnerFormValue>,
+  OwnerFormValue extends FormValue,
 >(
   componentFunc: Component<MProps>,
-  initialValueParam: AllowedValues | ((props: MProps) => AllowedValues) = '' as any
+  initialValueParam: BaseValueType | ((props: MProps) => BaseValueType) = '' as any
 ) {
   return <
-  OwnerFormValue extends FormValue = {}, 
-  Props extends FieldProps<AllowedValues, OwnerFormValue> = MProps & FieldProps<AllowedValues, OwnerFormValue>
+    Name extends FieldName<OwnerFormValue>,
+    Props extends MProps & FieldProps<OwnerFormValue, Name> = MProps & FieldProps<OwnerFormValue, Name>,
   >(props: Props) => {
     // eslint-disable-next-line solid/reactivity
     const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
-    const initialValue = typeof initialValueParam === 'function' ? initialValueParam(props as unknown as MProps) : initialValueParam;
+    const initialValue = typeof initialValueParam === 'function'
+      ? initialValueParam(props as unknown as MProps)
+      : initialValueParam;
 
     const form = setupCommunicationWithFormContext<Props, OwnerFormValue>(
       props,
@@ -43,19 +47,22 @@ export function setupFieldComponent<
     );
     const [value, setValue] = setupFieldsValueSignal<
       Props,
-      OwnerFormValue,
-      AllowedValues
+      BaseValueType,
+      OwnerFormValue
     >(
       props,
       form,
       initialValue
     );
-    const validate = setupValidateFunction(props, setErrors, form);
+    const validate = setupValidateFunction<
+      Props,
+      OwnerFormValue
+    >(props, setErrors, form);
 
     const id = createMemo(() =>
       form
-        ? `field-${form.identification()}-${props.name.toString()}`
-        : `field-${props.name.toString()}`
+        ? `field-${form.identification()}-${props.name}`
+        : `field-${props.name}`
     );
 
     const hasContent = createMemo(() => (value() || '').toString().length > 0);
@@ -88,7 +95,7 @@ export function setupFieldComponent<
           fieldProps: splitProps(
             props,
             FieldPropKeys
-          )[0] as unknown as FieldProps,
+          )[0] as unknown as FieldProps<OwnerFormValue> & { value: FormFieldValue },
 
           hasContent,
           hasErrors,

@@ -3,12 +3,13 @@ import { Accessor, createEffect, createMemo, createSignal, on, Setter, Signal } 
 import { FormProviderValue } from '../../../FormContext';
 import { FormValue } from '../../../Types/FormValue';
 
-import { FieldProps } from '../Types/FieldProps';
+import { FieldName, FieldProps } from '../Types/FieldProps';
 
 export function setupFieldsDisabledSignal<
-  T extends FieldProps<any, K>,
-  K extends FormValue = FormValue
->(props: T, form: FormProviderValue<K> | undefined): Signal<boolean> {
+  Name extends FieldName<OwnerFormValue>,
+  Props extends FieldProps<OwnerFormValue, Name>,
+  OwnerFormValue extends FormValue
+>(props: Props, form: FormProviderValue<OwnerFormValue> | undefined): Signal<boolean> {
   let signal: Signal<boolean>;
 
   if (typeof form !== 'undefined') {
