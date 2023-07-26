@@ -59,7 +59,7 @@ export type Form<
 > = {
   (props: Omit<FormProps<Value>, 'identification' | 'formStore'>): JSX.Element;
 
-  Input<Type extends InputType, Name extends FieldName<Value, InputBaseValue<Type>>>(
+  Input<Name extends FieldName<Value, InputBaseValue<Type>>, Type extends InputType = undefined>(
     props: InputProps<Value, Type, Name> & 
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
     
