@@ -10,9 +10,10 @@ import { FormProviderValue } from '../../../FormContext';
 import { FieldProps } from '../Types/FieldProps';
 
 export function setupCommunicationWithFormContext<
-  Props extends FieldProps<OwnerFormValue>,
+  Props extends FieldProps<OwnerFormValue, BaseValueType>,
+  BaseValueType extends FormFieldValue,
   OwnerFormValue extends FormValue = FormValue
->(props: Props, initialValue: FormFieldValue = ''): FormProviderValue<OwnerFormValue> | undefined {
+>(props: Props, initialValue: BaseValueType = '' as any): FormProviderValue<OwnerFormValue> | undefined {
   let form: FormProviderValue<OwnerFormValue> | undefined = useForm<OwnerFormValue>();
   if (props.manuallyControlled) {
     form = undefined;

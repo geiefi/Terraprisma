@@ -15,6 +15,8 @@ import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { FormValue } from '../../Types/FormValue';
+import { FieldName } from '../_Shared/Types/FieldProps';
+import { EmptyObj } from '../../../_Shared/Types/EmptyObj';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -24,15 +26,17 @@ export type InputOnChangeEvent = Event & {
 export type InputType = 'text' | 'email' | 'number' | 'email' | 'password' | undefined;
 
 export interface InputProps<
-OwnerFormValue extends FormValue = {},
+OwnerFormValue extends FormValue = EmptyObj,
+Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>,
 Type extends InputType = undefined
 > extends MaskedFieldProps<
+OwnerFormValue,
 Type extends 'text' ? string
 : Type extends 'email' ? string
 : Type extends 'number' ? number
 : Type extends 'password' ? string
 : string,
-OwnerFormValue
+Name
 > {
   label?: JSX.Element;
 
@@ -104,8 +108,8 @@ const Input = setupFieldComponent(
     },
     ['mask', 'label', 'helperText', 'type', 'color', 'onChange', ...MaskedFieldPropsKeys]
   )
-) as <OwnerFormValue extends FormValue, Type extends InputType>(
-  props: InputProps<OwnerFormValue, Type> & JSX.InputHTMLAttributes<HTMLInputElement>
+) as <OwnerFormValue extends FormValue, Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>, Type extends InputType = undefined>(
+  props: InputProps<OwnerFormValue, Name, Type> & JSX.InputHTMLAttributes<HTMLInputElement>
 ) => JSX.Element;
 
 export default Input;

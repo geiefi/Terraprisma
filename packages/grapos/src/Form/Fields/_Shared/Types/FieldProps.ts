@@ -97,7 +97,7 @@ export interface FieldProps<
    * Will be ignored when there is a form above the field. This is because its value can 
    * be set in other better ways.
    */
-  value?: FormFieldValue & DeepGet<OwnerFormValue, Name>;
+  value?: BaseValueType & DeepGet<OwnerFormValue, Name>;
 
   helperText?: JSX.Element
 }

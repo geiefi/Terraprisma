@@ -1,5 +1,5 @@
 import {
-  Component,
+  JSX,
   Signal,
   createEffect,
   createMemo,
@@ -20,19 +20,23 @@ import { setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
+import { EmptyObj } from '../../../../_Shared/Types/EmptyObj';
 
 export function setupFieldComponent<
   BaseValueType extends FormFieldValue,
 
-  MProps extends FieldProps<OwnerFormValue>,
+  MProps extends FieldProps<OwnerFormValue, BaseValueType>,
+
   OwnerFormValue extends FormValue,
 >(
-  componentFunc: Component<MProps>,
+  componentFunc: <OwnerFormValue extends FormValue = EmptyObj, Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>>(
+    props: MProps & FieldProps<OwnerFormValue, BaseValueType, Name>
+  ) => JSX.Element,
   initialValueParam: BaseValueType | ((props: MProps) => BaseValueType) = '' as any
 ) {
   return <
     Name extends FieldName<OwnerFormValue>,
-    Props extends MProps & FieldProps<OwnerFormValue, Name> = MProps & FieldProps<OwnerFormValue, Name>,
+    Props extends MProps & FieldProps<OwnerFormValue, BaseValueType, Name> = MProps & FieldProps<OwnerFormValue, BaseValueType, Name>,
   >(props: Props) => {
     // eslint-disable-next-line solid/reactivity
     const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
@@ -41,7 +45,7 @@ export function setupFieldComponent<
       ? initialValueParam(props as unknown as MProps)
       : initialValueParam;
 
-    const form = setupCommunicationWithFormContext<Props, OwnerFormValue>(
+    const form = setupCommunicationWithFormContext<Props, BaseValueType, OwnerFormValue>(
       props,
       initialValue
     );
@@ -103,7 +107,7 @@ export function setupFieldComponent<
           validate,
         }}
       >
-        <Dynamic component={componentFunc} {...(props as unknown as MProps)} />
+        <Dynamic component={(props: Props) => componentFunc<Name, OwnerFormValue>(props)} {...props} />
       </FieldContext.Provider>
     );
   };

@@ -39,6 +39,7 @@ import { TextAreaProps } from './Fields/TextArea/TextArea';
 import { DatepickerProps } from './Fields/Datepicker/Datepicker';
 import { TogglerProps } from './Fields/Toggler/Toggler';
 import { CheckboxProps } from './Fields/Checkbox/Checkbox';
+import { FieldName } from './Fields/_Shared/Types/FieldProps';
 
 export interface FormProps<Value extends FormValue = FormValue>
   extends ParentProps {
@@ -57,8 +58,8 @@ export type Form<
 > = {
   (props: Omit<FormProps<Value>, 'identification' | 'formStore'>): JSX.Element;
 
-  Input<Type extends InputType>(
-    props: InputProps<Value, Type> & 
+  Input<Type extends InputType, Name extends FieldName<Value>>(
+    props: InputProps<Value, Name, Type> & 
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
     
   ): JSX.Element;
@@ -161,7 +162,7 @@ export function createForm<
     />
   );
 
-  form.Input = Input<Value, undefined>;
+  form.Input = Input<Value>;
   form.Slider = Slider<Value>;
   form.Select = Select<Value>;
   form.ButtonChooser = ButtonChooser<Value>;
