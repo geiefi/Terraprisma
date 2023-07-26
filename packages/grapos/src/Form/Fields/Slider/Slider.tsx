@@ -12,18 +12,19 @@ import { FieldInternalWrapper } from '../_Shared';
 import { GrowFade } from '../../../Transitions';
 import { createTooltip } from '../../../DataDisplay';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FormValue } from '../../Types/FormValue';
 
 import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import './Slider.scss';
-import { FormValue } from '../../Types/FormValue';
 
 export interface SliderProps<
-OwnerFormValue extends FormValue = {},
-> extends FieldProps<number, OwnerFormValue> {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, number> = FieldName<OwnerFormValue, number>,
+> extends FieldProps<OwnerFormValue, number, Name> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';

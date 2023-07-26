@@ -22,7 +22,7 @@ import { KeyboardArrowDown } from '../../../Icons';
 import { mergeClass } from '../../../_Shared/Utils';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './Select.scss';
 import { forwardNativeElementProps } from '../../../Helpers';
@@ -32,8 +32,9 @@ import { mergeCallbacks } from '../../../Helpers';
 import { FormValue } from '../../Types/FormValue';
 
 export interface SelectProps<
-OwnerFormValue extends FormValue = {}
-> extends FieldProps<any, OwnerFormValue> {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
+> extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';

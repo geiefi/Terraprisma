@@ -10,32 +10,31 @@ import {
 import { Dynamic } from 'solid-js/web';
 import { createStore } from 'solid-js/store';
 
-import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FieldContext } from './FieldContext';
-import { FormValue } from '../../../Types/FormValue';
-
-import { FieldName, FieldPropKeys, FieldProps } from '../Types/FieldProps';
 
 import { setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
-import { EmptyObj } from '../../../../_Shared/Types/EmptyObj';
+
+import { FormFieldValue } from '../../../Types/FormFieldValue';
+import { FormValue } from '../../../Types/FormValue';
+import { FieldName, FieldPropKeys, FieldProps } from '../Types/FieldProps';
 
 export function setupFieldComponent<
   BaseValueType extends FormFieldValue,
 
-  MProps extends FieldProps<OwnerFormValue, BaseValueType>,
-
-  OwnerFormValue extends FormValue,
+  MProps extends FieldProps<FormValue, BaseValueType>,
 >(
-  componentFunc: <OwnerFormValue extends FormValue = EmptyObj, Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>>(
-    props: MProps & FieldProps<OwnerFormValue, BaseValueType, Name>
+  componentFunc: (
+    props: MProps
   ) => JSX.Element,
   initialValueParam: BaseValueType | ((props: MProps) => BaseValueType) = '' as any
 ) {
   return <
-    Name extends FieldName<OwnerFormValue>,
+    OwnerFormValue extends FormValue,
+    Name extends FieldName<OwnerFormValue, BaseValueType> = FieldName<OwnerFormValue, BaseValueType>,
+
     Props extends MProps & FieldProps<OwnerFormValue, BaseValueType, Name> = MProps & FieldProps<OwnerFormValue, BaseValueType, Name>,
   >(props: Props) => {
     // eslint-disable-next-line solid/reactivity
@@ -45,23 +44,16 @@ export function setupFieldComponent<
       ? initialValueParam(props as unknown as MProps)
       : initialValueParam;
 
-    const form = setupCommunicationWithFormContext<Props, BaseValueType, OwnerFormValue>(
+    const form = setupCommunicationWithFormContext(
       props,
       initialValue
     );
-    const [value, setValue] = setupFieldsValueSignal<
-      Props,
-      BaseValueType,
-      OwnerFormValue
-    >(
+    const [value, setValue] = setupFieldsValueSignal(
       props,
       form,
       initialValue
     );
-    const validate = setupValidateFunction<
-      Props,
-      OwnerFormValue
-    >(props, setErrors, form);
+    const validate = setupValidateFunction(props, setErrors, form);
 
     const id = createMemo(() =>
       form
@@ -107,7 +99,7 @@ export function setupFieldComponent<
           validate,
         }}
       >
-        <Dynamic component={(props: Props) => componentFunc<Name, OwnerFormValue>(props)} {...props} />
+        <Dynamic component={(props: Props) => componentFunc(props)} {...props} />
       </FieldContext.Provider>
     );
   };

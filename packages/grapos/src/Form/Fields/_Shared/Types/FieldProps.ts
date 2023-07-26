@@ -20,7 +20,11 @@ export const FieldPropKeys: (keyof FieldProps)[] = [
   'errorsStore'
 ];
 
-export type FieldName<OwnerFormValue extends FormValue> = OwnerFormValue extends EmptyObj ? string : LeavesOfObject<OwnerFormValue>;
+// export type FieldName<OwnerFormValue extends FormValue, ValueType = any> = OwnerFormValue extends EmptyObj ? string 
+//   : { [K in keyof OwnerFormValue]: OwnerFormValue[K] extends ValueType ? K : never }[keyof OwnerFormValue];
+
+export type FieldName<OwnerFormValue extends FormValue, ValueType = any> = OwnerFormValue extends EmptyObj ? string 
+  : LeavesOfObject<OwnerFormValue, ValueType>;
 
 /**
   * The field props that are required for all of the fields used in conjunction with the `<Form />`

@@ -13,6 +13,7 @@ import { forwardNativeElementProps } from '../../../Helpers';
 import { mergeCallbacks } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { FormValue } from '../../Types/FormValue';
+import { FieldName } from '../_Shared/Types/FieldProps';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
@@ -20,8 +21,9 @@ export type TextAreaChangeEvent = Event & {
 };
 
 export interface TextAreaProps<
-OwnerFormValue extends FormValue = {}
-> extends MaskedFieldProps<string, OwnerFormValue> {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, string> = FieldName<OwnerFormValue, string>
+> extends MaskedFieldProps<OwnerFormValue, string, Name> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';

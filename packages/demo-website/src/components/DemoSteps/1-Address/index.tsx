@@ -51,16 +51,17 @@ const Address: Component<{
           <AddressForm.Input
             name="cidade"
             label="Cidade"
-            type="text"
             placeholder="São Paulo"
             validators={[Validators.required]}
           />
         </Col>
+        <AddressForm.Toggler
+          name="togglerVal"
+        />
         <Col size={8}>
           <AddressForm.Select
             name="uf"
             label="UF"
-            value="efwqfe"
             validators={[Validators.required]}
           >
             <AddressForm.Select.Option value="pe">PE</AddressForm.Select.Option>

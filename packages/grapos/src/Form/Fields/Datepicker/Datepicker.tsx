@@ -23,7 +23,7 @@ import { GrowFade } from '../../../Transitions';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './Datepicker.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
@@ -33,8 +33,9 @@ import { mergeCallbacks } from '../../../Helpers';
 import { FormValue } from '../../Types/FormValue';
 
 export interface DatepickerProps<
-OwnerFormValue extends FormValue = {}
-> extends FieldProps<Date, OwnerFormValue> {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, Date> = FieldName<OwnerFormValue, Date>
+> extends FieldProps<OwnerFormValue, Date, Name> {
   label?: string;
 
   color?: 'primary' | 'secondary' | 'tertiary';

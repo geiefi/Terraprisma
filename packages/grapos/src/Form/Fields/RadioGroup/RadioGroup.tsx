@@ -14,7 +14,7 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import './RadioGroup.scss';
 import { ClickableSignalizer, Ripple } from '../../../General';
@@ -25,6 +25,7 @@ import { mergeClass } from '../../../_Shared/Utils';
 import { Stack } from '../../../Layout';
 import { StackProps } from '../../../Layout/Stack/Stack';
 import { FormValue } from '../../Types/FormValue';
+import { FormFieldValue } from '../../Types/FormFieldValue';
 
 export interface RadioGroupOptionProps extends ParentProps {
   value: string;
@@ -120,8 +121,9 @@ const RadioInternal = forwardNativeElementProps<
 );
 
 export interface RadioGroupProps<
-OwnerFormValue extends FormValue = {}
-> extends FieldProps<any, OwnerFormValue>, ParentProps {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
+> extends FieldProps<OwnerFormValue, FormFieldValue, Name>, ParentProps {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
@@ -130,7 +132,6 @@ OwnerFormValue extends FormValue = {}
   radiosDirection?: StackProps['direction'];
 
   onChange?: (value: string, event: MouseEvent) => any;
-  value?: string;
 }
 
 const RadioGroup = setupFieldComponent(

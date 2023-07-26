@@ -4,7 +4,7 @@ import { JSX, Show } from 'solid-js';
 import { FieldInternalWrapper } from '../_Shared';
 import Label from '../_Shared/Label/Label';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 import { FormValue } from '../../Types/FormValue';
 
 import './Toggler.scss';
@@ -12,7 +12,10 @@ import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { forwardNativeElementProps } from '../../../Helpers';
 
-export interface TogglerProps<OwnerFormValue extends FormValue = FormValue> extends FieldProps<OwnerFormValue> {
+export interface TogglerProps<
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+> extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
 
   color?: 'primary' | 'secondary' | 'tertiary';

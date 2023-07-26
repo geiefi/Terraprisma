@@ -7,7 +7,7 @@ import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
-import { FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
 
 import { Check } from '../../../Icons';
 import { GrowFade } from '../../../Transitions';
@@ -17,15 +17,15 @@ import './Checkbox.scss';
 import { FormValue } from '../../Types/FormValue';
 
 export interface CheckboxProps<
-OwnerFormValue extends FormValue = {}
-> extends FieldProps<boolean, OwnerFormValue> {
+OwnerFormValue extends FormValue = FormValue,
+Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+> extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: boolean, event: MouseEvent) => any;
-  value?: boolean;
 }
 
 const Checkbox = setupFieldComponent(

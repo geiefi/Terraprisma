@@ -24,7 +24,7 @@ import {
   TextArea,
   Toggler,
 } from './Fields';
-import { InputProps, InputType } from './Fields/Input/Input';
+import { InputBaseValue, InputProps, InputType } from './Fields/Input/Input';
 import { SliderProps } from './Fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './Fields/Select/Select';
 import {
@@ -40,6 +40,7 @@ import { DatepickerProps } from './Fields/Datepicker/Datepicker';
 import { TogglerProps } from './Fields/Toggler/Toggler';
 import { CheckboxProps } from './Fields/Checkbox/Checkbox';
 import { FieldName } from './Fields/_Shared/Types/FieldProps';
+import { FormFieldValue } from './Types/FormFieldValue';
 
 export interface FormProps<Value extends FormValue = FormValue>
   extends ParentProps {
@@ -58,54 +59,55 @@ export type Form<
 > = {
   (props: Omit<FormProps<Value>, 'identification' | 'formStore'>): JSX.Element;
 
-  Input<Type extends InputType, Name extends FieldName<Value>>(
-    props: InputProps<Value, Name, Type> & 
+  Input<Type extends InputType, Name extends FieldName<Value, InputBaseValue<Type>>>(
+    props: InputProps<Value, Type, Name> & 
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
     
   ): JSX.Element;
-  Slider(
-    props: SliderProps<Value> &
+  Slider<Name extends FieldName<Value, number>>(
+    props: SliderProps<Value, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof SliderProps>
   ): JSX.Element;
   Select: {
-    (
-      props: SelectProps<Value> & 
+    <Name extends FieldName<Value, FormFieldValue>>(
+      props: SelectProps<Value, Name> & 
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof SelectProps>
     ): JSX.Element;
     Option(props: SelectOptionProps): JSX.Element;
   };
   ButtonChooser: {
-    (
-      props: ButtonChooserProps<Value> & 
+    <Name extends FieldName<Value, FormFieldValue>>(
+      props: ButtonChooserProps<Value, Name> & 
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof ButtonChooserProps>
     ): JSX.Element;
     Option(props: ButtonChooserOptionProps): JSX.Element;
   };
   RadioGroup: {
-    (
-      props: RadioGroupProps<Value> & 
+    <Name extends FieldName<Value, FormFieldValue>>(
+      props: RadioGroupProps<Value, Name> & 
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof RadioGroupProps>
     ): JSX.Element;
     Option(
       props: RadioGroupOptionProps & JSX.InputHTMLAttributes<HTMLInputElement>
     ): JSX.Element;
   };
-  TextArea(
-    props: TextAreaProps<Value> &
+  TextArea<Name extends FieldName<Value, string>>(
+    props: TextAreaProps<Value, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLTextAreaElement>, keyof TextAreaProps>
   ): JSX.Element;
-  Datepicker(
-    props: DatepickerProps<Value> &
+  Datepicker<Name extends FieldName<Value, Date>>(
+    props: DatepickerProps<Value, Name> &
       Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof DatepickerProps>
   ): JSX.Element;
-  Toggler(
-    props: TogglerProps<Value> &
+  Toggler<Name extends FieldName<Value, boolean>>(
+    props: TogglerProps<Value, Name> &
       Omit<JSX.HTMLAttributes<HTMLInputElement>, keyof TogglerProps>
   ): JSX.Element;
-  Checkbox(
-    props: CheckboxProps<Value> &
+  Checkbox<Name extends FieldName<Value, boolean>>(
+    props: CheckboxProps<Value, Name> &
       Omit<JSX.HTMLAttributes<HTMLInputElement>, keyof CheckboxProps>
   ): JSX.Element;
+
   store: [
     get: FormStore<Partial<Value>>,
     set: SetStoreFunction<FormStore<Partial<Value>>>

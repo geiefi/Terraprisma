@@ -34,7 +34,7 @@ type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
 export type LeavesOfObject<
   A,
   TypeOfValueAtLeaf = any,
-  D extends number = 6,
+  D extends number = 2,
   T extends Required<A> = Required<A>
 > = [D] extends [never] ? never : T extends object ?
 T extends Date ? '' : {
