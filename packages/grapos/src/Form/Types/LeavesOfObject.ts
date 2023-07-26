@@ -1,10 +1,4 @@
-type Join<K, P> = K extends string | number ?
-  P extends string | number ?
-  `${K}${'' extends P ? '' : '.'}${P}`
-  : never : never;
-
-type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-  11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...0[]];
+import { FormFieldValue } from './FormFieldValue';
 
 /**
   * @description A type function that can be used to get all of the extremity paths
@@ -31,17 +25,10 @@ type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
   * // type TestFiltered = "strider" | "role" | "foo.bar"
   * ```
   */
-export type LeavesOfObject<
-  A,
-  TypeOfValueAtLeaf = any,
-  D extends number = 2,
-  T extends Required<A> = Required<A>
-> = [D] extends [never] ? never : T extends object ?
-T extends Date ? '' : {
-  [K in keyof T]-?: Join<
-    K,
-    LeavesOfObject<T[K], TypeOfValueAtLeaf, Prev[D]> extends ''
-    ? (T[K] extends TypeOfValueAtLeaf ? '' : never)
-    : LeavesOfObject<T[K], TypeOfValueAtLeaf, Prev[D]>
-  >
-}[keyof T] : '';
+export type LeavesOfObject<TValue, OnlyOfType = any> = {
+  [TKey in keyof TValue]-?: RestOfLeaves<TKey & string, TValue[TKey], OnlyOfType>;
+}[keyof TValue];
+
+type RestOfLeaves<TKey extends string, TValue, OnlyOfType = any> = TValue extends FormFieldValue | Blob
+    ? (TValue extends OnlyOfType ? `${TKey}` : never)
+    : `${TKey}.${LeavesOfObject<TValue>}`;

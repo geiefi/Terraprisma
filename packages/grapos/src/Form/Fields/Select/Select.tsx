@@ -220,7 +220,7 @@ const Select = setupFieldComponent(
                             props.onChange(optionProps.value);
                           }
 
-                          setValue(optionProps.value);
+                          setValue(optionProps.value as any);
                           setFocused(false);
                         }
                       )}
