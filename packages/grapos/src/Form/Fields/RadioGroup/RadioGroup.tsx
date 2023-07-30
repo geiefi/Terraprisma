@@ -7,6 +7,7 @@ import {
   Show,
   createMemo,
   createSignal,
+  Component,
 } from 'solid-js';
 
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
@@ -27,8 +28,8 @@ import { StackProps } from '../../../Layout/Stack/Stack';
 import { FormValue } from '../../Types/FormValue';
 import { FormFieldValue } from '../../Types/FormFieldValue';
 
-export interface RadioGroupOptionProps extends ParentProps {
-  value: string;
+export interface RadioGroupOptionProps<AllowedValue extends FormFieldValue = FormFieldValue> extends ParentProps {
+  value: AllowedValue;
 
   color?: 'primary' | 'secondary' | 'tertiary';
   size?: 'small' | 'medium' | 'large';
@@ -37,7 +38,7 @@ export interface RadioGroupOptionProps extends ParentProps {
   onClick?: (e: MouseEvent) => void;
 }
 
-const RadioOption = (props: RadioGroupOptionProps & ComponentProps<'input'>) =>
+const RadioOption = (props: RadioGroupOptionProps & Omit<ComponentProps<'input'>, keyof RadioGroupOptionProps>) =>
   props as unknown as JSX.Element;
 
 const RadioInternal = forwardNativeElementProps<
@@ -122,8 +123,10 @@ const RadioInternal = forwardNativeElementProps<
 
 export interface RadioGroupProps<
 OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
-> extends FieldProps<OwnerFormValue, FormFieldValue, Name>, ParentProps {
+Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>,
+AllowedValue extends FieldProps<OwnerFormValue, FormFieldValue, Name>['value'] 
+  = FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+> extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
 
@@ -131,7 +134,17 @@ Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValu
   size?: 'small' | 'medium' | 'large';
   radiosDirection?: StackProps['direction'];
 
-  onChange?: (value: string, event: MouseEvent) => any;
+  onChange?: (value: AllowedValue, event: MouseEvent) => any;
+
+  children?: JSX.Element | (
+    (
+      Option: Component<
+        RadioGroupOptionProps<
+          AllowedValue
+        >
+      >
+    ) => JSX.Element
+  );
 }
 
 const RadioGroup = setupFieldComponent(
@@ -148,9 +161,9 @@ const RadioGroup = setupFieldComponent(
         hasErrors,
 
         validate,
-      } = useField<string>()!;
+      } = useField()!;
 
-      const getChildren = accessChildren(() => props.children);
+      const getChildren = accessChildren(() => typeof props.children === 'function' ? props.children(RadioOption) : props.children);
       const options = createMemo<RadioGroupOptionProps[]>(() => {
         let childrenArr: (JSX.Element | RadioGroupOptionProps)[];
 
@@ -223,7 +236,9 @@ const RadioGroup = setupFieldComponent(
     ]
   )
 ) as {
-  <OwnerFormValue extends FormValue>(props: RadioGroupProps<OwnerFormValue> & ComponentProps<'div'>): JSX.Element;
+  <OwnerFormValue extends FormValue>(
+    props: RadioGroupProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof RadioGroupProps>
+  ): JSX.Element;
   Option(props: RadioGroupOptionProps & ComponentProps<'input'>): JSX.Element;
 };
 

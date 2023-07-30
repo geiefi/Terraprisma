@@ -1,1 +1,1 @@
-export type FormFieldValue = string | string[] | number | boolean | Date | File | File[] | undefined | null;
+export type FormFieldValue = string | string[] | number | boolean | Date | undefined | null;

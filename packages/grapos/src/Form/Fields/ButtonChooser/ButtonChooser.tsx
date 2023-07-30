@@ -37,10 +37,22 @@ Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValu
   style?: JSX.CSSProperties;
 
   onChange?: (newValue: FormFieldValue) => any;
+
+  children: JSX.Element | (
+    (
+      Option: Component<
+        ButtonChooserOptionProps<
+          FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+        >
+      >
+    ) => JSX.Element
+  );
 }
 
-export interface ButtonChooserOptionProps extends GetProps<typeof Button.Empty> {
-  value: string;
+export interface ButtonChooserOptionProps<
+  AllowedValue extends FormFieldValue = FormFieldValue
+> extends GetProps<typeof Button.Empty> {
+  value: AllowedValue;
 }
 
 const Option: Component<ButtonChooserOptionProps> = (props) => {
@@ -58,7 +70,9 @@ const ButtonChooser = setupFieldComponent(
         hasErrors,
       } = useField()!;
 
-      const getChildren = accessChildren(() => elProps.children);
+      const getChildren = accessChildren(
+        () => typeof props.children === 'function' ? props.children(Option) : props.children
+      );
       const options = createMemo<ButtonChooserOptionProps[]>(() => {
         let childrenArr: (JSX.Element | ButtonChooserOptionProps)[];
 
@@ -138,11 +152,11 @@ const ButtonChooser = setupFieldComponent(
         </FieldInternalWrapper>
       );
     },
-    [...FieldPropKeys, 'label', 'color', 'helperText', 'onChange', 'style']
+    [...FieldPropKeys, 'label', 'color', 'children', 'helperText', 'onChange', 'style']
   )
 ) as {
   <OwnerFormValue extends FormValue>(
-    props: ButtonChooserProps<OwnerFormValue> & ComponentProps<'div'>
+    props: ButtonChooserProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof ButtonChooserProps>
   ): JSX.Element;
   Option(props: ButtonChooserOptionProps): JSX.Element;
 };

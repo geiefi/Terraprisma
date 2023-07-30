@@ -64,13 +64,13 @@ const Address: Component<{
             name="uf"
             label="UF"
             validators={[Validators.required]}
-          >
-            <AddressForm.Select.Option value="pe">PE</AddressForm.Select.Option>
-            <AddressForm.Select.Option value="mg">MG</AddressForm.Select.Option>
-            <AddressForm.Select.Option value="pr">PR</AddressForm.Select.Option>
-            <AddressForm.Select.Option value="rj">RJ</AddressForm.Select.Option>
-            <AddressForm.Select.Option value="sp">SP</AddressForm.Select.Option>
-          </AddressForm.Select>
+          >{Option => [
+            <Option value="pe">PE</Option>,
+            <Option value="mg">MG</Option>,
+            <Option value="pr">PR</Option>,
+            <Option value="rj">RJ</Option>,
+            <Option value="sp">SP</Option>
+          ]}</AddressForm.Select>
         </Col>
 
         <Col size={16}>

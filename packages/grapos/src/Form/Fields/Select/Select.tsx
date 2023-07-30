@@ -32,8 +32,8 @@ import { mergeCallbacks } from '../../../Helpers';
 import { FormValue } from '../../Types/FormValue';
 
 export interface SelectProps<
-OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
+  OwnerFormValue extends FormValue = FormValue,
+  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
 
@@ -41,10 +41,20 @@ Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValu
 
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
+
+  children: JSX.Element | ((
+    Option: Component<
+      SelectOptionProps<
+        FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+      >
+    >
+  ) => JSX.Element);
 }
 
-export interface SelectOptionProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  value: FormFieldValue;
+export interface SelectOptionProps<
+  AllowedValue extends FormFieldValue = FormFieldValue
+> extends JSX.HTMLAttributes<HTMLDivElement> {
+  value: AllowedValue;
   children: JSX.Element;
 }
 
@@ -94,15 +104,14 @@ const Select = setupFieldComponent(
         }
       };
 
-      onMount(() => {
-        document.addEventListener('click', onDocumentClick);
-      });
+      onMount(() => document.addEventListener('click', onDocumentClick));
+      onCleanup(() => document.removeEventListener('click', onDocumentClick));
 
-      onCleanup(() => {
-        document.removeEventListener('click', onDocumentClick);
-      });
-
-      const getChildren = accessChildren(() => elProps.children);
+      const getChildren = accessChildren(
+        () => typeof props.children === 'function' 
+          ? props.children(Option) 
+          : props.children
+      );
       const options = createMemo<SelectOptionProps[]>(() => {
         let childrenArr: (JSX.Element | SelectOptionProps)[];
 
@@ -235,10 +244,12 @@ const Select = setupFieldComponent(
         </FieldInternalWrapper>
       );
     },
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'onChange', 'onFocus']
+    [...FieldPropKeys, 'label', 'helperText', 'color', 'children', 'onChange', 'onFocus']
   )
 ) as {
-  <OwnerFormValue extends FormValue>(props: SelectProps<OwnerFormValue> & ComponentProps<'div'>): JSX.Element;
+  <OwnerFormValue extends FormValue>(
+    props: SelectProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof SelectProps>
+  ): JSX.Element;
   Option(props: SelectOptionProps): JSX.Element;
 };
 

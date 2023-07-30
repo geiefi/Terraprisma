@@ -21,16 +21,17 @@ import { ArrowLeft, ArrowRight, CalendarMonth } from '../../../Icons';
 import { Row } from '../../../Layout/Grid';
 import { GrowFade } from '../../../Transitions';
 
-import { FormFieldValue } from '../../Types/FormFieldValue';
+import { mergeCallbacks } from '../../../Helpers';
+import { forwardNativeElementProps } from '../../../Helpers';
+
+import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
+import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
 import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import { FormFieldValue } from '../../Types/FormFieldValue';
+import { FormValue } from '../../Types/FormValue';
 
 import './Datepicker.scss';
-import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers';
-import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
-import { mergeCallbacks } from '../../../Helpers';
-import { FormValue } from '../../Types/FormValue';
 
 export interface DatepickerProps<
 OwnerFormValue extends FormValue = FormValue,
@@ -433,22 +434,22 @@ const Datepicker = setupFieldComponent(
                         setDatepickerSelectionType(v as any);
                       }
                     }}
-                  >
-                    <ButtonChooser.Option
+                  >{Option => [
+                    <Option
                       size="medium"
                       class="selection-type-button"
                       value="month"
                     >
                       {monthNames[viewedMonth()]}
-                    </ButtonChooser.Option>
-                    <ButtonChooser.Option
+                    </Option>,
+                    <Option
                       size="medium"
                       class="selection-type-button"
                       value="year"
                     >
                       {viewedYear()}
-                    </ButtonChooser.Option>
-                  </ButtonChooser>
+                    </Option>
+                  ]}</ButtonChooser>
 
                   <Button.Icon
                     size="small"

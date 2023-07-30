@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: './',
-  plugins: [solid({ ssr: true })],
+  plugins: [solid({ ssr: false })],
   build: {
     target: 'esnext',
   },
