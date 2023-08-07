@@ -179,7 +179,7 @@ const DatepickerInternalMonthPicker: Component<{
                   monthNumber === props.selectedDate.getMonth() &&
                   props.year === props.selectedDate.getFullYear(),
               }}
-              onClick={props.onMonthClicked(monthNumber)}
+              onClick={() => props.onMonthClicked(monthNumber)}
             >
               {month()}
             </Button.Rounded>
@@ -220,7 +220,7 @@ const DatepickerIntenralYearPicker: Component<{
                   props.month === props.selectedDate.getMonth() &&
                   year() === props.selectedDate.getFullYear(),
               }}
-              onClick={props.onYearClicked(year())}
+              onClick={() => props.onYearClicked(year())}
             >
               {year()}
             </Button.Rounded>
