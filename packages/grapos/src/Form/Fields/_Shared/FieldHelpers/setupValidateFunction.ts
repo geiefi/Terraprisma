@@ -4,21 +4,27 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldProps } from '../Types/FieldProps';
+import { FieldName, FieldProps } from '../Types/FieldProps';
 
-export type FieldInternalValidate = (value: FormFieldValue) => string[] | undefined;
+export type FieldInternalValidate<ValueType extends FormFieldValue = FormFieldValue> = (value: ValueType | undefined) => string[] | undefined;
 
 export function setupValidateFunction<
-  Props extends FieldProps<OwnerFormValue>,
+  Name extends FieldName<OwnerFormValue, BaseValueType>,
+  Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
+  BaseValueType extends FormFieldValue,
   OwnerFormValue extends FormValue
->(props: Props, setErrors: Setter<string[]>, form: FormProviderValue<OwnerFormValue> | undefined): FieldInternalValidate {
+>(
+  props: Props, 
+  setErrors: Setter<string[]>, 
+  form: FormProviderValue<OwnerFormValue> | undefined
+): FieldInternalValidate<Props['value']> {
   if (typeof form !== 'undefined') {
     createEffect(() => {
       setErrors(form.getErrors(props.name) || []);
     });
   }
 
-  return (value: FormFieldValue) => {
+  return (value: Props['value']) => {
     if (typeof form !== 'undefined') {
       form.validate(props.name);
 

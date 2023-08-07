@@ -10,11 +10,10 @@ import { FormValue } from '../../Types/FormValue';
 import './Toggler.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
-import { forwardNativeElementProps } from '../../../Helpers';
 
 export interface TogglerProps<
-OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+  OwnerFormValue extends FormValue = FormValue,
+  Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
 
@@ -24,72 +23,70 @@ Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, bool
   onChange?: (value: boolean, event: MouseEvent) => any;
 }
 
-const Toggler = setupFieldComponent(
-  forwardNativeElementProps<TogglerProps, HTMLInputElement>(
-    (props, elProps) => {
-      const {
-        elementId: id,
+const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
+  (props, elProps) => {
+    const {
+      elementId: id,
 
-        disabledS: [disabled],
-        valueS: [value, setValue],
+      disabledS: [disabled],
+      valueS: [value, setValue],
 
-        validate,
-        hasErrors,
-      } = useField<boolean>()!;
+      validate,
+      hasErrors,
+    } = useField<boolean>()!;
 
-      return (
-        <FieldInternalWrapper class="toggler-container">
-          <Show when={props.label}>
-            <Label for={id()} hasErrors={hasErrors()}>
-              {props.label}
-            </Label>
-          </Show>
+    return (
+      <FieldInternalWrapper class="toggler-container">
+        <Show when={props.label}>
+          <Label for={id()} hasErrors={hasErrors()}>
+            {props.label}
+          </Label>
+        </Show>
 
-          <div class="toggler">
-            <input
-              {...elProps}
-              id={id()}
-              type="checkbox"
-              class={elProps.class}
-              classList={{
-                on: value() === true,
-                off: value() === false || typeof value() === 'undefined',
+        <div class="toggler">
+          <input
+            {...elProps}
+            id={id()}
+            type="checkbox"
+            class={elProps.class}
+            classList={{
+              on: value() === true,
+              off: value() === false || typeof value() === 'undefined',
 
-                disabled: disabled(),
+              disabled: disabled(),
 
-                primary:
-                  props.color === 'primary' ||
-                  typeof props.color === 'undefined',
-                secondary: props.color === 'secondary',
-                tertiary: props.color === 'tertiary',
+              primary:
+                props.color === 'primary' ||
+                typeof props.color === 'undefined',
+              secondary: props.color === 'secondary',
+              tertiary: props.color === 'tertiary',
 
-                small: props.size === 'small',
-                medium:
-                  props.size === 'medium' || typeof props.size === 'undefined',
-                large: props.size === 'large',
+              small: props.size === 'small',
+              medium:
+                props.size === 'medium' || typeof props.size === 'undefined',
+              large: props.size === 'large',
 
-                ...elProps.classList,
-              }}
-              value={value() ? 'on' : 'off'}
-              onClick={(event) => {
-                if (!disabled()) {
-                  const newValue = !value();
+              ...elProps.classList,
+            }}
+            value={value() ? 'on' : 'off'}
+            onClick={(event) => {
+              if (!disabled()) {
+                const newValue = !value();
 
-                  if (typeof props.onChange !== 'undefined') {
-                    props.onChange(newValue, event);
-                  }
-
-                  setValue(newValue);
-                  validate(newValue);
+                if (typeof props.onChange !== 'undefined') {
+                  props.onChange(newValue, event);
                 }
-              }}
-            />
-          </div>
-        </FieldInternalWrapper>
-      );
-    },
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange']
-  ),
+
+                setValue(newValue);
+                validate(newValue);
+              }
+            }}
+          />
+        </div>
+      </FieldInternalWrapper>
+    );
+  },
+  [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange'],
   false
 );
 

@@ -1,22 +1,20 @@
-import { Component, splitProps } from 'solid-js';
+import { splitProps } from 'solid-js';
 import { JSX } from 'solid-js/jsx-runtime';
 
 export function forwardNativeElementProps<
-Props extends Record<string, any>, 
+Props extends Record<string, any>,
 ElementType extends HTMLElement, 
-PropsToIgnore extends (keyof Props)[] = (keyof Props)[],
-ElementProps extends JSX.HTMLAttributes<ElementType> 
+ElementProps extends JSX.HTMLAttributes<ElementType>
   = JSX.HTMLAttributes<ElementType>,
-ResultingComponentProps extends Props & Omit<ElementProps, PropsToIgnore[number]> 
-  = Props & Omit<ElementProps, PropsToIgnore[number]>,
+PropsToTake extends (keyof Props)[] = (keyof Props)[],
 >(
   componentFunc: (
     props: Props, 
-    elProps: Omit<ElementProps, PropsToIgnore[number]>
+    elProps: Omit<ElementProps, PropsToTake[number]>
   ) => JSX.Element,
-  componentPropNames: PropsToIgnore,
-): Component<ResultingComponentProps> {
-  return (allProps: ResultingComponentProps) => componentFunc(
-    ...(splitProps(allProps, componentPropNames) as unknown as [Props, Omit<ElementProps, PropsToIgnore[number]>])
+  componentPropNames: PropsToTake,
+): (allProps: Props & Omit<ElementProps, PropsToTake[number]>) => JSX.Element {
+  return (allProps: Props & Omit<ElementProps, PropsToTake[number]>) => componentFunc(
+    ...(splitProps(allProps, componentPropNames) as unknown as [Props, Omit<ElementProps, PropsToTake[number]>])
   );
 }

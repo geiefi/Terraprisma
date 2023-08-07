@@ -23,7 +23,7 @@ export interface FieldProviderValue<
   hasContent: Accessor<boolean>;
   hasErrors: Accessor<boolean>;
 
-  validate: FieldInternalValidate;
+  validate: FieldInternalValidate<Value | undefined>;
 }
 
 export const FieldContext = createContext<FieldProviderValue<any>>();

@@ -158,7 +158,7 @@ Leaves extends T extends EmptyObj ? string : LeavesOfObject<T>
     */
   init<Name extends Leaves>(
     name: Name, 
-    validators: FieldValidator[], 
+    validators: FieldValidator<DeepGet<Values, Name>>[], 
     value: DeepGet<Values, Name>
   ): void {
     if (document.querySelectorAll(`#field-${this.identification()}-${name}`).length > 1) {
@@ -169,7 +169,7 @@ Leaves extends T extends EmptyObj ? string : LeavesOfObject<T>
     }
     this.setForm(produce(form => {
       setByPath(form.values, name, value);
-      form.validators[name] = validators;
+      form.validators[name] = validators as any;
     }));
   }
 

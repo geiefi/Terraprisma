@@ -2,6 +2,8 @@ import { FormFieldValue } from './Types/FormFieldValue';
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
+type Optional<T> = T | null | undefined;
+
 /**
   * A object containing some useful and predefined validators
   * for Grape's fields
@@ -23,14 +25,18 @@ const Validators = {
     * 
     * Regex: `/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g`
     */
-  email: (value: FormFieldValue) => (typeof value === 'undefined')
+  email: (value: Optional<string>) => (typeof value === 'undefined')
     || (value === null)
     || emailRegex.test(value.toString().trim())
     ? 'This is not a valid email!'
     : undefined,
 
-  isEqual: (expectedValue: FormFieldValue) => (
-    (value: FormFieldValue) => value !== expectedValue
+  /**
+    * Validates weather the current value is the expected value, 
+    * only works for primitive values.
+    */
+  isEqual: (expectedValue: string | number | boolean | undefined) => (
+    (value: Optional<string | number | boolean>) => value !== expectedValue
       ? `This is expected to be ${expectedValue}!`
       : undefined
 
@@ -38,20 +44,20 @@ const Validators = {
   /**
     * Validates weather or not the current value of the field is >= than a given `minimum`.
     */
-  minEq: (minimum: number) => 
-    (value: FormFieldValue) => (typeof value === 'number') 
+  minEq: (minimum: number) =>
+    (value: Optional<number>) => (typeof value === 'number')
       ? (value! >= minimum
-          ? undefined
-          : `The minimmum value for this is ${minimum}!`)
+        ? undefined
+        : `The minimmum value for this is ${minimum}!`)
       : undefined,
   /**
     * Validates weather or not the current value of the field is <= than a given `maximum`.
     */
-  maxEq: (maximum: number) => 
-    (value: FormFieldValue) => (typeof value === 'number') 
+  maxEq: (maximum: number) =>
+    (value: Optional<number>) => (typeof value === 'number')
       ? (value <= maximum
-          ? undefined
-          : `The maximum value for this is ${maximum}!`)
+        ? undefined
+        : `The maximum value for this is ${maximum}!`)
       : undefined,
 }
 

@@ -122,9 +122,9 @@ const RadioInternal = forwardNativeElementProps<
 );
 
 export interface RadioGroupProps<
-OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>,
-AllowedValue extends FieldProps<OwnerFormValue, FormFieldValue, Name>['value'] 
+  OwnerFormValue extends FormValue = FormValue,
+  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>,
+  AllowedValue extends FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
   = FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
@@ -147,94 +147,92 @@ AllowedValue extends FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
   );
 }
 
-const RadioGroup = setupFieldComponent(
-  forwardNativeElementProps<RadioGroupProps, HTMLDivElement>(
-    (props, elProps) => {
-      const color = createMemo(() => props.color || 'primary');
-      const {
-        elementId: id,
+const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
+  (props, elProps) => {
+    const color = createMemo(() => props.color || 'primary');
+    const {
+      elementId: id,
 
-        disabledS: [disabled],
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        valueS: [_value, setValue],
+      disabledS: [disabled],
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      valueS: [_value, setValue],
 
-        hasErrors,
+      hasErrors,
 
-        validate,
-      } = useField()!;
+      validate,
+    } = useField()!;
 
-      const getChildren = accessChildren(() => typeof props.children === 'function' ? props.children(RadioOption) : props.children);
-      const options = createMemo<RadioGroupOptionProps[]>(() => {
-        let childrenArr: (JSX.Element | RadioGroupOptionProps)[];
+    const getChildren = accessChildren(() => typeof props.children === 'function' ? props.children(RadioOption) : props.children);
+    const options = createMemo<RadioGroupOptionProps[]>(() => {
+      let childrenArr: (JSX.Element | RadioGroupOptionProps)[];
 
-        const children = getChildren();
-        if (Array.isArray(children)) {
-          childrenArr = children;
-        } else {
-          childrenArr = [children];
-        }
+      const children = getChildren();
+      if (Array.isArray(children)) {
+        childrenArr = children;
+      } else {
+        childrenArr = [children];
+      }
 
-        return childrenArr.filter((child) => {
-          return (
-            child !== null &&
-            typeof child === 'object' &&
-            Object.hasOwn(child, 'value') &&
-            Object.hasOwn(child, 'children')
-          );
-        }) as RadioGroupOptionProps[];
-      });
+      return childrenArr.filter((child) => {
+        return (
+          child !== null &&
+          typeof child === 'object' &&
+          Object.hasOwn(child, 'value') &&
+          Object.hasOwn(child, 'children')
+        );
+      }) as RadioGroupOptionProps[];
+    });
 
-      return (
-        <FieldInternalWrapper
-          {...elProps}
-          class={mergeClass('radio-group', elProps.class)}
-        >
-          <Show when={props.label}>
-            <Label for={id()} hasErrors={hasErrors()}>
-              {props.label}
-            </Label>
-          </Show>
+    return (
+      <FieldInternalWrapper
+        {...elProps}
+        class={mergeClass('radio-group', elProps.class)}
+      >
+        <Show when={props.label}>
+          <Label for={id()} hasErrors={hasErrors()}>
+            {props.label}
+          </Label>
+        </Show>
 
-          <Stack spacing={10} direction={props.radiosDirection}>
-            <For each={options()}>
-              {(optionProps, i) => (
-                <RadioInternal
-                  {...optionProps}
-                  tabindex={i()}
-                  color={optionProps.color || color()}
-                  size={optionProps.size || props.size || 'medium'}
-                  onClick={mergeCallbacks(
-                    optionProps.onClick,
-                    (e) => {
-                      if (!disabled()) {
-                        const newValue = optionProps.value;
-                        setValue(newValue);
-                        validate(newValue);
+        <Stack spacing={10} direction={props.radiosDirection}>
+          <For each={options()}>
+            {(optionProps, i) => (
+              <RadioInternal
+                {...optionProps}
+                tabindex={i()}
+                color={optionProps.color || color()}
+                size={optionProps.size || props.size || 'medium'}
+                onClick={mergeCallbacks(
+                  optionProps.onClick,
+                  (e) => {
+                    if (!disabled()) {
+                      const newValue = optionProps.value;
+                      setValue(newValue);
+                      validate(newValue);
 
-                        if (props.onChange) {
-                          props.onChange(newValue, e);
-                        }
+                      if (props.onChange) {
+                        props.onChange(newValue, e);
                       }
                     }
-                  )}
-                />
-              )}
-            </For>
-          </Stack>
-        </FieldInternalWrapper>
-      );
-    },
-    [
-      ...FieldPropKeys,
-      'label',
-      'radiosDirection',
-      'helperText',
-      'color',
-      'size',
-      'onChange',
-      'children',
-    ]
-  )
+                  }
+                )}
+              />
+            )}
+          </For>
+        </Stack>
+      </FieldInternalWrapper>
+    );
+  },
+  [
+    ...FieldPropKeys,
+    'label',
+    'radiosDirection',
+    'helperText',
+    'color',
+    'size',
+    'onChange',
+    'children',
+  ]
 ) as {
   <OwnerFormValue extends FormValue>(
     props: RadioGroupProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof RadioGroupProps>

@@ -8,7 +8,7 @@ import { DeepGet } from '../../../Types/DeepGet';
 import { EmptyObj } from '../../../../_Shared/Types/EmptyObj';
 import { FormFieldValue } from '../../../Types/FormFieldValue';
 
-export const FieldPropKeys: (keyof FieldProps)[] = [
+export const FieldPropKeys = [
   'name',
   'manuallyControlled',
   'value',
@@ -18,7 +18,7 @@ export const FieldPropKeys: (keyof FieldProps)[] = [
   'validateOnStartup',
   'helperText',
   'errorsStore'
-];
+] as const;
 
 // export type FieldName<OwnerFormValue extends FormValue, ValueType = any> = OwnerFormValue extends EmptyObj ? string 
 //   : { [K in keyof OwnerFormValue]: OwnerFormValue[K] extends ValueType ? K : never }[keyof OwnerFormValue];
@@ -63,7 +63,7 @@ export interface FieldProps<
     *
     * There are some basic validators implemented under the `Validators` const.
     */
-  validators?: FieldValidator[];
+  validators?: FieldValidator<BaseValueType & DeepGet<OwnerFormValue, Name>>[];
 
   /**
     * @description A store containing all of the errors of the field.

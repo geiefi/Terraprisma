@@ -1,4 +1,5 @@
 import {
+  ComponentProps,
   JSX,
   Signal,
   createEffect,
@@ -12,7 +13,7 @@ import { createStore } from 'solid-js/store';
 
 import { FieldContext } from './FieldContext';
 
-import { setupValidateFunction } from './setupValidateFunction';
+import { FieldInternalValidate, setupValidateFunction } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
@@ -21,39 +22,70 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 import { FieldName, FieldPropKeys, FieldProps } from '../Types/FieldProps';
 
-export function setupFieldComponent<
-  BaseValueType extends FormFieldValue,
 
-  MProps extends FieldProps<FormValue, BaseValueType>,
+export function setupFieldComponent<
+  MProps extends FieldProps<FormValue, BaseValueType, FieldName<FormValue, BaseValueType>>,
+
+  InternalElement extends keyof JSX.IntrinsicElements,
+  BaseValueType extends FormFieldValue = FormFieldValue,
+  ElProps extends Omit<ComponentProps<InternalElement>, keyof MProps>
+    = Omit<ComponentProps<InternalElement>, keyof MProps>,
+  PropKeys extends Array<keyof MProps> = Array<keyof MProps>,
 >(
   componentFunc: (
-    props: MProps
+    props: MProps,
+    elProps: ElProps
   ) => JSX.Element,
-  initialValueParam: BaseValueType | ((props: MProps) => BaseValueType) = '' as any
+  propKeys: PropKeys,
+  initialValueParam: BaseValueType | ((props: MProps & ElProps) => BaseValueType) = '' as any
 ) {
   return <
     OwnerFormValue extends FormValue,
     Name extends FieldName<OwnerFormValue, BaseValueType> = FieldName<OwnerFormValue, BaseValueType>,
 
-    Props extends MProps & FieldProps<OwnerFormValue, BaseValueType, Name> = MProps & FieldProps<OwnerFormValue, BaseValueType, Name>,
-  >(props: Props) => {
+
+    Props extends MProps
+    & FieldProps<OwnerFormValue, BaseValueType, Name> = MProps & FieldProps<OwnerFormValue, BaseValueType, Name>,
+
+    AllProps extends Props & ElProps = Props & ElProps
+  >(allProps: AllProps) => {
+    const [props, elProps] = splitProps(allProps, propKeys) as unknown as [
+      Props,
+      ElProps
+    ];
+
     // eslint-disable-next-line solid/reactivity
     const [errors, setErrors] = props.errorsStore || createStore<string[]>([]);
 
-    const initialValue = typeof initialValueParam === 'function'
-      ? initialValueParam(props as unknown as MProps)
-      : initialValueParam;
+    const initialValue = (typeof initialValueParam === 'function'
+      ? initialValueParam(allProps)
+      : initialValueParam) as AllProps['value'];
 
-    const form = setupCommunicationWithFormContext(
+    const form = setupCommunicationWithFormContext<
+      Name,
+      Props,
+      BaseValueType,
+      OwnerFormValue
+    >(
       props,
       initialValue
     );
-    const [value, setValue] = setupFieldsValueSignal(
+    const [value, setValue] = setupFieldsValueSignal<
+      Name,
+      Props,
+      BaseValueType,
+      OwnerFormValue
+    >(
       props,
       form,
       initialValue
     );
-    const validate = setupValidateFunction(props, setErrors, form);
+    const validate = setupValidateFunction<
+      Name,
+      Props,
+      BaseValueType,
+      OwnerFormValue
+    >(props, setErrors, form);
 
     const id = createMemo(() =>
       form
@@ -66,7 +98,12 @@ export function setupFieldComponent<
       () => errors && Array.isArray(errors) && typeof errors[0] !== 'undefined'
     );
 
-    const disabledSignal = setupFieldsDisabledSignal(props, form);
+    const disabledSignal = setupFieldsDisabledSignal<
+      Name,
+      BaseValueType,
+      Props,
+      OwnerFormValue
+    >(props, form);
     // eslint-disable-next-line solid/reactivity
     const [focused, setFocused] = createSignal<boolean>(false);
 
@@ -91,15 +128,23 @@ export function setupFieldComponent<
           fieldProps: splitProps(
             props,
             FieldPropKeys
-          )[0] as unknown as FieldProps<OwnerFormValue> & { value: FormFieldValue },
+          )[0] as unknown as FieldProps<FormValue> & { value: FormFieldValue },
 
           hasContent,
           hasErrors,
 
-          validate,
+          validate: validate as FieldInternalValidate,
         }}
       >
-        <Dynamic component={(props: Props) => componentFunc(props)} {...props} />
+        <Dynamic 
+          component={(p: {
+            props: Props,
+            elProps: ElProps
+          }) => componentFunc(p.props, p.elProps)} 
+
+          props={props} 
+          elProps={elProps}
+        />
       </FieldContext.Provider>
     );
   };

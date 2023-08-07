@@ -22,7 +22,6 @@ import { Row } from '../../../Layout/Grid';
 import { GrowFade } from '../../../Transitions';
 
 import { mergeCallbacks } from '../../../Helpers';
-import { forwardNativeElementProps } from '../../../Helpers';
 
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
@@ -34,8 +33,8 @@ import { FormValue } from '../../Types/FormValue';
 import './Datepicker.scss';
 
 export interface DatepickerProps<
-OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, Date> = FieldName<OwnerFormValue, Date>
+  OwnerFormValue extends FormValue = FormValue,
+  Name extends FieldName<OwnerFormValue, Date> = FieldName<OwnerFormValue, Date>
 > extends FieldProps<OwnerFormValue, Date, Name> {
   label?: string;
 
@@ -232,296 +231,294 @@ const DatepickerIntenralYearPicker: Component<{
   );
 };
 
-const Datepicker = setupFieldComponent(
-  forwardNativeElementProps<DatepickerProps, HTMLDivElement>(
-    (props, elProps) => {
-      const {
-        elementId: id,
-        disabledS: [disabled],
-        focusedS: [focused, setFocused],
-        valueS: [value, setValue],
-        validate,
-      } = useField<Date>()!;
+const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
+  (props, elProps) => {
+    const {
+      elementId: id,
+      disabledS: [disabled],
+      focusedS: [focused, setFocused],
+      valueS: [value, setValue],
+      validate,
+    } = useField<Date>()!;
 
-      const [inputContainerRef, setInputContainerRef] =
-        createSignal<HTMLDivElement>();
-      const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
+    const [inputContainerRef, setInputContainerRef] =
+      createSignal<HTMLDivElement>();
+    const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
 
-      const onDocumentClick = (event: MouseEvent) => {
-        if (
-          event.target !== inputContainerRef() &&
-          event.target !== dropdownRef() &&
-          !dropdownRef()?.contains(event.target as HTMLElement) &&
-          focused()
-        ) {
-          setFocused(false);
-        }
-      };
+    const onDocumentClick = (event: MouseEvent) => {
+      if (
+        event.target !== inputContainerRef() &&
+        event.target !== dropdownRef() &&
+        !dropdownRef()?.contains(event.target as HTMLElement) &&
+        focused()
+      ) {
+        setFocused(false);
+      }
+    };
 
-      onMount(() => {
-        document.addEventListener('click', onDocumentClick);
-      });
+    onMount(() => {
+      document.addEventListener('click', onDocumentClick);
+    });
 
-      onCleanup(() => {
-        document.removeEventListener('click', onDocumentClick);
-      });
+    onCleanup(() => {
+      document.removeEventListener('click', onDocumentClick);
+    });
 
-      const [datepickerSelectionType, setDatepickerSelectionType] =
-        createSignal<'day' | 'month' | 'year'>('day');
+    const [datepickerSelectionType, setDatepickerSelectionType] =
+      createSignal<'day' | 'month' | 'year'>('day');
 
-      createEffect(
-        on(
-          focused,
-          () => {
-            if (props.onFocus && focused() === true) {
-              props.onFocus();
-            }
+    createEffect(
+      on(
+        focused,
+        () => {
+          if (props.onFocus && focused() === true) {
+            props.onFocus();
+          }
 
-            if (focused() === false) {
-              validate(value());
-              setDatepickerSelectionType('day');
-            }
-          },
-          { defer: true } 
-        )
-      );
+          if (focused() === false) {
+            validate(value());
+            setDatepickerSelectionType('day');
+          }
+        },
+        { defer: true }
+      )
+    );
 
-      const [viewedMonth, setViewedMonth] = createSignal<number>(
-        value() ? value()!.getMonth() : new Date().getMonth()
-      );
+    const [viewedMonth, setViewedMonth] = createSignal<number>(
+      value() ? value()!.getMonth() : new Date().getMonth()
+    );
 
-      const [viewedYear, setViewedYear] = createSignal<number>(
-        value() ? value()!.getFullYear() : new Date().getFullYear()
-      );
+    const [viewedYear, setViewedYear] = createSignal<number>(
+      value() ? value()!.getFullYear() : new Date().getFullYear()
+    );
 
-      createEffect(() => {
-        const currentDate = value() || new Date();
+    createEffect(() => {
+      const currentDate = value() || new Date();
 
-        setViewedMonth(currentDate.getMonth());
-        setViewedYear(currentDate.getFullYear());
-      });
+      setViewedMonth(currentDate.getMonth());
+      setViewedYear(currentDate.getFullYear());
+    });
 
-      const handleNext = () => {
-        switch (datepickerSelectionType()) {
-          case 'day':
-            if (viewedMonth() === 11) {
-              setViewedYear((year) => year + 1);
-              setViewedMonth(0);
-            } else {
-              setViewedMonth((month) => month + 1);
-            }
-            break;
-          case 'month':
+    const handleNext = () => {
+      switch (datepickerSelectionType()) {
+        case 'day':
+          if (viewedMonth() === 11) {
             setViewedYear((year) => year + 1);
-            break;
-          case 'year':
-            setViewedYear((year) => year + 15);
-            break;
-        }
-      };
+            setViewedMonth(0);
+          } else {
+            setViewedMonth((month) => month + 1);
+          }
+          break;
+        case 'month':
+          setViewedYear((year) => year + 1);
+          break;
+        case 'year':
+          setViewedYear((year) => year + 15);
+          break;
+      }
+    };
 
-      const handlePrevious = () => {
-        switch (datepickerSelectionType()) {
-          case 'day':
-            if (viewedMonth() === 0) {
-              setViewedYear((year) => year - 1);
-              setViewedMonth(11);
-            } else {
-              setViewedMonth((month) => month - 1);
-            }
-            break;
-          case 'month':
+    const handlePrevious = () => {
+      switch (datepickerSelectionType()) {
+        case 'day':
+          if (viewedMonth() === 0) {
             setViewedYear((year) => year - 1);
-            break;
-          case 'year':
-            setViewedYear((year) => year - 15);
-            break;
-        }
-      };
+            setViewedMonth(11);
+          } else {
+            setViewedMonth((month) => month - 1);
+          }
+          break;
+        case 'month':
+          setViewedYear((year) => year - 1);
+          break;
+        case 'year':
+          setViewedYear((year) => year - 15);
+          break;
+      }
+    };
 
-      createEffect(
-        on(value, () => {
-          setFocused(false);
-        }, { defer: true })
-      );
+    createEffect(
+      on(value, () => {
+        setFocused(false);
+      }, { defer: true })
+    );
 
-      const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
 
-      const displayDate = createMemo(() => {
-        const selectedDate = value();
+    const displayDate = createMemo(() => {
+      const selectedDate = value();
 
-        if (selectedDate) {
-          const DD = ('00' + selectedDate.getDate()).slice(-2);
-          const MM = ('00' + (selectedDate.getMonth() + 1)).slice(-2);
-          const YYYY = ('0000' + selectedDate.getFullYear()).slice(-4);
-          return `${DD}/${MM}/${YYYY}`;
-        } else {
-          return 'DD/MM/YYYY';
-        }
-      });
+      if (selectedDate) {
+        const DD = ('00' + selectedDate.getDate()).slice(-2);
+        const MM = ('00' + (selectedDate.getMonth() + 1)).slice(-2);
+        const YYYY = ('0000' + selectedDate.getFullYear()).slice(-4);
+        return `${DD}/${MM}/${YYYY}`;
+      } else {
+        return 'DD/MM/YYYY';
+      }
+    });
 
-      return (
-        <FieldInternalWrapper>
-          <InputContainer
-            {...elProps}
-            id={id()}
-            labelFor={id()}
-            label={props.label}
-            color={props.color}
-            style={{
-              cursor: disabled() === false ? 'pointer' : 'default',
-              ...props.style,
-            }}
-            onClick={mergeCallbacks(
-              elProps.onClick as any,
-              () => {
-                if (!disabled()) {
-                  setFocused((focused) => !focused);
-                }
+    return (
+      <FieldInternalWrapper>
+        <InputContainer
+          {...elProps}
+          id={id()}
+          labelFor={id()}
+          label={props.label}
+          color={props.color}
+          style={{
+            cursor: disabled() === false ? 'pointer' : 'default',
+            ...props.style,
+          }}
+          onClick={mergeCallbacks(
+            elProps.onClick as any,
+            () => {
+              if (!disabled()) {
+                setFocused((focused) => !focused);
               }
-            )}
-            icon={<CalendarMonth variant="rounded" />}
-            ref={(ref) => {
-              if (typeof elProps.ref === 'function') {
-                elProps.ref(ref);
-              }
+            }
+          )}
+          icon={<CalendarMonth variant="rounded" />}
+          ref={(ref) => {
+            if (typeof elProps.ref === 'function') {
+              elProps.ref(ref);
+            }
 
-              setInputContainerRef(ref);
-            }}
+            setInputContainerRef(ref);
+          }}
+        >
+          {displayDate()}
+        </InputContainer>
+
+        <GrowFade>
+          <Dropdown
+            for={inputContainerRef()!}
+            visible={focused()}
+            class="datepicker-dropdown"
+            ref={setDropdownRef}
           >
-            {displayDate()}
-          </InputContainer>
+            <Box depth={0} class="datepicker-dropdown-inner">
+              <div class="dropdown-header">
+                <Button.Icon
+                  size="small"
+                  class="arrow-previous"
+                  onClick={handlePrevious}
+                >
+                  <ArrowLeft />
+                </Button.Icon>
 
-          <GrowFade>
-            <Dropdown
-              for={inputContainerRef()!}
-              visible={focused()}
-              class="datepicker-dropdown"
-              ref={setDropdownRef}
-            >
-              <Box depth={0} class="datepicker-dropdown-inner">
-                <div class="dropdown-header">
-                  <Button.Icon
-                    size="small"
-                    class="arrow-previous"
-                    onClick={handlePrevious}
+                <ButtonChooser
+                  name="dateSelectionType"
+                  class="selection-type-button-chooser"
+                  value={datepickerSelectionType()}
+                  manuallyControlled
+                  onChange={(v: any) => {
+                    if (v === datepickerSelectionType()) {
+                      setDatepickerSelectionType('day');
+                    } else {
+                      setDatepickerSelectionType(v as any);
+                    }
+                  }}
+                >{Option => [
+                  <Option
+                    size="medium"
+                    class="selection-type-button"
+                    value="month"
                   >
-                    <ArrowLeft />
-                  </Button.Icon>
-
-                  <ButtonChooser
-                    name="dateSelectionType"
-                    class="selection-type-button-chooser"
-                    value={datepickerSelectionType()}
-                    manuallyControlled
-                    onChange={(v: any) => {
-                      if (v === datepickerSelectionType()) {
-                        setDatepickerSelectionType('day');
-                      } else {
-                        setDatepickerSelectionType(v as any);
-                      }
-                    }}
-                  >{Option => [
-                    <Option
-                      size="medium"
-                      class="selection-type-button"
-                      value="month"
-                    >
-                      {monthNames[viewedMonth()]}
-                    </Option>,
-                    <Option
-                      size="medium"
-                      class="selection-type-button"
-                      value="year"
-                    >
-                      {viewedYear()}
-                    </Option>
-                  ]}</ButtonChooser>
-
-                  <Button.Icon
-                    size="small"
-                    class="arrow-next"
-                    onClick={handleNext}
+                    {monthNames[viewedMonth()]}
+                  </Option>,
+                  <Option
+                    size="medium"
+                    class="selection-type-button"
+                    value="year"
                   >
-                    <ArrowRight />
-                  </Button.Icon>
-                </div>
+                    {viewedYear()}
+                  </Option>
+                ]}</ButtonChooser>
 
-                <Row class="dropdown-content">
-                  <Switch>
-                    <Match when={typeof value() === 'undefined'}>
-                      ...
-                    </Match>
-                    <Match when={datepickerSelectionType() === 'day'}>
-                      <DatepickerInternalDayPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        onDayClicked={(newDate) => setValue(newDate)}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                    <Match when={datepickerSelectionType() === 'month'}>
-                      <DatepickerInternalMonthPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        monthNames={monthNames}
-                        onMonthClicked={(month) => {
-                          setValue(
-                            new Date(
-                              viewedYear(),
-                              month,
-                              Math.min(
-                                amountOfDaysInMonth(viewedYear(), month),
-                                value()?.getDate() || 1
-                              )
+                <Button.Icon
+                  size="small"
+                  class="arrow-next"
+                  onClick={handleNext}
+                >
+                  <ArrowRight />
+                </Button.Icon>
+              </div>
+
+              <Row class="dropdown-content">
+                <Switch>
+                  <Match when={typeof value() === 'undefined'}>
+                    ...
+                  </Match>
+                  <Match when={datepickerSelectionType() === 'day'}>
+                    <DatepickerInternalDayPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      onDayClicked={(newDate) => setValue(newDate)}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                  <Match when={datepickerSelectionType() === 'month'}>
+                    <DatepickerInternalMonthPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      monthNames={monthNames}
+                      onMonthClicked={(month) => {
+                        setValue(
+                          new Date(
+                            viewedYear(),
+                            month,
+                            Math.min(
+                              amountOfDaysInMonth(viewedYear(), month),
+                              value()?.getDate() || 1
                             )
-                          );
-                        }}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                    <Match when={datepickerSelectionType() === 'year'}>
-                      <DatepickerIntenralYearPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        onYearClicked={(year) => {
-                          setValue(
-                            new Date(
-                              year,
-                              viewedMonth(),
-                              Math.min(
-                                amountOfDaysInMonth(year, viewedMonth()),
-                                value()?.getDate() || 1
-                              )
+                          )
+                        );
+                      }}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                  <Match when={datepickerSelectionType() === 'year'}>
+                    <DatepickerIntenralYearPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      onYearClicked={(year) => {
+                        setValue(
+                          new Date(
+                            year,
+                            viewedMonth(),
+                            Math.min(
+                              amountOfDaysInMonth(year, viewedMonth()),
+                              value()?.getDate() || 1
                             )
-                          );
-                        }}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                  </Switch>
-                </Row>
-              </Box>
-            </Dropdown>
-          </GrowFade>
-        </FieldInternalWrapper>
-      );
-    },
-    [...FieldPropKeys, 'label', 'helperText', 'style', 'color', 'onChange', 'onFocus']
-  ),
+                          )
+                        );
+                      }}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                </Switch>
+              </Row>
+            </Box>
+          </Dropdown>
+        </GrowFade>
+      </FieldInternalWrapper>
+    );
+  },
+  [...FieldPropKeys, 'label', 'helperText', 'style', 'color', 'onChange', 'onFocus'],
   new Date()
 );
 

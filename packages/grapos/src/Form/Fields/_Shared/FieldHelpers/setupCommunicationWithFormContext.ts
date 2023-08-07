@@ -7,12 +7,13 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 import { FormValue } from '../../../Types/FormValue';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldProps } from '../Types/FieldProps';
+import { FieldName, FieldProps } from '../Types/FieldProps';
 
 export function setupCommunicationWithFormContext<
-  Props extends FieldProps<OwnerFormValue, BaseValueType>,
+  Name extends FieldName<OwnerFormValue, BaseValueType>,
+  Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
   BaseValueType extends FormFieldValue,
-  OwnerFormValue extends FormValue = FormValue
+  OwnerFormValue extends FormValue
 >(props: Props, initialValue: BaseValueType = '' as any): FormProviderValue<OwnerFormValue> | undefined {
   let form: FormProviderValue<OwnerFormValue> | undefined = useForm<OwnerFormValue>();
   if (props.manuallyControlled) {
@@ -29,7 +30,7 @@ export function setupCommunicationWithFormContext<
 
       form!.init(
         props.name,
-        props.validators || [],
+        (props.validators || []) as any,
         (form!.valueFor(props.name) || initialValue as any)
       );
     });

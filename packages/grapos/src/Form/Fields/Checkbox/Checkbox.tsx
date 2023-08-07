@@ -4,7 +4,6 @@ import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
 import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
@@ -17,8 +16,8 @@ import './Checkbox.scss';
 import { FormValue } from '../../Types/FormValue';
 
 export interface CheckboxProps<
-OwnerFormValue extends FormValue = FormValue,
-Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+  OwnerFormValue extends FormValue = FormValue,
+  Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
@@ -28,92 +27,90 @@ Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, bool
   onChange?: (value: boolean, event: MouseEvent) => any;
 }
 
-const Checkbox = setupFieldComponent(
-  forwardNativeElementProps<CheckboxProps, HTMLInputElement>(
-    (props, elProps) => {
-      const {
-        elementId: id,
-        disabledS: [disabled],
-        valueS: [value, setValue],
-        focusedS: [focused, setFocused],
-        validate,
-        hasErrors,
-      } = useField<boolean>()!;
+const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
+  (props, elProps) => {
+    const {
+      elementId: id,
+      disabledS: [disabled],
+      valueS: [value, setValue],
+      focusedS: [focused, setFocused],
+      validate,
+      hasErrors,
+    } = useField<boolean>()!;
 
-      const color = createMemo(() => props.color || 'primary');
+    const color = createMemo(() => props.color || 'primary');
 
-      return (
-        <FieldInternalWrapper>
-          <Show when={props.label}>
-            <Label for={id()} hasErrors={hasErrors()}>
-              {props.label}
-            </Label>
-          </Show>
+    return (
+      <FieldInternalWrapper>
+        <Show when={props.label}>
+          <Label for={id()} hasErrors={hasErrors()}>
+            {props.label}
+          </Label>
+        </Show>
 
-          <div
-            class="checkbox"
-            classList={{
-              primary: color() === 'primary',
-              secondary: color() === 'secondary',
-              tertiary: color() === 'tertiary',
+        <div
+          class="checkbox"
+          classList={{
+            primary: color() === 'primary',
+            secondary: color() === 'secondary',
+            tertiary: color() === 'tertiary',
 
-              small: props.size === 'small',
-              medium:
-                typeof props.size === 'undefined' || props.size === 'medium',
-              large: props.size === 'large',
+            small: props.size === 'small',
+            medium:
+              typeof props.size === 'undefined' || props.size === 'medium',
+            large: props.size === 'large',
 
-              checked: value() === true,
-              disabled: disabled(),
-            }}
-            onClick={(e) => {
-              if (!disabled()) {
-                const newValue = !value();
-                setValue(newValue);
-                validate(newValue);
+            checked: value() === true,
+            disabled: disabled(),
+          }}
+          onClick={(e) => {
+            if (!disabled()) {
+              const newValue = !value();
+              setValue(newValue);
+              validate(newValue);
 
-                if (props.onChange) {
-                  props.onChange(newValue, e);
-                }
+              if (props.onChange) {
+                props.onChange(newValue, e);
               }
-            }}
-            onMouseEnter={() => setFocused(true)}
-            onMouseLeave={() => setFocused(false)}
+            }
+          }}
+          onMouseEnter={() => setFocused(true)}
+          onMouseLeave={() => setFocused(false)}
+        >
+          <ClickableSignalizer
+            show={focused() && !disabled()}
+            color={value() ? `var(--${color()})` : undefined}
           >
-            <ClickableSignalizer
-              show={focused() && !disabled()}
-              color={value() ? `var(--${color()})` : undefined}
-            >
-              <Ripple class="checkbox-internal" color={color()} center>
-                <input
-                  {...elProps}
-                  id={id()}
-                  type="checkbox"
-                  onBlur={mergeCallbacks<() => void>(
-                    // eslint-disable-next-line solid/reactivity
-                    elProps.onBlur as any,
-                    () => setFocused(false)
-                  )}
-                  onFocus={mergeCallbacks<() => void>(
-                    // eslint-disable-next-line solid/reactivity
-                    elProps.onFocus as any,
-                    () => setFocused(true)
-                  )}
-                  value={value() ? 'on' : 'off'}
-                />
+            <Ripple class="checkbox-internal" color={color()} center>
+              <input
+                {...elProps}
+                id={id()}
+                type="checkbox"
+                onBlur={mergeCallbacks<() => void>(
+                  // eslint-disable-next-line solid/reactivity
+                  elProps.onBlur as any,
+                  () => setFocused(false)
+                )}
+                onFocus={mergeCallbacks<() => void>(
+                  // eslint-disable-next-line solid/reactivity
+                  elProps.onFocus as any,
+                  () => setFocused(true)
+                )}
+                value={value() ? 'on' : 'off'}
+              />
 
-                <GrowFade>
-                  <Show when={value() === true}>
-                    <Check class="checked-icon" variant="rounded" />
-                  </Show>
-                </GrowFade>
-              </Ripple>
-            </ClickableSignalizer>
-          </div>
-        </FieldInternalWrapper>
-      );
-    },
-    [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange']
-  ),
+              <GrowFade>
+                <Show when={value() === true}>
+                  <Check class="checked-icon" variant="rounded" />
+                </Show>
+              </GrowFade>
+            </Ripple>
+          </ClickableSignalizer>
+        </div>
+      </FieldInternalWrapper>
+    );
+  },
+  [...FieldPropKeys, 'label', 'helperText', 'color', 'size', 'onChange'],
   false
 );
 
