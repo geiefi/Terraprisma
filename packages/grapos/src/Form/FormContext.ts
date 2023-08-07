@@ -66,7 +66,7 @@ function getLeaves(obj: any): string[] {
   return resultingKeys;
 }
 
-function setByPath(obj: any, path: string | string[], value: any): void {
+export function setByPath(obj: any, path: string | string[], value: any): void {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
 
@@ -74,7 +74,9 @@ function setByPath(obj: any, path: string | string[], value: any): void {
     obj[cursorKey] = {};
   }
 
-  if (typeof obj[cursorKey] === 'object' && pathArr.length > 0) {
+  if (typeof obj[cursorKey] === 'object' 
+      && !(obj[cursorKey] instanceof Date) 
+      && pathArr.length > 0) {
     setByPath(obj[cursorKey], pathArr.slice(1), value);
   } else {
     obj[cursorKey] = value;

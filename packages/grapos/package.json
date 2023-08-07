@@ -17,25 +17,38 @@
     "material design",
     "flexible components"
   ],
+  "jest": {
+    "preset": "solid-jest/preset/browser",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
+  },
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
     "prepublish": "npm run build && cp package.json lib/package.json && cp ../../README.md README.md",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gabrielmfern/grapes.git"
   },
   "devDependencies": {
+    "@jest/globals": "^29.6.2",
+    "@types/jest": "^29.5.3",
     "@types/tinycolor2": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "eslint": "^8.41.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-solid": "^0.12.1",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "node-sass": "^9.0.0",
     "prettier": "^2.8.8",
     "sass": "^1.63.4",
+    "solid-jest": "^0.2.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.0-dev.20230805"
   },
   "dependencies": {
