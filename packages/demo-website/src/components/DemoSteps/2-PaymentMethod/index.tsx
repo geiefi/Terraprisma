@@ -10,7 +10,7 @@ import { Component, Show, createSignal } from 'solid-js';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';
-  creditCardDetails?: {
+  creditCardDetails: {
     number: string;
     cvv: string;
     displayedName: string;
