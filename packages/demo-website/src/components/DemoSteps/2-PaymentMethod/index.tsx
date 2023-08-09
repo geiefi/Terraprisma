@@ -1,3 +1,5 @@
+import { Component, Show, createSignal } from 'solid-js';
+
 import { Table } from 'grapos/DataDisplay';
 import { createForm } from 'grapos/Form/Form';
 import { FormProviderValue } from 'grapos/Form/FormContext';
@@ -6,7 +8,6 @@ import { Box } from 'grapos/General';
 import { BarcodeScanner, CreditCard, QrCode } from 'grapos/Icons';
 import { Col, Row } from 'grapos/Layout/Grid';
 import { Pagination } from 'grapos/Navigation';
-import { Component, Show, createSignal } from 'solid-js';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';
@@ -33,17 +34,19 @@ const PaymentMethod: Component<{
         name="paymentMethod"
         label="Método de pagamento"
         validators={[Validators.required]}
-      >
-        <PaymentForm.ButtonChooser.Option value="cartao-de-credito">
+      >{(Option) => <>
+        <Option value="cartao-de-credito">
           <CreditCard /> Cartão de crédito
-        </PaymentForm.ButtonChooser.Option>
-        <PaymentForm.ButtonChooser.Option value="boleto">
+        </Option>
+
+        <Option value="boleto">
           <BarcodeScanner /> Boleto
-        </PaymentForm.ButtonChooser.Option>
-        <PaymentForm.ButtonChooser.Option value="pix">
+        </Option>
+
+        <Option value="pix">
           <QrCode /> Pix
-        </PaymentForm.ButtonChooser.Option>
-      </PaymentForm.ButtonChooser>
+        </Option>
+      </>}</PaymentForm.ButtonChooser>
 
       <Show
         when={PaymentForm.store[0].values.paymentMethod === 'cartao-de-credito'}
