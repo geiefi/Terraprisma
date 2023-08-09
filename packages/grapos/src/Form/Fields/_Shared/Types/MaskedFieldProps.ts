@@ -31,8 +31,6 @@ export interface MaskedFieldProps<
    *
    * The mask functionality in GrapeS is taken from solid primitives's
    * [input-mask](https://github.com/solidjs-community/solid-primitives/tree/main/packages/input-mask).
-   *
-   * @see {@link maskShouldChangeUnderlyingValue}.
    */
   mask?: InputMask;
 }
