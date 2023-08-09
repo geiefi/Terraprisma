@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "grapos",
-  "version": "0.0.7",
+  "version": "0.0.0-1",
   "type": "module",
   "main": "index.jsx",
-  "description": "A flexible and fun to use Material Design-basd SolidJS component library",
+  "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
   "keywords": [
     "ui",
@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
-    "prepublish": "npm test && npm run build && cp package.json lib/package.json && cp ../../README.md README.md",
+    "prepublish": "npm test && npm run build && cp package.json lib/package.json && cp ../../README.md ./lib/README.md",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest"
   },
