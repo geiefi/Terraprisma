@@ -23,8 +23,8 @@ export class FormError extends Error { }
   * ```
   */
 export class FormStore<
-T extends FormValue, 
-Values extends FormValue = Partial<T>,
+  T extends FormValue,
+  Values extends FormValue = Partial<T>,
 > {
   values: Values;
   /**
@@ -42,10 +42,14 @@ Values extends FormValue = Partial<T>,
   }
 }
 
-function getByPath(obj: any, path: string | string[]): any {
+function isObject(thing: any): thing is object {
+  return typeof thing === 'object' && !(thing instanceof Date);
+}
+
+export function getByPath(obj: any, path: string | string[]): any {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
-  if (typeof obj[cursorKey] === 'object' && path.length > 0) {
+  if (isObject(obj[cursorKey]) && path.length > 0) {
     return getByPath(obj[cursorKey], pathArr.slice(1));
   } else {
     return obj[cursorKey];
@@ -56,7 +60,7 @@ function getLeaves(obj: any): string[] {
   const resultingKeys = [];
 
   for (const key of Object.keys(obj)) {
-    if (typeof obj[key] === 'object' && !(obj[key] instanceof Date)) {
+    if (isObject(obj[key])) {
       resultingKeys.push(...getLeaves(obj[key]).map(l => `${key}.${l}`));
     } else {
       resultingKeys.push(key);
@@ -74,20 +78,19 @@ export function setByPath(obj: any, path: string | string[], value: any): void {
     obj[cursorKey] = {};
   }
 
-  if (typeof obj[cursorKey] === 'object' 
-      && !(obj[cursorKey] instanceof Date) 
-      && pathArr.length > 0) {
+  if (isObject(obj[cursorKey])
+    && pathArr.length > 0) {
     setByPath(obj[cursorKey], pathArr.slice(1), value);
   } else {
     obj[cursorKey] = value;
   }
 }
 
-function deepDelete(obj: any, path: string | string[]): void {
+export function deepDelete(obj: any, path: string | string[]): void {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
 
-  if (typeof obj[cursorKey] === 'object' && path.length > 0) {
+  if (isObject(obj[cursorKey]) && path.length > 0) {
     deepDelete(obj[cursorKey], pathArr.slice(1));
   } else {
     delete obj[cursorKey];
@@ -99,9 +102,9 @@ function deepDelete(obj: any, path: string | string[]): void {
   * and access to some actions related to the context Form.
   */
 export class FormProviderValue<
-T extends FormValue, 
-Values extends FormValue = Partial<T>,
-Leaves extends T extends EmptyObj ? string : LeavesOfObject<T> 
+  T extends FormValue,
+  Values extends FormValue = Partial<T>,
+  Leaves extends T extends EmptyObj ? string : LeavesOfObject<T>
   = T extends EmptyObj ? string : LeavesOfObject<T>,
 > {
   private form: FormStore<Values>;
@@ -159,8 +162,8 @@ Leaves extends T extends EmptyObj ? string : LeavesOfObject<T>
     * @param value Just the initial value of the field being initialized.
     */
   init<Name extends Leaves>(
-    name: Name, 
-    validators: FieldValidator<DeepGet<Values, Name>>[], 
+    name: Name,
+    validators: FieldValidator<DeepGet<Values, Name>>[],
     value: DeepGet<Values, Name>
   ): void {
     if (document.querySelectorAll(`#field-${this.identification()}-${name}`).length > 1) {
