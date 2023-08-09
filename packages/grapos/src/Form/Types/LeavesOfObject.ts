@@ -29,6 +29,6 @@ export type LeavesOfObject<TValue, OnlyOfType = any> = {
   [TKey in keyof TValue]-?: RestOfLeaves<TKey & string, TValue[TKey], OnlyOfType>;
 }[keyof TValue];
 
-type RestOfLeaves<TKey extends string, TValue, OnlyOfType = any> = TValue extends FormFieldValue | Blob
+export type RestOfLeaves<TKey extends string, TValue, OnlyOfType = any> = TValue extends FormFieldValue | Blob
     ? (TValue extends OnlyOfType ? `${TKey}` : never)
-    : `${TKey}.${LeavesOfObject<TValue>}`;
+    : `${TKey}.${LeavesOfObject<TValue, OnlyOfType>}`;
