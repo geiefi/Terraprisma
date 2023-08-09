@@ -52,8 +52,8 @@ const Ripple: Component<RippleProps> = (allProps) => {
     let positionX = globalPositionX - elDOMRect.x;
     let positionY = globalPositionY - elDOMRect.y;
     if (props.center) {
-      positionX = element.offsetLeft + element.clientWidth / 2;
-      positionY = element.offsetTop + element.clientHeight / 2;
+      positionX = radius;
+      positionY = radius;
     }
 
     const rippleConfig: RippleConfig = {

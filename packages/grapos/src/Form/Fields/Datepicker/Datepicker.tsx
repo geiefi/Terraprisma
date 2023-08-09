@@ -140,6 +140,7 @@ const DatepickerInternalDayPicker: Component<{
           >
             <Button.Icon
               size="small"
+              centerRipple
               classList={{
                 active:
                   props.selectedDate.getMonth() === day.dateAtDay.getMonth() &&

@@ -63,6 +63,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
         color={p.pageN === props.current ? 'primary' : undefined}
         class="page-number"
         size="small"
+        centerRipple
         onClick={(e: MouseEvent) => handleChangePage(p.pageN, e)}
       >
         {p.pageN}
