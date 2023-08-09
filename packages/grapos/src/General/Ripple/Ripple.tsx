@@ -29,6 +29,9 @@ interface RippleConfig {
   top: number;
 }
 
+// TODO: make the Ripple not create a ripple container and modify
+// its child as necessary to automatically add the ripple such as solid-transition-group's 
+// Transitions do with their children
 const Ripple: Component<RippleProps> = (allProps) => {
   const [props, elProps] = splitProps(allProps, [
     'noRipple',
