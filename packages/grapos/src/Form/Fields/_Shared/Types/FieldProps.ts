@@ -33,7 +33,7 @@ export type FieldName<OwnerFormValue extends FormValue, ValueType = any> = Owner
 export interface FieldProps<
   OwnerFormValue extends FormValue = EmptyObj,
   BaseValueType extends FormFieldValue = FormFieldValue,
-  Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>,
+  Name extends FieldName<OwnerFormValue, BaseValueType> = FieldName<OwnerFormValue, BaseValueType>,
 > {
   /**
     * @description This is the identification of the field basically. If it is inside a `<Form>`

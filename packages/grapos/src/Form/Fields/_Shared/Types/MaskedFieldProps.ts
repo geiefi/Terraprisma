@@ -10,7 +10,6 @@ export const MaskedFieldPropsKeys: (keyof MaskedFieldProps)[] = [
   'mask',
 ];
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export interface MaskedFieldProps<
   OwnerFormValue extends FormValue = EmptyObj,
   BaseValueType extends FormFieldValue = FormFieldValue,
@@ -32,5 +31,6 @@ export interface MaskedFieldProps<
    * The mask functionality in GrapeS is taken from solid primitives's
    * [input-mask](https://github.com/solidjs-community/solid-primitives/tree/main/packages/input-mask).
    */
-  mask?: InputMask;
+  // TODO: find a way of disallowing this field instead of setting its type to never
+  mask?: BaseValueType extends string ? InputMask : never;
 }
