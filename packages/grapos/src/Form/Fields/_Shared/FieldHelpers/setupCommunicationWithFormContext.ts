@@ -14,7 +14,7 @@ export function setupCommunicationWithFormContext<
   Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
   BaseValueType extends FormFieldValue,
   OwnerFormValue extends FormValue
->(props: Props, initialValue: BaseValueType = '' as any): FormProviderValue<OwnerFormValue> | undefined {
+>(props: Props, initialValue: Props['value'] & BaseValueType = '' as any): FormProviderValue<OwnerFormValue> | undefined {
   let form: FormProviderValue<OwnerFormValue> | undefined = useForm<OwnerFormValue>();
   if (props.manuallyControlled) {
     form = undefined;

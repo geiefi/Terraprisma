@@ -37,7 +37,7 @@ export function setupFieldComponent<
     elProps: ElProps
   ) => JSX.Element,
   propKeys: PropKeys,
-  initialValueParam: BaseValueType | ((props: MProps & ElProps) => BaseValueType) = '' as any
+  initialValueParam: MProps['value'] & BaseValueType | ((props: MProps & ElProps) => MProps['value'] & BaseValueType) = '' as any
 ) {
   return <
     OwnerFormValue extends FormValue,
@@ -59,7 +59,7 @@ export function setupFieldComponent<
 
     const initialValue = (typeof initialValueParam === 'function'
       ? initialValueParam(allProps)
-      : initialValueParam) as AllProps['value'];
+      : initialValueParam) as Props['value'];
 
     const form = setupCommunicationWithFormContext<
       Name,

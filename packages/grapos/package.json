@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ./convert-scss-to-css-in-build.js",
-    "prepublish": "npm run build && cp package.json lib/package.json && cp ../../README.md README.md",
+    "prepublish": "npm test && npm run build && cp package.json lib/package.json && cp ../../README.md README.md",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest"
   },
@@ -49,7 +49,7 @@
     "sass": "^1.63.4",
     "solid-jest": "^0.2.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.2.0-dev.20230805"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",
