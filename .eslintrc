@@ -3,17 +3,19 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "prettier",
     "@typescript-eslint",
-    "solid"
+    "solid",
+    "prettier"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:solid/recommended"
+    "plugin:solid/recommended",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
