@@ -99,10 +99,15 @@ export default function GrapeS(props: ParentProps<{
         '--text-4': currentTheme().textColors[4].toRGBA(),
         '--text-5': currentTheme().textColors[5].toRGBA(),
 
+        '--text-marked': currentTheme().textColors.marked.textColor.toRGBA(),
+        '--text-marked-bg': currentTheme().textColors.marked.background.toRGBA(),
+
         '--primary': currentTheme().primary.toRGBA(),
         '--text-primary': currentTheme().textColors.primary.toRGBA(),
         '--lightened-primary': (currentTheme().lightnedPrimary
           || currentTheme().primary.withAlpha(0.32)).toRGBA(),
+        '--lightened-primary-2': (currentTheme().lightnedPrimary2
+          || currentTheme().primary.withAlpha(0.20)).toRGBA(),
 
         '--secondary': currentTheme().secondary.toRGBA(),
         '--text-secondary': currentTheme().textColors.secondary.toRGBA(),
@@ -114,10 +119,9 @@ export default function GrapeS(props: ParentProps<{
         '--lightened-tertiary': (currentTheme().lightnedTertiary
           || currentTheme().tertiary.withAlpha(0.32)).toRGBA(),
 
-        '--error': currentTheme().error.toRGBA(),
-
-        '--lightened-primary-2': (currentTheme().lightnedPrimary2
-          || currentTheme().primary.withAlpha(0.20)).toRGBA(),
+        '--warning': currentTheme().warning.toRGBA(),
+        '--success': currentTheme().success.toRGBA(),
+        '--danger': currentTheme().danger.toRGBA(),
       }}
     >
       {props.children}

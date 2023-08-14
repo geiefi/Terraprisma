@@ -52,8 +52,8 @@
   }
 
   &.error {
-    --label-color: var(--error);
-    --text-color: var(--error);
+    --label-color: var(--danger);
+    --text-color: var(--danger);
   }
 
   // sets the colors based on the variables created above
@@ -152,12 +152,12 @@
 
 .error .input-container,
 .error.input-container {
-  border-bottom: 3px solid var(--error);
+  border-bottom: 3px solid var(--danger);
 
   &::after {
     transition: .2s width ease-out,
       .2s height ease-out !important;
-    background: var(--error);
+    background: var(--danger);
     width: 100%;
   }
 }

@@ -4,6 +4,6 @@
   transition: .2s ease-in-out;
 
   &.error {
-    color: var(--error) !important;
+    color: var(--danger) !important;
   }
 }

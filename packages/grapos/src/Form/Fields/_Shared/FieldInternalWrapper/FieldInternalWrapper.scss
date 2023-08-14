@@ -15,7 +15,7 @@
 
   &.error {
     .helper-text { // the helper text shoes the error message in this situation
-      color: var(--error);
+      color: var(--danger);
     }
   }
 }

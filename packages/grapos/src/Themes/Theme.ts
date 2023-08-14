@@ -62,6 +62,11 @@ export type Theme = {
       */
     tertiary: Color;
 
+    marked: {
+      background: Color;
+      textColor: Color;
+    };
+
     0: Color;
     1: Color;
     2: Color;
@@ -93,5 +98,7 @@ export type Theme = {
    */
   lightnedTertiary?: Color;
 
-  error: Color;
+  success: Color;
+  warning: Color;
+  danger: Color;
 };
