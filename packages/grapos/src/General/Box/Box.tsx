@@ -7,7 +7,7 @@ import './Box.scss';
  * @description Determines what depth the current context of box is in
  * to then determine its background color based on the theme's defined monochromatic scale. 
  */
-export type Depth = 0 | 1 | 2 | 3 | 4;
+export type Depth = 0 | 1 | 2 | 3;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
@@ -58,7 +58,6 @@ const Box: Component<BoxProps> = (allProps) => {
         'gray-1': depth() === 1,
         'gray-2': depth() === 2,
         'gray-3': depth() === 3,
-        'bordered': (oldDepth || (() => 0))() === 3,
         ...elProps.classList
       }}
       style={elProps.style}
@@ -73,4 +72,3 @@ export function useDepth(): Accessor<Depth> | undefined {
 }
 
 export default Box;
-
