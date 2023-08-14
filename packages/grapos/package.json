@@ -39,7 +39,7 @@
     "@types/tinycolor2": "^1.4.3",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
-    "eslint": "^8.41.0",
+    "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-solid": "^0.12.1",
@@ -54,7 +54,6 @@
   },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",
-    "@solid-primitives/mutation-observer": "^1.1.13",
     "material-symbols": "^0.5.5",
     "solid-js": "^1.7.11",
     "solid-transition-group": "^0.2.2",
