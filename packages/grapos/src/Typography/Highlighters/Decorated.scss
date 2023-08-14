@@ -1,0 +1,15 @@
+.decorated {
+  &.disabled {
+    color: color-mix(in srgb, var(--text-0), transparent 80%);
+    font-weight: bolder;
+  }
+  &.underlined {
+    text-decoration: underline;
+  }
+  &.line-through {
+    text-decoration: line-through;
+  }
+  &.overlined {
+    text-decoration: overline;
+  }
+}

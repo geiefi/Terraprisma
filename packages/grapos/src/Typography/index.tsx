@@ -1,15 +1,11 @@
-import { ParentProps } from "solid-js";
+import { ParentProps } from 'solid-js';
 
-import { forwardNativeElementProps } from "../Helpers";
+import { forwardNativeElementProps } from '../Helpers';
 
 import Title from "./Title";
 import Paragraph from "./Paragraph";
-import Code from "./Code";
 
-export interface TypographyProps extends ParentProps {
-}
-
-const Typography = forwardNativeElementProps<TypographyProps, HTMLElement>(
+const Typography = forwardNativeElementProps<ParentProps, HTMLElement>(
   (props, elProps) => {
     return <article {...elProps}>
       {props.children}
@@ -18,4 +14,4 @@ const Typography = forwardNativeElementProps<TypographyProps, HTMLElement>(
   ['children']
 );
 
-export { Typography, Paragraph, Title, Code };
+export { Typography, Paragraph, Title };

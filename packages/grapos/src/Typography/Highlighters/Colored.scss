@@ -1,0 +1,20 @@
+.colored {
+  &.primary {
+    color: var(--primary);
+  }
+  &.secondary {
+    color: var(--secondary);
+  }
+  &.tertiary {
+    color: var(--tertiary);
+  }
+  &.danger {
+    color: var(--danger);
+  }
+  &.warning {
+    color: var(--warning);
+  }
+  &.success {
+    color: var(--success);
+  }
+}

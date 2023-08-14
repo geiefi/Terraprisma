@@ -1,16 +1,13 @@
 import { ParentProps, createMemo } from 'solid-js';
 
-import { useDepth } from '../General/Box/Box';
+import { useDepth } from '../../General/Box/Box';
 
-import { forwardNativeElementProps } from '../Helpers';
-import { mergeClass } from '../_Shared/Utils';
+import { forwardNativeElementProps } from '../../Helpers';
+import { mergeClass } from '../../_Shared/Utils';
 
 import './Code.scss';
 
-export interface CodeProps extends ParentProps {
-}
-
-const Code = forwardNativeElementProps<CodeProps, HTMLElement>(
+const Code = forwardNativeElementProps<ParentProps, HTMLElement>(
   (props, elProps) => {
     const originalDepth = useDepth();
     const depth = createMemo(() => typeof originalDepth !== 'undefined' ? originalDepth() : 0);
