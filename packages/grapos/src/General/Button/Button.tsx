@@ -1,4 +1,4 @@
-import { Component, createMemo, JSX, ParentProps } from 'solid-js';
+import { Component, createMemo, JSX } from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 import { useDepth } from '../Box/Box';
 import Ripple from '../Ripple/Ripple';
@@ -17,7 +17,6 @@ export interface ButtonProps {
   rippleClass?: string;
   centerRipple?: boolean;
 
-  onClick?: (e: MouseEvent) => any;
   style?: JSX.CSSProperties;
 }
 
@@ -35,15 +34,6 @@ const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
     return (
       <Ripple
         noRipple={props.disabled}
-        onClick={(event) => {
-          if (
-            props.onClick &&
-            typeof props.onClick === 'function' &&
-            !props.disabled
-          ) {
-            props.onClick(event as any);
-          }
-        }}
         center={props.centerRipple}
         class={props.rippleClass}
         classList={{
@@ -93,7 +83,6 @@ const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
     'disabled',
     'rippleColor',
     'rippleClass',
-    'onClick',
     'centerRipple',
   ]
 ) as {

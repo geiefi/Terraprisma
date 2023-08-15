@@ -17,6 +17,7 @@ export type GrapeSThemesProviderValue = {
   themes: Accessor<Theme[]>;
   currentTheme: Accessor<Theme>;
   currentThemeIdSignal: Signal<string>;
+  grapesGlobalDivRef: Accessor<HTMLDivElement>;
 };
 
 const GrapeSContext = createContext<GrapeSThemesProviderValue>();
@@ -77,13 +78,17 @@ export default function GrapeS(props: ParentProps<{
     document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
   });
 
+  const [grapesAppRef, setGrapesAppRef] = createSignal<HTMLDivElement>();
+
   return <GrapeSContext.Provider value={{
     themes,
     currentTheme,
-    currentThemeIdSignal: [themeId, setThemeId]
+    currentThemeIdSignal: [themeId, setThemeId],
+    grapesGlobalDivRef: grapesAppRef as Accessor<HTMLDivElement>,
   }}>
     <div 
       id="grapes-app"
+      ref={setGrapesAppRef}
       style={{
         '--gray-0': currentTheme().grays[0].toRGBA(),
         '--gray-1': currentTheme().grays[1].toRGBA(),
