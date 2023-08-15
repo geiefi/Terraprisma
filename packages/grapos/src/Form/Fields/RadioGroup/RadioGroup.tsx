@@ -90,8 +90,9 @@ const RadioInternal = forwardNativeElementProps<
           <ClickableSignalizer
             color={isChecked() ? `var(--${props.color})` : undefined}
             show={isRadioFocused() && !isDisabled()}
+            class="radio-internal" 
           >
-            <Ripple class="radio-internal" noRipple={isDisabled()} color={props.color} center>
+            <Ripple noRipple={isDisabled()} color={props.color} center>
               <input
                 {...elProps}
                 id={id()}

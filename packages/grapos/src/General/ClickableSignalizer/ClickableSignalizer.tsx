@@ -12,7 +12,7 @@ export interface ClickableSignalizerProps extends ParentProps {
   show?: boolean,
 }
 
-const ClickableSignalizer: Component<ClickableSignalizerProps> = forwardNativeElementProps<
+const ClickableSignalizer = forwardNativeElementProps<
   ClickableSignalizerProps, HTMLDivElement
 >(
   (props, elProps) => {

@@ -14,6 +14,7 @@ import { ClickableSignalizer, Ripple } from '../../../General';
 
 import './Checkbox.scss';
 import { FormValue } from '../../Types/FormValue';
+import { mergeClass } from '../../../_Shared/Utils';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -80,8 +81,9 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
           <ClickableSignalizer
             show={focused() && !disabled()}
             color={value() ? `var(--${color()})` : undefined}
+            class="checkbox-internal"
           >
-            <Ripple class="checkbox-internal" color={color()} center>
+            <Ripple color={color()} center>
               <input
                 {...elProps}
                 id={id()}
