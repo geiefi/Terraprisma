@@ -142,7 +142,6 @@ const Ripple: Component<RippleProps> = (allProps) => {
       const rippledElement = firstElementChild as HTMLElement;
 
       rippledElement.addEventListener('click', addNewRipple);
-      console.log(rippledElement);
 
       return rippledElement;
     } else {
