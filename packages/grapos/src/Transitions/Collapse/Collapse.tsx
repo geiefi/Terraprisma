@@ -1,7 +1,7 @@
 import { type Component, type ParentProps } from 'solid-js';
 import { Transition, TransitionProps } from 'solid-transition-group';
 
-import './GrowFade.scss';
+import './Collapse.scss';
 
 export interface CollapseProps extends Omit<TransitionProps, 'name'>, ParentProps {
   /**
