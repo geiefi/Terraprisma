@@ -5,15 +5,24 @@ import './Collapse.scss';
 
 export interface CollapseProps extends Omit<TransitionProps, 'name'>, ParentProps {
   /**
-   * @default 'top'
+   * @default 'vertical'
    */
-  origin?: 'top' | 'left' | 'bottom' | 'right';
+  // orientation?: 'vertical' | 'horizontal';
 }
 
-const Collapse: Component<CollapseProps> = (props) => (
-  <Transition name={`collapse-${props.origin || 'top'}`} {...props}>
-    {props.children}
-  </Transition>
-);
+const Collapse: Component<CollapseProps> = (props) => <Transition
+  name="collapse"
+  {...props}
+  onEnter={(el: Element, done) => {
+    if (el instanceof HTMLElement) {
+      el.style.setProperty('--expected-height', el.scrollHeight + 'px');
+    } else {
+      console.warn('The <Collapse> transition should be used only with HTML elements!');
+      done();
+    }
+  }}
+>
+  {props.children}
+</Transition>;
 
 export default Collapse;
