@@ -1,59 +1,19 @@
-.grow-fade-top-enter-active,
-.grow-fade-top-exit-active {
-  transform-origin: top !important;
-}
+$growth-origins: top left right center bottom;
 
-.grow-fade-left-enter-active,
-.grow-fade-left-exit-active {
-  transform-origin: left !important;
-}
+@each $origin in $growth-origins {
+  .grow-fade-#{$origin}-enter-active,
+  .grow-fade-#{$origin}-exit-active {
+    transform-origin: #{$origin} !important;
+    transition: opacity .2s, scale .2s !important;
+  }
 
-.grow-fade-right-enter-active,
-.grow-fade-right-exit-active {
-  transform-origin: right !important;
-}
+  .grow-fade-#{$origin}-exit-to {
+    scale: 0.8 !important;
+    opacity: 0 !important;
+  }
 
-.grow-fade-center-enter-active,
-.grow-fade-center-exit-active {
-  transform-origin: center !important;
-}
-
-.grow-fade-bottom-enter-active,
-.grow-fade-bottom-exit-active {
-  transform-origin: bottom !important;
-}
-
-.grow-fade-top-enter-active,
-.grow-fade-top-exit-active,
-
-.grow-fade-left-enter-active,
-.grow-fade-left-exit-active,
-
-.grow-fade-right-enter-active,
-.grow-fade-right-exit-active,
-
-.grow-fade-center-enter-active,
-.grow-fade-center-exit-active,
-
-.grow-fade-bottom-enter-active,
-.grow-fade-bottom-exit-active {
-  transition: opacity .2s, scale .2s !important;
-}
-
-.grow-fade-top-exit-to,
-.grow-fade-left-exit-to,
-.grow-fade-center-exit-to,
-.grow-fade-right-exit-to,
-.grow-fade-bottom-exit-to {
-  scale: 0.8 !important;
-  opacity: 0 !important;
-}
-
-.grow-fade-top-enter,
-.grow-fade-left-enter,
-.grow-fade-center-enter,
-.grow-fade-right-enter,
-.grow-fade-bottom-enter {
-  scale: 0.8 !important;
-  opacity: 0 !important;
+  .grow-fade-#{$origin}-enter {
+    scale: 0.8 !important;
+    opacity: 0 !important;
+  }
 }
