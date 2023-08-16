@@ -1,0 +1,35 @@
+
+$origins: top left right bottom;
+
+@each $origin in $origins {
+  .shrink-fade-#{$origin}-enter-active,
+  .shrink-fade-#{$origin}-exit-active {
+    transition: width .2s, height .2s !important;
+    @if $origin == 'top' {
+      height: 0 !important;
+    } @else if $origin == 'bottom' {
+      height: 0 !important;
+    } 
+
+    @if $origin == 'left' {
+      width: 0 !important;
+    } @else if $origin == 'right' {
+      width: 0 !important;
+    }
+  }
+
+  .shrink-fade-#{$origin}-exit-to,
+  .shrink-fade-#{$origin}-enter {
+    @if $origin == 'top' {
+      height: 100% !important;
+    } @else if $origin == 'bottom' {
+      height: 100% !important;
+    } 
+
+    @if $origin == 'left' {
+      width: 100% !important;
+    } @else if $origin == 'right' {
+      width: 100% !important;
+    }
+  }
+}
