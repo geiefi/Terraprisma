@@ -21,7 +21,6 @@ import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProp
 
 import './ButtonChooser.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
-import { forwardNativeElementProps } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { FormValue } from '../../Types/FormValue';
 import { GetProps } from '../../../Helpers/Types/GetProps';
@@ -131,7 +130,7 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
                   active: opt.value === value(),
                   ...opt.classList,
                 }}
-                onClick={(event: MouseEvent) => {
+                onClick={(event) => {
                   setValue(opt.value);
 
                   if (props.onChange) {

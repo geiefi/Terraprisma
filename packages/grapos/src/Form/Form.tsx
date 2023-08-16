@@ -222,7 +222,7 @@ const Form = <Value extends FormValue>(
   });
 
   return (
-    <FormContext.Provider value={providerValue as FormProviderValue<FormValue>}>
+    <FormContext.Provider value={providerValue as unknown as FormProviderValue<FormValue>}>
       {createRoot((rootDispose) => {
         disposeChildren = rootDispose;
 
