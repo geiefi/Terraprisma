@@ -8,11 +8,20 @@ import './Title.scss';
 
 export interface TitleProps extends ParentProps {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+  center?: boolean;
+
+  /**
+   * @default `true` if {@link as} is h1 or h2.
+   */
+  showDivisor?: boolean;
 }
 
 const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
+
+    const shouldShowDivisor = createMemo(() => typeof props.showDivisor === 'undefined' ? ['h1', 'h2'].includes(element()) : props.showDivisor);
 
     return <>
       <Dynamic 
@@ -25,17 +34,18 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
           'header-4': element() === 'h4',
           'header-5': element() === 'h5',
           'header-6': element() === 'h6',
+          center: props.center,
           ...elProps.classList,
         }}
       >
         {props.children}
       </Dynamic>
-      <Show when={['h1', 'h2'].includes(element())}>
+      <Show when={shouldShowDivisor()}>
         <Divisor />
       </Show>
     </>;
   },
-  ['children']
+  ['children', 'center']
 );
 
 export default Title;
