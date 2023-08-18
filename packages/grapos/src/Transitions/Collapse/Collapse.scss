@@ -1,12 +1,13 @@
 .collapse-enter-active,
 .collapse-exit-active {
   transition: max-height .3s !important;
+  height: auto !important;
   overflow-y: hidden !important;
 }
 
 .collapse-enter-to,
 .collapse-exit {
-  max-height: var(--expected-height);
+  max-height: var(--expected-height) !important;
 }
 
 .collapse-exit-to,
