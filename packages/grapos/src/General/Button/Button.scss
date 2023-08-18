@@ -25,7 +25,7 @@ button {
   gap: 5px;
   align-items: center;
 
-  height: 100%;
+  height: max-content;
 
   width: fit-content;
   box-sizing: border-box;
@@ -186,4 +186,3 @@ button {
     }
   }
 }
-
