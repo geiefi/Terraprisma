@@ -21,7 +21,9 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
 
-    const shouldShowDivisor = createMemo(() => typeof props.showDivisor === 'undefined' ? ['h1', 'h2'].includes(element()) : props.showDivisor);
+    const shouldShowDivisor = createMemo(() => typeof props.showDivisor === 'undefined' 
+      ? ['h1', 'h2'].includes(element()) 
+      : props.showDivisor);
 
     return <>
       <Dynamic 
