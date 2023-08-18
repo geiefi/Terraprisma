@@ -9,16 +9,17 @@ import {
   JSX,
   on,
   onCleanup,
-  ParentProps,
   Show,
   splitProps,
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
+
+import { useTheme } from '../../GrapeS';
+
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Ripple.scss';
-import { Portal } from 'solid-js/web';
-import { useTheme } from '../../GrapeS';
 
 export interface RippleProps extends JSX.HTMLAttributes<HTMLDivElement> {
   /**
@@ -88,14 +89,14 @@ const Ripple: Component<RippleProps> = (allProps) => {
   const createRipple = (
     element: HTMLElement,
     globalPositionX: number,
-    globalPositionY: number
+    globalPositionY: number,
   ) => {
     if (props.noRipple === true) return;
 
     const diameter = Math.max(element.clientWidth, element.clientHeight);
     const radius = diameter / 2;
 
-    const elDOMRect = element.getBoundingClientRect();
+    let elDOMRect = element.getBoundingClientRect();
     let positionX = globalPositionX - elDOMRect.x;
     let positionY = globalPositionY - elDOMRect.y;
     if (props.center) {
@@ -129,11 +130,38 @@ const Ripple: Component<RippleProps> = (allProps) => {
   });
 
   const [rippledElementBoundingBox, setRippledElementBoundingBox] = createSignal<DOMRect | undefined>();
+  const updateRipplesPosition = () => setRippledElementBoundingBox(absolutePosition(rippledElement()!));
 
   const addNewRipple = (event: MouseEvent) => {
-    setRippledElementBoundingBox(absolutePosition(rippledElement()!));
-    createRipple(rippleContainer()!, event.x, event.y);
+    createRipple(
+      rippleContainer()!,
+      event.x,
+      event.y
+    );
   };
+
+  let isUpdatingRippleWrapper = false;
+  const keepUpdatingRippleWrapper = () => {
+    isUpdatingRippleWrapper = true;
+
+    requestAnimationFrame(() => {
+      if (ripples.length > 0) {
+        updateRipplesPosition();
+        keepUpdatingRippleWrapper();
+      } else {
+        isUpdatingRippleWrapper = false;
+      }
+    });
+  };
+
+  createEffect(on(
+    () => ripples[0],
+    () => {
+      if (isUpdatingRippleWrapper === false) {
+        keepUpdatingRippleWrapper();
+      }
+    }
+  ));
 
   const rippledElement = createMemo<HTMLElement | undefined>(() => {
     const firstElementChild = childrenList().find(c => c instanceof HTMLElement);
