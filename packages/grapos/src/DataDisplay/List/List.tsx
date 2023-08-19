@@ -1,11 +1,4 @@
-import {
-  ComponentProps,
-  JSX,
-  ParentProps,
-  Show,
-  children as accessChildren,
-  createMemo,
-} from 'solid-js';
+import { ComponentProps, JSX, ParentProps, Show } from 'solid-js';
 import { forwardNativeElementProps } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 import { Ripple } from '../../General';
