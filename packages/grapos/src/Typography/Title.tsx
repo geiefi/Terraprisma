@@ -1,8 +1,8 @@
-import { ParentProps, Show, createMemo } from "solid-js";
-import { Dynamic } from "solid-js/web";
+import { ParentProps, Show, createMemo } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
-import { forwardNativeElementProps } from "../Helpers";
-import { Divisor } from "../Layout";
+import { forwardNativeElementProps } from '../Helpers';
+import { Divisor } from '../Layout';
 
 import './Title.scss';
 
@@ -21,33 +21,37 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
 
-    const shouldShowDivisor = createMemo(() => typeof props.showDivisor === 'undefined' 
-      ? ['h1', 'h2'].includes(element()) 
-      : props.showDivisor);
+    const shouldShowDivisor = createMemo(() =>
+      typeof props.showDivisor === 'undefined'
+        ? ['h1', 'h2'].includes(element())
+        : props.showDivisor
+    );
 
-    return <>
-      <Dynamic 
-        component={'h1'} 
-        {...elProps} 
-        classList={{
-          'header-1': element() === 'h1',
-          'header-2': element() === 'h2',
-          'header-3': element() === 'h3',
-          'header-4': element() === 'h4',
-          'header-5': element() === 'h5',
-          'header-6': element() === 'h6',
-          center: props.center,
-          ...elProps.classList,
-        }}
-      >
-        {props.children}
-      </Dynamic>
-      <Show when={shouldShowDivisor()}>
-        <Divisor />
-      </Show>
-    </>;
+    return (
+      <>
+        <Dynamic
+          component={'h1'}
+          {...elProps}
+          classList={{
+            'header-1': element() === 'h1',
+            'header-2': element() === 'h2',
+            'header-3': element() === 'h3',
+            'header-4': element() === 'h4',
+            'header-5': element() === 'h5',
+            'header-6': element() === 'h6',
+            center: props.center,
+            ...elProps.classList,
+          }}
+        >
+          {props.children}
+        </Dynamic>
+        <Show when={shouldShowDivisor()}>
+          <Divisor />
+        </Show>
+      </>
+    );
   },
-  ['children', 'center']
+  ['children', 'center', 'showDivisor', 'as']
 );
 
 export default Title;
