@@ -22,7 +22,11 @@ import { KeyboardArrowDown } from '../../../Icons';
 import { mergeClass } from '../../../_Shared/Utils';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps,
+} from '../_Shared/Types/FieldProps';
 
 import './Select.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
@@ -32,7 +36,10 @@ import { FormValue } from '../../Types/FormValue';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
+  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<
+    OwnerFormValue,
+    FormFieldValue
+  >
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
 
@@ -41,13 +48,15 @@ export interface SelectProps<
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
 
-  children: JSX.Element | ((
-    Option: Component<
-      SelectOptionProps<
-        FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
-      >
-    >
-  ) => JSX.Element);
+  children:
+    | JSX.Element
+    | ((
+        Option: Component<
+          SelectOptionProps<
+            FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+          >
+        >
+      ) => JSX.Element);
 }
 
 export interface SelectOptionProps<
@@ -105,8 +114,8 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
     onMount(() => document.addEventListener('click', onDocumentClick));
     onCleanup(() => document.removeEventListener('click', onDocumentClick));
 
-    const getChildren = accessChildren(
-      () => typeof props.children === 'function'
+    const getChildren = accessChildren(() =>
+      typeof props.children === 'function'
         ? props.children(Option)
         : props.children
     );
@@ -198,8 +207,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
             visible={focused()}
             classList={{
               primary:
-                props.color === 'primary' ||
-                typeof props.color === 'undefined',
+                props.color === 'primary' || typeof props.color === 'undefined',
               secondary: props.color === 'secondary',
               tertiary: props.color === 'tertiary',
             }}
@@ -242,10 +250,19 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
       </FieldInternalWrapper>
     );
   },
-  [...FieldPropKeys, 'label', 'helperText', 'color', 'children', 'onChange', 'onFocus']
+  [
+    ...FieldPropKeys,
+    'label',
+    'helperText',
+    'color',
+    'children',
+    'onChange',
+    'onFocus',
+  ]
 ) as {
   <OwnerFormValue extends FormValue>(
-    props: SelectProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof SelectProps>
+    props: SelectProps<OwnerFormValue> &
+      Omit<ComponentProps<'div'>, keyof SelectProps>
   ): JSX.Element;
   Option(props: SelectOptionProps): JSX.Element;
 };
