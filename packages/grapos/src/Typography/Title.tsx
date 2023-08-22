@@ -24,7 +24,7 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
     const shouldShowDivisor = createMemo(() =>
       typeof props.showDivisor === 'undefined'
         ? ['h1', 'h2'].includes(element())
-        : props.showDivisor
+        : props.showDivisor,
     );
 
     return (
@@ -51,7 +51,7 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
       </>
     );
   },
-  ['children', 'center', 'showDivisor', 'as']
+  ['children', 'center', 'showDivisor', 'as'],
 );
 
 export default Title;

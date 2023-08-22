@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/eslintrc.json",
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
@@ -7,13 +8,12 @@
     "prettier"
   ],
   "extends": [
-    "prettier",
     "plugin:@typescript-eslint/recommended",
-    "plugin:solid/recommended"
+    "plugin:solid/recommended",
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": "warn",
-    "eol-last": ["warn", "always"],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
