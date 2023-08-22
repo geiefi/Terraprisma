@@ -39,8 +39,13 @@ const Modal = forwardNativeElementProps<
           <Show when={props.visible}>
             <div
               class="modal-backdrop"
+              classList={{
+                visible: props.visible,
+              }}
               onClick={(event) =>
-                props.onCancel ? props.onCancel(event as any) : undefined
+                props.onCancel && props.visible
+                  ? props.onCancel(event as any)
+                  : undefined
               }
             >
               <Box

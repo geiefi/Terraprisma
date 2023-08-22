@@ -11,6 +11,10 @@
   background: rgba(0,0,0,.4);
   backdrop-filter: blur(1px);
 
+  &:not(.visible) {
+    pointer-events: none;
+  }
+
   & > .modal-box {
     position: absolute;
     left: 50%;
