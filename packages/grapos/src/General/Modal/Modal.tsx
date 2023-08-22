@@ -1,7 +1,7 @@
 import { JSX, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardNativeElementProps, mergeCallbacks } from '../../Helpers';
 
 import Box from '../Box/Box';
 import Button from '../Button/Button';
@@ -46,6 +46,12 @@ const Modal = forwardNativeElementProps<
               <Box
                 depth={1}
                 {...elProps}
+                onClick={mergeCallbacks(
+                  elProps.onClick as any,
+                  (event: MouseEvent) => {
+                    event.stopPropagation();
+                  },
+                )}
                 class={mergeClass('modal-box', elProps.class)}
               >
                 <div class="header">{props.title}</div>
@@ -60,25 +66,8 @@ const Modal = forwardNativeElementProps<
                   {props.extraElementsInFooter}
 
                   <div class="actions">
-                    <Button.Empty
-                      onClick={(event) => {
-                        if (props.onOk) {
-                          event.stopPropagation();
-                          props.onOk(event);
-                        }
-                      }}
-                    >
-                      Cancel
-                    </Button.Empty>
-                    <Button
-                      onClick={(event) => {
-                        if (props.onCancel) {
-                          event.stopPropagation();
-                          props.onCancel(event);
-                        }
-                      }}
-                      color="primary"
-                    >
+                    <Button.Empty onClick={props.onCancel}>Cancel</Button.Empty>
+                    <Button onClick={props.onOk} color="primary">
                       Ok
                     </Button>
                   </div>
