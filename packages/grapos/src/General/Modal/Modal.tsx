@@ -1,4 +1,4 @@
-import { ComponentProps, JSX, Show } from 'solid-js';
+import { JSX, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 import { forwardNativeElementProps } from '../../Helpers';
@@ -11,6 +11,7 @@ import './Modal.scss';
 import { useTheme } from '../../GrapeS';
 import { mergeClass } from '../../_Shared/Utils';
 import { Divisor } from '../../Layout';
+import { GetProps } from '../../Helpers/Types/GetProps';
 
 export interface ModalProps {
   visible?: boolean;
@@ -20,11 +21,15 @@ export interface ModalProps {
 
   extraElementsInFooter?: JSX.Element;
 
-  onOk?: ComponentProps<'button'>['onClick'];
-  onCancel?: ComponentProps<'button'>['onClick'];
+  onOk?: (event: MouseEvent) => any;
+  onCancel?: (event: MouseEvent) => any;
 }
 
-const Modal = forwardNativeElementProps<ModalProps, HTMLDivElement>(
+const Modal = forwardNativeElementProps<
+  ModalProps,
+  HTMLDivElement,
+  GetProps<typeof Box>
+>(
   (props, elProps) => {
     const { grapesGlobalDivRef } = useTheme()!;
 
@@ -32,11 +37,16 @@ const Modal = forwardNativeElementProps<ModalProps, HTMLDivElement>(
       <Portal mount={grapesGlobalDivRef()}>
         <Fade>
           <Show when={props.visible}>
-            <div class="modal-backdrop">
+            <div
+              class="modal-backdrop"
+              onClick={(event) =>
+                props.onCancel ? props.onCancel(event as any) : undefined
+              }
+            >
               <Box
+                depth={1}
                 {...elProps}
                 class={mergeClass('modal-box', elProps.class)}
-                depth={1}
               >
                 <div class="header">{props.title}</div>
 
@@ -50,8 +60,25 @@ const Modal = forwardNativeElementProps<ModalProps, HTMLDivElement>(
                   {props.extraElementsInFooter}
 
                   <div class="actions">
-                    <Button.Empty onClick={props.onOk}>Cancel</Button.Empty>
-                    <Button onClick={props.onCancel} color="primary">
+                    <Button.Empty
+                      onClick={(event) => {
+                        if (props.onOk) {
+                          event.stopPropagation();
+                          props.onOk(event);
+                        }
+                      }}
+                    >
+                      Cancel
+                    </Button.Empty>
+                    <Button
+                      onClick={(event) => {
+                        if (props.onCancel) {
+                          event.stopPropagation();
+                          props.onCancel(event);
+                        }
+                      }}
+                      color="primary"
+                    >
                       Ok
                     </Button>
                   </div>
