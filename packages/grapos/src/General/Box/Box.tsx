@@ -1,17 +1,28 @@
-import { Accessor, Component, createContext, createMemo, JSX, ParentProps, splitProps, useContext } from 'solid-js';
+import {
+  Accessor,
+  Component,
+  createContext,
+  createMemo,
+  JSX,
+  ParentProps,
+  splitProps,
+  useContext,
+} from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Box.scss';
 
 /**
  * @description Determines what depth the current context of box is in
- * to then determine its background color based on the theme's defined monochromatic scale. 
+ * to then determine its background color based on the theme's defined monochromatic scale.
  */
 export type Depth = 0 | 1 | 2 | 3;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
-export interface BoxProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement> {
+export interface BoxProps
+  extends ParentProps,
+    JSX.HTMLAttributes<HTMLDivElement> {
   /**
    * @description The depth of the current Box.
    *
@@ -19,11 +30,11 @@ export interface BoxProps extends ParentProps, JSX.HTMLAttributes<HTMLDivElement
    * its own background color when necessary, but normally this depth
    * is set automatically based on the context the Box is found on.
    */
-  depth?: Depth,
+  depth?: Exclude<Depth, 0>;
 }
 
 /**
- * @description A component used for having a kind of box, this Box creates a context automatically 
+ * @description A component used for having a kind of box, this Box creates a context automatically
  * that communicates to other boxes inside the depth that they should have automatically changing
  * their color accordingly.
  *
@@ -50,21 +61,23 @@ const Box: Component<BoxProps> = (allProps) => {
     return 1;
   }) as Accessor<Depth>;
 
-  return <BoxContext.Provider value={depth}>
-    <div 
-      {...elProps}
-      class={mergeClass('box', elProps.class)} 
-      classList={{
-        'gray-1': depth() === 1,
-        'gray-2': depth() === 2,
-        'gray-3': depth() === 3,
-        ...elProps.classList
-      }}
-      style={elProps.style}
-    >
-      {elProps.children}
-    </div>
-  </BoxContext.Provider>;
+  return (
+    <BoxContext.Provider value={depth}>
+      <div
+        {...elProps}
+        class={mergeClass('box', elProps.class)}
+        classList={{
+          'gray-1': depth() === 1,
+          'gray-2': depth() === 2,
+          'gray-3': depth() === 3,
+          ...elProps.classList,
+        }}
+        style={elProps.style}
+      >
+        {elProps.children}
+      </div>
+    </BoxContext.Provider>
+  );
 };
 
 export function useDepth(): Accessor<Depth> | undefined {

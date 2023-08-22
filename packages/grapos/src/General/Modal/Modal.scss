@@ -1,0 +1,47 @@
+@function add-transparency($color, $percentage) {
+  @return color-mix(in srgb, $color, transparent $percentage);
+}
+
+.modal-backdrop {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 20;
+
+  background: add-transparency(var(--gray-0), 40%);
+  backdrop-filter: blur(1px);
+
+  & > .modal-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 100%;
+    max-width: 568px;
+    height: fit-content;
+
+    border: none;
+
+    transform: translate(-50%, -50%);
+
+    & > .footer {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      & > .actions {
+        margin-left: auto;
+        display: flex;
+        gap: 20px;
+
+        & > * {
+          height: 100%;
+        }
+      }
+    }
+  }
+}

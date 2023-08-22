@@ -1,9 +1,9 @@
-import { Component, Show, createSignal } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 
 import { Col, Row } from 'grapos/Layout/Grid';
 import { List, Table } from 'grapos/DataDisplay';
 import { Container, Stack } from 'grapos/Layout';
-import { Box, Button } from 'grapos/General';
+import { Box, Button, Modal } from 'grapos/General';
 import {
   RadioGroup,
   Input,
@@ -20,15 +20,15 @@ import {
   Delete,
   Drafts,
   Inbox,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
   QuestionMark,
   Send,
   Star,
 } from 'grapos/Icons';
-import { Collapse } from 'grapos/Transitions';
+import { Paragraph, Typography } from 'grapos/Typography';
+import { Marked } from 'grapos/Typography/Highlighters';
 
 const DesignShowcase: Component = () => {
+  const [modalOpen, setModalOpen] = createSignal(false);
   return (
     <Container maxWidth="lg">
       <Box>
@@ -54,6 +54,29 @@ const DesignShowcase: Component = () => {
                 </List.ItemWithDetails>
               </List>
             </Box>
+          </Col>
+          <Col size={16}>
+            <Button onClick={() => setModalOpen(true)}>Open modal</Button>
+
+            <Modal
+              title="Hello, this is a modal"
+              visible={modalOpen()}
+              onOk={() => setModalOpen(false)}
+              onCancel={() => setModalOpen(false)}
+            >
+              <Typography>
+                <Paragraph>
+                  A modal consists of a dialog box that can be used for almost
+                  anything when you want to add something new to the website
+                  without needing to find a way to add too much information on
+                  the user's screen.
+                </Paragraph>
+                <Paragraph>
+                  You can create many modals with <Marked>GrapeS</Marked> and
+                  still not have enough of it. Have fun!
+                </Paragraph>
+              </Typography>
+            </Modal>
           </Col>
           <Col size={14}>
             <Table identification="MostPopulatedCountries" boxed>
@@ -84,19 +107,14 @@ const DesignShowcase: Component = () => {
                 validators={[Validators.isEqual('terraria')]}
                 value="minecraft"
               >
-                <RadioGroup.Option value="terraria">
-                  {' '}
-                  Terraria{' '}
-                </RadioGroup.Option>
+                <RadioGroup.Option value="terraria">Terraria</RadioGroup.Option>
                 <RadioGroup.Option value="minecraft">
-                  {' '}
-                  Minecraft{' '}
+                  Minecraft
                 </RadioGroup.Option>
                 <RadioGroup.Option value="roblox" disabled>
-                  {' '}
-                  Roblox{' '}
+                  Roblox
                 </RadioGroup.Option>
-                <RadioGroup.Option value="necesse"> Necesse </RadioGroup.Option>
+                <RadioGroup.Option value="necesse">Necesse</RadioGroup.Option>
               </RadioGroup>
             </Box>
           </Col>
