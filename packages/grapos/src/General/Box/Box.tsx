@@ -30,7 +30,7 @@ export interface BoxProps
    * its own background color when necessary, but normally this depth
    * is set automatically based on the context the Box is found on.
    */
-  depth?: Exclude<Depth, 0>;
+  depth?: Depth;
 }
 
 /**
