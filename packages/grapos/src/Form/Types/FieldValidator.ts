@@ -1,3 +1,7 @@
 import { FormFieldValue } from './FormFieldValue';
 
-export type FieldValidator<ValueType = FormFieldValue> = (value: ValueType | undefined | null) => string | string[] | undefined;
+export type FieldValidator<ValueType = FormFieldValue> = <
+  T extends ValueType | undefined | null,
+>(
+  value: T,
+) => string | string[] | undefined;
