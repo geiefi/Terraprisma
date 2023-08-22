@@ -32,5 +32,7 @@ export function useField<
   Value extends FormFieldValue = FormFieldValue,
   OwnerFormValue extends FormValue = EmptyObj,
 >() {
-  return useContext(FieldContext) as FieldProviderValue<Value, OwnerFormValue> | undefined;
+  return useContext(FieldContext) as
+    | FieldProviderValue<Value, OwnerFormValue>
+    | undefined;
 }
