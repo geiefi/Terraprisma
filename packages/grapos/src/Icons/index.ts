@@ -2,7 +2,7 @@ import 'material-symbols';
 
 import { icons, iconsPascalCase } from './Icons';
 
-import { createIconComponent, IconComponent } from './IconTemplate';
+import createIconComponent, { IconComponent } from './IconTemplate';
 
 const iconComponents: Record<string, IconComponent> = {} as any;
 

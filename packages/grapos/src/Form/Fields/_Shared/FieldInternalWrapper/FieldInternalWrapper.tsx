@@ -1,9 +1,4 @@
-import {
-  Component,
-  ComponentProps,
-  createMemo,
-  Show,
-} from 'solid-js';
+import { Component, ComponentProps, createMemo, Show } from 'solid-js';
 import { mergeClass } from '../../../../_Shared/Utils';
 
 import './FieldInternalWrapper.scss';
@@ -22,7 +17,7 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
     errorsT: [errors],
     disabledS: [isDisabled],
 
-    fieldProps,
+    fieldProps
   } = useField()!;
 
   const shouldRenderHelperText = createMemo(
@@ -38,7 +33,7 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
       class={mergeClass('field', divProps.class)}
       classList={{
         error: hasErrors(),
-        ...divProps.classList,
+        ...divProps.classList
       }}
     >
       {divProps.children}

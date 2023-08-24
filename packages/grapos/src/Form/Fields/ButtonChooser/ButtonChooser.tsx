@@ -7,7 +7,7 @@ import {
   createEffect,
   For,
   Show,
-  ComponentProps,
+  ComponentProps
 } from 'solid-js';
 import Button from '../../../General/Button/Button';
 
@@ -17,17 +17,23 @@ import Label from '../_Shared/Label/Label';
 import { mergeClass } from '../../../_Shared/Utils';
 
 import { FormFieldValue } from '../../Types/FormFieldValue';
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 
 import './ButtonChooser.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { FormValue } from '../../Types/FormValue';
-import { GetProps } from '../../../Helpers/Types/GetProps';
 
 export interface ButtonChooserProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>
+  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<
+    OwnerFormValue,
+    FormFieldValue
+  >
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -37,20 +43,20 @@ export interface ButtonChooserProps<
 
   onChange?: (newValue: FormFieldValue) => any;
 
-  children: JSX.Element | (
-    (
-      Option: Component<
-        ButtonChooserOptionProps<
-          FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+  children:
+    | JSX.Element
+    | ((
+        Option: Component<
+          ButtonChooserOptionProps<
+            FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+          >
         >
-      >
-    ) => JSX.Element
-  );
+      ) => JSX.Element);
 }
 
 export interface ButtonChooserOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue
-> extends GetProps<typeof Button.Empty> {
+> extends ComponentProps<typeof Button.Empty> {
   value: AllowedValue;
 }
 
@@ -65,11 +71,13 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
       disabledS: [disabled],
       valueS: [value, setValue],
       validate,
-      hasErrors,
+      hasErrors
     } = useField()!;
 
-    const getChildren = accessChildren(
-      () => typeof props.children === 'function' ? props.children(Option) : props.children
+    const getChildren = accessChildren(() =>
+      typeof props.children === 'function'
+        ? props.children(Option)
+        : props.children
     );
     const options = createMemo<ButtonChooserOptionProps[]>(() => {
       let childrenArr: (JSX.Element | ButtonChooserOptionProps)[];
@@ -109,7 +117,7 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
         class={mergeClass('button-chooser', elProps.class)}
         style={{
           height: 'fit-content',
-          ...props.style,
+          ...props.style
         }}
       >
         <Show when={props.label}>
@@ -128,7 +136,7 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
                 class={opt.class}
                 classList={{
                   active: opt.value === value(),
-                  ...opt.classList,
+                  ...opt.classList
                 }}
                 onClick={(event) => {
                   setValue(opt.value);
@@ -150,10 +158,19 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
       </FieldInternalWrapper>
     );
   },
-  [...FieldPropKeys, 'label', 'color', 'children', 'helperText', 'onChange', 'style']
+  [
+    ...FieldPropKeys,
+    'label',
+    'color',
+    'children',
+    'helperText',
+    'onChange',
+    'style'
+  ]
 ) as {
   <OwnerFormValue extends FormValue>(
-    props: ButtonChooserProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof ButtonChooserProps>
+    props: ButtonChooserProps<OwnerFormValue> &
+      Omit<ComponentProps<'div'>, keyof ButtonChooserProps>
   ): JSX.Element;
   Option(props: ButtonChooserOptionProps): JSX.Element;
 };

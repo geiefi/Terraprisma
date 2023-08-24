@@ -20,7 +20,7 @@ import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProp
 import './RadioGroup.scss';
 import { ClickableSignalizer, Ripple } from '../../../General';
 import { mergeCallbacks } from '../../../Helpers';
-import { forwardNativeElementProps } from '../../../Helpers';
+import { forwardComponentProps } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { mergeClass } from '../../../_Shared/Utils';
 import { Stack } from '../../../Layout';
@@ -41,7 +41,7 @@ export interface RadioGroupOptionProps<AllowedValue extends FormFieldValue = For
 const RadioOption = (props: RadioGroupOptionProps & Omit<ComponentProps<'input'>, keyof RadioGroupOptionProps>) =>
   props as unknown as JSX.Element;
 
-const RadioInternal = forwardNativeElementProps<
+const RadioInternal = forwardComponentProps<
   RadioGroupOptionProps,
   HTMLInputElement
 >(
@@ -90,7 +90,7 @@ const RadioInternal = forwardNativeElementProps<
           <ClickableSignalizer
             color={isChecked() ? `var(--${props.color})` : undefined}
             show={isRadioFocused() && !isDisabled()}
-            class="radio-internal" 
+            class="radio-internal"
           >
             <Ripple noRipple={isDisabled()} color={props.color} center>
               <input

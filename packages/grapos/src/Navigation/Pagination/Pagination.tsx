@@ -1,6 +1,6 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 
 import { Button } from '../../General';
 import { ArrowBackIosNew, ArrowForwardIos } from '../../Icons';
@@ -19,16 +19,18 @@ export interface PaginationProps {
    *
    * Mostly this should be a odd number since this component tries to center the current page.
    *
-   * @default 5 
+   * @default 5
    */
   maximumAppearingChoices?: number;
 
   onChangePage?: (newPage: number, event?: MouseEvent) => any;
 }
 
-const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
+const Pagination = forwardComponentProps<PaginationProps, 'div'>(
   (props, elProps) => {
-    const maximumAppearingChoices = createMemo(() => props.maximumAppearingChoices || 5 - 2);
+    const maximumAppearingChoices = createMemo(
+      () => props.maximumAppearingChoices || 5 - 2
+    );
 
     const handleChangePage = (newPage: number, event: MouseEvent) => {
       if (typeof props.onChangePage === 'function') {
@@ -46,7 +48,8 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
         if (pageNAtOffset <= 1) {
           pageNAtOffset = props.current + half + 2 - pageNAtOffset;
         } else if (pageNAtOffset >= props.total) {
-          pageNAtOffset = props.current - half - 1 - (pageNAtOffset - props.total);
+          pageNAtOffset =
+            props.current - half - 1 - (pageNAtOffset - props.total);
         }
 
         if (pageNAtOffset > props.total || pageNAtOffset < 1) {
@@ -55,7 +58,7 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
 
         pagesSurroundingCurrent.push(pageNAtOffset);
       }
-        return pagesSurroundingCurrent.sort((a,b) => a - b);
+      return pagesSurroundingCurrent.sort((a, b) => a - b);
     });
 
     const PageNumber = (p: { pageN: number }) => (
@@ -70,38 +73,58 @@ const Pagination = forwardNativeElementProps<PaginationProps, HTMLDivElement>(
       </Button.Icon>
     );
 
-    const Etc = () => 
-      <div class="etc-icon"> ... </div>;
+    const Etc = () => <div class="etc-icon"> ... </div>;
 
-    return <div {...elProps} class={mergeClass('pagination-container', elProps.class)}>
-      <Button.Icon 
-        class="back" 
-        disabled={props.current === 1}
-        size="small"
-        onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
-      > <ArrowBackIosNew /> </Button.Icon>
+    return (
+      <div
+        {...elProps}
+        class={mergeClass('pagination-container', elProps.class)}
+      >
+        <Button.Icon
+          class="back"
+          disabled={props.current === 1}
+          size="small"
+          onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
+        >
+          {' '}
+          <ArrowBackIosNew />{' '}
+        </Button.Icon>
 
-      <Show when={!range().includes(1)}> <PageNumber pageN={1}/> </Show>
+        <Show when={!range().includes(1)}>
+          {' '}
+          <PageNumber pageN={1} />{' '}
+        </Show>
 
-      <Show when={!range().includes(2)}> <Etc/> </Show>
+        <Show when={!range().includes(2)}>
+          {' '}
+          <Etc />{' '}
+        </Show>
 
-      <For each={range()}>{
-        (pageN) => <PageNumber pageN={pageN}/>
-      }</For>
+        <For each={range()}>{(pageN) => <PageNumber pageN={pageN} />}</For>
 
-      <Show when={!range().includes(props.total - 1)}> <Etc/> </Show>
+        <Show when={!range().includes(props.total - 1)}>
+          {' '}
+          <Etc />{' '}
+        </Show>
 
-      <Show when={!range().includes(props.total)}> <PageNumber pageN={props.total}/> </Show>
+        <Show when={!range().includes(props.total)}>
+          {' '}
+          <PageNumber pageN={props.total} />{' '}
+        </Show>
 
-      <Button.Icon 
-        class="next" 
-        disabled={props.current === props.total}
-        onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
-        size="small"
-      > <ArrowForwardIos /> </Button.Icon>
-    </div>;
+        <Button.Icon
+          class="next"
+          disabled={props.current === props.total}
+          onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
+          size="small"
+        >
+          {' '}
+          <ArrowForwardIos />{' '}
+        </Button.Icon>
+      </div>
+    );
   },
   ['current', 'total', 'onChangePage']
-)
+);
 
 export default Pagination;

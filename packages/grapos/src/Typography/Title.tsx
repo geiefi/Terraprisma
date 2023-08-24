@@ -1,7 +1,7 @@
 import { ParentProps, Show, createMemo } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { forwardNativeElementProps } from '../Helpers';
+import { forwardComponentProps } from '../Helpers';
 import { Divisor } from '../Layout';
 
 import './Title.scss';
@@ -17,14 +17,14 @@ export interface TitleProps extends ParentProps {
   showDivisor?: boolean;
 }
 
-const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
+const Title = forwardComponentProps<TitleProps, 'h1'>(
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
 
     const shouldShowDivisor = createMemo(() =>
       typeof props.showDivisor === 'undefined'
         ? ['h1', 'h2'].includes(element())
-        : props.showDivisor,
+        : props.showDivisor
     );
 
     return (
@@ -40,7 +40,7 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
             'header-5': element() === 'h5',
             'header-6': element() === 'h6',
             center: props.center,
-            ...elProps.classList,
+            ...elProps.classList
           }}
         >
           {props.children}
@@ -51,7 +51,7 @@ const Title = forwardNativeElementProps<TitleProps, HTMLHeadingElement>(
       </>
     );
   },
-  ['children', 'center', 'showDivisor', 'as'],
+  ['children', 'center', 'showDivisor', 'as']
 );
 
 export default Title;

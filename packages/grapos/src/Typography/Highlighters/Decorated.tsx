@@ -1,24 +1,30 @@
 import { ParentProps } from 'solid-js';
 
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Decorated.scss';
 
-export type TypographyDecoration = 'disabled' | 'underlined' | 'line-through' | 'overlined';
+export type TypographyDecoration =
+  | 'disabled'
+  | 'underlined'
+  | 'line-through'
+  | 'overlined';
 
 export interface DecoratedProps extends ParentProps {
   decoration: TypographyDecoration;
 }
 
-const Decorated = forwardNativeElementProps<DecoratedProps, HTMLElement>(
+const Decorated = forwardComponentProps<DecoratedProps, 'span'>(
   (props, elProps) => {
-    return <span 
-      {...elProps} 
-      class={mergeClass('decorated', props.decoration, elProps.class)}
-    >
-      {props.children}
-    </span>;
+    return (
+      <span
+        {...elProps}
+        class={mergeClass('decorated', props.decoration, elProps.class)}
+      >
+        {props.children}
+      </span>
+    );
   },
   ['decoration', 'children'],
 );

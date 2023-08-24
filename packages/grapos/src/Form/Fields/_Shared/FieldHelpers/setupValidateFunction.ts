@@ -6,7 +6,9 @@ import { FormProviderValue } from '../../../FormContext';
 
 import { FieldName, FieldProps } from '../Types/FieldProps';
 
-export type FieldInternalValidate<ValueType extends FormFieldValue = FormFieldValue> = (value: ValueType | undefined) => string[] | undefined;
+export type FieldInternalValidate<
+  ValueType extends FormFieldValue = FormFieldValue
+> = (value: ValueType | undefined) => string[] | undefined;
 
 export function setupValidateFunction<
   Name extends FieldName<OwnerFormValue, BaseValueType>,
@@ -14,8 +16,8 @@ export function setupValidateFunction<
   BaseValueType extends FormFieldValue,
   OwnerFormValue extends FormValue
 >(
-  props: Props, 
-  setErrors: Setter<string[]>, 
+  props: Props,
+  setErrors: Setter<string[]>,
   form: FormProviderValue<OwnerFormValue> | undefined
 ): FieldInternalValidate<Props['value']> {
   if (typeof form !== 'undefined') {
@@ -34,7 +36,7 @@ export function setupValidateFunction<
     } else if (typeof props.validators !== 'undefined') {
       const newErrors = props.validators
         // we assert it to be truthy here since we filter(Boolean) after
-        .map(validator => validator(value)!)
+        .map((validator) => validator(value)!)
         .filter(Boolean)
         .flat();
 
@@ -42,5 +44,5 @@ export function setupValidateFunction<
 
       return newErrors;
     }
-  }
+  };
 }

@@ -5,7 +5,10 @@ import { createInputMask } from '@solid-primitives/input-mask';
 import InputContainer from '../_Shared/InputContainer/InputContainer';
 import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalWrapper';
 
-import { MaskedFieldPropsKeys, MaskedFieldProps } from '../_Shared/Types/MaskedFieldProps';
+import {
+  MaskedFieldPropsKeys,
+  MaskedFieldProps
+} from '../_Shared/Types/MaskedFieldProps';
 
 import './TextArea.scss';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
@@ -21,7 +24,10 @@ export type TextAreaChangeEvent = Event & {
 
 export interface TextAreaProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, string> = FieldName<OwnerFormValue, string>
+  Name extends FieldName<OwnerFormValue, string> = FieldName<
+    OwnerFormValue,
+    string
+  >
 > extends MaskedFieldProps<OwnerFormValue, string, Name> {
   label?: JSX.Element;
 
@@ -38,18 +44,13 @@ const TextArea = setupFieldComponent<TextAreaProps, 'textarea', string>(
       disabledS: [disabled],
       valueS: [value, setValue],
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       focusedS: [_focused, setFocused],
-      validate,
+      validate
     } = useField<string>()!;
 
     return (
       <FieldInternalWrapper>
-        <InputContainer
-          labelFor={id()}
-          color={props.color}
-          label={props.label}
-        >
+        <InputContainer labelFor={id()} color={props.color} label={props.label}>
           <textarea
             {...elProps}
             id={id()}
@@ -58,12 +59,17 @@ const TextArea = setupFieldComponent<TextAreaProps, 'textarea', string>(
             class={elProps.class}
             classList={{
               'no-label': typeof props.label === 'undefined',
-              ...elProps.classList,
+              ...elProps.classList
             }}
             onInput={mergeCallbacks(
               elProps.onInput as any,
               props.mask ? createInputMask(props.mask) : undefined,
-              (event: InputEvent & { target: HTMLTextAreaElement, currentTarget: HTMLTextAreaElement }) => {
+              (
+                event: InputEvent & {
+                  target: HTMLTextAreaElement;
+                  currentTarget: HTMLTextAreaElement;
+                }
+              ) => {
                 event.target.style.height = '0px';
                 const scrollHeight = Math.max(event.target.scrollHeight, 54);
                 event.target.style.height = `${scrollHeight}px`;

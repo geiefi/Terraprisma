@@ -17,7 +17,7 @@ export const FieldPropKeys = [
   'focused',
   'validateOnStartup',
   'helperText',
-  'errorsStore',
+  'errorsStore'
 ] as const;
 
 // export type FieldName<OwnerFormValue extends FormValue, ValueType = any> = OwnerFormValue extends EmptyObj ? string
@@ -25,7 +25,7 @@ export const FieldPropKeys = [
 
 export type FieldName<
   OwnerFormValue extends FormValue,
-  ValueType = any,
+  ValueType = any
 > = OwnerFormValue extends EmptyObj
   ? string
   : LeavesOfObject<OwnerFormValue, ValueType>;
@@ -40,7 +40,7 @@ export interface FieldProps<
   Name extends FieldName<OwnerFormValue, BaseValueType> = FieldName<
     OwnerFormValue,
     BaseValueType
-  >,
+  >
 > {
   /**
    * @description This is the identification of the field basically. If it is inside a `<Form>`

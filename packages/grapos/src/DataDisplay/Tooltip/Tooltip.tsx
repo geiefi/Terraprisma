@@ -5,12 +5,12 @@ import {
   JSX,
   on,
   ParentProps,
-  Show,
+  Show
 } from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Tooltip.scss';
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 import { ArrowDropDown } from '../../Icons';
 
 export interface TooltipProps extends ParentProps {
@@ -63,10 +63,7 @@ export function createTooltip(identification: string) {
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
-    Tooltip: forwardNativeElementProps<
-      TooltipProps,
-      HTMLDivElement
-    >(
+    Tooltip: forwardComponentProps<TooltipProps, 'div'>(
       (props, elProps) => {
         const [visible, setVisible] = createSignal(props.visible);
 
@@ -81,11 +78,9 @@ export function createTooltip(identification: string) {
             console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
             Are your forgetting to call setAnchor for it?`);
           }
-        }
+        };
 
-        createEffect(
-          on([visible, anchorRef], () => updateBoundingBox!())
-        );
+        createEffect(on([visible, anchorRef], () => updateBoundingBox!()));
 
         createEffect(() => {
           setVisible(props.visible);
@@ -107,21 +102,24 @@ export function createTooltip(identification: string) {
 
                 '--offset-from-anchor': props.offsetFromAnchor || '12px',
 
-                ...props.style,
+                ...props.style
               }}
               classList={{
                 top:
-                  props.position === 'top' || typeof props.position === 'undefined',
+                  props.position === 'top' ||
+                  typeof props.position === 'undefined',
                 bottom: props.position === 'bottom',
                 left: props.position === 'left',
                 right: props.position === 'right',
-                ...elProps.classList,
+                ...elProps.classList
               }}
             >
               <div class="tooltip-content">
                 {props.children}
 
-                <span class="icon"><ArrowDropDown /></span>
+                <span class="icon">
+                  <ArrowDropDown />
+                </span>
               </div>
             </div>
           </Show>
@@ -134,19 +132,27 @@ export function createTooltip(identification: string) {
 
 /**
  * @description A tooltip component, a small box that appears at a certain specified offset from an anchor
- * when it is visible. 
+ * when it is visible.
  *
  * There is a also a {@link createTooltip} pattern for when you need to update the positioning of the
  * Tooltip in a data driven way.
  */
-const Tooltip = (props: TooltipProps & { identification: string; anchor: HTMLElement; } & ComponentProps<'div'>) => {
+const Tooltip = (
+  props: TooltipProps & {
+    identification: string;
+    anchor: HTMLElement;
+  } & ComponentProps<'div'>
+) => {
   // eslint-disable-next-line solid/reactivity
   const { setAnchor, Tooltip: Comp } = createTooltip(props.identification);
 
   createEffect(() => setAnchor(props.anchor));
 
-  return <><Comp {...props} /></>;
+  return (
+    <>
+      <Comp {...props} />
+    </>
+  );
 };
 
-export default Tooltip
-
+export default Tooltip;

@@ -9,7 +9,7 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 
 export interface FieldProviderValue<
   Value extends FormFieldValue,
-  OwnerFormValue extends FormValue = FormValue,
+  OwnerFormValue extends FormValue = FormValue
 > {
   fieldProps: FieldProps<OwnerFormValue> & { name: FieldName<OwnerFormValue> };
 
@@ -30,7 +30,7 @@ export const FieldContext = createContext<FieldProviderValue<any>>();
 
 export function useField<
   Value extends FormFieldValue = FormFieldValue,
-  OwnerFormValue extends FormValue = EmptyObj,
+  OwnerFormValue extends FormValue = EmptyObj
 >() {
   return useContext(FieldContext) as
     | FieldProviderValue<Value, OwnerFormValue>

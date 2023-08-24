@@ -6,7 +6,11 @@ import { mergeCallbacks } from '../../../Helpers';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 
 import { Check } from '../../../Icons';
 import { GrowFade } from '../../../Transitions';
@@ -14,11 +18,13 @@ import { ClickableSignalizer, Ripple } from '../../../General';
 
 import './Checkbox.scss';
 import { FormValue } from '../../Types/FormValue';
-import { mergeClass } from '../../../_Shared/Utils';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+  Name extends FieldName<OwnerFormValue, boolean> = FieldName<
+    OwnerFormValue,
+    boolean
+  >
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
@@ -36,7 +42,7 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
       valueS: [value, setValue],
       focusedS: [focused, setFocused],
       validate,
-      hasErrors,
+      hasErrors
     } = useField<boolean>()!;
 
     const color = createMemo(() => props.color || 'primary');
@@ -62,7 +68,7 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
             large: props.size === 'large',
 
             checked: value() === true,
-            disabled: disabled(),
+            disabled: disabled()
           }}
           onClick={(e) => {
             if (!disabled()) {

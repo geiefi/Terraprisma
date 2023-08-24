@@ -1,18 +1,15 @@
-import {
-  createEffect,
-  createMemo,
-  JSX,
-  on,
-  onCleanup,
-  Show,
-} from 'solid-js';
+import { createEffect, createMemo, JSX, on, onCleanup, Show } from 'solid-js';
 
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 import { GrowFade } from '../../../Transitions';
 import { createTooltip } from '../../../DataDisplay';
 
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 import { FormValue } from '../../Types/FormValue';
 
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
@@ -22,7 +19,10 @@ import './Slider.scss';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, number> = FieldName<OwnerFormValue, number>,
+  Name extends FieldName<OwnerFormValue, number> = FieldName<
+    OwnerFormValue,
+    number
+  >
 > extends FieldProps<OwnerFormValue, number, Name> {
   label?: JSX.Element;
 
@@ -47,7 +47,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
       focusedS: [focused, setFocused],
       valueS: [value, setValue],
       validate,
-      hasErrors,
+      hasErrors
       // eslint-disable-next-line solid/reactivity
     } = useField<number>()!;
 
@@ -97,10 +97,10 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
     createEffect(() => {
       const tempSlider = slider;
       tempSlider.addEventListener('mousedown', handleMouseDown, {
-        passive: true,
+        passive: true
       });
       document.addEventListener('mousemove', handleMouseMove, {
-        passive: true,
+        passive: true
       });
       document.addEventListener('mouseup', handleMouseUp);
 
@@ -111,7 +111,9 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
       });
     });
 
-    const { setAnchor, updateBoundingBox, Tooltip } = createTooltip(`${id()}-SliderValueTooltip`);
+    const { setAnchor, updateBoundingBox, Tooltip } = createTooltip(
+      `${id()}-SliderValueTooltip`
+    );
 
     const valuePercentageToMaxFromMin = createMemo(
       () => ((value() || min() - min()) / max()) * 100
@@ -119,9 +121,11 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
 
     const color = createMemo(() => props.color || 'primary');
 
-    createEffect(on(value, () => {
-      updateBoundingBox();
-    }));
+    createEffect(
+      on(value, () => {
+        updateBoundingBox();
+      })
+    );
 
     return (
       <FieldInternalWrapper>
@@ -148,10 +152,10 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
 
             primary: color() === 'primary',
             secondary: color() === 'secondary',
-            tertiary: color() === 'tertiary',
+            tertiary: color() === 'tertiary'
           }}
           style={{
-            '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
+            '--value-percentage': `${valuePercentageToMaxFromMin()}%`
           }}
         >
           <span class="trunk" draggable={false} />
@@ -172,9 +176,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
 
         <Show
           when={
-            typeof props.showTooltip === 'undefined'
-              ? true
-              : props.showTooltip
+            typeof props.showTooltip === 'undefined' ? true : props.showTooltip
           }
         >
           <GrowFade growingOrigin="bottom">
@@ -183,7 +185,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
               class="slider-value-tooltip"
               style={{
                 '--color': `var(--${color()})`,
-                '--text-color': `var(--text-${color()})`,
+                '--text-color': `var(--text-${color()})`
               }}
             >
               <Show when={props.renderTooltipContent} fallback={value()}>
@@ -203,7 +205,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
     'showTooltip',
     'renderTooltipContent',
     'size',
-    'onChange',
+    'onChange'
   ],
   (props) => parseFloat((props.min ?? 0).toString())
 );

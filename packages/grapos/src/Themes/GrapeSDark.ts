@@ -9,7 +9,7 @@ export const GrapeSDarkTheme: Theme = {
     2: new Color('#292626'),
     3: new Color('#3A3737'),
     4: new Color('#5B5858'),
-    5: new Color('#7C7878'),
+    5: new Color('#7C7878')
   },
 
   textColors: {
@@ -19,7 +19,7 @@ export const GrapeSDarkTheme: Theme = {
 
     marked: {
       background: new Color('#4555A2'),
-      textColor: new Color('#ffffff'),
+      textColor: new Color('#ffffff')
     },
 
     0: new Color('#ffffff'),
@@ -27,7 +27,7 @@ export const GrapeSDarkTheme: Theme = {
     2: new Color('#D8D5D5'),
     3: new Color('#C4C2C2'),
     4: new Color('#B2B0B0'),
-    5: new Color('#A2A0A0'),
+    5: new Color('#A2A0A0')
   },
 
   primary: new Color('#9b66d9'),
@@ -36,5 +36,5 @@ export const GrapeSDarkTheme: Theme = {
 
   success: new Color('#259C33'),
   warning: new Color('#DC8623'),
-  danger: new Color('#d66565'),
+  danger: new Color('#d66565')
 };

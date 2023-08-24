@@ -8,6 +8,14 @@ import Toggler from './Toggler/Toggler';
 import Checkbox from './Checkbox/Checkbox';
 import RadioGroup from './RadioGroup/RadioGroup';
 
-export { 
-  Input, Slider, Select, ButtonChooser, RadioGroup, TextArea, Datepicker, Toggler, Checkbox 
+export {
+  Input,
+  Slider,
+  Select,
+  ButtonChooser,
+  RadioGroup,
+  TextArea,
+  Datepicker,
+  Toggler,
+  Checkbox
 };

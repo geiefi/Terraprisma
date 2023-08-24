@@ -10,7 +10,7 @@ import {
   on,
   onCleanup,
   onMount,
-  Switch,
+  Switch
 } from 'solid-js';
 
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
@@ -26,7 +26,11 @@ import { mergeCallbacks } from '../../../Helpers';
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
 import { useField } from '../_Shared/FieldHelpers/FieldContext';
 
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 import { FormFieldValue } from '../../Types/FormFieldValue';
 import { FormValue } from '../../Types/FormValue';
 
@@ -78,7 +82,7 @@ const DatepickerInternalDayPicker: Component<{
       days.push({
         day,
         dateAtDay,
-        weekday: dateAtDay.getDay() as any,
+        weekday: dateAtDay.getDay() as any
       });
     }
 
@@ -99,7 +103,7 @@ const DatepickerInternalDayPicker: Component<{
         days.unshift({
           day: date.getDate(),
           weekday: date.getDay() as any,
-          dateAtDay: date,
+          dateAtDay: date
         });
       }
 
@@ -110,7 +114,7 @@ const DatepickerInternalDayPicker: Component<{
         days.push({
           day: date.getDate(),
           weekday: date.getDay() as any,
-          dateAtDay: date,
+          dateAtDay: date
         });
       }
 
@@ -135,7 +139,7 @@ const DatepickerInternalDayPicker: Component<{
           <span
             class="entry"
             classList={{
-              'outside-of-view': day.dateAtDay.getMonth() !== props.month,
+              'outside-of-view': day.dateAtDay.getMonth() !== props.month
             }}
           >
             <Button.Icon
@@ -146,7 +150,7 @@ const DatepickerInternalDayPicker: Component<{
                   props.selectedDate.getMonth() === day.dateAtDay.getMonth() &&
                   props.selectedDate.getDate() === day.dateAtDay.getDate() &&
                   props.selectedDate.getFullYear() ===
-                  day.dateAtDay.getFullYear(),
+                    day.dateAtDay.getFullYear()
               }}
               onClick={() => props.onDayClicked(day.dateAtDay)}
             >
@@ -178,7 +182,7 @@ const DatepickerInternalMonthPicker: Component<{
               classList={{
                 active:
                   monthNumber === props.selectedDate.getMonth() &&
-                  props.year === props.selectedDate.getFullYear(),
+                  props.year === props.selectedDate.getFullYear()
               }}
               onClick={() => props.onMonthClicked(monthNumber)}
             >
@@ -219,7 +223,7 @@ const DatepickerIntenralYearPicker: Component<{
               classList={{
                 active:
                   props.month === props.selectedDate.getMonth() &&
-                  year() === props.selectedDate.getFullYear(),
+                  year() === props.selectedDate.getFullYear()
               }}
               onClick={() => props.onYearClicked(year())}
             >
@@ -239,7 +243,7 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
       disabledS: [disabled],
       focusedS: [focused, setFocused],
       valueS: [value, setValue],
-      validate,
+      validate
     } = useField<Date>()!;
 
     const [inputContainerRef, setInputContainerRef] =
@@ -265,8 +269,9 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
       document.removeEventListener('click', onDocumentClick);
     });
 
-    const [datepickerSelectionType, setDatepickerSelectionType] =
-      createSignal<'day' | 'month' | 'year'>('day');
+    const [datepickerSelectionType, setDatepickerSelectionType] = createSignal<
+      'day' | 'month' | 'year'
+    >('day');
 
     createEffect(
       on(
@@ -339,9 +344,13 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
     };
 
     createEffect(
-      on(value, () => {
-        setFocused(false);
-      }, { defer: true })
+      on(
+        value,
+        () => {
+          setFocused(false);
+        },
+        { defer: true }
+      )
     );
 
     const monthNames = [
@@ -356,7 +365,7 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
       'September',
       'October',
       'November',
-      'December',
+      'December'
     ];
 
     const displayDate = createMemo(() => {
@@ -382,16 +391,13 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
           color={props.color}
           style={{
             cursor: disabled() === false ? 'pointer' : 'default',
-            ...props.style,
+            ...props.style
           }}
-          onClick={mergeCallbacks(
-            elProps.onClick as any,
-            () => {
-              if (!disabled()) {
-                setFocused((focused) => !focused);
-              }
+          onClick={mergeCallbacks(elProps.onClick as any, () => {
+            if (!disabled()) {
+              setFocused((focused) => !focused);
             }
-          )}
+          })}
           icon={<CalendarMonth variant="rounded" />}
           ref={(ref) => {
             if (typeof elProps.ref === 'function') {
@@ -433,22 +439,24 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
                       setDatepickerSelectionType(v as any);
                     }
                   }}
-                >{Option => [
-                  <Option
-                    size="medium"
-                    class="selection-type-button"
-                    value="month"
-                  >
-                    {monthNames[viewedMonth()]}
-                  </Option>,
-                  <Option
-                    size="medium"
-                    class="selection-type-button"
-                    value="year"
-                  >
-                    {viewedYear()}
-                  </Option>
-                ]}</ButtonChooser>
+                >
+                  {(Option) => [
+                    <Option
+                      size="medium"
+                      class="selection-type-button"
+                      value="month"
+                    >
+                      {monthNames[viewedMonth()]}
+                    </Option>,
+                    <Option
+                      size="medium"
+                      class="selection-type-button"
+                      value="year"
+                    >
+                      {viewedYear()}
+                    </Option>
+                  ]}
+                </ButtonChooser>
 
                 <Button.Icon
                   size="small"
@@ -461,9 +469,7 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
 
               <Row class="dropdown-content">
                 <Switch>
-                  <Match when={typeof value() === 'undefined'}>
-                    ...
-                  </Match>
+                  <Match when={typeof value() === 'undefined'}>...</Match>
                   <Match when={datepickerSelectionType() === 'day'}>
                     <DatepickerInternalDayPicker
                       year={viewedYear()}
@@ -519,7 +525,15 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
       </FieldInternalWrapper>
     );
   },
-  [...FieldPropKeys, 'label', 'helperText', 'style', 'color', 'onChange', 'onFocus'],
+  [
+    ...FieldPropKeys,
+    'label',
+    'helperText',
+    'style',
+    'color',
+    'onChange',
+    'onFocus'
+  ],
   new Date()
 );
 

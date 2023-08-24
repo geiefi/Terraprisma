@@ -5,7 +5,7 @@ import {
   createRoot,
   onCleanup,
   onMount,
-  useContext,
+  useContext
 } from 'solid-js';
 import { SetStoreFunction, createStore, produce } from 'solid-js/store';
 
@@ -22,18 +22,18 @@ import {
   Select,
   Slider,
   TextArea,
-  Toggler,
+  Toggler
 } from './Fields';
 import { InputBaseValue, InputProps, InputType } from './Fields/Input/Input';
 import { SliderProps } from './Fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './Fields/Select/Select';
 import {
   ButtonChooserOptionProps,
-  ButtonChooserProps,
+  ButtonChooserProps
 } from './Fields/ButtonChooser/ButtonChooser';
 import {
   RadioGroupOptionProps,
-  RadioGroupProps,
+  RadioGroupProps
 } from './Fields/RadioGroup/RadioGroup';
 import { TextAreaProps } from './Fields/TextArea/TextArea';
 import { DatepickerProps } from './Fields/Datepicker/Datepicker';
@@ -54,15 +54,15 @@ export interface FormProps<Value extends FormValue = FormValue>
   ref?: (val: FormProviderValue<Value>) => void;
 }
 
-export type Form<
-  Value extends FormValue
-> = {
+export type Form<Value extends FormValue> = {
   (props: Omit<FormProps<Value>, 'identification' | 'formStore'>): JSX.Element;
 
-  Input<Name extends FieldName<Value, InputBaseValue<Type>>, Type extends InputType = undefined>(
-    props: InputProps<Value, Type, Name> & 
+  Input<
+    Name extends FieldName<Value, InputBaseValue<Type>>,
+    Type extends InputType = undefined
+  >(
+    props: InputProps<Value, Type, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
-    
   ): JSX.Element;
   Slider<Name extends FieldName<Value, number>>(
     props: SliderProps<Value, Name> &
@@ -70,21 +70,21 @@ export type Form<
   ): JSX.Element;
   Select: {
     <Name extends FieldName<Value, FormFieldValue>>(
-      props: SelectProps<Value, Name> & 
+      props: SelectProps<Value, Name> &
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof SelectProps>
     ): JSX.Element;
     Option(props: SelectOptionProps): JSX.Element;
   };
   ButtonChooser: {
     <Name extends FieldName<Value, FormFieldValue>>(
-      props: ButtonChooserProps<Value, Name> & 
+      props: ButtonChooserProps<Value, Name> &
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof ButtonChooserProps>
     ): JSX.Element;
     Option(props: ButtonChooserOptionProps): JSX.Element;
   };
   RadioGroup: {
     <Name extends FieldName<Value, FormFieldValue>>(
-      props: RadioGroupProps<Value, Name> & 
+      props: RadioGroupProps<Value, Name> &
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof RadioGroupProps>
     ): JSX.Element;
     Option(
@@ -145,9 +145,7 @@ export type Form<
  * };
  * ```
  */
-export function createForm<
-  Value extends FormValue
->(
+export function createForm<Value extends FormValue>(
   identification: string,
   initialValue: Partial<Value> = {}
 ): Form<Value> {
@@ -222,7 +220,9 @@ const Form = <Value extends FormValue>(
   });
 
   return (
-    <FormContext.Provider value={providerValue as unknown as FormProviderValue<FormValue>}>
+    <FormContext.Provider
+      value={providerValue as unknown as FormProviderValue<FormValue>}
+    >
       {createRoot((rootDispose) => {
         disposeChildren = rootDispose;
 

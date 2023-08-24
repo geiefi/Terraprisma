@@ -1,10 +1,13 @@
 import { JSX, Show } from 'solid-js';
 
-
 import { FieldInternalWrapper } from '../_Shared';
 import Label from '../_Shared/Label/Label';
 
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 import { FormValue } from '../../Types/FormValue';
 
 import './Toggler.scss';
@@ -13,7 +16,10 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, boolean> = FieldName<OwnerFormValue, boolean>
+  Name extends FieldName<OwnerFormValue, boolean> = FieldName<
+    OwnerFormValue,
+    boolean
+  >
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
 
@@ -32,7 +38,7 @@ const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
       valueS: [value, setValue],
 
       validate,
-      hasErrors,
+      hasErrors
     } = useField<boolean>()!;
 
     return (
@@ -56,8 +62,7 @@ const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
               disabled: disabled(),
 
               primary:
-                props.color === 'primary' ||
-                typeof props.color === 'undefined',
+                props.color === 'primary' || typeof props.color === 'undefined',
               secondary: props.color === 'secondary',
               tertiary: props.color === 'tertiary',
 
@@ -66,7 +71,7 @@ const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
                 props.size === 'medium' || typeof props.size === 'undefined',
               large: props.size === 'large',
 
-              ...elProps.classList,
+              ...elProps.classList
             }}
             value={value() ? 'on' : 'off'}
             onClick={(event) => {

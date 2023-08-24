@@ -1,7 +1,7 @@
-import { JSX, Show } from 'solid-js';
+import { ComponentProps, JSX, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import { forwardNativeElementProps, mergeCallbacks } from '../../Helpers';
+import { forwardComponentProps, mergeCallbacks } from '../../Helpers';
 
 import Box from '../Box/Box';
 import Button from '../Button/Button';
@@ -11,7 +11,6 @@ import './Modal.scss';
 import { useTheme } from '../../GrapeS';
 import { mergeClass } from '../../_Shared/Utils';
 import { Divisor } from '../../Layout';
-import { GetProps } from '../../Helpers/Types/GetProps';
 
 export interface ModalProps {
   visible?: boolean;
@@ -25,10 +24,10 @@ export interface ModalProps {
   onCancel?: (event: MouseEvent) => any;
 }
 
-const Modal = forwardNativeElementProps<
+const Modal = forwardComponentProps<
   ModalProps,
-  HTMLDivElement,
-  GetProps<typeof Box>
+  'div',
+  ComponentProps<typeof Box>
 >(
   (props, elProps) => {
     const { grapesGlobalDivRef } = useTheme()!;
@@ -40,7 +39,7 @@ const Modal = forwardNativeElementProps<
             <div
               class="modal-backdrop"
               classList={{
-                visible: props.visible,
+                visible: props.visible
               }}
               onClick={(event) =>
                 props.onCancel && props.visible
@@ -55,7 +54,7 @@ const Modal = forwardNativeElementProps<
                   elProps.onClick as any,
                   (event: MouseEvent) => {
                     event.stopPropagation();
-                  },
+                  }
                 )}
                 class={mergeClass('modal-box', elProps.class)}
               >
@@ -84,7 +83,7 @@ const Modal = forwardNativeElementProps<
       </Portal>
     );
   },
-  ['title', 'extraElementsInFooter', 'visible', 'onOk', 'onCancel', 'children'],
+  ['title', 'extraElementsInFooter', 'visible', 'onOk', 'onCancel', 'children']
 );
 
 export default Modal;

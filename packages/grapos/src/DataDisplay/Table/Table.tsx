@@ -1,6 +1,13 @@
-import { ComponentProps, JSX, ParentProps, Show, createContext, useContext } from 'solid-js';
+import {
+  ComponentProps,
+  JSX,
+  ParentProps,
+  Show,
+  createContext,
+  useContext
+} from 'solid-js';
 
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 
 import './Table.scss';
 import { Dynamic } from 'solid-js/web';
@@ -16,32 +23,34 @@ export interface TableProps extends ParentProps {
 
 const TableContext = createContext<TableProps>();
 
-const Table = forwardNativeElementProps<TableProps, HTMLTableElement>(
+const Table = forwardComponentProps<TableProps, 'table'>(
   (props, elProps) => {
-    const table = <table 
-      {...elProps} 
-      class={mergeClass('grapes-table', elProps.class)}
-      classList={{
-        boxed: props.boxed,
-        compact: props.compact,
-        ...elProps.classList
-      }}
-    >
-      {props.children}
-    </table>;
-    return <TableContext.Provider value={props}>
-      <Show when={props.boxed} fallback={table}>
-        <Box class="grapes-table-box">
-          {table}
-        </Box>
-      </Show>
-    </TableContext.Provider>;
+    const table = (
+      <table
+        {...elProps}
+        class={mergeClass('grapes-table', elProps.class)}
+        classList={{
+          boxed: props.boxed,
+          compact: props.compact,
+          ...elProps.classList
+        }}
+      >
+        {props.children}
+      </table>
+    );
+    return (
+      <TableContext.Provider value={props}>
+        <Show when={props.boxed} fallback={table}>
+          <Box class="grapes-table-box">{table}</Box>
+        </Show>
+      </TableContext.Provider>
+    );
   },
   ['identification', 'boxed', 'compact', 'children']
 ) as {
-  (props: TableProps & ComponentProps<'table'>): JSX.Element,
-  Row(props: TableRowProps & ComponentProps<'tr'>): JSX.Element,
-  Column(props: TableColumnProps & ComponentProps<'td'>): JSX.Element
+  (props: TableProps & ComponentProps<'table'>): JSX.Element;
+  Row(props: TableRowProps & ComponentProps<'tr'>): JSX.Element;
+  Column(props: TableColumnProps & ComponentProps<'td'>): JSX.Element;
 };
 
 export interface TableRowProps extends ParentProps {
@@ -50,13 +59,13 @@ export interface TableRowProps extends ParentProps {
 
 const RowContext = createContext<TableRowProps>();
 
-const Row = forwardNativeElementProps<TableRowProps, HTMLTableRowElement>(
+const Row = forwardComponentProps<TableRowProps, 'tr'>(
   (props, elProps) => {
-    return <RowContext.Provider value={props}>
-      <tr {...elProps}>
-        {props.children}
-      </tr>
-    </RowContext.Provider>;
+    return (
+      <RowContext.Provider value={props}>
+        <tr {...elProps}>{props.children}</tr>
+      </RowContext.Provider>
+    );
   },
   ['headRow', 'children']
 );
@@ -65,29 +74,36 @@ export interface TableColumnProps extends ParentProps {
   align?: 'left' | 'right' | 'center';
 }
 
-const Column = forwardNativeElementProps<TableColumnProps, HTMLTableCellElement>(
+const Column = forwardComponentProps<TableColumnProps, 'td'>(
   (props, elProps) => {
     const tableProps = useContext(TableContext);
     const rowProps = useContext(RowContext);
 
     if (typeof rowProps === 'undefined') {
       if (typeof tableProps !== 'undefined') {
-        throw new Error(`Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`);
+        throw new Error(
+          `Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`
+        );
       } else {
-        throw new Error('A <Table.Column> must be inside a <Table.Row>! Also, could not determine the Table which it belong to either!');
+        throw new Error(
+          'A <Table.Column> must be inside a <Table.Row>! Also, could not determine the Table which it belong to either!'
+        );
       }
     }
 
-    return <Dynamic 
-      component={rowProps.headRow ? 'th' : 'td'}
-      {...elProps}
-      classList={{
-        'align-left': props.align === 'left' || typeof props.align === 'undefined',
-        'align-right': props.align === 'right',
-        'align-center': props.align === 'center',
-      }}
-      children={props.children}
-    />;
+    return (
+      <Dynamic
+        component={rowProps.headRow ? 'th' : 'td'}
+        {...elProps}
+        classList={{
+          'align-left':
+            props.align === 'left' || typeof props.align === 'undefined',
+          'align-right': props.align === 'right',
+          'align-center': props.align === 'center'
+        }}
+        children={props.children}
+      />
+    );
   },
   ['align', 'children']
 );

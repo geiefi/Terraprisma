@@ -12,7 +12,7 @@
   ],
   "rules": {
     "prettier/prettier": "warn",
-    "eol-last": "off",
+    "eol-last": "error",
     "comma-dangle": ["error", "never"],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",

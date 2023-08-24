@@ -3,7 +3,9 @@ import { Transition, TransitionProps } from 'solid-transition-group';
 
 import './GrowFade.scss';
 
-export interface GrowFadeProps extends Omit<TransitionProps, 'name'>, ParentProps {
+export interface GrowFadeProps
+  extends Omit<TransitionProps, 'name'>,
+    ParentProps {
   growingOrigin?: JSX.CSSProperties['transform-origin'];
 }
 

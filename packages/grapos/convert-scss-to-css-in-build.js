@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 
 function getAllFilesRecursively(dirname) {
-  return fs.readdirSync(dirname, { withFileTypes: true })
-    .flatMap(file => file.isDirectory()
-      ? getAllFilesRecursively(`${dirname}/${file.name}`)
-      : `${dirname}/${file.name}`
+  return fs
+    .readdirSync(dirname, { withFileTypes: true })
+    .flatMap((file) =>
+      file.isDirectory()
+        ? getAllFilesRecursively(`${dirname}/${file.name}`)
+        : `${dirname}/${file.name}`
     );
 }
 
@@ -21,5 +23,7 @@ if (fs.existsSync('./lib')) {
     }
   }
 } else {
-  throw new Error('Cannot convert .scss to .css without having compiled the project and generated the proper files!');
+  throw new Error(
+    'Cannot convert .scss to .css without having compiled the project and generated the proper files!'
+  );
 }

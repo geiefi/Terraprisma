@@ -1,7 +1,7 @@
 import { FormFieldValue } from './FormFieldValue';
 
 export type FieldValidator<ValueType = FormFieldValue> = <
-  T extends ValueType | undefined | null,
+  T extends ValueType | undefined | null
 >(
-  value: T,
+  value: T
 ) => string | string[] | undefined;

@@ -1,7 +1,7 @@
 import tinycolor2 from 'tinycolor2';
 
 /**
- * A class that uses the `tinycolor2` library to parse and 
+ * A class that uses the `tinycolor2` library to parse and
  * deal with colors. Contains a **internal** property with
  * the `tinycolor2.Instance` interface.
  */
@@ -37,7 +37,7 @@ export type Theme = {
   grays: {
     /**
      * This is the first gray color, it is automatically
-     * used to set the background-color of the body. 
+     * used to set the background-color of the body.
      *
      * This color is most useful for dark themes.
      */
@@ -50,16 +50,16 @@ export type Theme = {
   };
   textColors: {
     /**
-      * A text color that will match the primary color
-      */
+     * A text color that will match the primary color
+     */
     primary: Color;
     /**
-      * A text color that will match the secondary color
-      */
+     * A text color that will match the secondary color
+     */
     secondary: Color;
     /**
-      * A text color that will match the tertiary color
-      */
+     * A text color that will match the tertiary color
+     */
     tertiary: Color;
 
     marked: {
@@ -73,7 +73,7 @@ export type Theme = {
     3: Color;
     4: Color;
     5: Color;
-  },
+  };
   primary: Color;
   /**
    * Generally just a 0.32 alpha version of the already defined primary color,

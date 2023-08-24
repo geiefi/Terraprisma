@@ -1,11 +1,10 @@
-import { Component, createMemo, JSX } from 'solid-js';
+import { Component, ComponentProps, createMemo, JSX } from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 import { useDepth } from '../Box/Box';
 import Ripple from '../Ripple/Ripple';
 
 import './Button.scss';
-import { forwardNativeElementProps } from '../../Helpers';
-import { GetProps } from '../../Helpers/Types/GetProps';
+import { forwardComponentProps } from '../../Helpers';
 
 export interface ButtonProps {
   color?: 'primary' | 'secondary' | 'tertiary' | 'transparent';
@@ -20,7 +19,7 @@ export interface ButtonProps {
   style?: JSX.CSSProperties;
 }
 
-const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
+const Button = forwardComponentProps<ButtonProps, 'button'>(
   (props, elProps) => {
     const depth = useDepth() || (() => 0);
 
@@ -39,12 +38,12 @@ const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
         classList={{
           small: props.size === 'small',
           medium: props.size === 'medium' || typeof props.size === 'undefined',
-          large: props.size === 'large',
+          large: props.size === 'large'
         }}
         color={rippleColor()}
         style={{
           display: 'inline-block',
-          'border-radius': props.style?.['border-radius'],
+          'border-radius': props.style?.['border-radius']
         }}
       >
         <button
@@ -69,7 +68,7 @@ const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
               props.size === 'medium' || typeof props.size === 'undefined',
             large: props.size === 'large',
 
-            ...elProps.classList,
+            ...elProps.classList
           }}
         >
           {elProps.children}
@@ -77,22 +76,15 @@ const Button = forwardNativeElementProps<ButtonProps, HTMLButtonElement>(
       </Ripple>
     );
   },
-  [
-    'color',
-    'size',
-    'disabled',
-    'rippleColor',
-    'rippleClass',
-    'centerRipple',
-  ]
+  ['color', 'size', 'disabled', 'rippleColor', 'rippleClass', 'centerRipple']
 ) as {
-  (props: ButtonProps & JSX.HTMLAttributes<HTMLButtonElement>): JSX.Element,
-  Rounded(props: GetProps<typeof Button>): JSX.Element,
-  Icon(props: GetProps<typeof Button>): JSX.Element,
-  Empty(props: GetProps<typeof Button>): JSX.Element
+  (props: ButtonProps & JSX.HTMLAttributes<HTMLButtonElement>): JSX.Element;
+  Rounded(props: ComponentProps<typeof Button>): JSX.Element;
+  Icon(props: ComponentProps<typeof Button>): JSX.Element;
+  Empty(props: ComponentProps<typeof Button>): JSX.Element;
 };
 
-const RoundedButton: Component<GetProps<typeof Button>> = (props) => {
+const RoundedButton: Component<ComponentProps<typeof Button>> = (props) => {
   return (
     <Button
       rippleClass="rounded"
@@ -105,7 +97,7 @@ const RoundedButton: Component<GetProps<typeof Button>> = (props) => {
   );
 };
 
-const EmptyButton: Component<GetProps<typeof Button>> = (props) => {
+const EmptyButton: Component<ComponentProps<typeof Button>> = (props) => {
   const color = createMemo(() => props.color || 'primary');
 
   return (
@@ -119,7 +111,7 @@ const EmptyButton: Component<GetProps<typeof Button>> = (props) => {
   );
 };
 
-const IconButton: Component<GetProps<typeof Button>> = (props) => {
+const IconButton: Component<ComponentProps<typeof Button>> = (props) => {
   return (
     <RoundedButton {...props} class={mergeClass('icon', props.class)}>
       {props.children}

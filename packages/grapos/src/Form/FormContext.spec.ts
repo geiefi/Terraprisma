@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect } from '@jest/globals';
 
 import { deepDelete, getByPath, setByPath } from './FormContext';
 
@@ -9,7 +9,7 @@ describe('FormContext', () => {
       number: '1wdoiujqwdoij',
       cvv: '1231qwd',
       displayedName: 'name',
-      expiresIn: new Date(),
+      expiresIn: new Date()
     }
   };
 
@@ -20,7 +20,7 @@ describe('FormContext', () => {
         number: '1wdoiujqwdoij',
         cvv: '1231qwd',
         displayedName: 'name',
-        expiresIn: new Date(),
+        expiresIn: new Date()
       }
     };
   });
@@ -35,15 +35,15 @@ describe('FormContext', () => {
 
   describe('getByPath()', () => {
     it('should work with date fields', () => {
-      expect(
-        getByPath(object, 'creditCardDetails.expiresIn')
-      ).toEqual(object.creditCardDetails.expiresIn);
+      expect(getByPath(object, 'creditCardDetails.expiresIn')).toEqual(
+        object.creditCardDetails.expiresIn
+      );
     });
   });
 
   describe('delete()', () => {
     it('should work with date fields', () => {
-      deepDelete(object, 'creditCardDetails.expiresIn')
+      deepDelete(object, 'creditCardDetails.expiresIn');
 
       expect(object.creditCardDetails.expiresIn).toBeUndefined();
     });

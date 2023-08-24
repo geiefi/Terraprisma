@@ -7,13 +7,13 @@ import { FormFieldValue } from '../../../Types/FormFieldValue';
 
 export const MaskedFieldPropsKeys: (keyof MaskedFieldProps)[] = [
   ...FieldPropKeys,
-  'mask',
+  'mask'
 ];
 
 export interface MaskedFieldProps<
   OwnerFormValue extends FormValue = EmptyObj,
   BaseValueType extends FormFieldValue = FormFieldValue,
-  Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>,
+  Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>
 > extends FieldProps<OwnerFormValue, BaseValueType, Name> {
   /**
    * @description The mask that should be applied to the field.

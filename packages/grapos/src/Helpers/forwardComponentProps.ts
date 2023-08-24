@@ -1,4 +1,4 @@
-import { splitProps } from 'solid-js';
+import { ComponentProps, ValidComponent, splitProps } from 'solid-js';
 import { JSX } from 'solid-js/jsx-runtime';
 
 /**
@@ -15,24 +15,25 @@ import { JSX } from 'solid-js/jsx-runtime';
  * @param componentPropNames All of the keys of {@link Props} for splitting. Sadly
  * this parameter is a limitation of this helper. Maybe can be fixed with ts-transformers though.
  */
-export function forwardNativeElementProps<
+export function forwardComponentProps<
   Props extends Record<string, any>,
-  ElementType extends HTMLElement,
-  ElementProps extends
-    JSX.HTMLAttributes<ElementType> = JSX.HTMLAttributes<ElementType>,
-  PropsToTake extends (keyof Props)[] = (keyof Props)[],
+  Comp extends ValidComponent,
+  PropsToForward extends ComponentProps<Comp> = ComponentProps<Comp>,
+  PropsToTake extends (keyof Props)[] = (keyof Props)[]
 >(
   componentFunc: (
     props: Props,
-    elProps: Omit<ElementProps, PropsToTake[number]>,
+    elProps: Omit<ComponentProps<Comp>, PropsToTake[number]>
   ) => JSX.Element,
-  componentPropNames: PropsToTake,
-): (allProps: Props & Omit<ElementProps, PropsToTake[number]>) => JSX.Element {
-  return (allProps: Props & Omit<ElementProps, PropsToTake[number]>) =>
+  componentPropNames: PropsToTake
+): (
+  allProps: Props & Omit<PropsToForward, PropsToTake[number]>
+) => JSX.Element {
+  return (allProps: Props & Omit<PropsToForward, PropsToTake[number]>) =>
     componentFunc(
       ...(splitProps(allProps, componentPropNames) as unknown as [
         Props,
-        Omit<ElementProps, PropsToTake[number]>,
-      ]),
+        Omit<PropsToForward, PropsToTake[number]>
+      ])
     );
 }

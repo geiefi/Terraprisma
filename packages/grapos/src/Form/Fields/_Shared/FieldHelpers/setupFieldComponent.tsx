@@ -6,7 +6,7 @@ import {
   createMemo,
   createSignal,
   onMount,
-  splitProps,
+  splitProps
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { createStore } from 'solid-js/store';
@@ -15,7 +15,7 @@ import { FieldContext } from './FieldContext';
 
 import {
   FieldInternalValidate,
-  setupValidateFunction,
+  setupValidateFunction
 } from './setupValidateFunction';
 import { setupCommunicationWithFormContext } from './setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setupFieldValueSignal';
@@ -37,15 +37,13 @@ export function setupFieldComponent<
     ComponentProps<InternalElement>,
     keyof MProps
   >,
-  PropKeys extends Array<keyof MProps> = Array<keyof MProps>,
+  PropKeys extends Array<keyof MProps> = Array<keyof MProps>
 >(
   componentFunc: (props: MProps, elProps: ElProps) => JSX.Element,
   propKeys: PropKeys,
   initialValueParam:
     | (MProps['value'] & BaseValueType)
-    | ((
-        props: MProps & ElProps,
-      ) => MProps['value'] & BaseValueType) = '' as any,
+    | ((props: MProps & ElProps) => MProps['value'] & BaseValueType) = '' as any
 ) {
   return <
     OwnerFormValue extends FormValue,
@@ -56,13 +54,13 @@ export function setupFieldComponent<
     Props extends MProps &
       FieldProps<OwnerFormValue, BaseValueType, Name> = MProps &
       FieldProps<OwnerFormValue, BaseValueType, Name>,
-    AllProps extends Props & ElProps = Props & ElProps,
+    AllProps extends Props & ElProps = Props & ElProps
   >(
-    allProps: AllProps,
+    allProps: AllProps
   ) => {
     const [props, elProps] = splitProps(allProps, propKeys) as unknown as [
       Props,
-      ElProps,
+      ElProps
     ];
 
     // eslint-disable-next-line solid/reactivity
@@ -96,12 +94,12 @@ export function setupFieldComponent<
     const id = createMemo(() =>
       form
         ? `field-${form.identification()}-${props.name}`
-        : `field-${props.name}`,
+        : `field-${props.name}`
     );
 
     const hasContent = createMemo(() => (value() || '').toString().length > 0);
     const hasErrors = createMemo(
-      () => errors && Array.isArray(errors) && typeof errors[0] !== 'undefined',
+      () => errors && Array.isArray(errors) && typeof errors[0] !== 'undefined'
     );
 
     const disabledSignal = setupFieldsDisabledSignal<
@@ -133,13 +131,13 @@ export function setupFieldComponent<
 
           fieldProps: splitProps(
             props,
-            FieldPropKeys,
+            FieldPropKeys
           )[0] as unknown as FieldProps<FormValue> & { value: FormFieldValue },
 
           hasContent,
           hasErrors,
 
-          validate: validate as FieldInternalValidate,
+          validate: validate as FieldInternalValidate
         }}
       >
         <Dynamic

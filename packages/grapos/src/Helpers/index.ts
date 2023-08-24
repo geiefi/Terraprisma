@@ -1,11 +1,15 @@
 import { deeplyTrack } from './deeplyTrack';
 import { splitTupleAccessor } from './splitTupleAccessor';
-import { forwardNativeElementProps } from './forwardNativeElementProps';
+import { forwardComponentProps } from './forwardComponentProps';
 import { mergeCallbacks } from './mergeCallbacks';
 
 import type { Store } from './Types/Store';
 
-export { deeplyTrack, splitTupleAccessor, forwardNativeElementProps, mergeCallbacks };
+export {
+  deeplyTrack,
+  splitTupleAccessor,
+  forwardComponentProps,
+  mergeCallbacks
+};
 
 export type { Store };
-

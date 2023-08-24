@@ -1,11 +1,10 @@
 import { ComponentProps, JSX, ParentProps, Show, createSignal } from 'solid-js';
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 import { Ripple } from '../../General';
 
 import './List.scss';
 import { Divisor } from '../../Layout';
-import { GetProps } from '../../Helpers/Types/GetProps';
 import { KeyboardArrowDown } from '../../Icons';
 import { Collapse } from '../../Transitions';
 
@@ -13,13 +12,13 @@ export interface ListProps extends ParentProps {
   dense?: boolean;
 }
 
-const List = forwardNativeElementProps<ListProps, HTMLUListElement>(
+const List = forwardComponentProps<ListProps, 'ul'>(
   (props, elProps) => (
     <ul
       {...elProps}
       class={mergeClass('unordered-list', elProps.class)}
       classList={{
-        dense: props.dense,
+        dense: props.dense
       }}
     >
       {props.children}
@@ -28,7 +27,9 @@ const List = forwardNativeElementProps<ListProps, HTMLUListElement>(
   ['children', 'dense']
 ) as {
   (props: ListProps & Omit<ComponentProps<'ul'>, keyof ListProps>): JSX.Element;
-  Divisor(props: Omit<GetProps<typeof Divisor>, 'direction'>): JSX.Element;
+  Divisor(
+    props: Omit<ComponentProps<typeof Divisor>, 'direction'>
+  ): JSX.Element;
   ItemWithDetails(
     props: ListItemWithDetailsProps &
       Omit<ComponentProps<'li'>, keyof ListItemWithDetailsProps>
@@ -50,10 +51,7 @@ export interface ListItemWithDetailsProps extends ParentProps {
   active?: boolean;
 }
 
-List.ItemWithDetails = forwardNativeElementProps<
-  ListItemWithDetailsProps,
-  HTMLLIElement
->(
+List.ItemWithDetails = forwardComponentProps<ListItemWithDetailsProps, 'li'>(
   (props, elProps) => {
     const [showingDetails, setShowingDetails] = createSignal(false);
 
@@ -62,14 +60,14 @@ List.ItemWithDetails = forwardNativeElementProps<
         {...elProps}
         class={mergeClass('list-item', elProps.class)}
         classList={{
-          'has-icon': typeof props.icon !== 'undefined',
+          'has-icon': typeof props.icon !== 'undefined'
         }}
       >
         <Ripple>
           <div
             class="list-item-content clickable"
             classList={{
-              active: props.active,
+              active: props.active
             }}
             onClick={() => setShowingDetails((k) => !k)}
           >
@@ -83,7 +81,7 @@ List.ItemWithDetails = forwardNativeElementProps<
                 variant="rounded"
                 class="show-details-icon"
                 classList={{
-                  open: showingDetails(),
+                  open: showingDetails()
                 }}
               />
             </div>
@@ -98,7 +96,7 @@ List.ItemWithDetails = forwardNativeElementProps<
       </li>
     );
   },
-  ['icon', 'children', 'subItems', 'active']
+  ['icon', 'children', 'subItems', 'active', 'children']
 );
 
 export interface ListItemProps extends ParentProps {
@@ -109,14 +107,14 @@ export interface ListItemProps extends ParentProps {
   active?: boolean;
 }
 
-List.Item = forwardNativeElementProps<ListItemProps, HTMLLIElement>(
+List.Item = forwardComponentProps<ListItemProps, 'li'>(
   (props, elProps) => {
     const content = (
       <div
         class="list-item-content"
         classList={{
           active: props.active,
-          clickable: props.clickable,
+          clickable: props.clickable
         }}
       >
         <Show when={props.icon}>
@@ -135,7 +133,7 @@ List.Item = forwardNativeElementProps<ListItemProps, HTMLLIElement>(
         {...elProps}
         class={mergeClass('list-item', elProps.class)}
         classList={{
-          'has-icon': typeof props.icon !== 'undefined',
+          'has-icon': typeof props.icon !== 'undefined'
         }}
       >
         <Show when={props.clickable} fallback={content}>

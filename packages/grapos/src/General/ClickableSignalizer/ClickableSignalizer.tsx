@@ -1,6 +1,6 @@
 import { ComponentProps, ParentProps, Show } from 'solid-js';
 
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 import { Fade } from '../../Transitions';
 
@@ -12,9 +12,9 @@ export interface ClickableSignalizerProps extends ParentProps {
   show?: boolean;
 }
 
-const ClickableSignalizer = forwardNativeElementProps<
+const ClickableSignalizer = forwardComponentProps<
   ClickableSignalizerProps,
-  HTMLDivElement
+  'div'
 >(
   (props, elProps) => {
     return (
@@ -30,10 +30,10 @@ const ClickableSignalizer = forwardNativeElementProps<
               {...props.clickableSignalizerProps}
               class={mergeClass(
                 'clickable-signalizer',
-                props.clickableSignalizerProps?.class,
+                props.clickableSignalizerProps?.class
               )}
               style={{
-                '--color': props.color || 'var(--gray-5)',
+                '--color': props.color || 'var(--gray-5)'
               }}
             />
           </Show>
@@ -41,7 +41,7 @@ const ClickableSignalizer = forwardNativeElementProps<
       </div>
     );
   },
-  ['children', 'show', 'color', 'clickableSignalizerProps'],
+  ['children', 'show', 'color', 'clickableSignalizerProps']
 );
 
 export default ClickableSignalizer;

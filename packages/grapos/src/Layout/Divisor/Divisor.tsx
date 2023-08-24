@@ -1,16 +1,16 @@
-import { Component, JSX, splitProps } from 'solid-js';
+import { Component } from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Divisor.scss';
-import { forwardNativeElementProps } from '../../Helpers';
+import { forwardComponentProps } from '../../Helpers';
 
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const Divisor: Component<DivisorProps> = forwardNativeElementProps<
+const Divisor: Component<DivisorProps> = forwardComponentProps<
   DivisorProps,
-  HTMLDivElement
+  'div'
 >(
   (props, elProps) => {
     return (
@@ -19,7 +19,7 @@ const Divisor: Component<DivisorProps> = forwardNativeElementProps<
         class={mergeClass('divisor', elProps.class)}
         classList={{
           vertical: props.direction === 'vertical',
-          ...elProps.classList,
+          ...elProps.classList
         }}
       />
     );

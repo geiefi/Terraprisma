@@ -9,7 +9,8 @@ import {
   JSX,
   Show,
   splitProps,
-  useContext
+  useContext,
+  ParentProps
 } from 'solid-js';
 
 import { StepsContext } from './StepsContext';
@@ -18,9 +19,10 @@ import { Check } from '../../Icons';
 
 import './Steps.scss';
 import { mergeClass } from '../../_Shared/Utils';
+import { forwardComponentProps } from '../../Helpers';
 
 export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  description?: string | JSX.Element,
+  description?: string | JSX.Element;
 
   style?: JSX.CSSProperties;
 }
@@ -34,7 +36,8 @@ const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
 
   const [current] = useSteps()!;
 
-  const [descriptionPRef, setDescriptionPRef] = createSignal<HTMLParagraphElement>();
+  const [descriptionPRef, setDescriptionPRef] =
+    createSignal<HTMLParagraphElement>();
   const [stepInfoRef, setStepInfoRef] = createSignal<HTMLSpanElement>();
   const [descriptionOffset, setDescriptionOffset] = createSignal<string>('0px');
   createEffect(() => {
@@ -56,101 +59,112 @@ const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
     setContentHeight(`${contentRef()?.offsetHeight || 0}px`);
   });
 
-  return <div
-    {...elProps}
-    class={mergeClass('step', elProps.class)}
-    classList={{
-      'current-step': current() === props.index,
-      'done-step': current() > props.index,
-      ...elProps.classList
-    }}
-    style={{ 
-      '--step-content-width': contentWidth(),
-      '--step-content-height': contentHeight(),
+  return (
+    <div
+      {...elProps}
+      class={mergeClass('step', elProps.class)}
+      classList={{
+        'current-step': current() === props.index,
+        'done-step': current() > props.index,
+        ...elProps.classList
+      }}
+      style={{
+        '--step-content-width': contentWidth(),
+        '--step-content-height': contentHeight(),
 
-      '--description-offset': descriptionOffset(),
-      
-      ...elProps.style
-    }}
-  >
-    <span class="step-content" ref={setContentRef}>
-      <span class="step-circle">
-        <Show when={current() <= props.index} fallback={<Check />}>
-          {props.index + 1}
-        </Show>
+        '--description-offset': descriptionOffset(),
+
+        ...elProps.style
+      }}
+    >
+      <span class="step-content" ref={setContentRef}>
+        <span class="step-circle">
+          <Show when={current() <= props.index} fallback={<Check />}>
+            {props.index + 1}
+          </Show>
+        </span>
+
+        <span class="step-info" ref={setStepInfoRef}>
+          <p class="step-title">{elProps.children}</p>
+
+          <Show when={props.description}>
+            <p class="step-description" ref={setDescriptionPRef}>
+              {props.description}
+            </p>
+          </Show>
+        </span>
       </span>
-
-      <span class="step-info" ref={setStepInfoRef}>
-        <p class="step-title">{elProps.children}</p>
-
-        <Show when={props.description}>
-          <p class="step-description" ref={setDescriptionPRef}>{props.description}</p>
-        </Show>
-      </span>
-    </span>
-  </div>;
-}
+    </div>
+  );
+};
 
 function isElementAStepProps(el: unknown): el is StepProps {
   return typeof el === 'object' && Object.hasOwn(el || {}, 'children');
 }
 
-export interface StepsProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  identification: string,
-  current: number,
+export interface StepsProps extends ParentProps {
+  identification: string;
+  current: number;
 
-  direction?: 'horizontal' | 'vertical',
+  direction?: 'horizontal' | 'vertical';
 
-  onFinish?: () => void,
+  onFinish?: () => void;
 }
 
-export class StepsError extends Error { }
+export class StepsError extends Error {}
 
-function Steps(allProps: StepsProps) {
-  const [props, elProps] = splitProps(allProps, ['identification', 'current', 'direction', 'onFinish']);
+const Steps = forwardComponentProps<StepsProps, 'div'>(
+  (props, elProps) => {
+    const childrenAccessor = accessChildren(() => props.children);
+    const steps: Accessor<StepProps[]> = createMemo(() => {
+      const children = childrenAccessor() as JSX.Element[];
+      return children.filter((child) =>
+        isElementAStepProps(child)
+      ) as unknown as StepProps[];
+    });
 
-  const childrenAccessor = accessChildren(() => elProps.children);
-  const steps: Accessor<StepProps[]> = createMemo(() => {
-    const children = childrenAccessor() as JSX.Element[];
-    return children.filter(child => isElementAStepProps(child)) as unknown as StepProps[];
-  });
+    const stepsCount = createMemo(() => steps().length);
 
-  const stepsCount = createMemo(() => steps().length);
+    createEffect(() => {
+      if (props.current > stepsCount()) {
+        throw new StepsError(
+          `Cannot set current step to the step at index ${props.current} for` +
+            ` Steps with identification "${props.identification}" because it does not exist!`
+        );
+      }
 
-  createEffect(() => {
-    if (props.current > stepsCount()) {
-      throw new StepsError(`Cannot set current step to the step at index ${props.current} for` +
-        ` Steps with identification "${props.identification}" because it does not exist!`);
-    }
+      if (props.current === stepsCount() && props.onFinish) {
+        props.onFinish();
+      }
+    });
 
-    if (props.current === stepsCount() && props.onFinish) {
-      props.onFinish();
-    }
-  });
+    const current = createMemo(() => props.current);
 
-  const current = createMemo(() => props.current);
-
-  return <StepsContext.Provider value={[
-    current,
-    stepsCount
-  ]}>
-    <div
-      {...elProps}
-      class={mergeClass('steps-container', elProps.class)}
-      classList={{
-        'vertical': props.direction === 'vertical',
-        'horizontal': props.direction === 'horizontal' || typeof props.direction === 'undefined',
-        ...elProps.classList
-      }}
-    >
-      <For each={steps()}>{(step, i) => (
-        <InternalStep {...step} index={i()} />
-      )}</For>
-    </div>
-  </StepsContext.Provider>;
-}
+    return (
+      <StepsContext.Provider value={[current, stepsCount]}>
+        <div
+          {...elProps}
+          class={mergeClass('steps-container', elProps.class)}
+          classList={{
+            vertical: props.direction === 'vertical',
+            horizontal:
+              props.direction === 'horizontal' ||
+              typeof props.direction === 'undefined',
+            ...elProps.classList
+          }}
+        >
+          <For each={steps()}>
+            {(step, i) => <InternalStep {...step} index={i()} />}
+          </For>
+        </div>
+      </StepsContext.Provider>
+    );
+  },
+  ['identification', 'current', 'direction', 'onFinish', 'children']
+);
 
 export default Steps;
 
-export function useSteps() { return useContext(StepsContext) }
-
+export function useSteps() {
+  return useContext(StepsContext);
+}

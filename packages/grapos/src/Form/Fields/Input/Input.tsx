@@ -7,7 +7,10 @@ import FieldInternalWrapper from '../_Shared/FieldInternalWrapper/FieldInternalW
 
 import { mergeClass } from '../../../_Shared/Utils';
 
-import { MaskedFieldPropsKeys, MaskedFieldProps } from '../_Shared/Types/MaskedFieldProps';
+import {
+  MaskedFieldPropsKeys,
+  MaskedFieldProps
+} from '../_Shared/Types/MaskedFieldProps';
 
 import './Input.scss';
 import { mergeCallbacks } from '../../../Helpers';
@@ -21,22 +24,31 @@ export type InputOnChangeEvent = Event & {
   target: Element;
 };
 
-export type InputType = 'text' | 'email' | 'number' | 'email' | 'password' | undefined;
-export type InputBaseValue<Type> = Type extends 'text' ? string
-  : Type extends 'email' ? string
-  : Type extends 'number' ? number
-  : Type extends 'password' ? string
+export type InputType =
+  | 'text'
+  | 'email'
+  | 'number'
+  | 'email'
+  | 'password'
+  | undefined;
+export type InputBaseValue<Type> = Type extends 'text'
+  ? string
+  : Type extends 'email'
+  ? string
+  : Type extends 'number'
+  ? number
+  : Type extends 'password'
+  ? string
   : string;
 
 export interface InputProps<
   OwnerFormValue extends FormValue = FormValue,
   Type extends InputType = undefined,
-  Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<OwnerFormValue, InputBaseValue<Type>>,
-> extends MaskedFieldProps<
-  OwnerFormValue,
-  InputBaseValue<Type>,
-  Name
-> {
+  Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<
+    OwnerFormValue,
+    InputBaseValue<Type>
+  >
+> extends MaskedFieldProps<OwnerFormValue, InputBaseValue<Type>, Name> {
   label?: JSX.Element;
 
   type?: Type;
@@ -45,43 +57,53 @@ export interface InputProps<
   onChange?: (value: string, event?: InputOnChangeEvent) => void;
 }
 
-const Input = setupFieldComponent<InputProps, 'input', InputBaseValue<undefined>>(
+const Input = setupFieldComponent<
+  InputProps,
+  'input',
+  InputBaseValue<undefined>
+>(
   (props, elProps) => {
     const {
       elementId: id,
       disabledS: [disabled],
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       focusedS: [_focused, setFocused],
       valueS: [value, setValue],
-      validate,
+      validate
     } = useField()!;
 
     createEffect(() => {
-      if (props.mask && typeof props.type !== 'undefined' && props.type === 'number') {
-        throw new Error(`Error with Input named ${props.name}: Cannot have a mask on a number input!`);
+      if (
+        props.mask &&
+        typeof props.type !== 'undefined' &&
+        props.type === 'number'
+      ) {
+        throw new Error(
+          `Error with Input named ${props.name}: Cannot have a mask on a number input!`
+        );
       }
     });
 
     return (
       <FieldInternalWrapper>
-        <InputContainer
-          labelFor={id()}
-          color={props.color}
-          label={props.label}
-        >
+        <InputContainer labelFor={id()} color={props.color} label={props.label}>
           <input
             {...elProps}
             id={id()}
             disabled={disabled()}
             class={mergeClass('input', elProps.class)}
             classList={{
-              'no-label': typeof props.label === 'undefined',
+              'no-label': typeof props.label === 'undefined'
             }}
             value={(value() || '') as string}
             onInput={mergeCallbacks(
               elProps.onInput as any,
               props.mask ? createInputMask(props.mask) : undefined,
-              (event: InputEvent & { target: HTMLInputElement, currentTarget: HTMLInputElement }) => {
+              (
+                event: InputEvent & {
+                  target: HTMLInputElement;
+                  currentTarget: HTMLInputElement;
+                }
+              ) => {
                 const ref = event.currentTarget || event.target;
                 if (props.onChange) {
                   props.onChange(ref.value, event);
@@ -104,13 +126,25 @@ const Input = setupFieldComponent<InputProps, 'input', InputBaseValue<undefined>
       </FieldInternalWrapper>
     );
   },
-  ['mask', 'label', 'helperText', 'type', 'color', 'onChange', ...MaskedFieldPropsKeys]
+  [
+    'mask',
+    'label',
+    'helperText',
+    'type',
+    'color',
+    'onChange',
+    ...MaskedFieldPropsKeys
+  ]
 ) as <
   OwnerFormValue extends FormValue,
   Type extends InputType = undefined,
-  Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<OwnerFormValue, InputBaseValue<Type>>,
+  Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<
+    OwnerFormValue,
+    InputBaseValue<Type>
+  >
 >(
-  props: InputProps<OwnerFormValue, Type, Name> & JSX.InputHTMLAttributes<HTMLInputElement>
+  props: InputProps<OwnerFormValue, Type, Name> &
+    JSX.InputHTMLAttributes<HTMLInputElement>
 ) => JSX.Element;
 
 export default Input;

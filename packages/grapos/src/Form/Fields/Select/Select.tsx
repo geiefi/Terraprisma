@@ -10,7 +10,7 @@ import {
   createEffect,
   on,
   splitProps,
-  ComponentProps,
+  ComponentProps
 } from 'solid-js';
 
 import InputContainer from '../_Shared/InputContainer/InputContainer';
@@ -25,7 +25,7 @@ import { FormFieldValue } from '../../Types/FormFieldValue';
 import {
   FieldName,
   FieldPropKeys,
-  FieldProps,
+  FieldProps
 } from '../_Shared/Types/FieldProps';
 
 import './Select.scss';
@@ -99,7 +99,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
       disabledS: [disabled],
       focusedS: [focused, setFocused],
       valueS: [value, setValue],
-      validate,
+      validate
     } = useField()!;
 
     const [inputContainerRef, setInputContainerRef] =
@@ -162,7 +162,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
     return (
       <FieldInternalWrapper
         style={{
-          cursor: disabled() === false ? 'pointer' : 'default',
+          cursor: disabled() === false ? 'pointer' : 'default'
         }}
       >
         <InputContainer
@@ -185,7 +185,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
               variant="rounded"
               class="select-icon"
               classList={{
-                open: focused(),
+                open: focused()
               }}
             />
           }
@@ -209,7 +209,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
               primary:
                 props.color === 'primary' || typeof props.color === 'undefined',
               secondary: props.color === 'secondary',
-              tertiary: props.color === 'tertiary',
+              tertiary: props.color === 'tertiary'
             }}
           >
             <For each={options()}>
@@ -224,7 +224,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
                     class={mergeClass('option', optionElProps.class)}
                     classList={{
                       active: optionProps.value === value(),
-                      ...optionElProps.classList,
+                      ...optionElProps.classList
                     }}
                     onClick={mergeCallbacks<(e: MouseEvent) => void>(
                       // eslint-disable-next-line solid/reactivity
@@ -257,7 +257,7 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
     'color',
     'children',
     'onChange',
-    'onFocus',
+    'onFocus'
   ]
 ) as {
   <OwnerFormValue extends FormValue>(

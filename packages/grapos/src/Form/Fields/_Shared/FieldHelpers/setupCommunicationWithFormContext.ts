@@ -13,10 +13,10 @@ export function setupCommunicationWithFormContext<
   Name extends FieldName<OwnerFormValue, BaseValueType>,
   Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
   BaseValueType extends FormFieldValue,
-  OwnerFormValue extends FormValue,
+  OwnerFormValue extends FormValue
 >(
   props: Props,
-  initialValue: Props['value'] & BaseValueType = '' as any,
+  initialValue: Props['value'] & BaseValueType = '' as any
 ): FormProviderValue<OwnerFormValue> | undefined {
   let form: FormProviderValue<OwnerFormValue> | undefined =
     useForm<OwnerFormValue>();
@@ -30,14 +30,14 @@ export function setupCommunicationWithFormContext<
         form!.store[1](
           produce((form) => {
             form.errors[props.name] = [];
-          }),
+          })
         );
       }
 
       form!.init(
         props.name,
         (props.validators || []) as any,
-        form!.valueFor(props.name) || (initialValue as any),
+        form!.valueFor(props.name) || (initialValue as any)
       );
     });
 
@@ -45,7 +45,7 @@ export function setupCommunicationWithFormContext<
       form!.store[1](
         produce((form) => {
           form.validators[props.name] = props.validators;
-        }),
+        })
       );
     });
 

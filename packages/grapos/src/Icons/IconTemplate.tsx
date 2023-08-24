@@ -1,7 +1,8 @@
-import { Component, JSX, splitProps } from 'solid-js';
+import { Component, JSX, ParentProps, splitProps } from 'solid-js';
 import { mergeClass } from '../_Shared/Utils';
+import { forwardComponentProps } from '../Helpers';
 
-export interface IconProps extends JSX.HTMLAttributes<HTMLSpanElement> {
+export interface IconProps extends ParentProps {
   /**
    * Outlined by default
    */
@@ -13,11 +14,9 @@ export interface IconProps extends JSX.HTMLAttributes<HTMLSpanElement> {
 export type IconComponent = Component<IconProps>;
 
 // not a decorator
-export function createIconComponent(iconName: string): IconComponent {
-  return (allProps) => {
-    const [props, elProps] = splitProps(allProps, ['variant']);
-
-    return (
+const createIconComponent = (iconName: string) => {
+  return forwardComponentProps<IconProps, 'span'>(
+    (props, elProps) => (
       <span
         {...elProps}
         class={mergeClass(
@@ -31,11 +30,14 @@ export function createIconComponent(iconName: string): IconComponent {
           display: 'flex',
           'justify-content': 'center',
           'align-items': 'center',
-          ...elProps.style,
+          ...props.style
         }}
       >
         {iconName}
       </span>
-    );
-  };
-}
+    ),
+    ['variant', 'style', 'children']
+  );
+};
+
+export default createIconComponent;

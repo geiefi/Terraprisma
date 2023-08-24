@@ -3,6 +3,7 @@
   "editorconfig": true,
   "tabWidth": 2,
   "trailingComma": "none",
+  "endOfLine": "lf",
   "semi": true,
   "singleQuote": true
 }

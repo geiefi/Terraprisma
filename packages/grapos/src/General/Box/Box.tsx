@@ -6,11 +6,12 @@ import {
   JSX,
   ParentProps,
   splitProps,
-  useContext,
+  useContext
 } from 'solid-js';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Box.scss';
+import { forwardComponentProps } from '../../Helpers';
 
 /**
  * @description Determines what depth the current context of box is in
@@ -20,9 +21,7 @@ export type Depth = 0 | 1 | 2 | 3;
 
 const BoxContext = createContext<Accessor<Depth>>();
 
-export interface BoxProps
-  extends ParentProps,
-    JSX.HTMLAttributes<HTMLDivElement> {
+export interface BoxProps extends ParentProps {
   /**
    * @description The depth of the current Box.
    *
@@ -49,36 +48,37 @@ export interface BoxProps
  * </Box>
  * ```
  */
-const Box: Component<BoxProps> = (allProps) => {
-  const [props, elProps] = splitProps(allProps, ['depth']);
+const Box = forwardComponentProps<BoxProps, 'div'>(
+  (props, elProps) => {
+    const oldDepth = useDepth();
+    const depth = createMemo(() => {
+      if (typeof props.depth !== 'undefined') return props.depth;
 
-  const oldDepth = useDepth();
-  const depth = createMemo(() => {
-    if (typeof props.depth !== 'undefined') return props.depth;
+      if (typeof oldDepth !== 'undefined') return Math.min(oldDepth() + 1, 3);
 
-    if (typeof oldDepth !== 'undefined') return Math.min(oldDepth() + 1, 3);
+      return 1;
+    }) as Accessor<Depth>;
 
-    return 1;
-  }) as Accessor<Depth>;
-
-  return (
-    <BoxContext.Provider value={depth}>
-      <div
-        {...elProps}
-        class={mergeClass('box', elProps.class)}
-        classList={{
-          'gray-1': depth() === 1,
-          'gray-2': depth() === 2,
-          'gray-3': depth() === 3,
-          ...elProps.classList,
-        }}
-        style={elProps.style}
-      >
-        {elProps.children}
-      </div>
-    </BoxContext.Provider>
-  );
-};
+    return (
+      <BoxContext.Provider value={depth}>
+        <div
+          {...elProps}
+          class={mergeClass('box', elProps.class)}
+          classList={{
+            'gray-1': depth() === 1,
+            'gray-2': depth() === 2,
+            'gray-3': depth() === 3,
+            ...elProps.classList
+          }}
+          style={elProps.style}
+        >
+          {props.children}
+        </div>
+      </BoxContext.Provider>
+    );
+  },
+  ['depth', 'children']
+);
 
 export function useDepth(): Accessor<Depth> | undefined {
   return useContext(BoxContext);
