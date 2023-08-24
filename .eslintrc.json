@@ -3,18 +3,17 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint",
     "solid",
     "prettier"
   ],
   "extends": [
-    "plugin:@typescript-eslint/recommended",
     "plugin:solid/recommended",
     "prettier"
   ],
   "rules": {
     "prettier/prettier": "warn",
-    "eol-last": "warn",
+    "eol-last": "off",
+    "comma-dangle": ["error", "never"],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
