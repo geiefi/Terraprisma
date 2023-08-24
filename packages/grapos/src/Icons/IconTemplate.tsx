@@ -1,4 +1,4 @@
-import { Component, JSX, ParentProps, splitProps } from 'solid-js';
+import { JSX, ParentProps } from 'solid-js';
 import { mergeClass } from '../_Shared/Utils';
 import { forwardComponentProps } from '../Helpers';
 
@@ -11,7 +11,7 @@ export interface IconProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-export type IconComponent = Component<IconProps>;
+export type IconComponent = ReturnType<typeof createIconComponent>;
 
 // not a decorator
 const createIconComponent = (iconName: string) => {
