@@ -7,7 +7,7 @@ import {
   Show,
   createMemo,
   createSignal,
-  Component,
+  Component
 } from 'solid-js';
 
 import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent';
@@ -15,7 +15,11 @@ import { setupFieldComponent } from '../_Shared/FieldHelpers/setupFieldComponent
 import Label from '../_Shared/Label/Label';
 import { FieldInternalWrapper } from '../_Shared';
 
-import { FieldName, FieldPropKeys, FieldProps } from '../_Shared/Types/FieldProps';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps
+} from '../_Shared/Types/FieldProps';
 
 import './RadioGroup.scss';
 import { ClickableSignalizer, Ripple } from '../../../General';
@@ -28,7 +32,9 @@ import { StackProps } from '../../../Layout/Stack/Stack';
 import { FormValue } from '../../Types/FormValue';
 import { FormFieldValue } from '../../Types/FormFieldValue';
 
-export interface RadioGroupOptionProps<AllowedValue extends FormFieldValue = FormFieldValue> extends ParentProps {
+export interface RadioGroupOptionProps<
+  AllowedValue extends FormFieldValue = FormFieldValue
+> extends ParentProps {
   value: AllowedValue;
 
   color?: 'primary' | 'secondary' | 'tertiary';
@@ -38,20 +44,19 @@ export interface RadioGroupOptionProps<AllowedValue extends FormFieldValue = For
   onClick?: (e: MouseEvent) => void;
 }
 
-const RadioOption = (props: RadioGroupOptionProps & Omit<ComponentProps<'input'>, keyof RadioGroupOptionProps>) =>
-  props as unknown as JSX.Element;
+const RadioOption = (
+  props: RadioGroupOptionProps &
+    Omit<ComponentProps<'input'>, keyof RadioGroupOptionProps>
+) => props as unknown as JSX.Element;
 
-const RadioInternal = forwardComponentProps<
-  RadioGroupOptionProps,
-  HTMLInputElement
->(
+const RadioInternal = forwardComponentProps<RadioGroupOptionProps, 'input'>(
   (props, elProps) => {
     const {
       elementId: groupId,
       valueS: [groupValue],
       disabledS: [groupDisabled],
 
-      hasErrors,
+      hasErrors
     } = useField<string>()!;
 
     const id = createMemo(() => `${groupId()}-${props.value}`);
@@ -82,7 +87,7 @@ const RadioInternal = forwardComponentProps<
             large: props.size === 'large',
 
             checked: isChecked(),
-            disabled: isDisabled(),
+            disabled: isDisabled()
           }}
           onMouseEnter={() => setRadioToFocused(true)}
           onMouseLeave={() => setRadioToFocused(false)}
@@ -98,13 +103,11 @@ const RadioInternal = forwardComponentProps<
                 id={id()}
                 type="radio"
                 value={groupValue()}
-                onFocus={mergeCallbacks(
-                  elProps.onFocus as any,
-                  () => setRadioToFocused(true)
+                onFocus={mergeCallbacks(elProps.onFocus as any, () =>
+                  setRadioToFocused(true)
                 )}
-                onBlur={mergeCallbacks(
-                  elProps.onBlur as any,
-                  () => setRadioToFocused(false)
+                onBlur={mergeCallbacks(elProps.onBlur as any, () =>
+                  setRadioToFocused(false)
                 )}
               />
             </Ripple>
@@ -124,9 +127,15 @@ const RadioInternal = forwardComponentProps<
 
 export interface RadioGroupProps<
   OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<OwnerFormValue, FormFieldValue>,
-  AllowedValue extends FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
-  = FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<
+    OwnerFormValue,
+    FormFieldValue
+  >,
+  AllowedValue extends FieldProps<
+    OwnerFormValue,
+    FormFieldValue,
+    Name
+  >['value'] = FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
@@ -137,15 +146,9 @@ export interface RadioGroupProps<
 
   onChange?: (value: AllowedValue, event: MouseEvent) => any;
 
-  children?: JSX.Element | (
-    (
-      Option: Component<
-        RadioGroupOptionProps<
-          AllowedValue
-        >
-      >
-    ) => JSX.Element
-  );
+  children?:
+    | JSX.Element
+    | ((Option: Component<RadioGroupOptionProps<AllowedValue>>) => JSX.Element);
 }
 
 const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
@@ -155,15 +158,18 @@ const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
       elementId: id,
 
       disabledS: [disabled],
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       valueS: [_value, setValue],
 
       hasErrors,
 
-      validate,
+      validate
     } = useField()!;
 
-    const getChildren = accessChildren(() => typeof props.children === 'function' ? props.children(RadioOption) : props.children);
+    const getChildren = accessChildren(() =>
+      typeof props.children === 'function'
+        ? props.children(RadioOption)
+        : props.children
+    );
     const options = createMemo<RadioGroupOptionProps[]>(() => {
       let childrenArr: (JSX.Element | RadioGroupOptionProps)[];
 
@@ -203,20 +209,17 @@ const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
                 tabindex={i()}
                 color={optionProps.color || color()}
                 size={optionProps.size || props.size || 'medium'}
-                onClick={mergeCallbacks(
-                  optionProps.onClick,
-                  (e) => {
-                    if (!disabled()) {
-                      const newValue = optionProps.value;
-                      setValue(newValue);
-                      validate(newValue);
+                onClick={mergeCallbacks(optionProps.onClick, (e) => {
+                  if (!disabled()) {
+                    const newValue = optionProps.value;
+                    setValue(newValue);
+                    validate(newValue);
 
-                      if (props.onChange) {
-                        props.onChange(newValue, e);
-                      }
+                    if (props.onChange) {
+                      props.onChange(newValue, e);
                     }
                   }
-                )}
+                })}
               />
             )}
           </For>
@@ -232,11 +235,12 @@ const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
     'color',
     'size',
     'onChange',
-    'children',
+    'children'
   ]
 ) as {
   <OwnerFormValue extends FormValue>(
-    props: RadioGroupProps<OwnerFormValue> & Omit<ComponentProps<'div'>, keyof RadioGroupProps>
+    props: RadioGroupProps<OwnerFormValue> &
+      Omit<ComponentProps<'div'>, keyof RadioGroupProps>
   ): JSX.Element;
   Option(props: RadioGroupOptionProps & ComponentProps<'input'>): JSX.Element;
 };
