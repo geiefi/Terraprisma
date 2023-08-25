@@ -1,11 +1,9 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { forwardComponentProps } from '../../Helpers';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
-import { Button } from '../../General';
-import { ArrowBackIosNew, ArrowForwardIos } from '../../Icons';
-
-import { mergeClass } from '../../_Shared/Utils';
+import { Button } from '../../general';
+import { ArrowBackIosNew, ArrowForwardIos } from '../../icons';
 
 import './Pagination.scss';
 
@@ -26,7 +24,7 @@ export interface PaginationProps {
   onChangePage?: (newPage: number, event?: MouseEvent) => any;
 }
 
-const Pagination = forwardComponentProps<PaginationProps, 'div'>(
+const Pagination = createComponentExtendingFromOther<PaginationProps, 'div'>(
   (props, elProps) => {
     const maximumAppearingChoices = createMemo(
       () => props.maximumAppearingChoices || 5 - 2
@@ -86,30 +84,25 @@ const Pagination = forwardComponentProps<PaginationProps, 'div'>(
           size="small"
           onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
         >
-          {' '}
-          <ArrowBackIosNew />{' '}
+          <ArrowBackIosNew />
         </Button.Icon>
 
         <Show when={!range().includes(1)}>
-          {' '}
-          <PageNumber pageN={1} />{' '}
+          <PageNumber pageN={1} />
         </Show>
 
         <Show when={!range().includes(2)}>
-          {' '}
-          <Etc />{' '}
+          <Etc />
         </Show>
 
         <For each={range()}>{(pageN) => <PageNumber pageN={pageN} />}</For>
 
         <Show when={!range().includes(props.total - 1)}>
-          {' '}
-          <Etc />{' '}
+          <Etc />
         </Show>
 
         <Show when={!range().includes(props.total)}>
-          {' '}
-          <PageNumber pageN={props.total} />{' '}
+          <PageNumber pageN={props.total} />
         </Show>
 
         <Button.Icon
@@ -118,8 +111,7 @@ const Pagination = forwardComponentProps<PaginationProps, 'div'>(
           onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
           size="small"
         >
-          {' '}
-          <ArrowForwardIos />{' '}
+          <ArrowForwardIos />
         </Button.Icon>
       </div>
     );

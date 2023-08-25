@@ -11,7 +11,7 @@ import {
 
 import './GrapeS.scss';
 
-import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './Themes';
+import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './themes';
 
 export type GrapeSThemesProviderValue = {
   themes: Accessor<Theme[]>;

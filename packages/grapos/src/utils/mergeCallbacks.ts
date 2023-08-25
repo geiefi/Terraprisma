@@ -1,8 +1,13 @@
-type Func = ((...args: any[]) => any) | {
-  (...args: any[]): any
-} | Event;
+type Func =
+  | ((...args: any[]) => any)
+  | {
+      (...args: any[]): any;
+    }
+  | Event;
 
-export function mergeCallbacks<Callback extends Func>(...callbacks: [...(Callback | undefined)[], Callback]): Callback {
+export function mergeCallbacks<Callback extends Func>(
+  ...callbacks: [...(Callback | undefined)[], Callback]
+): Callback {
   return ((...args: any[]) => {
     for (const callback of callbacks.slice(0, -1)) {
       if (typeof callback === 'function') {

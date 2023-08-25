@@ -15,7 +15,7 @@ import { JSX } from 'solid-js/jsx-runtime';
  * @param componentPropNames All of the keys of {@link Props} for splitting. Sadly
  * this parameter is a limitation of this helper. Maybe can be fixed with ts-transformers though.
  */
-export function forwardComponentProps<
+export function createComponentExtendingFromOther<
   Props extends Record<string, any>,
   Comp extends ValidComponent,
   PropsToForward extends ComponentProps<Comp> = ComponentProps<Comp>,

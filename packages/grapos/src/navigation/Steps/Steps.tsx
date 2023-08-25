@@ -13,13 +13,13 @@ import {
   ParentProps
 } from 'solid-js';
 
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
+
 import { StepsContext } from './StepsContext';
 
-import { Check } from '../../Icons';
+import { Check } from '../../icons';
 
 import './Steps.scss';
-import { mergeClass } from '../../_Shared/Utils';
-import { forwardComponentProps } from '../../Helpers';
 
 export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
   description?: string | JSX.Element;
@@ -113,7 +113,7 @@ export interface StepsProps extends ParentProps {
 
 export class StepsError extends Error {}
 
-const Steps = forwardComponentProps<StepsProps, 'div'>(
+const Steps = createComponentExtendingFromOther<StepsProps, 'div'>(
   (props, elProps) => {
     const childrenAccessor = accessChildren(() => props.children);
     const steps: Accessor<StepProps[]> = createMemo(() => {
