@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
+
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Colored.scss';
 

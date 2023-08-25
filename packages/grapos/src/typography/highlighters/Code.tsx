@@ -1,9 +1,8 @@
 import { ParentProps, createMemo } from 'solid-js';
 
-import { useDepth } from '../../General/Box/Box';
+import { useDepth } from '../../general/Box/Box';
 
-import { createComponentExtendingFromOther } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Code.scss';
 

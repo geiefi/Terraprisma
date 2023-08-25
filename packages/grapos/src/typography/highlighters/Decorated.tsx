@@ -1,7 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Decorated.scss';
 
@@ -26,7 +25,7 @@ const Decorated = createComponentExtendingFromOther<DecoratedProps, 'span'>(
       </span>
     );
   },
-  ['decoration', 'children'],
+  ['decoration', 'children']
 );
 
 export default Decorated;
