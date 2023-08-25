@@ -1,0 +1,44 @@
+
+> demo-website@ build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website
+> solid-start build
+
+ solid-start build 
+ version  0.3.4
+ adapter  node
+
+solid-start building client...
+solid-start rendering index.html...
+solid-start index.html rendered in: 1.492s
+vite v4.4.9 building for production...
+transforming...
+../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 80 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/public/.solid/index.html                                    0.13 kB │ gzip:  0.13 kB
+dist/public/manifest.json                                        2.47 kB │ gzip:  0.49 kB
+dist/public/ssr-manifest.json                                    6.09 kB │ gzip:  0.85 kB
+dist/public/assets/material-symbols-sharp-5e8b2862.woff2     2,535.64 kB
+dist/public/assets/material-symbols-outlined-ba77dc83.woff2  2,852.45 kB
+dist/public/assets/material-symbols-rounded-e7c5b465.woff2   3,697.10 kB
+dist/public/assets/index-6a431300.css                            1.63 kB │ gzip:  0.38 kB
+dist/public/assets/index-e12517a5.js                             1.54 kB │ gzip:  0.60 kB
+dist/public/assets/TypographyTest-0ae51c22.js                    1.67 kB │ gzip:  0.84 kB
+dist/public/assets/Demo-becc4781.js                              4.90 kB │ gzip:  1.67 kB
+dist/public/assets/(DesignShowcase)-8948b93a.js                  5.65 kB │ gzip:  1.68 kB
+dist/public/assets/index-52b9a710.js                            83.78 kB │ gzip: 29.73 kB
+dist/public/assets/index-59807f03.js                           163.99 kB │ gzip: 60.92 kB
+✓ built in 1.64s
+solid-start client built in: 3.159s
+
+solid-start building server...
+vite v4.4.9 building SSR bundle for production...
+transforming...
+../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 64 modules transformed.
+rendering chunks...
+.solid/server/manifest.json     0.12 kB
+.solid/server/entry-server.js  52.45 kB
+✓ built in 569ms
+solid-start server built in: 591.513ms
+

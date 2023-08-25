@@ -1,7 +1,7 @@
 import { Component } from 'solid-js';
 
-import { Container } from 'grapos/layout';
-import { Box } from 'grapos/general';
+import { Container } from '@grapos/layout';
+import { Box } from '@grapos/core';
 import {
   Paragraph,
   Title,
@@ -9,7 +9,7 @@ import {
   Code,
   Marked,
   Decorated
-} from 'grapos/typography';
+} from '@grapos/typography';
 
 const TypographyTest: Component = () => {
   return (

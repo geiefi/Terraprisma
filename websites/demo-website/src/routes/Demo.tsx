@@ -1,10 +1,10 @@
 import { Component, createSignal, Match, Switch } from 'solid-js';
 
-import { Box, Button } from 'grapos/general';
-import { Stack, Container, Divisor } from 'grapos/layout';
-import { Steps, Step } from 'grapos/navigation';
-import { FormProviderValue } from 'grapos/form/FormContext';
-import { FormValue } from 'grapos/form/types';
+import { Box, Button } from '@grapos/core';
+import { Stack, Container, Divisor } from '@grapos/layout';
+import { Steps, Step } from '@grapos/navigation';
+import type { FormProviderValue } from '@grapos/form/FormContext';
+import { FormValue } from '@grapos/form/types';
 
 import Address from '../components/DemoSteps/1-Address';
 import PaymentMethod from '../components/DemoSteps/2-PaymentMethod';

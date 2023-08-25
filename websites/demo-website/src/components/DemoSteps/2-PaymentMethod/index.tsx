@@ -1,11 +1,11 @@
 import { Component, Show, createSignal } from 'solid-js';
 
-import { Table } from 'grapos/data-display';
-import { createForm, Validators, FormProviderValue } from 'grapos/form';
-import { Box } from 'grapos/general';
-import { BarcodeScanner, CreditCard, QrCode } from 'grapos/icons';
-import { Col, Row } from 'grapos/layout';
-import { Pagination } from 'grapos/navigation';
+import { Table } from '@grapos/data-display';
+import { createForm, Validators, FormProviderValue } from '@grapos/form';
+import { Box } from '@grapos/core';
+import { BarcodeScanner, CreditCard, QrCode } from '@grapos/icons';
+import { Col, Row } from '@grapos/layout';
+import { Pagination } from '@grapos/navigation';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';

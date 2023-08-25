@@ -1,9 +1,9 @@
 import { Component, on, createEffect, createSignal } from 'solid-js';
 
-import { createForm, Validators, FormProviderValue } from 'grapos/form';
-import { Col, Row } from 'grapos/layout';
-import { GrowFade } from 'grapos/transitions';
-import { Tooltip } from 'grapos/data-display';
+import { createForm, Validators, FormProviderValue } from '@grapos/form';
+import { Col, Row } from '@grapos/layout';
+import { GrowFade } from '@grapos/transitions';
+import { Tooltip } from '@grapos/data-display';
 
 export type AddressFormValue = {
   cidade: string;

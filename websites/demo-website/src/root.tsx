@@ -1,5 +1,5 @@
 // @refresh reload
-import { GrapeS } from 'grapos';
+import { GrapeS } from '@grapos/core';
 import { onMount, Suspense } from 'solid-js';
 import {
   Body,
