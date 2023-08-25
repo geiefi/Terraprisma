@@ -1,4 +1,4 @@
-import { Component, JSX, ParentProps } from 'solid-js';
+import { JSX, ParentProps } from 'solid-js';
 import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Row.scss';
