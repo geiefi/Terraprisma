@@ -1,4 +1,4 @@
-import { FormFieldValue } from './Types/FormFieldValue';
+import { FormFieldValue } from './types';
 
 const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 

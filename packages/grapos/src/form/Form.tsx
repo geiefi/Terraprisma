@@ -11,8 +11,7 @@ import { SetStoreFunction, createStore, produce } from 'solid-js/store';
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
-import { AgnosticValidator } from './Types/AgnosticValidator';
-import { FormValue } from './Types/FormValue';
+import { AgnosticValidator, FormValue } from './types';
 import {
   ButtonChooser,
   Datepicker,
@@ -23,24 +22,24 @@ import {
   Slider,
   TextArea,
   Toggler
-} from './Fields';
-import { InputBaseValue, InputProps, InputType } from './Fields/Input/Input';
-import { SliderProps } from './Fields/Slider/Slider';
-import { SelectOptionProps, SelectProps } from './Fields/Select/Select';
+} from './fields';
+import { InputBaseValue, InputProps, InputType } from './fields/Input/Input';
+import { SliderProps } from './fields/Slider/Slider';
+import { SelectOptionProps, SelectProps } from './fields/Select/Select';
 import {
   ButtonChooserOptionProps,
   ButtonChooserProps
-} from './Fields/ButtonChooser/ButtonChooser';
+} from './fields/ButtonChooser/ButtonChooser';
 import {
   RadioGroupOptionProps,
   RadioGroupProps
-} from './Fields/RadioGroup/RadioGroup';
-import { TextAreaProps } from './Fields/TextArea/TextArea';
-import { DatepickerProps } from './Fields/Datepicker/Datepicker';
-import { TogglerProps } from './Fields/Toggler/Toggler';
-import { CheckboxProps } from './Fields/Checkbox/Checkbox';
-import { FieldName } from './Fields/_Shared/Types/FieldProps';
-import { FormFieldValue } from './Types/FormFieldValue';
+} from './fields/RadioGroup/RadioGroup';
+import { TextAreaProps } from './fields/TextArea/TextArea';
+import { DatepickerProps } from './fields/Datepicker/Datepicker';
+import { TogglerProps } from './fields/Toggler/Toggler';
+import { CheckboxProps } from './fields/Checkbox/Checkbox';
+import { FieldName } from './fields/utils/types/FieldProps';
+import { FormFieldValue } from './types/FormFieldValue';
 
 export interface FormProps<Value extends FormValue = FormValue>
   extends ParentProps {

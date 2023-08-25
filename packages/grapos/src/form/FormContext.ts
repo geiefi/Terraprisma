@@ -1,16 +1,16 @@
 import { createContext, Setter } from 'solid-js';
 import { produce } from 'solid-js/store';
 
-import { deeplyTrack } from '../Helpers/deeplyTrack';
-1;
-import { Store } from '../Helpers/Types/Store';
+import { deeplyTrack, Store } from '../utils';
 
-import { AgnosticValidator } from './Types/AgnosticValidator';
-import { FieldValidator } from './Types/FieldValidator';
-import { FormValue } from './Types/FormValue';
-import { LeavesOfObject } from './Types/LeavesOfObject';
-import { DeepGet } from './Types/DeepGet';
-import { EmptyObj } from '../_Shared/Types/EmptyObj';
+import {
+  AgnosticValidator,
+  FieldValidator,
+  FormValue,
+  LeavesOfObject,
+  DeepGet,
+  EmptyObj
+} from './types';
 
 export class FormError extends Error {}
 
