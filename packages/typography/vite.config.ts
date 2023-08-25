@@ -3,12 +3,14 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import solidPlugin from 'vite-plugin-solid';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 
 import pkg from './package.json';
 
 export default defineConfig({
   plugins: [
     solidPlugin(),
+    cssInjectedByJsPlugin(),
     dts({
       insertTypesEntry: true,
       tsconfigPath: 'tsconfig.build.json',

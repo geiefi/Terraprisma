@@ -1,0 +1,17 @@
+
+> @grapos/navigation@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation
+> vite build && cp package.json lib/package.json && cp README.md lib/README.md
+
+vite v4.4.9 building for production...
+transforming...
+"memo" is imported from external module "solid-js/web" but never used in "src/Pagination/Pagination.tsx" and "src/Steps/Steps.tsx".
+✓ 6 modules transformed.
+rendering chunks...
+
+[vite:dts] Start generate declaration files...
+computing gzip size...
+lib/index.mjs  10.03 kB │ gzip: 3.04 kB
+[vite:dts] Declaration files built in 1781ms.
+
+lib/index.cjs  8.80 kB │ gzip: 2.78 kB
+✓ built in 2.25s

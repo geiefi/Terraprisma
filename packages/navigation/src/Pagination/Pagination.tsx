@@ -1,9 +1,9 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '../../utils';
+import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 
-import { Button } from '../../general';
-import { ArrowBackIosNew, ArrowForwardIos } from '../../icons';
+import { Button } from '@grapos/core';
+import { ArrowBackIosNew, ArrowForwardIos } from '@grapos/icons';
 
 import './Pagination.scss';
 

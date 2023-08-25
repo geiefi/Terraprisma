@@ -1,0 +1,16 @@
+
+> @grapos/layout@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/layout
+> vite build && cp package.json lib/package.json && cp README.md lib/README.md
+
+vite v4.4.9 building for production...
+transforming...
+✓ 11 modules transformed.
+rendering chunks...
+
+[vite:dts] Start generate declaration files...
+computing gzip size...
+lib/index.mjs  3.54 kB │ gzip: 1.23 kB
+[vite:dts] Declaration files built in 1622ms.
+
+lib/index.cjs  3.04 kB │ gzip: 1.13 kB
+✓ built in 2.13s

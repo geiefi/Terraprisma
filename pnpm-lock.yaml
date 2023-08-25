@@ -78,6 +78,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -137,6 +140,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -202,6 +208,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -252,6 +261,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -299,6 +311,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -309,6 +324,9 @@ importers:
 
   packages/navigation:
     dependencies:
+      '@grapos/core':
+        specifier: workspace:latest
+        version: link:../core/lib
       '@grapos/icons':
         specifier: workspace:latest
         version: link:../icons/lib
@@ -349,6 +367,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -399,6 +420,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -452,6 +476,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -496,6 +523,9 @@ importers:
       vite:
         specifier: ^4.1.4
         version: 4.4.9(sass@1.66.1)
+      vite-plugin-css-injected-by-js:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@4.4.9)
       vite-plugin-dts:
         specifier: ^3.5.2
         version: 3.5.2(typescript@5.1.6)(vite@4.4.9)
@@ -506,6 +536,30 @@ importers:
 
   websites/demo-website:
     dependencies:
+      '@grapos/core':
+        specifier: workspace:latest
+        version: link:../../packages/core/lib
+      '@grapos/data-display':
+        specifier: workspace:latest
+        version: link:../../packages/data-display/lib
+      '@grapos/form':
+        specifier: workspace:latest
+        version: link:../../packages/form/lib
+      '@grapos/icons':
+        specifier: workspace:latest
+        version: link:../../packages/icons/lib
+      '@grapos/layout':
+        specifier: workspace:latest
+        version: link:../../packages/layout/lib
+      '@grapos/navigation':
+        specifier: workspace:latest
+        version: link:../../packages/navigation/lib
+      '@grapos/transitions':
+        specifier: workspace:latest
+        version: link:../../packages/transitions/lib
+      '@grapos/typography':
+        specifier: workspace:latest
+        version: link:../../packages/typography/lib
       '@solidjs/meta':
         specifier: ^0.28.2
         version: 0.28.6(solid-js@1.7.11)
@@ -7144,6 +7198,14 @@ packages:
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  /vite-plugin-css-injected-by-js@3.3.0(vite@4.4.9):
+    resolution: {integrity: sha512-xG+jyHNCmUqi/TXp6q88wTJGeAOrNLSyUUTp4qEQ9QZLGcHWQQsCsSSKa59rPMQr8sOzfzmWDd8enGqfH/dBew==}
+    peerDependencies:
+      vite: '>2.0.0-0'
+    dependencies:
+      vite: 4.4.9(sass@1.66.1)
+    dev: true
 
   /vite-plugin-dts@3.5.2(typescript@5.1.6)(vite@4.4.9):
     resolution: {integrity: sha512-iKc851+jdHEoN1ifbOEsoMs+/Zg26PE1EyO2Jc+4apOWRoaeK2zRJnaStgUuJaVaEcAjTqWzpNgCAMq7iO6DWA==}
