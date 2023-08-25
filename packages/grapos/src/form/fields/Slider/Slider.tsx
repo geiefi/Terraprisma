@@ -15,6 +15,7 @@ import { GrowFade } from '../../../transitions';
 import { createTooltip } from '../../../data-display';
 
 import './Slider.scss';
+import { canUseDocument } from '../../../utils';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -98,15 +99,19 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
       tempSlider.addEventListener('mousedown', handleMouseDown, {
         passive: true
       });
-      document.addEventListener('mousemove', handleMouseMove, {
-        passive: true
-      });
-      document.addEventListener('mouseup', handleMouseUp);
+      if (canUseDocument()) {
+        document.addEventListener('mousemove', handleMouseMove, {
+          passive: true
+        });
+        document.addEventListener('mouseup', handleMouseUp);
+      }
 
       onCleanup(() => {
         tempSlider.removeEventListener('mousedown', handleMouseDown);
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
+        if (canUseDocument()) {
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+        }
       });
     });
 

@@ -23,7 +23,7 @@ import {
   InputContainer
 } from '../utils';
 
-import { mergeCallbacks } from '../../../utils';
+import { canUseDocument, mergeCallbacks } from '../../../utils';
 
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
 import { Box, Button, Dropdown } from '../../../general';
@@ -261,11 +261,12 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
     };
 
     onMount(() => {
-      document.addEventListener('click', onDocumentClick);
+      if (canUseDocument()) document.addEventListener('click', onDocumentClick);
     });
 
     onCleanup(() => {
-      document.removeEventListener('click', onDocumentClick);
+      if (canUseDocument())
+        document.removeEventListener('click', onDocumentClick);
     });
 
     const [datepickerSelectionType, setDatepickerSelectionType] = createSignal<

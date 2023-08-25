@@ -12,6 +12,7 @@ import {
 import './GrapeS.scss';
 
 import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './themes';
+import { canUseDocument } from './utils';
 
 export type GrapeSThemesProviderValue = {
   themes: Accessor<Theme[]>;
@@ -79,7 +80,8 @@ export default function GrapeS(
   );
 
   createEffect(() => {
-    document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
+    if (canUseDocument())
+      document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
   });
 
   const [grapesAppRef, setGrapesAppRef] = createSignal<HTMLDivElement>();

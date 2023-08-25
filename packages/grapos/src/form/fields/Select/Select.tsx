@@ -13,7 +13,7 @@ import {
   ComponentProps
 } from 'solid-js';
 
-import { mergeClass, mergeCallbacks } from '../../../utils';
+import { mergeClass, mergeCallbacks, canUseDocument } from '../../../utils';
 
 import {
   InputContainer,
@@ -110,8 +110,13 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
       }
     };
 
-    onMount(() => document.addEventListener('click', onDocumentClick));
-    onCleanup(() => document.removeEventListener('click', onDocumentClick));
+    onMount(() => {
+      if (canUseDocument()) document.addEventListener('click', onDocumentClick);
+    });
+    onCleanup(() => {
+      if (canUseDocument())
+        document.removeEventListener('click', onDocumentClick);
+    });
 
     const getChildren = accessChildren(() =>
       typeof props.children === 'function'

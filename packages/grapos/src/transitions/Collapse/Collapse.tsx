@@ -2,6 +2,7 @@ import { type Component, type ParentProps } from 'solid-js';
 import { Transition, TransitionProps } from 'solid-transition-group';
 
 import './Collapse.scss';
+import { canUseDocument } from '../../utils';
 
 export interface CollapseProps
   extends Omit<TransitionProps, 'name'>,
@@ -17,7 +18,7 @@ const Collapse: Component<CollapseProps> = (props) => (
     name="collapse"
     {...props}
     onEnter={(el: Element, done) => {
-      if (el instanceof HTMLElement) {
+      if (canUseDocument() && el instanceof HTMLElement) {
         el.style.setProperty('--expected-height', el.scrollHeight + 'px');
       } else {
         console.warn(

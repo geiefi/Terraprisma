@@ -3,6 +3,7 @@ import { splitTupleAccessor } from './splitTupleAccessor';
 import { createComponentExtendingFromOther } from './createComponentExtendingFromOther';
 import { mergeCallbacks } from './mergeCallbacks';
 import { mergeClass } from './mergeClass';
+import { canUseDocument } from './canUseDocument';
 
 import type { Store } from './types/Store';
 
@@ -11,7 +12,8 @@ export {
   splitTupleAccessor,
   createComponentExtendingFromOther,
   mergeClass,
-  mergeCallbacks
+  mergeCallbacks,
+  canUseDocument
 };
 
 export type { Store };

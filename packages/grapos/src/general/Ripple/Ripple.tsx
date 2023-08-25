@@ -15,7 +15,11 @@ import { createStore, produce } from 'solid-js/store';
 
 import { useTheme } from '../../GrapeS';
 
-import { mergeClass, createComponentExtendingFromOther } from '../../utils';
+import {
+  mergeClass,
+  createComponentExtendingFromOther,
+  canUseDocument
+} from '../../utils';
 
 import './Ripple.scss';
 
@@ -157,20 +161,22 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
     );
 
     const rippledElement = createMemo<HTMLElement | undefined>(() => {
-      const firstElementChild = childrenList().find(
-        (c) => c instanceof HTMLElement
-      );
-
-      if (typeof firstElementChild !== 'undefined') {
-        const rippledElement = firstElementChild as HTMLElement;
-
-        rippledElement.addEventListener('click', addNewRipple);
-
-        return rippledElement;
-      } else {
-        console.warn(
-          'At least one of the children of Ripple should be an actual HTML element so that the ripple can be positioned based on it!'
+      if (canUseDocument()) {
+        const firstElementChild = childrenList().find(
+          (c) => c instanceof HTMLElement
         );
+
+        if (typeof firstElementChild !== 'undefined') {
+          const rippledElement = firstElementChild as HTMLElement;
+
+          rippledElement.addEventListener('click', addNewRipple);
+
+          return rippledElement;
+        } else {
+          console.warn(
+            'At least one of the children of Ripple should be an actual HTML element so that the ripple can be positioned based on it!'
+          );
+        }
       }
     });
 
