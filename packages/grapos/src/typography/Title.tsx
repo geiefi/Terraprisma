@@ -1,8 +1,8 @@
 import { ParentProps, Show, createMemo } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { forwardComponentProps } from '../Helpers';
-import { Divisor } from '../Layout';
+import { createComponentExtendingFromOther } from '../utils';
+import { Divisor } from '../layout';
 
 import './Title.scss';
 
@@ -17,7 +17,7 @@ export interface TitleProps extends ParentProps {
   showDivisor?: boolean;
 }
 
-const Title = forwardComponentProps<TitleProps, 'h1'>(
+const Title = createComponentExtendingFromOther<TitleProps, 'h1'>(
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
 

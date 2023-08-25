@@ -1,5 +1,5 @@
 import { ParentProps } from 'solid-js';
-import { forwardComponentProps } from '../../Helpers';
+import { createComponentExtendingFromOther } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Colored.scss';
@@ -14,7 +14,7 @@ interface ColorProps extends ParentProps {
     | 'warning';
 }
 
-const Colored = forwardComponentProps<ColorProps, 'span'>(
+const Colored = createComponentExtendingFromOther<ColorProps, 'span'>(
   (props, elProps) => {
     return (
       <span

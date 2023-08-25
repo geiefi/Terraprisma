@@ -1,11 +1,10 @@
 import { ParentProps } from 'solid-js';
 
-import { forwardComponentProps } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Marked.scss';
 
-const Marked = forwardComponentProps<ParentProps, 'mark'>(
+const Marked = createComponentExtendingFromOther<ParentProps, 'mark'>(
   (props, elProps) => {
     return (
       <mark {...elProps} class={mergeClass('marked', elProps.class)}>
@@ -13,8 +12,7 @@ const Marked = forwardComponentProps<ParentProps, 'mark'>(
       </mark>
     );
   },
-  ['children'],
+  ['children']
 );
 
 export default Marked;
-

@@ -2,12 +2,12 @@ import { ParentProps, createMemo } from 'solid-js';
 
 import { useDepth } from '../../General/Box/Box';
 
-import { forwardComponentProps } from '../../Helpers';
+import { createComponentExtendingFromOther } from '../../Helpers';
 import { mergeClass } from '../../_Shared/Utils';
 
 import './Code.scss';
 
-const Code = forwardComponentProps<ParentProps, 'code'>(
+const Code = createComponentExtendingFromOther<ParentProps, 'code'>(
   (props, elProps) => {
     const originalDepth = useDepth();
     const depth = createMemo(() =>
