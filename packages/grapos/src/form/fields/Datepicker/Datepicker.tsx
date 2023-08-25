@@ -28,7 +28,7 @@ import { mergeCallbacks } from '../../../utils';
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
 import { Box, Button, Dropdown } from '../../../general';
 import { ArrowLeft, ArrowRight, CalendarMonth } from '../../../icons';
-import { Row } from '../../../layout/Grid';
+import { Row } from '../../../layout';
 import { GrowFade } from '../../../transitions';
 
 import { FormFieldValue, FormValue } from '../../types';
