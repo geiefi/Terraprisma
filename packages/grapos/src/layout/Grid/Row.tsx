@@ -10,10 +10,7 @@ export interface RowProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Row: Component<RowProps> = createComponentExtendingFromOther<
-  RowProps,
-  'div'
->(
+const Row = createComponentExtendingFromOther<RowProps, 'div'>(
   (props, elProps) => {
     return (
       <div

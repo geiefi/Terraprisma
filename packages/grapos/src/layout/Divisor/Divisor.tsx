@@ -8,10 +8,7 @@ export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const Divisor: Component<DivisorProps> = createComponentExtendingFromOther<
-  DivisorProps,
-  'div'
->(
+const Divisor = createComponentExtendingFromOther<DivisorProps, 'div'>(
   (props, elProps) => {
     return (
       <div

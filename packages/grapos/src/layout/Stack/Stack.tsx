@@ -1,9 +1,9 @@
-import { Component, JSX, ParentProps, splitProps } from 'solid-js';
-import { mergeClass } from '../../utils';
+import { JSX, ParentProps } from 'solid-js';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './Stack.scss';
 
-export interface StackProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface StackProps extends ParentProps {
   spacing?: number;
   align?:
     | 'center'
@@ -18,15 +18,8 @@ export interface StackProps extends JSX.HTMLAttributes<HTMLDivElement> {
   style?: JSX.CSSProperties;
 }
 
-const Stack: Component<ParentProps<StackProps>> = (allProps) => {
-  const [props, elProps] = splitProps(allProps, [
-    'spacing',
-    'align',
-    'direction',
-    'fullWidth'
-  ]);
-
-  return (
+const Stack = createComponentExtendingFromOther<StackProps, 'div'>(
+  (props, elProps) => (
     <div
       {...elProps}
       class={mergeClass('stack', elProps.class)}
@@ -41,12 +34,13 @@ const Stack: Component<ParentProps<StackProps>> = (allProps) => {
       style={{
         gap: `${props.spacing}px`,
         'justify-content': props.align,
-        ...elProps.style
+        ...props.style
       }}
     >
-      {elProps.children}
+      {props.children}
     </div>
-  );
-};
+  ),
+  ['spacing', 'align', 'direction', 'fullWidth', 'children', 'style']
+);
 
 export default Stack;

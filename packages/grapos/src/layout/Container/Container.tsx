@@ -27,10 +27,7 @@ function isPredefinedLayoutWidth(
   return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth.toString());
 }
 
-const Container: Component<ContainerProps> = createComponentExtendingFromOther<
-  ContainerProps,
-  'div'
->(
+const Container = createComponentExtendingFromOther<ContainerProps, 'div'>(
   (props, elProps) => {
     const maxWidthPx = createMemo<string>(() => {
       const maxWidth = props.maxWidth || 'lg';

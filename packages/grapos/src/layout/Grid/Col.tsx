@@ -1,6 +1,7 @@
-import { Component, JSX, splitProps } from 'solid-js';
+import { JSX, ParentProps } from 'solid-js';
+import { createComponentExtendingFromOther } from '../../utils';
 
-export interface ColProps extends JSX.HTMLAttributes<HTMLDivElement> {
+export interface ColProps extends ParentProps {
   size:
     | 1
     | 2
@@ -30,21 +31,20 @@ export interface ColProps extends JSX.HTMLAttributes<HTMLDivElement> {
   style?: JSX.CSSProperties;
 }
 
-const Col: Component<ColProps> = (allProps) => {
-  const [props, elProps] = splitProps(allProps, ['size']);
-
-  return (
+const Col = createComponentExtendingFromOther<ColProps, 'div'>(
+  (props, elProps) => (
     <div
       {...elProps}
       class="col"
       style={{
         width: `${(props.size / 24) * 100}%`,
-        ...elProps.style
+        ...props.style
       }}
     >
-      {elProps.children}
+      {props.children}
     </div>
-  );
-};
+  ),
+  ['size', 'children', 'style']
+);
 
 export default Col;
