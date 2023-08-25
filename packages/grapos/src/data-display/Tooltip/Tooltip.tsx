@@ -7,11 +7,12 @@ import {
   ParentProps,
   Show
 } from 'solid-js';
-import { mergeClass } from '../../_Shared/Utils';
+
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
+
+import { ArrowDropDown } from '../../icons';
 
 import './Tooltip.scss';
-import { forwardComponentProps } from '../../Helpers';
-import { ArrowDropDown } from '../../Icons';
 
 export interface TooltipProps extends ParentProps {
   visible?: boolean;
@@ -63,7 +64,7 @@ export function createTooltip(identification: string) {
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
-    Tooltip: forwardComponentProps<TooltipProps, 'div'>(
+    Tooltip: createComponentExtendingFromOther<TooltipProps, 'div'>(
       (props, elProps) => {
         const [visible, setVisible] = createSignal(props.visible);
 

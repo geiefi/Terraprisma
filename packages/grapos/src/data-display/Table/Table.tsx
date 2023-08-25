@@ -6,13 +6,13 @@ import {
   createContext,
   useContext
 } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
-import { forwardComponentProps } from '../../Helpers';
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
+
+import { Box } from '../../general';
 
 import './Table.scss';
-import { Dynamic } from 'solid-js/web';
-import { Box } from '../../General';
-import { mergeClass } from '../../_Shared/Utils';
 
 export interface TableProps extends ParentProps {
   identification: string;
@@ -23,7 +23,7 @@ export interface TableProps extends ParentProps {
 
 const TableContext = createContext<TableProps>();
 
-const Table = forwardComponentProps<TableProps, 'table'>(
+const Table = createComponentExtendingFromOther<TableProps, 'table'>(
   (props, elProps) => {
     const table = (
       <table
@@ -59,7 +59,7 @@ export interface TableRowProps extends ParentProps {
 
 const RowContext = createContext<TableRowProps>();
 
-const Row = forwardComponentProps<TableRowProps, 'tr'>(
+const Row = createComponentExtendingFromOther<TableRowProps, 'tr'>(
   (props, elProps) => {
     return (
       <RowContext.Provider value={props}>
@@ -74,7 +74,7 @@ export interface TableColumnProps extends ParentProps {
   align?: 'left' | 'right' | 'center';
 }
 
-const Column = forwardComponentProps<TableColumnProps, 'td'>(
+const Column = createComponentExtendingFromOther<TableColumnProps, 'td'>(
   (props, elProps) => {
     const tableProps = useContext(TableContext);
     const rowProps = useContext(RowContext);

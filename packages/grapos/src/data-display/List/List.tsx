@@ -1,18 +1,18 @@
 import { ComponentProps, JSX, ParentProps, Show, createSignal } from 'solid-js';
-import { forwardComponentProps } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
-import { Ripple } from '../../General';
+
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
+import { Ripple } from '../../general';
+import { Divisor } from '../../layout';
+import { KeyboardArrowDown } from '../../icons';
+import { Collapse } from '../../transitions';
 
 import './List.scss';
-import { Divisor } from '../../Layout';
-import { KeyboardArrowDown } from '../../Icons';
-import { Collapse } from '../../Transitions';
 
 export interface ListProps extends ParentProps {
   dense?: boolean;
 }
 
-const List = forwardComponentProps<ListProps, 'ul'>(
+const List = createComponentExtendingFromOther<ListProps, 'ul'>(
   (props, elProps) => (
     <ul
       {...elProps}
@@ -51,7 +51,10 @@ export interface ListItemWithDetailsProps extends ParentProps {
   active?: boolean;
 }
 
-List.ItemWithDetails = forwardComponentProps<ListItemWithDetailsProps, 'li'>(
+List.ItemWithDetails = createComponentExtendingFromOther<
+  ListItemWithDetailsProps,
+  'li'
+>(
   (props, elProps) => {
     const [showingDetails, setShowingDetails] = createSignal(false);
 
@@ -107,7 +110,7 @@ export interface ListItemProps extends ParentProps {
   active?: boolean;
 }
 
-List.Item = forwardComponentProps<ListItemProps, 'li'>(
+List.Item = createComponentExtendingFromOther<ListItemProps, 'li'>(
   (props, elProps) => {
     const content = (
       <div
