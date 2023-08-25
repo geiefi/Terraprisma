@@ -1,14 +1,14 @@
 import { Component } from 'solid-js';
-import { mergeClass } from '../../_Shared/Utils';
+
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
 
 import './Divisor.scss';
-import { forwardComponentProps } from '../../Helpers';
 
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const Divisor: Component<DivisorProps> = forwardComponentProps<
+const Divisor: Component<DivisorProps> = createComponentExtendingFromOther<
   DivisorProps,
   'div'
 >(
