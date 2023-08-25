@@ -1,13 +1,11 @@
 import { Component, Show, createSignal } from 'solid-js';
 
-import { Table } from 'grapos/DataDisplay';
-import { createForm } from 'grapos/Form/Form';
-import { FormProviderValue } from 'grapos/Form/FormContext';
-import Validators from 'grapos/Form/Validators';
-import { Box } from 'grapos/General';
-import { BarcodeScanner, CreditCard, QrCode } from 'grapos/Icons';
-import { Col, Row } from 'grapos/Layout/Grid';
-import { Pagination } from 'grapos/Navigation';
+import { Table } from 'grapos/data-display';
+import { createForm, Validators, FormProviderValue } from 'grapos/form';
+import { Box } from 'grapos/general';
+import { BarcodeScanner, CreditCard, QrCode } from 'grapos/icons';
+import { Col, Row } from 'grapos/layout';
+import { Pagination } from 'grapos/navigation';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';
@@ -23,7 +21,7 @@ const PaymentMethod: Component<{
   ref?: (formProviderValue: FormProviderValue<PaymentFormValue>) => void;
 }> = (props) => {
   const PaymentForm = createForm<PaymentFormValue>('PaymentForm', {
-    paymentMethod: 'cartao-de-credito',
+    paymentMethod: 'cartao-de-credito'
   });
 
   const [page, setPage] = createSignal(5);
@@ -34,19 +32,23 @@ const PaymentMethod: Component<{
         name="paymentMethod"
         label="Método de pagamento"
         validators={[Validators.required]}
-      >{(Option) => <>
-        <Option value="cartao-de-credito">
-          <CreditCard /> Cartão de crédito
-        </Option>
+      >
+        {(Option) => (
+          <>
+            <Option value="cartao-de-credito">
+              <CreditCard /> Cartão de crédito
+            </Option>
 
-        <Option value="boleto">
-          <BarcodeScanner /> Boleto
-        </Option>
+            <Option value="boleto">
+              <BarcodeScanner /> Boleto
+            </Option>
 
-        <Option value="pix">
-          <QrCode /> Pix
-        </Option>
-      </>}</PaymentForm.ButtonChooser>
+            <Option value="pix">
+              <QrCode /> Pix
+            </Option>
+          </>
+        )}
+      </PaymentForm.ButtonChooser>
 
       <Show
         when={PaymentForm.store[0].values.paymentMethod === 'cartao-de-credito'}
@@ -69,11 +71,11 @@ const PaymentMethod: Component<{
               </Table.Row>
             </Table>
 
-            <Pagination 
-              style={{ 'margin-left': 'auto' }} 
-              current={page()} 
-              total={10} 
-              onChangePage={(newPage) => setPage(newPage)} 
+            <Pagination
+              style={{ 'margin-left': 'auto' }}
+              current={page()}
+              total={10}
+              onChangePage={(newPage) => setPage(newPage)}
             />
           </Box>
 

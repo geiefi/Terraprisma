@@ -16,13 +16,13 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "grapos": ["../grapos/src"],
-      "grapos/*": ["../grapos/src/*"],
+      // "grapos": ["../../packages/grapos/src"],
+      // "grapos/*": ["../../packages/grapos/src/*"],
       "~/*": ["./src/*"]
     }
   },
-  "includes": ["src"],
-  "references": [
-    { "path": "../grapos/tsconfig.build.json" }
-  ]
+  "includes": ["src"]
+  // "references": [
+  //   { "path": "../../packages/grapos/tsconfig.build.json" }
+  // ]
 }

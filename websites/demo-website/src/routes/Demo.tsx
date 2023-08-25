@@ -1,18 +1,19 @@
 import { Component, createSignal, Match, Switch } from 'solid-js';
 
-import { Box, Button } from 'grapos/General';
-import { Stack, Container, Divisor } from 'grapos/Layout';
-import { Steps, Step } from 'grapos/Navigation';
-import { FormProviderValue } from 'grapos/Form/FormContext';
-import { FormValue } from 'grapos/Form/Types/FormValue';
+import { Box, Button } from 'grapos/general';
+import { Stack, Container, Divisor } from 'grapos/layout';
+import { Steps, Step } from 'grapos/navigation';
+import { FormProviderValue } from 'grapos/form/FormContext';
+import { FormValue } from 'grapos/form/types';
 
 import Address from '../components/DemoSteps/1-Address';
 import PaymentMethod from '../components/DemoSteps/2-PaymentMethod';
 
 const Demo: Component = () => {
-  const [currentStep, setCurrentStep] = createSignal<number>(1);
+  const [currentStep, setCurrentStep] = createSignal<number>(0);
 
-  const [currentForm, setCurrenForm] = createSignal<FormProviderValue<FormValue>>();
+  const [currentForm, setCurrenForm] =
+    createSignal<FormProviderValue<FormValue>>();
 
   return (
     <Container
@@ -26,15 +27,12 @@ const Demo: Component = () => {
           width: '100%',
           'max-width': '768px',
           'min-height': '568px',
-          'height': 'fit-content',
-          'display': 'flex',
-          'flex-direction': 'column',
+          height: 'fit-content',
+          display: 'flex',
+          'flex-direction': 'column'
         }}
       >
-        <Steps
-          current={currentStep()}
-          identification="PassoAPassoDeCompra"
-        >
+        <Steps current={currentStep()} identification="PassoAPassoDeCompra">
           <Step description="endereço de entrega">endereço</Step>
           <Step description="dados de pagamento">pagamento</Step>
           <Step description="confirme a compra">conclusão</Step>
@@ -54,26 +52,34 @@ const Demo: Component = () => {
           </Match>
         </Switch>
 
-        <Stack style={{ 'margin-top': 'auto' }} direction="horizontal" align="space-between">
+        <Stack
+          style={{ 'margin-top': 'auto' }}
+          direction="horizontal"
+          align="space-between"
+        >
           <Button
             style={{
-              'border-radius': '7px',
+              'border-radius': '7px'
             }}
             onClick={() => setCurrentStep(currentStep() - 1)}
             disabled={currentStep() === 0}
-          >Previous</Button>
+          >
+            Previous
+          </Button>
           <Button
             style={{
-              'border-radius': '7px',
+              'border-radius': '7px'
             }}
             onClick={() => {
               const isValid = currentForm()?.validateAll();
               if (isValid) {
-                setCurrentStep(currentStep() + 1)
+                setCurrentStep(currentStep() + 1);
               }
             }}
             disabled={currentStep() === 2 || currentForm()?.isInvalid()}
-          >Next</Button>
+          >
+            Next
+          </Button>
         </Stack>
       </Box>
     </Container>

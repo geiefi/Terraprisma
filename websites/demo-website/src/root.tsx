@@ -10,12 +10,10 @@ import {
   Meta,
   Routes,
   Scripts,
-  Title,
+  Title
 } from 'solid-start';
 
 import { onLCP, onFID, onCLS } from 'web-vitals';
-
-import '../../grapos/src/GrapeS.scss';
 
 export default function Root() {
   onMount(() => {

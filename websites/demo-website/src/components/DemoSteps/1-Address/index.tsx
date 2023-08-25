@@ -1,11 +1,9 @@
 import { Component, on, createEffect, createSignal } from 'solid-js';
 
-import { createForm } from 'grapos/Form/Form';
-import { FormProviderValue } from 'grapos/Form/FormContext';
-import Validators from 'grapos/Form/Validators';
-import { Col, Row } from 'grapos/Layout/Grid';
-import { GrowFade } from 'grapos/Transitions';
-import { Tooltip } from 'grapos/DataDisplay';
+import { createForm, Validators, FormProviderValue } from 'grapos/form';
+import { Col, Row } from 'grapos/layout';
+import { GrowFade } from 'grapos/transitions';
+import { Tooltip } from 'grapos/data-display';
 
 export type AddressFormValue = {
   cidade: string;
@@ -15,8 +13,6 @@ export type AddressFormValue = {
   numero: number;
   cep: string;
   bairro: string;
-
-  togglerVal: boolean;
 };
 
 const Address: Component<{
@@ -56,21 +52,20 @@ const Address: Component<{
             validators={[Validators.required]}
           />
         </Col>
-        <AddressForm.Toggler
-          name="togglerVal"
-        />
         <Col size={8}>
           <AddressForm.Select
             name="uf"
             label="UF"
             validators={[Validators.required]}
-          >{Option => [
-            <Option value="pe">PE</Option>,
-            <Option value="mg">MG</Option>,
-            <Option value="pr">PR</Option>,
-            <Option value="rj">RJ</Option>,
-            <Option value="sp">SP</Option>
-          ]}</AddressForm.Select>
+          >
+            {(Option) => [
+              <Option value="pe">PE</Option>,
+              <Option value="mg">MG</Option>,
+              <Option value="pr">PR</Option>,
+              <Option value="rj">RJ</Option>,
+              <Option value="sp">SP</Option>
+            ]}
+          </AddressForm.Select>
         </Col>
 
         <Col size={16}>

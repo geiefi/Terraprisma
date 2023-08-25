@@ -5,17 +5,16 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: './',
-  plugins: [solid({ ssr: false })],
+  plugins: [solid({ ssr: true })],
   build: {
-    target: 'esnext',
+    target: 'esnext'
   },
-  ssr: {
-    noExternal: ['grapos'],
-  },
+  // ssr: {
+  //   noExternal: ['grapos']
+  // },
   resolve: {
     alias: {
-      '~': resolve(__dirname, 'src'),
-      'grapos': resolve(__dirname, '../grapos/src'),
+      '~': resolve(__dirname, 'src')
     }
   }
 });

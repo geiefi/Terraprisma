@@ -1,9 +1,9 @@
 import { Component, createSignal } from 'solid-js';
 
-import { Col, Row } from 'grapos/Layout/Grid';
-import { List, Table } from 'grapos/DataDisplay';
-import { Container, Stack } from 'grapos/Layout';
-import { Box, Button, Modal } from 'grapos/General';
+import { Col, Row, Container, Stack } from 'grapos/layout';
+import { List, Table } from 'grapos/data-display';
+import { Box, Button, Modal } from 'grapos/general';
+import { Step, Steps } from 'grapos/navigation';
 import {
   RadioGroup,
   Input,
@@ -12,9 +12,8 @@ import {
   Toggler,
   Checkbox,
   Datepicker,
-} from 'grapos/Form/Fields';
-import Validators from 'grapos/Form/Validators';
-import { Step, Steps } from 'grapos/Navigation';
+  Validators
+} from 'grapos/form';
 import {
   CopyAll,
   Delete,
@@ -22,10 +21,9 @@ import {
   Inbox,
   QuestionMark,
   Send,
-  Star,
-} from 'grapos/Icons';
-import { Paragraph, Typography } from 'grapos/Typography';
-import { Marked } from 'grapos/Typography/Highlighters';
+  Star
+} from 'grapos/icons';
+import { Paragraph, Typography, Marked } from 'grapos/typography';
 
 const DesignShowcase: Component = () => {
   const [modalOpen, setModalOpen] = createSignal(false);
