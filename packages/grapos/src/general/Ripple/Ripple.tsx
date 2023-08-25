@@ -15,10 +15,9 @@ import { createStore, produce } from 'solid-js/store';
 
 import { useTheme } from '../../GrapeS';
 
-import { mergeClass } from '../../_Shared/Utils';
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
 
 import './Ripple.scss';
-import { forwardComponentProps } from '../../Helpers';
 
 export interface RippleProps {
   /**
@@ -72,7 +71,7 @@ function absolutePosition(el: HTMLElement): DOMRect {
   };
 }
 
-const Ripple = forwardComponentProps<RippleProps, 'div'>(
+const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
   (props, elProps) => {
     const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 

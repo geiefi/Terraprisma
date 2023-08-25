@@ -1,9 +1,8 @@
-import { Component, JSX, ParentProps, Show, splitProps } from 'solid-js';
+import { JSX, ParentProps, Show } from 'solid-js';
 
-import { mergeClass } from '../../_Shared/Utils';
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
 
 import './Dropdown.scss';
-import { forwardComponentProps } from '../../Helpers';
 
 export interface DropdownProps extends ParentProps {
   /**
@@ -41,7 +40,7 @@ export interface DropdownProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Dropdown = forwardComponentProps<DropdownProps, 'div'>(
+const Dropdown = createComponentExtendingFromOther<DropdownProps, 'div'>(
   (props, elProps) => (
     <Show when={props.visible}>
       <div

@@ -1,17 +1,13 @@
 import {
   Accessor,
-  Component,
   createContext,
   createMemo,
-  JSX,
   ParentProps,
-  splitProps,
   useContext
 } from 'solid-js';
-import { mergeClass } from '../../_Shared/Utils';
+import { mergeClass, createComponentExtendingFromOther } from '../../utils';
 
 import './Box.scss';
-import { forwardComponentProps } from '../../Helpers';
 
 /**
  * @description Determines what depth the current context of box is in
@@ -48,7 +44,7 @@ export interface BoxProps extends ParentProps {
  * </Box>
  * ```
  */
-const Box = forwardComponentProps<BoxProps, 'div'>(
+const Box = createComponentExtendingFromOther<BoxProps, 'div'>(
   (props, elProps) => {
     const oldDepth = useDepth();
     const depth = createMemo(() => {

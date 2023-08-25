@@ -1,16 +1,20 @@
 import { ComponentProps, JSX, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import { forwardComponentProps, mergeCallbacks } from '../../Helpers';
+import { useTheme } from '../../GrapeS';
+
+import {
+  createComponentExtendingFromOther,
+  mergeClass,
+  mergeCallbacks
+} from '../../utils';
 
 import Box from '../Box/Box';
 import Button from '../Button/Button';
-import { Fade } from '../../Transitions';
+import { Fade } from '../../transitions';
+import { Divisor } from '../../layout';
 
 import './Modal.scss';
-import { useTheme } from '../../GrapeS';
-import { mergeClass } from '../../_Shared/Utils';
-import { Divisor } from '../../Layout';
 
 export interface ModalProps {
   visible?: boolean;
@@ -24,7 +28,7 @@ export interface ModalProps {
   onCancel?: (event: MouseEvent) => any;
 }
 
-const Modal = forwardComponentProps<
+const Modal = createComponentExtendingFromOther<
   ModalProps,
   'div',
   ComponentProps<typeof Box>

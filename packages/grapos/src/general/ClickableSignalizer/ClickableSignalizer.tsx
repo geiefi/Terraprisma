@@ -1,8 +1,8 @@
 import { ComponentProps, ParentProps, Show } from 'solid-js';
 
-import { forwardComponentProps } from '../../Helpers';
-import { mergeClass } from '../../_Shared/Utils';
-import { Fade } from '../../Transitions';
+import { Fade } from '../../transitions';
+
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
 
 import './ClickableSignalizer.scss';
 
@@ -12,7 +12,7 @@ export interface ClickableSignalizerProps extends ParentProps {
   show?: boolean;
 }
 
-const ClickableSignalizer = forwardComponentProps<
+const ClickableSignalizer = createComponentExtendingFromOther<
   ClickableSignalizerProps,
   'div'
 >(

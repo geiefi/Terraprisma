@@ -1,6 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { mergeClass } from '../_Shared/Utils';
-import { forwardComponentProps } from '../Helpers';
+import { createComponentExtendingFromOther, mergeClass } from '../utils';
 
 export interface IconProps extends ParentProps {
   /**
@@ -15,7 +14,7 @@ export type IconComponent = ReturnType<typeof createIconComponent>;
 
 // not a decorator
 const createIconComponent = (iconName: string) => {
-  return forwardComponentProps<IconProps, 'span'>(
+  return createComponentExtendingFromOther<IconProps, 'span'>(
     (props, elProps) => (
       <span
         {...elProps}

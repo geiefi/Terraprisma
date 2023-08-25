@@ -1,10 +1,12 @@
 import { Component, ComponentProps, createMemo, JSX } from 'solid-js';
-import { mergeClass } from '../../_Shared/Utils';
+
 import { useDepth } from '../Box/Box';
+
+import { createComponentExtendingFromOther, mergeClass } from '../../utils';
+
 import Ripple from '../Ripple/Ripple';
 
 import './Button.scss';
-import { forwardComponentProps } from '../../Helpers';
 
 export interface ButtonProps {
   color?: 'primary' | 'secondary' | 'tertiary' | 'transparent';
@@ -19,7 +21,7 @@ export interface ButtonProps {
   style?: JSX.CSSProperties;
 }
 
-const Button = forwardComponentProps<ButtonProps, 'button'>(
+const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
   (props, elProps) => {
     const depth = useDepth() || (() => 0);
 
