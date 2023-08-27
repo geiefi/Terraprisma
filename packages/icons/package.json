@@ -3,11 +3,6 @@
   "name": "@grapos/icons",
   "version": "0.0.0-1",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./index.js"
-    }
-  },
   "main": "index.js",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",

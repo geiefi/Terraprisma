@@ -3,12 +3,7 @@
   "name": "@grapos/navigation",
   "version": "0.0.0-1",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./index.jsx"
-    }
-  },
-  "main": "index.jsx",
+  "main": "index.js",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
   "keywords": [
