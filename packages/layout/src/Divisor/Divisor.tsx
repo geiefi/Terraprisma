@@ -1,5 +1,3 @@
-import { Component } from 'solid-js';
-
 import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
 
 import './Divisor.scss';

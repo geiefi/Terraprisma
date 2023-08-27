@@ -1,16 +1,4 @@
 
 > @grapos/icons@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/icons
-> vite build && cp package.json lib/package.json && cp README.md lib/README.md
+> tsc --build ./tsconfig.build.json && cp package.json lib/package.json
 
-vite v4.4.9 building for production...
-transforming...
-✓ 3 modules transformed.
-rendering chunks...
-
-[vite:dts] Start generate declaration files...
-computing gzip size...
-[vite:dts] Declaration files built in 25857ms.
-
-lib/index.mjs  199.84 kB │ gzip: 70.72 kB
-lib/index.cjs  193.89 kB │ gzip: 69.44 kB
-✓ built in 26.22s

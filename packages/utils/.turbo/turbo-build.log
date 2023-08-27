@@ -1,16 +1,4 @@
 
 > @grapos/utils@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/utils
-> vite build && cp package.json lib/package.json && cp README.md lib/README.md
+> tsc --build ./tsconfig.build.json && cp package.json lib/package.json
 
-vite v4.4.9 building for production...
-transforming...
-✓ 7 modules transformed.
-rendering chunks...
-
-[vite:dts] Start generate declaration files...
-computing gzip size...
-lib/index.mjs  1.04 kB │ gzip: 0.54 kB
-[vite:dts] Declaration files built in 1206ms.
-
-lib/index.cjs  0.92 kB │ gzip: 0.53 kB
-✓ built in 1.28s

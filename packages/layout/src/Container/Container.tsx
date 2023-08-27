@@ -1,4 +1,4 @@
-import { Component, createMemo, JSX, ParentProps, splitProps } from 'solid-js';
+import { createMemo, JSX, ParentProps } from 'solid-js';
 
 import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
 
@@ -13,22 +13,22 @@ export interface ContainerProps extends ParentProps {
   maxWidth?: LayoutWidth | number;
 }
 
-export const layoutWidths: Record<LayoutWidth, string> = {
-  xs: '576px',
-  sm: '768px',
-  md: '992px',
-  lg: '1200px',
-  xl: '1920px'
-};
-
-function isPredefinedLayoutWidth(
-  maxWidth: LayoutWidth | number
-): maxWidth is LayoutWidth {
-  return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth.toString());
-}
-
 const Container = createComponentExtendingFromOther<ContainerProps, 'div'>(
   (props, elProps) => {
+    const layoutWidths: Record<LayoutWidth, string> = {
+      xs: '576px',
+      sm: '768px',
+      md: '992px',
+      lg: '1200px',
+      xl: '1920px'
+    }
+
+    const isPredefinedLayoutWidth = (
+      maxWidth: LayoutWidth | number
+    ): maxWidth is LayoutWidth => {
+      return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth.toString());
+    }
+
     const maxWidthPx = createMemo<string>(() => {
       const maxWidth = props.maxWidth || 'lg';
 

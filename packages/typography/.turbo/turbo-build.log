@@ -1,16 +1,4 @@
 
 > @grapos/typography@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography
-> vite build && cp package.json lib/package.json && cp README.md lib/README.md
+> tsc --build ./tsconfig.build.json && node ../convert-scss-to-css-in-build.js && cp package.json lib/package.json 
 
-vite v4.4.9 building for production...
-transforming...
-✓ 15 modules transformed.
-rendering chunks...
-
-[vite:dts] Start generate declaration files...
-computing gzip size...
-lib/index.mjs  5.02 kB │ gzip: 1.57 kB
-[vite:dts] Declaration files built in 1190ms.
-
-lib/index.cjs  4.72 kB │ gzip: 1.49 kB
-✓ built in 1.68s
