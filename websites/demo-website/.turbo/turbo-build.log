@@ -7,109 +7,38 @@
  adapter  node
 
 solid-start building client...
+solid-start rendering index.html...
+solid-start index.html rendered in: 1.535s
 vite v4.4.9 building for production...
 transforming...
-✓ 37 modules transformed.
-✓ built in 661ms
-[commonjs--resolver] Failed to resolve entry for package "@grapos/utils". The package may have incorrect main/module/exports specified in its package.json.
-file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:28691
-    throw new Error(`Failed to resolve entry for package "${id}". ` +
-          ^
+../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 80 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/public/.solid/index.html                                    0.13 kB │ gzip:  0.13 kB
+dist/public/manifest.json                                        2.47 kB │ gzip:  0.49 kB
+dist/public/ssr-manifest.json                                    6.09 kB │ gzip:  0.85 kB
+dist/public/assets/material-symbols-sharp-5e8b2862.woff2     2,535.64 kB
+dist/public/assets/material-symbols-outlined-ba77dc83.woff2  2,852.45 kB
+dist/public/assets/material-symbols-rounded-e7c5b465.woff2   3,697.10 kB
+dist/public/assets/index-6a431300.css                            1.63 kB │ gzip:  0.38 kB
+dist/public/assets/TypographyTest-b2aa361a.js                    1.67 kB │ gzip:  0.84 kB
+dist/public/assets/index-70db8d91.js                             4.72 kB │ gzip:  1.72 kB
+dist/public/assets/Demo-3be5a995.js                              4.90 kB │ gzip:  1.68 kB
+dist/public/assets/(DesignShowcase)-cf496472.js                  5.65 kB │ gzip:  1.67 kB
+dist/public/assets/index-b123aaa1.js                            95.74 kB │ gzip: 32.34 kB
+dist/public/assets/index-3d769b70.js                           196.01 kB │ gzip: 66.78 kB
+✓ built in 1.89s
+solid-start client built in: 3.453s
 
-Error: Failed to resolve entry for package "@grapos/utils". The package may have incorrect main/module/exports specified in its package.json.
-    at packageEntryFailure (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:28691:11)
-    at resolvePackageEntry (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:28688:5)
-    at tryNodeResolve (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:28419:20)
-    at Object.resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:28180:28)
-    at file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:25461:40
-    at async PluginDriver.hookFirstAndGetPlugin (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:25361:28)
-    at async resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:24035:26)
-    at async ModuleLoader.resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:24449:15)
-    at async Object.resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/vite@4.4.9_@types+node@18.17.6_sass@1.63.4/node_modules/vite/dist/node/chunks/dep-df561101.js:7910:10)
-    at async PluginDriver.hookFirstAndGetPlugin (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:25361:28)
-    at async resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:24035:26)
-    at async ModuleLoader.resolveId (file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:24449:15)
-    at async file:///home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/es/shared/node-entry.js:24740:50 {
-  code: 'PLUGIN_ERROR',
-  plugin: 'commonjs--resolver',
-  hook: 'resolveId',
-  watchFiles: [
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/entry-client.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-js@1.7.11/node_modules/solid-js/web/dist/web.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/entry-client/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/entry-client/mount.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/entry-client/StartClient.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-js@1.7.11/node_modules/solid-js/dist/solid.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/mount.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/router.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+meta@0.28.6_solid-js@1.7.11/node_modules/@solidjs/meta/dist/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/server/ServerContext.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/server/types.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/root.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-js@1.7.11/node_modules/solid-js/store/dist/store.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/micromorph@0.3.1/node_modules/micromorph/index.mjs',
-    '\x00vite/preload-helper',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/web-vitals@3.4.0/node_modules/web-vitals/dist/web-vitals.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/FileRoutes.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/integration.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/lifecycle.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/routing.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/utils.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/@solidjs+router@0.8.3_solid-js@1.7.11/node_modules/@solidjs/router/dist/components.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/routes/(DesignShowcase).tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/routes/Demo.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/routes/TypographyTest.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/micromorph@0.3.1/node_modules/micromorph/dist/index.js',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/data/index.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/error-boundary/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/router.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/server/responses.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/index.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/types.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/layout/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/data-display/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/form/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/icons/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/package.json',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/layout/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/data-display/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/form/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/icons/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/index.jsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/components/DemoSteps/1-Address/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/websites/demo-website/src/components/DemoSteps/2-PaymentMethod/index.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/error-boundary/ErrorBoundary.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/utils.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/clientOnly.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/Document.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/InlineStyles.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/Links.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/Meta.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/root/Scripts.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/server-router.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/useLocation.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/data/createRouteAction.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/data/createRouteData.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/data/FormError.tsx',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/cookies.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/cookieSigning.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/cookieStorage.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/memoryStorage.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/sessions.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/session/cookie.ts',
-    '/home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/utils/lib/package.json'
-  ]
-}
+solid-start building server...
+vite v4.4.9 building SSR bundle for production...
+transforming...
+../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.4_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.7.11_solid-start-node@0.3.4_vite@4.4.9/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 64 modules transformed.
+rendering chunks...
+.solid/server/manifest.json     0.12 kB
+.solid/server/entry-server.js  66.36 kB
+✓ built in 564ms
+solid-start server built in: 588.259ms
 
-Node.js v20.5.1
- ELIFECYCLE  Command failed with exit code 1.
