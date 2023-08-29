@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "disableSizeLimit": true
+    "rootDir": "src"
   },
   "extends": "../../tsconfig.json",
   "include": ["src"]

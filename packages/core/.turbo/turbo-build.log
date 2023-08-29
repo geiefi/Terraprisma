@@ -1,19 +1,16 @@
 
 > @grapos/core@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core
-> tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ../convert-scss-to-css-in-build.js && cp package.json lib/package.json
+> rollup -c ./rollup.config.js && cp package.json lib/package.json
 
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/Box/Box.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/Button/Button.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/ClickableSignalizer/ClickableSignalizer.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/Dropdown/Dropdown.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/GrapeS.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/Modal/Modal.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib/Ripple/Ripple.css
-Wrote 7 CSS files to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core/lib
+[36m
+[1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
+[1m[33m(!) Unresolved dependencies[39m[22m
+[90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
+[1msolid-js[22m (imported by "src/GrapeS.tsx", "src/Ripple/Ripple.tsx", "src/Button/Button.tsx", "src/Box/Box.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
+[1m@grapos/utils[22m (imported by "src/GrapeS.tsx", "src/Ripple/Ripple.tsx", "src/Button/Button.tsx", "src/Box/Box.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
+[1msolid-js/web[22m (imported by "src/Ripple/Ripple.tsx" and "src/Modal/Modal.tsx")
+[1msolid-js/store[22m (imported by "src/Ripple/Ripple.tsx")
+[1m@grapos/transitions[22m (imported by "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
+[1m@grapos/layout[22m (imported by "src/Modal/Modal.tsx")
+[1mtinycolor2[22m (imported by "src/themes/Theme.ts")
+[32mcreated [1m./lib/index.jsx[22m in [1m1.7s[22m[39m

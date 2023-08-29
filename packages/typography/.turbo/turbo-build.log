@@ -1,17 +1,14 @@
 
 > @grapos/typography@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography
-> tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib  && node ../convert-scss-to-css-in-build.js && cp package.json lib/package.json 
+> rollup -c ./rollup.config.js && cp package.json lib/package.json
 
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/highlighters/Code.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/highlighters/Colored.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/highlighters/Decorated.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/highlighters/Marked.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/Paragraph.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib/Title.css
-Wrote 6 CSS files to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/typography/lib
+[36m
+[1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
+[1m[33m(!) Unresolved dependencies[39m[22m
+[90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
+[1msolid-js[22m (imported by "src/Title.tsx" and "src/highlighters/Code.tsx")
+[1msolid-js/web[22m (imported by "src/Title.tsx")
+[1m@grapos/utils[22m (imported by "src/Title.tsx", "src/Paragraph.tsx", "src/Typography.tsx", "src/highlighters/Code.tsx", "src/highlighters/Colored.tsx", "src/highlighters/Decorated.tsx" and "src/highlighters/Marked.tsx")
+[1m@grapos/layout[22m (imported by "src/Title.tsx")
+[1m@grapos/core[22m (imported by "src/highlighters/Code.tsx")
+[32mcreated [1m./lib/index.jsx[22m in [1m1.4s[22m[39m

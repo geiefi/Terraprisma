@@ -1,9 +1,13 @@
 
 > @grapos/navigation@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation
-> tsc --build ./tsconfig.build.json && node-sass ./src -o ./lib && node ../convert-scss-to-css-in-build.js && cp package.json lib/package.json
+> rollup -c ./rollup.config.js && cp package.json lib/package.json
 
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation/lib/Pagination/Pagination.css
-Rendering Complete, saving .css file...
-Wrote CSS to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation/lib/Steps/Steps.css
-Wrote 2 CSS files to /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/navigation/lib
+[36m
+[1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
+[1m[33m(!) Unresolved dependencies[39m[22m
+[90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
+[1msolid-js[22m (imported by "src/Steps/Steps.tsx", "src/Pagination/Pagination.tsx" and "src/Steps/StepsContext.ts")
+[1m@grapos/utils[22m (imported by "src/Steps/Steps.tsx" and "src/Pagination/Pagination.tsx")
+[1m@grapos/icons[22m (imported by "src/Steps/Steps.tsx" and "src/Pagination/Pagination.tsx")
+[1m@grapos/core[22m (imported by "src/Pagination/Pagination.tsx")
+[32mcreated [1m./lib/index.jsx[22m in [1m2.2s[22m[39m
