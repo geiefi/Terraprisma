@@ -4,7 +4,10 @@
     "build": {
       "dependsOn": ["^build"],
       "cache": true,
-      "outputs": ["lib"]
+      "outputs": ["lib/**"]
+    },
+    "deploy": {
+      "cache": true
     }
   }
 }

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
@@ -9,10 +10,8 @@
     "esModuleInterop": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "composite": true,
     "isolatedModules": false,
-    "declaration": true,
-    "declarationMap": true
+    "declaration": true
   },
   "exclude": ["**/temp/", "**/.*/", "**/lib", "**/node_modules"]
 }

@@ -9,9 +9,6 @@ export default defineConfig({
   build: {
     target: 'esnext'
   },
-  // ssr: {
-  //   noExternal: ['grapos']
-  // },
   resolve: {
     alias: {
       '~': resolve(__dirname, 'src')
