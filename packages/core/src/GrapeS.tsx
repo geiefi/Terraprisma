@@ -53,10 +53,12 @@ _global.dbg = function <T = any>(el: T, context?: string): T {
  *
  * If there is no default theme, the first custom theme is used or `GrapeSLightTheme` is used.
  */
-export default function GrapeS(
+export default function GrapeS<
+  Themes extends Theme[] = [typeof GrapeSLightTheme, typeof GrapeSDarkTheme]
+>(
   props: ParentProps<{
-    themes?: Theme[];
-    defaultThemeId?: string;
+    themes?: Themes;
+    defaultThemeId?: Themes[number]['id'];
   }>
 ) {
   const hasCustomThemes = createMemo(
@@ -73,7 +75,9 @@ export default function GrapeS(
   );
 
   const themes = createMemo(() =>
-    hasCustomThemes() ? props.themes! : [GrapeSLightTheme, GrapeSDarkTheme]
+    hasCustomThemes()
+      ? props.themes!
+      : ([GrapeSLightTheme, GrapeSDarkTheme] as Theme[])
   );
 
   const currentTheme = createMemo(
@@ -161,6 +165,15 @@ export default function GrapeS(
  * This is supposed to be used inside a `<GrapeS>` component since it is the one whom
  * initializes the global GrapeS context.
  */
-export function useTheme(): GrapeSThemesProviderValue | undefined {
-  return useContext<GrapeSThemesProviderValue | undefined>(GrapeSContext);
+export function useGrapeS(): GrapeSThemesProviderValue {
+  const providerValue = useContext<GrapeSThemesProviderValue | undefined>(
+    GrapeSContext
+  );
+  if (typeof providerValue === 'undefined') {
+    throw new Error(
+      'GrapeS context error: You can only have a useGrapeS inside of a GrapeS context!'
+    );
+  }
+
+  return providerValue;
 }

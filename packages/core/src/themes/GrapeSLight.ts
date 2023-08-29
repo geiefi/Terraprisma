@@ -1,6 +1,6 @@
-import { Color, Theme } from './Theme';
+import { Color } from './Theme';
 
-export const GrapeSLightTheme: Theme = {
+export const GrapeSLightTheme = {
   id: 'light',
 
   grays: {
@@ -37,4 +37,4 @@ export const GrapeSLightTheme: Theme = {
   danger: new Color('#AB4B4B'),
   success: new Color('#259C33'),
   warning: new Color('#DC8623')
-};
+} as const;

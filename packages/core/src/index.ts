@@ -1,4 +1,4 @@
-import GrapeS, { useTheme } from './GrapeS';
+import GrapeS, { useGrapeS } from './GrapeS';
 
 import Ripple from './Ripple/Ripple';
 import Button from './Button/Button';
@@ -9,4 +9,14 @@ import Modal from './Modal/Modal';
 
 export * from './themes';
 
-export { GrapeS, useTheme, Ripple, Button, Box, useDepth, Dropdown, ClickableSignalizer, Modal };
+export {
+  GrapeS,
+  useGrapeS,
+  Ripple,
+  Button,
+  Box,
+  useDepth,
+  Dropdown,
+  ClickableSignalizer,
+  Modal
+};

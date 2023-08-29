@@ -13,7 +13,7 @@ import {
 import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
-import { useTheme } from '../GrapeS';
+import { useGrapeS } from '../GrapeS';
 
 import {
   mergeClass,
@@ -187,7 +187,7 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
       }
     });
 
-    const { grapesGlobalDivRef } = useTheme()!;
+    const { grapesGlobalDivRef } = useGrapeS()!;
 
     return (
       <>

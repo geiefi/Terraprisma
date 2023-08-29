@@ -1,7 +1,7 @@
 import { ComponentProps, JSX, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import { useTheme } from '../GrapeS';
+import { useGrapeS } from '../GrapeS';
 
 import {
   createComponentExtendingFromOther,
@@ -34,7 +34,7 @@ const Modal = createComponentExtendingFromOther<
   ComponentProps<typeof Box>
 >(
   (props, elProps) => {
-    const { grapesGlobalDivRef } = useTheme()!;
+    const { grapesGlobalDivRef } = useGrapeS()!;
 
     return (
       <Portal mount={grapesGlobalDivRef()}>
