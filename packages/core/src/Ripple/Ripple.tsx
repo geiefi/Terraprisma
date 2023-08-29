@@ -8,12 +8,13 @@ import {
   JSX,
   on,
   onCleanup,
+  onMount,
   Show
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
-import { useGrapeS } from '../GrapeS';
+import { getGrapeSGlobalDiv } from '../GrapeS';
 
 import {
   mergeClass,
@@ -149,10 +150,13 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
       });
     };
 
+    let [grapesGlobalDiv, setGrapesGlobalDiv] = createSignal<HTMLDivElement>();
+
     createEffect(
       on(
         () => ripples[0],
         () => {
+          setGrapesGlobalDiv(getGrapeSGlobalDiv());
           if (isUpdatingRippleWrapper === false) {
             keepUpdatingRippleWrapper();
           }
@@ -187,12 +191,10 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
       }
     });
 
-    const { grapesGlobalDivRef } = useGrapeS()!;
-
     return (
       <>
         <Show when={rippledElement()}>
-          <Portal mount={grapesGlobalDivRef()}>
+          <Portal mount={grapesGlobalDiv()}>
             <div
               {...props.wrapperProps}
               class={mergeClass('ripple-wrapper', props.wrapperProps?.class)}

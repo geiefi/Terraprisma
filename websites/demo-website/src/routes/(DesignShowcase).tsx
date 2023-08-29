@@ -1,8 +1,8 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createRoot, createSignal, getOwner } from 'solid-js';
 
 import { Col, Row, Container, Stack } from '@grapos/layout';
 import { List, Table } from '@grapos/data-display';
-import { Box, Button, Modal } from '@grapos/core';
+import { Box, Button, Modal, createModal, useGrapeS } from '@grapos/core';
 import { Step, Steps } from '@grapos/navigation';
 import {
   RadioGroup,
@@ -26,6 +26,16 @@ import {
 import { Paragraph, Typography, Marked } from '@grapos/typography';
 
 const DesignShowcase: Component = () => {
+  const confirm = (message: string) => {
+    createModal({
+      identification: 'Confirmation',
+      title: <></>,
+      body: <>{message}</>,
+      onOk: () => console.log('confirmed!'),
+      onCancel: () => console.log('cancelled!')
+    });
+  };
+
   const [modalOpen, setModalOpen] = createSignal(false);
   return (
     <Container maxWidth="lg">
@@ -34,7 +44,11 @@ const DesignShowcase: Component = () => {
           <Col size={8}>
             <Box style={{ padding: 0 }}>
               <List>
-                <List.Item icon={<Inbox variant="rounded" />} clickable>
+                <List.Item
+                  icon={<Inbox variant="rounded" />}
+                  onClick={() => confirm('Are you bananas!?')}
+                  clickable
+                >
                   Inbox
                 </List.Item>
 

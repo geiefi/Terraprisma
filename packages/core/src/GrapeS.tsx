@@ -21,8 +21,6 @@ export type GrapeSThemesProviderValue<Themes extends Theme[] = Theme[]> = {
 
   themeId: Accessor<Themes[number]['id']>;
   setThemeId: Setter<Themes[number]['id']>;
-
-  grapesGlobalDivRef: Accessor<HTMLDivElement>;
 };
 
 const GrapeSContext = createContext<GrapeSThemesProviderValue>();
@@ -47,6 +45,8 @@ _global.dbg = function <T = any>(el: T, context?: string): T {
   console.groupEnd();
   return el;
 };
+
+export const GrapeSGlobalDivID = 'grapes-app';
 
 /**
  * A component that creates the `<GrapeSContext>` with the themes defined and creates
@@ -92,8 +92,6 @@ export default function GrapeS<
       document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
   });
 
-  const [grapesAppRef, setGrapesAppRef] = createSignal<HTMLDivElement>();
-
   return (
     <GrapeSContext.Provider
       value={{
@@ -101,14 +99,11 @@ export default function GrapeS<
         currentTheme,
 
         themeId,
-        setThemeId,
-
-        grapesGlobalDivRef: grapesAppRef as Accessor<HTMLDivElement>
+        setThemeId
       }}
     >
       <div
-        id="grapes-app"
-        ref={setGrapesAppRef}
+        id={GrapeSGlobalDivID}
         style={{
           '--gray-0': currentTheme().grays[0].toRGBA(),
           '--gray-1': currentTheme().grays[1].toRGBA(),
@@ -162,6 +157,18 @@ export default function GrapeS<
       </div>
     </GrapeSContext.Provider>
   );
+}
+
+export function getGrapeSGlobalDiv(): HTMLDivElement {
+  const div = document.getElementById(GrapeSGlobalDivID);
+
+  if (!div) {
+    throw new Error(
+      'Could not find GrapeS\'s global div by id, did you perhaps modify it or forget to use the GrapeS component?'
+    );
+  }
+
+  return div as HTMLDivElement;
 }
 
 /**

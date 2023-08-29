@@ -33,9 +33,11 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <GrapeS defaultThemeId="dark">
-              <Routes>
-                <FileRoutes />
-              </Routes>
+              <ErrorBoundary>
+                <Routes>
+                  <FileRoutes />
+                </Routes>
+              </ErrorBoundary>
             </GrapeS>
           </ErrorBoundary>
         </Suspense>

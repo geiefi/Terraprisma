@@ -13,4 +13,4 @@
 [1m@grapos/core[22m (imported by "src/Table/Table.tsx" and "src/List/List.tsx")
 [1m@grapos/layout[22m (imported by "src/List/List.tsx")
 [1m@grapos/transitions[22m (imported by "src/List/List.tsx")
-[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m2.3s[22m[39m
+[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m2.4s[22m[39m

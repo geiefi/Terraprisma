@@ -8,4 +8,4 @@
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1msolid-transition-group[22m (imported by "src/GrowFade/GrowFade.tsx", "src/Fade/Fade.tsx" and "src/Collapse/Collapse.tsx")
 [1m@grapos/utils[22m (imported by "src/Collapse/Collapse.tsx")
-[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m1.4s[22m[39m
+[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m1.5s[22m[39m

@@ -8,4 +8,4 @@
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1msolid-js[22m (imported by "src/Container/Container.tsx")
 [1m@grapos/utils[22m (imported by "src/Container/Container.tsx", "src/Stack/Stack.tsx", "src/Divisor/Divisor.tsx", "src/grid/Col.tsx" and "src/grid/Row.tsx")
-[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m1.6s[22m[39m
+[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m1.8s[22m[39m

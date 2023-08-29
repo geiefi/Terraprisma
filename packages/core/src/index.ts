@@ -5,7 +5,7 @@ import Button from './Button/Button';
 import Box, { useDepth } from './Box/Box';
 import Dropdown from './Dropdown/Dropdown';
 import ClickableSignalizer from './ClickableSignalizer/ClickableSignalizer';
-import Modal from './Modal/Modal';
+import Modal, { createModal } from './Modal/Modal';
 
 export * from './themes';
 
@@ -18,5 +18,6 @@ export {
   useDepth,
   Dropdown,
   ClickableSignalizer,
-  Modal
+  Modal,
+  createModal
 };
