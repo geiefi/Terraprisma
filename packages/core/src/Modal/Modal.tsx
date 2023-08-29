@@ -5,7 +5,8 @@ import {
   createEffect,
   createMemo,
   createRoot,
-  createSignal
+  createSignal,
+  onMount
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
@@ -36,28 +37,25 @@ export function createModal(options: CreateModalOptions) {
   createRoot((dispose) => {
     const grapesGlobalDiv = getGrapeSGlobalDiv();
 
-    const [isModalVisible, setModaVisible] = createSignal(true);
-
     const container = document.createElement('div');
-    createEffect(() => {
-      if (isModalVisible() === false) {
-        grapesGlobalDiv.removeChild(container);
-        dispose();
-      }
-    });
 
+    const [isModalVisible, setModalVisible] = createSignal(false);
     const modal = createMemo(() => (
       <ModalInternal
         {...options}
         visible={isModalVisible()}
+        onHidden={() => {
+          grapesGlobalDiv.removeChild(container);
+          dispose();
+        }}
         onOk={(...args) => {
-          setModaVisible(false);
+          setModalVisible(false);
           if (options.onOk) {
             options.onOk(...args);
           }
         }}
         onCancel={(...args) => {
-          setModaVisible(false);
+          setModalVisible(false);
           if (options.onCancel) {
             options.onCancel(...args);
           }
@@ -71,6 +69,8 @@ export function createModal(options: CreateModalOptions) {
     insert(container, modal);
 
     grapesGlobalDiv.appendChild(container);
+
+    setModalVisible(true);
   });
 }
 
@@ -84,6 +84,8 @@ export interface ModalProps {
 
   onOk?: (event: MouseEvent) => any;
   onCancel?: (event: MouseEvent) => any;
+
+  onHidden?: () => any;
 }
 
 const ModalInternal = createComponentExtendingFromOther<
@@ -92,7 +94,7 @@ const ModalInternal = createComponentExtendingFromOther<
   ComponentProps<typeof Box>
 >(
   (props, elProps) => (
-    <Fade>
+    <Fade onAfterExit={() => props.onHidden && props.onHidden()}>
       <Show when={props.visible}>
         <div
           class="modal-backdrop"
@@ -139,7 +141,15 @@ const ModalInternal = createComponentExtendingFromOther<
       </Show>
     </Fade>
   ),
-  ['title', 'extraElementsInFooter', 'visible', 'onOk', 'onCancel', 'children']
+  [
+    'title',
+    'extraElementsInFooter',
+    'visible',
+    'onOk',
+    'onHidden',
+    'onCancel',
+    'children'
+  ]
 );
 
 const Modal = (props: ComponentProps<typeof ModalInternal>) => {

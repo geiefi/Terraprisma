@@ -164,7 +164,7 @@ export function getGrapeSGlobalDiv(): HTMLDivElement {
 
   if (!div) {
     throw new Error(
-      'Could not find GrapeS\'s global div by id, did you perhaps modify it or forget to use the GrapeS component?'
+      "Could not find GrapeS's global div by id, did you perhaps modify it or forget to use the GrapeS component?"
     );
   }
 
