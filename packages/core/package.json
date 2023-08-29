@@ -24,8 +24,7 @@
     }
   },
   "scripts": {
-    "build": "rollup -c ./rollup.config.js && cp package.json lib/package.json",
-    "prepublish": "pnpm run build && cp ../../README.md ./lib/README.md",
+    "build": "rollup -c ./rollup.config.js && cp package.json lib/package.json && cp ../../README.md ./lib/README.md",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest"
   },

@@ -1,12 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "grapes-project",
   "workspaces": [
     "packages/*",
     "websites/*"
   ],
   "scripts": {
-    "publish-packages": "turbo run build && npx changeset version && npx changeset publish"
+    "publish-packages": "npx changeset version && turbo run build && npx changeset publish"
   },
   "repository": {
     "type": "git",

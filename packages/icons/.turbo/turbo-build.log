@@ -8,4 +8,4 @@
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1mmaterial-symbols[22m (imported by "src/index.ts")
 [1m@grapos/utils[22m (imported by "src/IconTemplate.tsx")
-[32mcreated [1m./lib/index.jsx[22m in [1m10.8s[22m[39m
+[32mcreated [1m./lib/index.jsx[22m in [1m10.3s[22m[39m
