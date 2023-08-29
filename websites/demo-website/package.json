@@ -2,7 +2,7 @@
   "name": "demo-website",
   "scripts": {
     "dev": "solid-start dev",
-    "build": "solid-start build",
+    "_build": "solid-start build",
     "start": "solid-start start"
   },
   "private": true,

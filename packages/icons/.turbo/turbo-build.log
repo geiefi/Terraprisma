@@ -1,6 +1,6 @@
 
-> @grapos/icons@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/icons
-> rollup -c ./rollup.config.js && cp package.json lib/package.json
+> @grapos/icons@0.0.0-20230829170706 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/icons
+> rollup -c ./rollup.config.js && cp package.json lib/package.json && cp README.md lib/README.md
 
 [36m
 [1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
@@ -8,4 +8,4 @@
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1mmaterial-symbols[22m (imported by "src/index.ts")
 [1m@grapos/utils[22m (imported by "src/IconTemplate.tsx")
-[32mcreated [1m./lib/index.jsx[22m in [1m10.3s[22m[39m
+[32mcreated [1m./lib/index.jsx[22m in [1m10.2s[22m[39m

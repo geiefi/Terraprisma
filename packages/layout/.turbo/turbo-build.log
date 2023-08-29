@@ -1,6 +1,6 @@
 
-> @grapos/layout@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/layout
-> rollup -c ./rollup.config.js && cp package.json lib/package.json
+> @grapos/layout@0.0.0-20230829170706 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/layout
+> rollup -c ./rollup.config.js && cp package.json lib/package.json && cp README.md lib/README.md
 
 [36m
 [1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m

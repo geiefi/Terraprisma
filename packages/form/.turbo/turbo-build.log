@@ -1,6 +1,6 @@
 
-> @grapos/form@0.0.0-1 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/form
-> rollup -c ./rollup.config.js && cp package.json lib/package.json
+> @grapos/form@0.0.0-20230829170706 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/form
+> rollup -c ./rollup.config.js && cp package.json lib/package.json && cp README.md lib/README.md
 
 [36m
 [1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
@@ -18,4 +18,4 @@
 [1msolid-js/web[22m (imported by "src/fields/utils/fields/setupFieldComponent.tsx")
 [1m[33m(!) Circular dependency[39m[22m
 src/Form.tsx -> src/fields/index.ts -> src/fields/Input/Input.tsx -> src/fields/utils/index.ts -> src/fields/utils/components/index.ts -> src/fields/utils/components/InputContainer/InputContainer.tsx -> src/fields/utils/fields/index.ts -> src/fields/utils/fields/setupCommunicationWithFormContext.ts -> src/Form.tsx
-[32mcreated [1m./lib/index.jsx[22m in [1m8.3s[22m[39m
+[32mcreated [1m./lib/index.jsx[22m in [1m8.2s[22m[39m
