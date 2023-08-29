@@ -18,7 +18,6 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/ban-types": "off",
-    "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-double"]
   }
 }
