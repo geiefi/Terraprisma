@@ -25,18 +25,19 @@ import {
 } from '@grapos/icons';
 import { Paragraph, Typography, Marked } from '@grapos/typography';
 
-const DesignShowcase: Component = () => {
-  const confirm = (message: string) => {
-    createModal({
-      identification: 'Confirmation',
-      title: <></>,
-      body: <>{message}</>,
-      onOk: () => console.log('confirmed!'),
-      onCancel: () => console.log('cancelled!')
-    });
-  };
+const confirm = (message: string) => {
+  createModal({
+    identification: 'Confirmation',
+    title: message,
+    body: <></>,
+    onOk: () => console.log('confirmed!'),
+    onCancel: () => console.log('cancelled!')
+  });
+};
 
+const DesignShowcase: Component = () => {
   const [modalOpen, setModalOpen] = createSignal(false);
+
   return (
     <Container maxWidth="lg">
       <Box>
