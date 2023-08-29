@@ -3,8 +3,8 @@
 > rollup -c ./rollup.config.js && cp package.json lib/package.json && cp README.md lib/README.md
 
 [36m
-[1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
+[1m./src/index.ts[22m → [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m...[39m
 [1m[33m(!) Unresolved dependencies[39m[22m
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1msolid-js[22m (imported by "src/createComponentExtendingFromOther.ts")
-[32mcreated [1m./lib/index.jsx[22m in [1m1.2s[22m[39m
+[32mcreated [1m./lib/index.esm.jsx, ./lib/index.cjs.jsx[22m in [1m1.2s[22m[39m

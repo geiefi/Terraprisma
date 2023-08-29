@@ -2,9 +2,10 @@
   "name": "demo-website",
   "scripts": {
     "dev": "solid-start dev",
-    "_build": "solid-start build",
+    "build": "solid-start build",
     "start": "solid-start start"
   },
+  "type": "module",
   "private": true,
   "devDependencies": {
     "@types/node": "^18.11.18",
@@ -18,19 +19,18 @@
     "web-vitals": "^3.3.2"
   },
   "dependencies": {
-    "@grapos/core": "workspace:latest",
-    "@grapos/icons": "workspace:latest",
-    "@grapos/transitions": "workspace:latest",
-    "@grapos/data-display": "workspace:latest",
-    "@grapos/navigation": "workspace:latest",
-    "@grapos/typography": "workspace:latest",
-    "@grapos/layout": "workspace:latest",
-    "@grapos/form": "workspace:latest",
-
+    "@grapos/core": "workspace:*",
+    "@grapos/data-display": "workspace:*",
+    "@grapos/form": "workspace:*",
+    "@grapos/icons": "workspace:*",
+    "@grapos/layout": "workspace:*",
+    "@grapos/navigation": "workspace:*",
+    "@grapos/transitions": "workspace:*",
+    "@grapos/typography": "workspace:*",
     "@solidjs/meta": "^0.28.2",
     "@solidjs/router": "^0.8.2",
     "solid-js": "^1.7.11",
-    "solid-start": "^0.3.4",
+    "solid-start": "0.3.0",
     "undici": "^5.15.1"
   },
   "engines": {

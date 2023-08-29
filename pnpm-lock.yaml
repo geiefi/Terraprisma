@@ -36,13 +36,13 @@ importers:
   packages/core:
     dependencies:
       '@grapos/layout':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../layout/lib
       '@grapos/transitions':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../transitions/lib
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -107,19 +107,19 @@ importers:
   packages/data-display:
     dependencies:
       '@grapos/core':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../core/lib
       '@grapos/icons':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../icons/lib
       '@grapos/layout':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../layout/lib
       '@grapos/transitions':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../transitions/lib
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -172,22 +172,22 @@ importers:
   packages/form:
     dependencies:
       '@grapos/core':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../core/lib
       '@grapos/data-display':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../data-display/lib
       '@grapos/icons':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../icons/lib
       '@grapos/layout':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../layout/lib
       '@grapos/transitions':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../transitions/lib
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       '@solid-primitives/input-mask':
         specifier: ^0.2.0
@@ -243,7 +243,7 @@ importers:
   packages/icons:
     dependencies:
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       material-symbols:
         specifier: ^0.11.0
@@ -299,7 +299,7 @@ importers:
   packages/layout:
     dependencies:
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -352,13 +352,13 @@ importers:
   packages/navigation:
     dependencies:
       '@grapos/core':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../core/lib
       '@grapos/icons':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../icons/lib
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -411,7 +411,7 @@ importers:
   packages/transitions:
     dependencies:
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -467,13 +467,13 @@ importers:
   packages/typography:
     dependencies:
       '@grapos/core':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../core/lib
       '@grapos/layout':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../layout/lib
       '@grapos/utils':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
@@ -576,28 +576,28 @@ importers:
   websites/demo-website:
     dependencies:
       '@grapos/core':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/core/lib
       '@grapos/data-display':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/data-display/lib
       '@grapos/form':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/form/lib
       '@grapos/icons':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/icons/lib
       '@grapos/layout':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/layout/lib
       '@grapos/navigation':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/navigation/lib
       '@grapos/transitions':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/transitions/lib
       '@grapos/typography':
-        specifier: workspace:latest
+        specifier: workspace:*
         version: link:../../packages/typography/lib
       '@solidjs/meta':
         specifier: ^0.28.2
@@ -609,8 +609,8 @@ importers:
         specifier: ^1.7.11
         version: 1.7.11
       solid-start:
-        specifier: ^0.3.4
-        version: 0.3.4(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9)
+        specifier: 0.3.0
+        version: 0.3.0(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9)
       undici:
         specifier: ^5.15.1
         version: 5.23.0
@@ -632,7 +632,7 @@ importers:
         version: 1.63.4
       solid-start-node:
         specifier: ^0.3.4
-        version: 0.3.4(solid-start@0.3.4)(vite@4.4.9)
+        version: 0.3.4(solid-start@0.3.0)(vite@4.4.9)
       typescript:
         specifier: ^5.1.6
         version: 5.1.6
@@ -8476,7 +8476,7 @@ packages:
       '@babel/types': 7.22.10
       solid-js: 1.7.11
 
-  /solid-start-node@0.3.4(solid-start@0.3.4)(vite@4.4.9):
+  /solid-start-node@0.3.4(solid-start@0.3.0)(vite@4.4.9):
     resolution: {integrity: sha512-8hm3lsaJEA+fgoJHjUJ1fSM9yTVo+jv1MwI0q2WqLObax/xMnLBrrN1vYtDIGwoVBhslS8qIGnEvHttOzkjUVg==}
     peerDependencies:
       solid-start: '*'
@@ -8489,14 +8489,14 @@ packages:
       polka: 1.0.0-next.22
       rollup: 3.28.1
       sirv: 2.0.3
-      solid-start: 0.3.4(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9)
+      solid-start: 0.3.0(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9)
       terser: 5.19.2
       vite: 4.4.9(@types/node@18.17.6)(sass@1.63.4)
     transitivePeerDependencies:
       - supports-color
 
-  /solid-start@0.3.4(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9):
-    resolution: {integrity: sha512-rgtJboxzqaXmLTYV6AwzYk2QMImPviPk9yIA8fVP/UvsZwwdMEfSprqYR+81dR+QZvOrJNckWleesQApdOYM6A==}
+  /solid-start@0.3.0(@solidjs/meta@0.28.6)(@solidjs/router@0.8.3)(solid-js@1.7.11)(solid-start-node@0.3.4)(vite@4.4.9):
+    resolution: {integrity: sha512-O9JE5gakUnJ2reYP+3QXxT6DminotA4wgHFwIDGX8D2fZ0+yN1Ie3UYpRAppXceXxb4Y+DtZwa00rczsj1PZXQ==}
     hasBin: true
     peerDependencies:
       '@solidjs/meta': ^0.28.0
@@ -8560,7 +8560,7 @@ packages:
       set-cookie-parser: 2.6.0
       sirv: 2.0.3
       solid-js: 1.7.11
-      solid-start-node: 0.3.4(solid-start@0.3.4)(vite@4.4.9)
+      solid-start-node: 0.3.4(solid-start@0.3.0)(vite@4.4.9)
       terser: 5.19.2
       undici: 5.23.0
       vite: 4.4.9(@types/node@18.17.6)(sass@1.63.4)
