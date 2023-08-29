@@ -5,7 +5,7 @@ import {
   createMemo,
   createSignal,
   ParentProps,
-  Signal,
+  Setter,
   useContext
 } from 'solid-js';
 
@@ -15,10 +15,13 @@ import './GrapeS.scss';
 
 import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './themes';
 
-export type GrapeSThemesProviderValue = {
-  themes: Accessor<Theme[]>;
-  currentTheme: Accessor<Theme>;
-  currentThemeIdSignal: Signal<string>;
+export type GrapeSThemesProviderValue<Themes extends Theme[] = Theme[]> = {
+  themes: Accessor<Themes>;
+  currentTheme: Accessor<Themes[number]>;
+
+  themeId: Accessor<Themes[number]['id']>;
+  setThemeId: Setter<Themes[number]['id']>;
+
   grapesGlobalDivRef: Accessor<HTMLDivElement>;
 };
 
@@ -65,7 +68,7 @@ export default function GrapeS<
     () => props.themes && props.themes.length >= 1
   );
 
-  const [themeId, setThemeId] = createSignal<string>(
+  const [themeId, setThemeId] = createSignal<Themes[number]['id']>(
     props.defaultThemeId ||
       // eslint-disable-next-line solid/reactivity
       (hasCustomThemes()
@@ -74,10 +77,10 @@ export default function GrapeS<
         : GrapeSLightTheme.id)
   );
 
-  const themes = createMemo(() =>
+  const themes = createMemo<Themes>(() =>
     hasCustomThemes()
       ? props.themes!
-      : ([GrapeSLightTheme, GrapeSDarkTheme] as Theme[])
+      : ([GrapeSLightTheme, GrapeSDarkTheme] as Themes)
   );
 
   const currentTheme = createMemo(
@@ -96,7 +99,10 @@ export default function GrapeS<
       value={{
         themes,
         currentTheme,
-        currentThemeIdSignal: [themeId, setThemeId],
+
+        themeId,
+        setThemeId,
+
         grapesGlobalDivRef: grapesAppRef as Accessor<HTMLDivElement>
       }}
     >
