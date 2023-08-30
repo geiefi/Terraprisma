@@ -13,7 +13,13 @@ import { canUseDocument } from '@grapos/utils';
 
 import './GrapeS.scss';
 
-import { Theme, GrapeSDarkTheme, GrapeSLightTheme } from './themes';
+import {
+  Theme,
+  GrapeSDarkTheme,
+  GrapeSLightTheme,
+  Color,
+  BgFgPair
+} from './themes';
 
 export type GrapeSThemesProviderValue<Themes extends Theme[] = Theme[]> = {
   themes: Accessor<Themes>;
@@ -89,7 +95,57 @@ export default function GrapeS<
 
   createEffect(() => {
     if (canUseDocument())
-      document.body.style.backgroundColor = currentTheme().grays[0].toRGBA();
+      document.body.style.backgroundColor = currentTheme().normal.bg.toRGBA();
+  });
+
+  const globalStyles = createMemo(() => {
+    const theme = currentTheme();
+    return (
+      Object.keys(currentTheme()).filter((k) => !['id'].includes(k)) as (
+        | Exclude<keyof Theme<{}>, 'id'>
+        | 'accents'
+        | 'accent'
+        | 'mainAccent'
+      )[]
+    )
+      .map((property) => {
+        const value = theme[property as keyof Theme];
+        const kebabCaseProperty = property
+          .replace(/([a-z])([A-Z])/g, '$1-$2')
+          .toLowerCase();
+
+        const stylesForValue: Record<string, string> = {};
+        if (Array.isArray(value)) {
+          value
+            .filter((l) => l instanceof Color)
+            .forEach((v: Color, i) => {
+              stylesForValue[`--${kebabCaseProperty}-${i}`] = v.toRGBA();
+            });
+        } else if (typeof value === 'object' && !(value instanceof Color)) {
+          (Object.keys(value) as (keyof typeof value)[])
+            .filter((key) => value[key] instanceof Color)
+            .forEach((key) => {
+              const keyKebabCase = key
+                .replace(/([a-z])([A-Z])/g, '$1-$2')
+                .toLowerCase();
+              stylesForValue[`--${kebabCaseProperty}-${keyKebabCase}`] =
+                value[key].toRGBA();
+            });
+
+          // automatically sets the --accent-bg and --accent-fg based on the accents defined
+          if (property === 'accents') {
+            const accents = value as unknown as Record<string, BgFgPair>;
+            stylesForValue['--accent-bg'] =
+              accents[(theme as any).mainAccent].bg.toRGBA();
+            stylesForValue['--accent-fg'] =
+              accents[(theme as any).mainAccent].fg.toRGBA();
+          }
+        } else if (value instanceof Color) {
+          stylesForValue[`--${kebabCaseProperty}`] = value.toRGBA();
+        }
+        return stylesForValue;
+      })
+      .reduce((p, styles) => ({ ...p, ...styles }), {});
   });
 
   return (
@@ -102,57 +158,7 @@ export default function GrapeS<
         setThemeId
       }}
     >
-      <div
-        id={GrapeSGlobalDivID}
-        style={{
-          '--gray-0': currentTheme().grays[0].toRGBA(),
-          '--gray-1': currentTheme().grays[1].toRGBA(),
-          '--gray-2': currentTheme().grays[2].toRGBA(),
-          '--gray-3': currentTheme().grays[3].toRGBA(),
-          '--gray-4': currentTheme().grays[4].toRGBA(),
-          '--gray-5': currentTheme().grays[5].toRGBA(),
-
-          '--text-0': currentTheme().textColors[0].toRGBA(),
-          '--text-1': currentTheme().textColors[1].toRGBA(),
-          '--text-2': currentTheme().textColors[2].toRGBA(),
-          '--text-3': currentTheme().textColors[3].toRGBA(),
-          '--text-4': currentTheme().textColors[4].toRGBA(),
-          '--text-5': currentTheme().textColors[5].toRGBA(),
-
-          '--text-marked': currentTheme().textColors.marked.textColor.toRGBA(),
-          '--text-marked-bg':
-            currentTheme().textColors.marked.background.toRGBA(),
-
-          '--primary': currentTheme().primary.toRGBA(),
-          '--text-primary': currentTheme().textColors.primary.toRGBA(),
-          '--lightened-primary': (
-            currentTheme().lightnedPrimary ||
-            currentTheme().primary.withAlpha(0.32)
-          ).toRGBA(),
-          '--lightened-primary-2': (
-            currentTheme().lightnedPrimary2 ||
-            currentTheme().primary.withAlpha(0.2)
-          ).toRGBA(),
-
-          '--secondary': currentTheme().secondary.toRGBA(),
-          '--text-secondary': currentTheme().textColors.secondary.toRGBA(),
-          '--lightened-secondary': (
-            currentTheme().lightnedSecondary ||
-            currentTheme().secondary.withAlpha(0.32)
-          ).toRGBA(),
-
-          '--tertiary': currentTheme().tertiary.toRGBA(),
-          '--text-tertiary': currentTheme().textColors.tertiary.toRGBA(),
-          '--lightened-tertiary': (
-            currentTheme().lightnedTertiary ||
-            currentTheme().tertiary.withAlpha(0.32)
-          ).toRGBA(),
-
-          '--warning': currentTheme().warning.toRGBA(),
-          '--success': currentTheme().success.toRGBA(),
-          '--danger': currentTheme().danger.toRGBA()
-        }}
-      >
+      <div id={GrapeSGlobalDivID} style={globalStyles()}>
         {props.children}
       </div>
     </GrapeSContext.Provider>

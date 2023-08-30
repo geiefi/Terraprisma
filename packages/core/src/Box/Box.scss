@@ -6,17 +6,7 @@
   box-sizing: border-box;
   width: 100%;
 
-  &.gray-1 {
-    background: var(--gray-1);
-    border: 1px solid var(--gray-4);
-  }
-
-  &.gray-2 {
-    background: var(--gray-2);
-  }
-
-  &.gray-3 {
-    background: var(--gray-3);
-    border: 1px solid rgba(128, 128, 128, 0.6);
-  }
+  background: var(--floating-bg);
+  border: var(--floating-border);
+  color: var(--floating-fg);
 }

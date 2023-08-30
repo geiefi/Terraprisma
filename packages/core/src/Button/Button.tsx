@@ -1,7 +1,5 @@
 import { Component, ComponentProps, createMemo, JSX } from 'solid-js';
 
-import { useDepth } from '../Box/Box';
-
 import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 
 import Ripple from '../Ripple/Ripple';
@@ -9,7 +7,7 @@ import Ripple from '../Ripple/Ripple';
 import './Button.scss';
 
 export interface ButtonProps {
-  color?: 'primary' | 'secondary' | 'tertiary' | 'transparent';
+  color?: 'accent' | `accent-${string}` | 'transparent';
   size?: 'small' | 'medium' | 'large';
 
   disabled?: boolean;
@@ -23,13 +21,20 @@ export interface ButtonProps {
 
 const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
   (props, elProps) => {
-    const depth = useDepth() || (() => 0);
+    const color = createMemo(() => props.color || 'accent');
 
-    const color = createMemo(() => props.color || 'primary');
+    const buttonBgColor = createMemo(() =>
+      color() === 'transparent' ? 'transparent' : `var(--${color()}-bg)`
+    );
+    const buttonFgColor = createMemo(() =>
+      color() === 'transparent' ? 'var(--normal-fg)' : `var(--${color()}-fg)`
+    );
     const rippleColor = createMemo(
       () =>
         props.rippleColor ||
-        (color() === 'transparent' ? 'var(--text-0)' : `var(--text-${color()})`)
+        (color() === 'transparent'
+          ? 'var(--normal-fg)'
+          : `var(--${color()}-fg)`)
     );
 
     return (
@@ -52,18 +57,14 @@ const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
           type="button"
           {...elProps}
           class={elProps.class}
+          style={{
+            '--bg': buttonBgColor(),
+            '--fg': buttonFgColor()
+          }}
           classList={{
-            primary: color() === 'primary',
-            secondary: color() === 'secondary',
-            tertiary: color() === 'tertiary',
-            transparent: color() === 'transparent',
-
             disabled: props.disabled,
 
-            'gray-1': depth() === 0,
-            'gray-2': depth() === 1,
-            'gray-3': depth() === 2,
-            'gray-4': depth() === 3,
+            transparent: color() === 'transparent',
 
             small: props.size === 'small',
             medium:

@@ -1,3 +1,4 @@
+import { LeavesOfObject, NonObject } from '@grapos/utils';
 import tinycolor2 from 'tinycolor2';
 
 /**
@@ -5,14 +6,14 @@ import tinycolor2 from 'tinycolor2';
  * deal with colors. Contains a **internal** property with
  * the `tinycolor2.Instance` interface.
  */
-export class Color {
+export class Color<Input extends tinycolor2.ColorInput = string> {
   internal: tinycolor2.Instance;
 
-  constructor(input: tinycolor2.ColorInput) {
+  constructor(input: Input) {
     this.internal = tinycolor2(input);
   }
 
-  withAlpha(newAlpha: number): Color {
+  withAlpha(newAlpha: number): Color<Input> {
     const clone = new Color(this.internal.clone());
     clone.internal.setAlpha(newAlpha);
     return clone;
@@ -28,77 +29,37 @@ export class Color {
   }
 }
 
-export type Theme = {
+export type BgFgPair = { bg: Color; fg: Color };
+
+export type Theme<Accents extends Record<string, BgFgPair> | never = never> = {
   id: string;
-  /**
-   * The gray scale that should be followed by the website,
-   * the default is increasingly dark.
-   */
-  grays: {
-    /**
-     * This is the first gray color, it is automatically
-     * used to set the background-color of the body.
-     *
-     * This color is most useful for dark themes.
-     */
-    0: Color;
-    1: Color;
-    2: Color;
-    3: Color;
-    4: Color;
-    5: Color;
-  };
-  textColors: {
-    /**
-     * A text color that will match the primary color
-     */
-    primary: Color;
-    /**
-     * A text color that will match the secondary color
-     */
-    secondary: Color;
-    /**
-     * A text color that will match the tertiary color
-     */
-    tertiary: Color;
 
-    marked: {
-      background: Color;
-      textColor: Color;
-    };
+  bgBackdrop: Color;
+  normal: BgFgPair;
 
-    0: Color;
-    1: Color;
-    2: Color;
-    3: Color;
-    4: Color;
-    5: Color;
-  };
-  primary: Color;
+  floating: BgFgPair & { border: Color };
+
   /**
-   * Generally just a 0.32 alpha version of the already defined primary color,
-   * which is calculated automatically, but can be defined to be something else.
+   * @description For texts that are within the <Marked/> component
    */
-  lightnedPrimary?: Color;
-  /**
-   * Generally just a 0.20 alpha version of the already defined primary color,
-   * which is calculated automatically, but can be defined to be something else.
-   */
-  lightnedPrimary2?: Color;
-  secondary: Color;
-  /**
-   * Generally just a 0.32 alpha version of the already defined secondary color,
-   * which is calculated automatically, but can be defined to be something else.
-   */
-  lightnedSecondary?: Color;
-  tertiary: Color;
-  /**
-   * Generally just a 0.32 alpha version of the already defined tertiary color,
-   * which is calculated automatically, but can be defined to be something else.
-   */
-  lightnedTertiary?: Color;
+  marked: BgFgPair;
 
   success: Color;
   warning: Color;
   danger: Color;
-};
+} & (
+  | {
+      /**
+       * @description The accent color for the whole website, there is also an `accents` option that
+       * allows for many accents.
+       */
+      accent: BgFgPair;
+    }
+  | {
+      mainAccent: keyof Accents;
+      /**
+       * @description A list of accent colors, the first accent color is going to be the primary one.
+       */
+      accents: Accents;
+    }
+);

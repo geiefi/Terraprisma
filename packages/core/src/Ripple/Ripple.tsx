@@ -8,7 +8,6 @@ import {
   JSX,
   on,
   onCleanup,
-  onMount,
   Show
 } from 'solid-js';
 import { Portal } from 'solid-js/web';

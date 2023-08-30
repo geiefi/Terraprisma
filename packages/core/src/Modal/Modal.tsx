@@ -2,15 +2,13 @@ import {
   ComponentProps,
   JSX,
   Show,
-  createEffect,
   createMemo,
   createRoot,
-  createSignal,
-  onMount
+  createSignal
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
-import { GrapeSGlobalDivID, getGrapeSGlobalDiv } from '../GrapeS';
+import { getGrapeSGlobalDiv } from '../GrapeS';
 
 import {
   createComponentExtendingFromOther,
@@ -108,7 +106,6 @@ const ModalInternal = createComponentExtendingFromOther<
           }
         >
           <Box
-            depth={1}
             {...elProps}
             onClick={mergeCallbacks(
               elProps.onClick as any,
@@ -131,7 +128,7 @@ const ModalInternal = createComponentExtendingFromOther<
 
               <div class="actions">
                 <Button.Empty onClick={props.onCancel}>Cancel</Button.Empty>
-                <Button onClick={props.onOk} color="primary">
+                <Button onClick={props.onOk} color="accent">
                   Ok
                 </Button>
               </div>

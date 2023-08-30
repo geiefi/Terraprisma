@@ -16,31 +16,29 @@ const ClickableSignalizer = createComponentExtendingFromOther<
   ClickableSignalizerProps,
   'div'
 >(
-  (props, elProps) => {
-    return (
-      <div
-        {...elProps}
-        class={mergeClass('clickable-signalizer-container', elProps.class)}
-      >
-        {props.children}
+  (props, elProps) => (
+    <div
+      {...elProps}
+      class={mergeClass('clickable-signalizer-container', elProps.class)}
+    >
+      {props.children}
 
-        <Fade>
-          <Show when={props.show}>
-            <span
-              {...props.clickableSignalizerProps}
-              class={mergeClass(
-                'clickable-signalizer',
-                props.clickableSignalizerProps?.class
-              )}
-              style={{
-                '--color': props.color || 'var(--gray-5)'
-              }}
-            />
-          </Show>
-        </Fade>
-      </div>
-    );
-  },
+      <Fade>
+        <Show when={props.show}>
+          <span
+            {...props.clickableSignalizerProps}
+            class={mergeClass(
+              'clickable-signalizer',
+              props.clickableSignalizerProps?.class
+            )}
+            style={{
+              '--color': props.color || 'rgba(0,0,0,0.04)'
+            }}
+          />
+        </Show>
+      </Fade>
+    </div>
+  ),
   ['children', 'show', 'color', 'clickableSignalizerProps']
 );
 

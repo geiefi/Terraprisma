@@ -1,4 +1,4 @@
-$disabled-text-color: color-mix(in srgb, var(--text-0), transparent 80%);
+$disabled-text-color: color-mix(in srgb, var(--normal-fg), transparent 80%);
 
 @function darken($base, $percentage) {
   @return color-mix(in srgb, $base, #000 $percentage);
@@ -48,40 +48,24 @@ button {
     cursor: pointer;
   }
 
-  &.primary:not(.disabled):not(.empty) {
-    background: var(--primary);
-    color: var(--text-primary);
-
-    &:hover {
-      background: darken(var(--primary), 20%);
-    }
-  }
-
-  &.secondary:not(.disabled):not(.empty) {
-    background: var(--secondary);
-    color: var(--text-secondary);
-
-    &:hover {
-      background: darken(var(--secondary), 20%);
-    }
-  }
-
-  &.tertiary:not(.disabled):not(.empty) {
-    background: var(--tertiary);
-    color: var(--text-tertiary);
-
-    &:hover {
-      background: darken(var(--tertiary), 20%);
-    }
-  }
-
-  &.transparent:not(.disabled):not(.empty) {
-    background: transparent;
+  &:not(.disabled):not(.empty) {
     transition: background .2s;
 
-    &:hover {
-      // generates a opaque version of the text-0 color
-      background: color-mix(in srgb, var(--text-0), transparent 85%);
+    &:not(.transparent) {
+      background: var(--bg);
+      color: var(--fg);
+
+      &:hover {
+        background: darken(var(--bg), 20%);
+      }
+    }
+
+    &.transparent {
+      transition: background .2s;
+
+      &:hover {
+        background: color-mix(in srgb, var(--normal-fg), transparent 85%);
+      }
     }
   }
 
@@ -157,32 +141,14 @@ button {
   &.disabled {
     color: $disabled-text-color;
     box-shadow: none;
-    background-color: color-mix(in srgb, var(--gray-5), transparent 80%);
+    background-color: rgba(0,0,0,0.04);
   }
 
   &.empty {
-    color: var(--text-1);
     transition: .2s linear;
     border: 2px solid rgba(0, 0, 0, 0);
 
-    &.gray-0 {
-      background: var(--gray-0);
-    }
-
-    &.gray-1 {
-      background: var(--gray-1);
-    }
-
-    &.gray-2 {
-      background: var(--gray-2);
-    }
-
-    &.gray-3 {
-      background: var(--gray-3);
-    }
-
-    &.gray-4 {
-      background: var(--gray-4);
-    }
+    background: var(--floating-bg);
+    color: var(--floating-fg);
   }
 }
