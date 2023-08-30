@@ -21,13 +21,13 @@ const Container = createComponentExtendingFromOther<ContainerProps, 'div'>(
       md: '992px',
       lg: '1200px',
       xl: '1920px'
-    }
+    };
 
     const isPredefinedLayoutWidth = (
       maxWidth: LayoutWidth | number
     ): maxWidth is LayoutWidth => {
       return ['xs', 'sm', 'md', 'lg', 'xl'].includes(maxWidth.toString());
-    }
+    };
 
     const maxWidthPx = createMemo<string>(() => {
       const maxWidth = props.maxWidth || 'lg';
