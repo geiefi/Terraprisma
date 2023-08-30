@@ -5,6 +5,8 @@ import { mergeCallbacks } from './mergeCallbacks';
 import { mergeClass } from './mergeClass';
 import { canUseDocument } from './canUseDocument';
 
+export * from './types';
+
 import type { Store } from './types/Store';
 
 export {

@@ -1,4 +1,12 @@
-import { FormFieldValue } from './FormFieldValue';
+export type NonObject =
+  | string
+  | string[]
+  | number
+  | boolean
+  | Date
+  | Blob
+  | undefined
+  | null;
 
 /**
  * @description A type function that can be used to get all of the extremity paths
@@ -37,7 +45,7 @@ export type RestOfLeaves<
   TKey extends string,
   TValue,
   OnlyOfType = any
-> = TValue extends FormFieldValue | Blob
+> = TValue extends NonObject
   ? TValue extends OnlyOfType
     ? `${TKey}`
     : never
