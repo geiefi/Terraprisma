@@ -32,7 +32,7 @@
       padding-inline: calc(18px + calc(var(--extra-padding-left)));
 
       &.active {
-        background: color-mix(in srgb, var(--text-0), transparent 85%)
+        background: color-mix(in srgb, var(--normal-fg), transparent 85%)
       }
 
       &.clickable {
@@ -41,7 +41,7 @@
         transition: background .2s;
 
         &:hover {
-          background: color-mix(in srgb, var(--text-0), transparent 85%)
+          background: color-mix(in srgb, var(--normal-fg), transparent 85%)
         }
       }
 

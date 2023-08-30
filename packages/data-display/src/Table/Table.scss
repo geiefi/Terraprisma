@@ -4,7 +4,7 @@
   padding-block: 0;
   margin-block: 15px;
 
-  border: 1px solid var(--gray-5);
+  border: 1px solid var(--floating-border);
   border-radius: 5px;
 }
 
@@ -40,7 +40,7 @@
     td {
       padding-block: 15px;
 
-      color: var(--text-0);
+      color: var(--normal-fg);
       font-weight: 600;
       font-size: 15px;
     }
@@ -48,7 +48,7 @@
     th {
       padding-block: 12px;
 
-      color: var(--text-1);
+      color: var(--floating-fg);
       font-weight: bolder;
       font-size: 15px;
     }
