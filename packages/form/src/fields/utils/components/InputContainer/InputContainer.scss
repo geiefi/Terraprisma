@@ -8,10 +8,6 @@
   border-radius: 7px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  border-bottom: 2px solid var(--gray-3);
-
-  color: var(--text-0);
-  background: var(--gray-1);
 
   padding-inline: 12px;
   padding-top: 19px;
@@ -21,34 +17,14 @@
     .2s background-color linear;
 
   // these are the default values
-  --text-color: var(--text-0);
-  --label-color: var(--text-1);
-  --focused-label-color: var(--text-2);
-  --background-color: var(--gray-1);
-  --border-color: var(--gray-3);
+  --text-color: var(--floating-fg);
+  --label-color: var(--floating-fg);
+  --focused-label-color: var(--choosen-accent-bg);
+  --background-color: var(--floating-bg);
+  --border-color: var(--floating-border);
 
-  &.gray-2 {
-    --text-color: var(--text-1);
-    --label-color: var(--text-2);
-    --focused-label-color: var(--text-3);
-    --background-color: var(--gray-2);
-    --border-color: var(--gray-4);
-  }
-
-  &.gray-3 {
-    --text-color: var(--text-2);
-    --label-color: var(--text-3);
-    --focused-label-color: var(--text-4);
-    --background-color: var(--gray-3);
-    --border-color: var(--gray-5);
-  }
-
-  &.gray-4 {
-    --text-color: var(--text-3);
-    --label-color: var(--text-4);
-    --focused-label-color: var(--text-5);
-    --background-color: var(--gray-4);
-    --border-color: var(--gray-5);
+  &.focused {
+    --label-color: var(--focused-label-color);
   }
 
   &.error {
@@ -83,6 +59,7 @@
 
   label {
     color: var(--label-color);
+    font-weight: 800;
 
     position: absolute;
     left: 12px;
@@ -94,33 +71,14 @@
   &.focused label,
   &.has-content label {
     color: var(--focused-label-color);
+
+    top: 15.5px;
+    opacity: 0.7;
+    transform: translateY(-50%) scale(0.7);
   }
 
   &:hover:not(.focused) {
     filter: brightness(94%);
-  }
-
-  &.focused label,
-  &.has-content label {
-    top: 15.5px;
-    opacity: 0.7;
-    font-weight: 500;
-    transform: translateY(-50%) scale(0.7);
-  }
-
-  &.focused.primary label {
-    color: var(--primary);
-    font-weight: 600;
-  }
-
-  &.focused.secondary label {
-    color: var(--secondary);
-    font-weight: 600;
-  }
-
-  &.focused.tertiary label {
-    color: var(--tertiary);
-    font-weight: 600;
   }
 
   &::after {
@@ -132,16 +90,7 @@
     height: 1px;
     transform: translateX(-50%);
     transition: .2s width ease-out;
-  }
-
-  &.primary::after {
-    background: var(--primary);
-  }
-  &.secondary::after {
-    background: var(--secondary);
-  }
-  &.tertiary::after {
-    background: var(--tertiary);
+    background: var(--choosen-accent-bg);
   }
 
   &.focused::after {

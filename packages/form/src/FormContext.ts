@@ -1,16 +1,15 @@
 import { createContext, Setter } from 'solid-js';
 import { produce } from 'solid-js/store';
 
-import { deeplyTrack, Store } from '@grapos/utils';
-
 import {
-  AgnosticValidator,
-  FieldValidator,
-  FormValue,
-  LeavesOfObject,
   DeepGet,
-  EmptyObj
-} from './types';
+  deeplyTrack,
+  EmptyObj,
+  LeavesOfObject,
+  Store
+} from '@grapos/utils';
+
+import { AgnosticValidator, FieldValidator, FormValue } from './types';
 
 export class FormError extends Error {}
 

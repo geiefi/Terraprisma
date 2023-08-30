@@ -1,9 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import {
-  mergeClass,
-  createComponentExtendingFromOther
-} from '@grapos/utils';
+import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
 
 import './Label.scss';
 

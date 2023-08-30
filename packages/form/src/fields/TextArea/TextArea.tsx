@@ -50,7 +50,8 @@ const TextArea = setupFieldComponent<TextAreaProps, 'textarea', string>(
 
     return (
       <FieldInternalWrapper>
-        <InputContainer labelFor={id()} color={props.color} label={props.label}>
+        {/* TODO: pass the color through here to work with the new coloring variables */}
+        <InputContainer labelFor={id()} label={props.label}>
           <textarea
             {...elProps}
             id={id()}

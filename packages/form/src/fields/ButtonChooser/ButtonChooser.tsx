@@ -130,9 +130,9 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
           <For each={options()}>
             {(opt) => (
               <Button.Empty
-                color={color()}
                 disabled={disabled()}
                 {...opt}
+                /* TODO: pass the color through here to work with the new coloring variables */
                 class={opt.class}
                 classList={{
                   active: opt.value === value(),

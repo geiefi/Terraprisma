@@ -383,12 +383,12 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
 
     return (
       <FieldInternalWrapper>
+        {/* TODO: pass the color through here to work with the new coloring variables */}
         <InputContainer
           {...elProps}
           id={id()}
           labelFor={id()}
           label={props.label}
-          color={props.color}
           style={{
             cursor: disabled() === false ? 'pointer' : 'default',
             ...props.style
@@ -417,7 +417,7 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
             class="datepicker-dropdown"
             ref={setDropdownRef}
           >
-            <Box depth={0} class="datepicker-dropdown-inner">
+            <Box class="datepicker-dropdown-inner">
               <div class="dropdown-header">
                 <Button.Icon
                   size="small"

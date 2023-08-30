@@ -1,12 +1,8 @@
-import { JSX, Show } from 'solid-js';
+import { JSX, Show, createMemo } from 'solid-js';
 
 import { useField } from '../../fields';
-import { useDepth } from '@grapos/core';
 
-import {
-  createComponentExtendingFromOther,
-  mergeClass
-} from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 
 import Label from '../Label/Label';
 
@@ -16,7 +12,7 @@ export interface InputContainerProps {
   labelFor: string;
   label?: JSX.Element;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   icon?: JSX.Element;
 }
 
@@ -32,25 +28,20 @@ const InputContainer = createComponentExtendingFromOther<
       hasContent
     } = useField()!;
 
-    const depth = useDepth() || (() => 0);
+    const color = createMemo(() => props.color || 'accent');
 
     return (
       <div
         {...elProps}
         class={mergeClass('input-container', elProps.class)}
+        style={{
+          '--choosen-accent-bg': `var(--${color()}-bg)`
+        }}
         classList={{
-          primary:
-            props.color === 'primary' || typeof props.color === 'undefined',
-          secondary: props.color === 'secondary',
-          tertiary: props.color === 'tertiary',
-
           focused: focused(),
           'has-content': hasContent(),
           disabled: disabled(),
           error: hasErrors(),
-
-          'gray-2': depth() === 1 || depth() === 3,
-          'gray-3': depth() === 2,
 
           ...elProps.classList
         }}

@@ -2,8 +2,8 @@ import { Accessor, Signal, createContext, useContext } from 'solid-js';
 
 import { FieldInternalValidate } from './setupValidateFunction';
 
-import type { FormFieldValue, EmptyObj, FormValue } from '../../../types';
-import type { Store } from '@grapos/utils';
+import type { FormFieldValue, FormValue } from '../../../types';
+import type { EmptyObj, Store } from '@grapos/utils';
 import type { FieldName, FieldProps } from '../types';
 
 export interface FieldProviderValue<

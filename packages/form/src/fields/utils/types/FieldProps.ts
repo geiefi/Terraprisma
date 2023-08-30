@@ -1,15 +1,8 @@
 import { JSX } from 'solid-js/jsx-runtime';
 
-import { Store } from '@grapos/utils';
+import { DeepGet, EmptyObj, LeavesOfObject, Store } from '@grapos/utils';
 
-import {
-  FormFieldValue,
-  FieldValidator,
-  FormValue,
-  LeavesOfObject,
-  DeepGet,
-  EmptyObj
-} from '../../../types';
+import { FormFieldValue, FieldValidator, FormValue } from '../../../types';
 
 export const FieldPropKeys = [
   'name',

@@ -1,7 +1,9 @@
 import { InputMask } from '@solid-primitives/input-mask';
 
+import { EmptyObj } from '@grapos/utils';
+
 import { FieldName, FieldPropKeys, FieldProps } from './FieldProps';
-import { FormValue, FormFieldValue, EmptyObj } from '../../../types';
+import { FormValue, FormFieldValue } from '../../../types';
 
 export const MaskedFieldPropsKeys: (keyof MaskedFieldProps)[] = [
   ...FieldPropKeys,

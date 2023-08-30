@@ -169,12 +169,12 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
           cursor: disabled() === false ? 'pointer' : 'default'
         }}
       >
+        {/* TODO: pass the color through here to work with the new coloring variables */}
         <InputContainer
           {...elProps}
           id={id()}
           labelFor={id()}
           label={props.label}
-          color={props.color}
           onClick={(e) => {
             if (typeof elProps.onClick === 'function') {
               elProps.onClick(e);

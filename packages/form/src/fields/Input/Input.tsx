@@ -83,7 +83,8 @@ const Input = setupFieldComponent<
 
     return (
       <FieldInternalWrapper>
-        <InputContainer labelFor={id()} color={props.color} label={props.label}>
+        {/* TODO: pass the color through here to work with the new coloring variables */}
+        <InputContainer labelFor={id()} label={props.label}>
           <input
             {...elProps}
             id={id()}
