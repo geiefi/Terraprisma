@@ -8,11 +8,16 @@
 </p>
 
 <p align="center">
-  <img 
-    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png" 
+  <img
+    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png"
     alt="Components Showcase"
   />
 </p>
+
+WARNING: Anything that is currently said here may still be changed due to me not being so satified with the current APIs,
+so the README may still not be updated.
+
+---
 
 Hey there! I'm Gabriel, the creator of GrapeS, and I'm excited to introduce you to a whole new way of building user interfaces with SolidJS. GrapeS is not just another UI library; it's my personal project that's been crafted with love and care, bringing together the power of SolidJS and the elegance of Material Design.
 
@@ -29,7 +34,7 @@ With GrapeS, type-safety isn't just a checkbox on the list – it's a core princ
 You are not alone, I've been there when we have problems debugging some UI library thrown error that just does not point
 you to the right place properly and it requires lots of annoyting debugging to find.
 
-So my thoughts were: bebugging should be a breeze, not a headache. That's why I've introduced the `identification` prop (with some variations for form fields components), a simple yet powerful tool that accompanies every GrapeS component that can error. 
+So my thoughts were: bebugging should be a breeze, not a headache. That's why I've introduced the `identification` prop (with some variations for form fields components), a simple yet powerful tool that accompanies every GrapeS component that can error.
 
 When things go awry, this prop points you directly to the source of the issue, helping you get to the bottom of problems *faster*.
 
@@ -44,7 +49,7 @@ to try improving it further without giving up simplicity, flexibility nor readab
 
 ## Getting Started: A Smooth Setup Process
 
-Setting up GrapeS is as smooth as sipping a *☕ pingado*. Just install the `grapos` npm package, where all the components, transitions, and helpers reside. 
+Setting up GrapeS is as smooth as sipping a *☕ pingado*. Just install the `grapos` npm package, where all the components, transitions, and helpers reside.
 
 Here's a quick peek at how to incorporate GrapeS into your project:
 
