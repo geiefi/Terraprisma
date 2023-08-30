@@ -101,7 +101,7 @@ const RoundedButton: Component<ComponentProps<typeof Button>> = (props) => {
 };
 
 const EmptyButton: Component<ComponentProps<typeof Button>> = (props) => {
-  const color = createMemo(() => props.color || 'primary');
+  const color = createMemo(() => props.color || 'accent');
 
   return (
     <Button
