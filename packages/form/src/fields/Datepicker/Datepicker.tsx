@@ -41,7 +41,7 @@ export interface DatepickerProps<
 > extends FieldProps<OwnerFormValue, Date, Name> {
   label?: string;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
 
   style?: JSX.CSSProperties;
 
@@ -383,11 +383,11 @@ const Datepicker = setupFieldComponent<DatepickerProps, 'div', Date>(
 
     return (
       <FieldInternalWrapper>
-        {/* TODO: pass the color through here to work with the new coloring variables */}
         <InputContainer
           {...elProps}
           id={id()}
           labelFor={id()}
+          color={props.color}
           label={props.label}
           style={{
             cursor: disabled() === false ? 'pointer' : 'default',

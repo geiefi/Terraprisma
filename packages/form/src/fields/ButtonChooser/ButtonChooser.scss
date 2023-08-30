@@ -48,17 +48,7 @@
     }
 
     button.active {
-      &.primary {
-        border: 2px solid var(--primary);
-      }
-
-      &.secondary {
-        border: 2px solid var(--secondary);
-      }
-
-      &.tertiary {
-        border: 2px solid var(--tertiary);
-      }
+      border: 2px solid var(--bg);
     }
   }
 

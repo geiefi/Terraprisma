@@ -15,21 +15,6 @@
     --size: 28px;
   }
 
-  &.primary {
-    --color: var(--primary);
-    --check-color: var(--text-primary);
-  }
-
-  &.secondary {
-    --color: var(--secondary);
-    --check-color: var(--text-secondary);
-  }
-
-  &.tertiary {
-    --color: var(--tertiary);
-    --check-color: var(--text-tertiary);
-  }
-
   &:not(.disabled) + *,
   &:not(.disabled) {
     cursor: pointer;

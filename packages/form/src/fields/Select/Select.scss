@@ -1,3 +1,7 @@
+@function add-transparency($color, $percentage) {
+  @return color-mix(in srgb, $color, transparent $percentage);
+}
+
 .select-icon {
   transition: transform .2s linear;
   transform-origin: center;
@@ -35,32 +39,12 @@
     }
   }
 
-  &.primary {
-    .option.active {
-      background: var(--lightened-primary);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--primary);
-    }
+  .option.active {
+    background: add-transparency(var(--color), 68%);
   }
-  &.secondary {
-    .option.active {
-      background: var(--lightened-secondary);
-    }
 
-    &::-webkit-scrollbar-thumb {
-      background: var(--secondary);
-    }
-  }
-  &.tertiary {
-    .option.active {
-      background: var(--lightened-tertiary);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--tertiary);
-    }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color);
   }
 }
 

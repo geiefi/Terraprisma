@@ -12,23 +12,17 @@
     padding-block: 2px;
 
     & > input {
-      &.on.primary {
-        --color: var(--primary);
-      }
-      &.on.secondary {
-        --color: var(--secondary);
-      }
-      &.on.tertiary {
-        --color: var(--tertiary);
+      &.on {
+        --color: var(--on-color);
       }
 
       &.off {
-        --color: var(--gray-4);
+        --color: var(--floating-bg);
       }
 
       &.disabled {
         opacity: 0.3;
-        --color: var(--gray-5);
+        --color: var(--normal-bg);
         filter: brightness(95%);
       }
 

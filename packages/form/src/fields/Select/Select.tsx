@@ -42,7 +42,7 @@ export interface SelectProps<
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
 
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
@@ -163,16 +163,18 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
       )
     );
 
+    const color = createMemo(() => props.color || 'accent');
+
     return (
       <FieldInternalWrapper
         style={{
           cursor: disabled() === false ? 'pointer' : 'default'
         }}
       >
-        {/* TODO: pass the color through here to work with the new coloring variables */}
         <InputContainer
           {...elProps}
           id={id()}
+          color={color()}
           labelFor={id()}
           label={props.label}
           onClick={(e) => {
@@ -209,11 +211,8 @@ const Select = setupFieldComponent<SelectProps, 'div'>(
             for={inputContainerRef()!}
             class="select-dropdown"
             visible={focused()}
-            classList={{
-              primary:
-                props.color === 'primary' || typeof props.color === 'undefined',
-              secondary: props.color === 'secondary',
-              tertiary: props.color === 'tertiary'
+            style={{
+              '--color': `var(--${color()}-bg)`
             }}
           >
             <For each={options()}>

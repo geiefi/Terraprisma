@@ -50,7 +50,7 @@ export interface InputProps<
   label?: JSX.Element;
 
   type?: Type;
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
 
   onChange?: (value: string, event?: InputOnChangeEvent) => void;
 }
@@ -90,6 +90,7 @@ const Input = setupFieldComponent<
             id={id()}
             disabled={disabled()}
             class={mergeClass('input', elProps.class)}
+            color={props.color}
             classList={{
               'no-label': typeof props.label === 'undefined'
             }}

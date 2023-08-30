@@ -1,4 +1,4 @@
-import { JSX, Show } from 'solid-js';
+import { JSX, Show, createMemo } from 'solid-js';
 
 import {
   FieldInternalWrapper,
@@ -23,7 +23,7 @@ export interface TogglerProps<
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: boolean, event: MouseEvent) => any;
@@ -41,6 +41,8 @@ const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
       hasErrors
     } = useField<boolean>()!;
 
+    const color = createMemo(() => props.color || 'accent');
+
     return (
       <FieldInternalWrapper class="toggler-container">
         <Show when={props.label}>
@@ -55,16 +57,14 @@ const Toggler = setupFieldComponent<TogglerProps, 'input', boolean>(
             id={id()}
             type="checkbox"
             class={elProps.class}
+            style={{
+              '--on-color': `--${color()}-bg`
+            }}
             classList={{
               on: value() === true,
               off: value() === false || typeof value() === 'undefined',
 
               disabled: disabled(),
-
-              primary:
-                props.color === 'primary' || typeof props.color === 'undefined',
-              secondary: props.color === 'secondary',
-              tertiary: props.color === 'tertiary',
 
               small: props.size === 'small',
               medium:

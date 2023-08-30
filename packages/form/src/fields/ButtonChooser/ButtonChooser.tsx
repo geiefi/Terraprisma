@@ -36,7 +36,7 @@ export interface ButtonChooserProps<
   >
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   helperText?: JSX.Element;
 
   style?: JSX.CSSProperties;
@@ -109,7 +109,7 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
       )
     );
 
-    const color = createMemo(() => props.color || 'primary');
+    const color = createMemo(() => props.color || 'accent');
 
     return (
       <FieldInternalWrapper
@@ -132,7 +132,7 @@ const ButtonChooser = setupFieldComponent<ButtonChooserProps, 'div'>(
               <Button.Empty
                 disabled={disabled()}
                 {...opt}
-                /* TODO: pass the color through here to work with the new coloring variables */
+                color={color()}
                 class={opt.class}
                 classList={{
                   active: opt.value === value(),

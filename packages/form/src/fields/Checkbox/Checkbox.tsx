@@ -29,7 +29,7 @@ export interface CheckboxProps<
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: boolean, event: MouseEvent) => any;
@@ -46,7 +46,7 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
       hasErrors
     } = useField<boolean>()!;
 
-    const color = createMemo(() => props.color || 'primary');
+    const color = createMemo(() => props.color || 'accent');
 
     return (
       <FieldInternalWrapper>
@@ -58,11 +58,11 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
 
         <div
           class="checkbox"
+          style={{
+            '--color': `var(--${color()}-bg)`,
+            '--check-color': `var(--${color()}-fg)`
+          }}
           classList={{
-            primary: color() === 'primary',
-            secondary: color() === 'secondary',
-            tertiary: color() === 'tertiary',
-
             small: props.size === 'small',
             medium:
               typeof props.size === 'undefined' || props.size === 'medium',
@@ -87,7 +87,7 @@ const Checkbox = setupFieldComponent<CheckboxProps, 'input', boolean>(
         >
           <ClickableSignalizer
             show={focused() && !disabled()}
-            color={value() ? `var(--${color()})` : undefined}
+            color={value() ? `var(--${color()}-bg)` : undefined}
             class="checkbox-internal"
           >
             <Ripple color={color()} center>

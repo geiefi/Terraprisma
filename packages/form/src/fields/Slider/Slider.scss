@@ -56,21 +56,11 @@
     border-radius: calc(var(--height) / 3);
   }
 
-  &.primary {
-    --color: var(--primary);
-  }
-  &.secondary {
-    --color: var(--secondary);
-  }
-  &.tertiary {
-    --color: var(--tertiary);
-  }
-
   &.disabled {
     opacity: 0.4;
     filter: brightness(95%);
 
-    --color: var(--text-2);
+    --color: var(--normal-bg);
   }
 
   & > .trunk {
@@ -102,17 +92,11 @@
     border-radius: 50%;
     pointer-events: none;
 
-    transition: .2s background ease-in;
+    transition: .2s opacity ease-in;
   }
 
-  &.primary.focused::after {
-    background: var(--lightened-primary);
-  }
-  &.secondary.focused::after {
-    background: var(--lightened-secondary);
-  }
-  &.tertiary.focused::after {
-    background: var(--lightened-tertiary);
+  &.focused::after {
+    opacity: 0.32;
   }
 
   & > .thumb {

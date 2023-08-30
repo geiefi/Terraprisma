@@ -27,7 +27,7 @@ export interface SliderProps<
 > extends FieldProps<OwnerFormValue, number, Name> {
   label?: JSX.Element;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   size?: 'small' | 'medium' | 'large';
 
   showTooltip?: boolean;
@@ -124,7 +124,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
       () => ((value() || min() - min()) / max()) * 100
     );
 
-    const color = createMemo(() => props.color || 'primary');
+    const color = createMemo(() => props.color || 'accent');
 
     createEffect(
       on(value, () => {
@@ -153,14 +153,11 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
             small: props.size === 'small',
             medium:
               props.size === 'medium' || typeof props.size === 'undefined',
-            large: props.size === 'large',
-
-            primary: color() === 'primary',
-            secondary: color() === 'secondary',
-            tertiary: color() === 'tertiary'
+            large: props.size === 'large'
           }}
           style={{
-            '--value-percentage': `${valuePercentageToMaxFromMin()}%`
+            '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
+            '--color': `${color()}-bg`
           }}
         >
           <span class="trunk" draggable={false} />
@@ -189,8 +186,8 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
               visible={focused()}
               class="slider-value-tooltip"
               style={{
-                '--color': `var(--${color()})`,
-                '--text-color': `var(--text-${color()})`
+                '--color': `var(--${color()}-bg)`,
+                '--text-color': `var(--${color()}-fg)`
               }}
             >
               <Show when={props.renderTooltipContent} fallback={value()}>

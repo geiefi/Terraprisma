@@ -39,7 +39,7 @@ export interface RadioGroupOptionProps<
 > extends ParentProps {
   value: AllowedValue;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 
@@ -71,6 +71,8 @@ const RadioInternal = createComponentExtendingFromOther<
     const isDisabled = createMemo(() => props.disabled || groupDisabled());
     const isChecked = createMemo(() => props.value === groupValue());
 
+    const color = createMemo(() => props.color || 'accent');
+
     return (
       <div
         class="radio-container"
@@ -82,11 +84,11 @@ const RadioInternal = createComponentExtendingFromOther<
       >
         <div
           class="radio"
+          style={{
+            '--color': `var(--${color()}-bg)`,
+            '--check-color': `var(--${color()}-fg)`
+          }}
           classList={{
-            primary: props.color === 'primary',
-            secondary: props.color === 'secondary',
-            tertiary: props.color === 'tertiary',
-
             small: props.size === 'small',
             medium: props.size === 'medium',
             large: props.size === 'large',
@@ -145,7 +147,7 @@ export interface RadioGroupProps<
   label?: JSX.Element;
   helperText?: JSX.Element;
 
-  color?: 'primary' | 'secondary' | 'tertiary';
+  color?: 'accent' | `accent-${string}`;
   size?: 'small' | 'medium' | 'large';
   radiosDirection?: StackProps['direction'];
 
@@ -158,7 +160,7 @@ export interface RadioGroupProps<
 
 const RadioGroup = setupFieldComponent<RadioGroupProps, 'div'>(
   (props, elProps) => {
-    const color = createMemo(() => props.color || 'primary');
+    const color = createMemo(() => props.color || 'accent');
     const {
       elementId: id,
 
