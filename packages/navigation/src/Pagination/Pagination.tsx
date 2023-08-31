@@ -61,7 +61,7 @@ const Pagination = createComponentExtendingFromOther<PaginationProps, 'div'>(
 
     const PageNumber = (p: { pageN: number }) => (
       <Button.Icon
-        color={p.pageN === props.current ? 'primary' : undefined}
+        color={p.pageN === props.current ? 'accent' : undefined}
         class="page-number"
         size="small"
         centerRipple

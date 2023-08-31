@@ -18,7 +18,6 @@ import { Check } from '@grapos/icons';
 
 import { StepsContext } from './StepsContext';
 
-
 import './Steps.scss';
 
 export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {

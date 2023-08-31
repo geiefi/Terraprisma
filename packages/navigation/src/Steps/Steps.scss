@@ -12,15 +12,15 @@
 
     & .step-info {
       position: relative;
-      
+
       & > .step-title {
         font-weight: 700;
         max-width: 100%;
         font-size: 14px;
         margin: 0;
-        white-space: nowrap; 
+        white-space: nowrap;
         transition: .4s;
-        color: var(--text-2);
+        color: var(--normal-fg);
       }
 
       & > .step-description {
@@ -29,7 +29,7 @@
         font-size: 14px;
         max-width: 200px;
         font-weight: 700;
-        color: var(--text-1);
+        color: var(--floating-fg);
         left: 0;
         top: 3px;
       }
@@ -38,7 +38,7 @@
     &.current-step .step-title,
     &.done-step .step-title {
       font-weight: 800;
-      color: var(--text-0);
+      color: var(--normal-fg);
       line-height: 22px;
     }
 
@@ -53,7 +53,7 @@
         border-radius: 50%;
         transition: background-color .4s ease-in-out,
                     color .4s ease-in-out;
-        background: var(--gray-3);
+        background: var(--floating-bg);
         box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
         color: #fff;
         box-sizing: border-box;
@@ -74,7 +74,6 @@
     }
 
     &.done-step > .step-content > .step-circle {
-      background: rgba(201, 95, 34, 0.1);
       background: var(--lightened-primary);
       color: var(--primary);
       font-weight: bolder;
@@ -99,13 +98,13 @@
 
       &.current-step:not(:last-of-type)::after {
         animation: grow-background-gradient-vertical .4s linear;
-        background: linear-gradient(180deg, 
+        background: linear-gradient(180deg,
         var(--primary) 25%, var(--gray-3) 75%);
         background-position: 50% 330%;
         background-size: 100% 400%;
       }
 
-      &:not(:last-of-type)::after { 
+      &:not(:last-of-type)::after {
         content: '';
         position: absolute;
         left: 15px;
@@ -132,13 +131,13 @@
 
     &.current-step:not(:last-of-type)::after {
       animation: grow-background-gradient-horizontal .4s linear;
-      background: linear-gradient(90deg, 
+      background: linear-gradient(90deg,
       var(--primary) 25%, var(--gray-3) 75%);
       background-position: 330% 50%;
       background-size: 400% 100%;
     }
 
-    &:not(:last-of-type)::after { 
+    &:not(:last-of-type)::after {
       content: '';
       position: absolute;
       top: 50%;
