@@ -2,3 +2,4 @@
 # of build compilation of .scss files
 **/*.css
 **/src-temp
+**/.turbo

@@ -146,24 +146,24 @@ const DesignShowcase: Component = () => {
             <Box>
               <Stack direction="vertical" spacing={10}>
                 <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button color="primary">Primary</Button>
-                  <Button color="secondary">Secondary</Button>
-                  <Button color="tertiary">Tertiary</Button>
+                  <Button color="accent">Primary</Button>
+                  <Button color="accent">Secondary</Button>
+                  <Button color="accent">Tertiary</Button>
                 </Stack>
                 <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button.Rounded color="primary">
+                  <Button.Rounded color="accent">
                     Send <Send />
                   </Button.Rounded>
-                  <Button.Rounded color="secondary">
+                  <Button.Rounded color="transparent">
                     Are you sure? <QuestionMark />
                   </Button.Rounded>
-                  <Button.Rounded color="tertiary">
+                  <Button.Rounded color="accent">
                     Delete <Delete />
                   </Button.Rounded>
                 </Stack>
                 <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button.Empty color="primary">Cancel</Button.Empty>
-                  <Button.Empty color="primary">Confirm</Button.Empty>
+                  <Button.Empty>Cancel</Button.Empty>
+                  <Button.Empty>Confirm</Button.Empty>
                 </Stack>
                 <Stack direction="horizontal" align="center" spacing={5}>
                   <Button.Icon color="primary">

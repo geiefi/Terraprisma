@@ -3,7 +3,7 @@
   "name": "@grapos/utils",
   "version": "0.0.0-20230829170706",
   "type": "module",
-  "main": "index.esm.jsx",
+  "main": "index.jsx",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
   "keywords": [
@@ -17,12 +17,6 @@
     "material design",
     "flexible components"
   ],
-  "exports": {
-    ".": {
-      "import": "./index.esm.jsx",
-      "require": "./index.cjs.jsx"
-    }
-  },
   "jest": {
     "preset": "solid-jest/preset/browser",
     "transform": {

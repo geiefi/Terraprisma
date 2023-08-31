@@ -1,7 +1,8 @@
+import * as fs from 'fs';
 import { defineConfig } from 'rollup';
 
-import typescript from '@rollup/plugin-typescript';
 import styles from 'rollup-plugin-styles';
+import typescript from '@rollup/plugin-typescript';
 
 import MagicString from 'magic-string';
 import { walk } from 'estree-walker';
@@ -100,22 +101,22 @@ export const baseConfig = {
   input: './src/index.ts',
   output: [
     {
-      file: './lib/index.esm.jsx',
+      file: './lib/index.jsx',
+      assetFileNames: '[name][extname]',
+      intro: `import './styles.css';`,
       format: 'es'
-    },
-    {
-      file: './lib/index.cjs.jsx',
-      format: 'cjs'
     }
   ],
   acornInjectPlugins: [jsx()],
   plugins: [
+    styles({
+      mode: ['extract', 'styles.css']
+    }),
     typescript({
       declaration: true,
       declarationDir: './lib/'
     }),
-    jsxPreserve(),
-    styles()
+    jsxPreserve()
   ]
 };
 
