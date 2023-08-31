@@ -1,5 +1,7 @@
 import { JSX, Show, createMemo } from 'solid-js';
 
+import { PossibleColors } from '@grapos/core';
+
 import {
   FieldInternalWrapper,
   Label,
@@ -23,7 +25,7 @@ export interface TogglerProps<
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: boolean, event: MouseEvent) => any;

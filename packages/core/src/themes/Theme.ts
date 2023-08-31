@@ -1,4 +1,3 @@
-import { LeavesOfObject, NonObject } from '@grapos/utils';
 import tinycolor2 from 'tinycolor2';
 
 /**
@@ -31,7 +30,37 @@ export class Color<Input extends tinycolor2.ColorInput = string> {
 
 export type BgFgPair = { bg: Color; fg: Color };
 
-export type Theme<Accents extends Record<string, BgFgPair> | never = never> = {
+type Kebab<
+  T extends string,
+  A extends string = ''
+> = T extends `${infer F}${infer R}`
+  ? Kebab<R, `${A}${F extends Lowercase<F> ? '' : '-'}${Lowercase<F>}`>
+  : A;
+
+type AllPossibleColors<Obj extends Record<string, any>> = {
+  [K in keyof Obj]: RestPossibleColors<Kebab<K & string>, Obj[K]>;
+}[keyof Obj];
+
+type RestPossibleColors<K extends string, Value> = Value extends Color
+  ? `${K}`
+  : Value extends Record<string, any>
+  ? `${K}-${AllPossibleColors<Value>}`
+  : never;
+
+export type PossibleColors<
+  Obj extends Record<string, any> = Theme,
+  Colors extends AllPossibleColors<Obj> = AllPossibleColors<Obj>
+> =
+  | (Colors extends `${string}-${infer Clr}-bg`
+      ? Clr
+      : Colors extends `${infer Clr}-bg`
+      ? Clr
+      : never)
+  | 'accent';
+
+export type Theme<
+  Accents extends Record<string, BgFgPair> | undefined = undefined
+> = {
   id: string;
 
   bgBackdrop: Color;
@@ -44,22 +73,21 @@ export type Theme<Accents extends Record<string, BgFgPair> | never = never> = {
    */
   marked: BgFgPair;
 
-  success: Color;
-  warning: Color;
-  danger: Color;
-} & (
-  | {
+  success: BgFgPair;
+  warning: BgFgPair;
+  danger: BgFgPair;
+} & (Accents extends undefined
+  ? {
       /**
        * @description The accent color for the whole website, there is also an `accents` option that
        * allows for many accents.
        */
       accent: BgFgPair;
     }
-  | {
+  : {
       mainAccent: keyof Accents;
       /**
        * @description A list of accent colors, the first accent color is going to be the primary one.
        */
       accents: Accents;
-    }
-);
+    });

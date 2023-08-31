@@ -5,9 +5,10 @@ import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 import Ripple from '../Ripple/Ripple';
 
 import './Button.scss';
+import { PossibleColors } from '../themes';
 
 export interface ButtonProps {
-  color?: 'accent' | `accent-${string}` | 'transparent';
+  color?: PossibleColors | 'transparent';
   size?: 'small' | 'medium' | 'large';
 
   disabled?: boolean;

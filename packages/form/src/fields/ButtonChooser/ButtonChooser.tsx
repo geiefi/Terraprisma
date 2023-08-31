@@ -22,7 +22,7 @@ import {
 
 import { mergeClass } from '@grapos/utils';
 
-import { Button } from '@grapos/core';
+import { Button, PossibleColors } from '@grapos/core';
 
 import { FormFieldValue, FormValue } from '../../types';
 
@@ -36,7 +36,7 @@ export interface ButtonChooserProps<
   >
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   helperText?: JSX.Element;
 
   style?: JSX.CSSProperties;

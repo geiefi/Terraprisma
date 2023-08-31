@@ -26,7 +26,7 @@ import {
   createComponentExtendingFromOther
 } from '@grapos/utils';
 
-import { ClickableSignalizer, Ripple } from '@grapos/core';
+import { ClickableSignalizer, PossibleColors, Ripple } from '@grapos/core';
 import { Stack } from '@grapos/layout';
 import type { StackProps } from '@grapos/layout/Stack/Stack';
 
@@ -39,7 +39,7 @@ export interface RadioGroupOptionProps<
 > extends ParentProps {
   value: AllowedValue;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
 
@@ -147,7 +147,7 @@ export interface RadioGroupProps<
   label?: JSX.Element;
   helperText?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   size?: 'small' | 'medium' | 'large';
   radiosDirection?: StackProps['direction'];
 

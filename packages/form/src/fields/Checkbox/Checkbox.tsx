@@ -14,7 +14,7 @@ import { mergeCallbacks } from '@grapos/utils';
 
 import { Check } from '@grapos/icons';
 import { GrowFade } from '@grapos/transitions';
-import { ClickableSignalizer, Ripple } from '@grapos/core';
+import { ClickableSignalizer, PossibleColors, Ripple } from '@grapos/core';
 
 import { FormValue } from '../../types';
 
@@ -29,7 +29,7 @@ export interface CheckboxProps<
 > extends FieldProps<OwnerFormValue, boolean, Name> {
   label?: JSX.Element;
   helperText?: JSX.Element;
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   size?: 'small' | 'medium' | 'large';
 
   onChange?: (value: boolean, event: MouseEvent) => any;

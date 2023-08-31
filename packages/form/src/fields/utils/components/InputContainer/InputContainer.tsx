@@ -2,6 +2,7 @@ import { JSX, Show, createMemo } from 'solid-js';
 
 import { useField } from '../../fields';
 
+import { PossibleColors } from '@grapos/core';
 import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 
 import Label from '../Label/Label';
@@ -12,7 +13,7 @@ export interface InputContainerProps {
   labelFor: string;
   label?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   icon?: JSX.Element;
 }
 

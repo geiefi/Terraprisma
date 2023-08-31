@@ -3,6 +3,7 @@ import { JSX } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 
 import { mergeCallbacks } from '@grapos/utils';
+import { PossibleColors } from '@grapos/core';
 
 import {
   InputContainer,
@@ -31,7 +32,7 @@ export interface TextAreaProps<
 > extends MaskedFieldProps<OwnerFormValue, string, Name> {
   label?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
 
   onChange?: (newValue: string, event?: TextAreaChangeEvent) => any;
 }

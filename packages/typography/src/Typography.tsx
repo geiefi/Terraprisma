@@ -1,6 +1,6 @@
-import { ParentProps } from "solid-js";
+import { ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther } from "@grapos/utils";
+import { createComponentExtendingFromOther } from '@grapos/utils';
 
 const Typography = createComponentExtendingFromOther<ParentProps, 'article'>(
   (props, elProps) => {

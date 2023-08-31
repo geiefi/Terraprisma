@@ -26,7 +26,7 @@ import {
 import { canUseDocument, mergeCallbacks } from '@grapos/utils';
 
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
-import { Box, Button, Dropdown } from '@grapos/core';
+import { Box, Button, Dropdown, PossibleColors } from '@grapos/core';
 import { ArrowLeft, ArrowRight, CalendarMonth } from '@grapos/icons';
 import { Row } from '@grapos/layout';
 import { GrowFade } from '@grapos/transitions';
@@ -41,7 +41,7 @@ export interface DatepickerProps<
 > extends FieldProps<OwnerFormValue, Date, Name> {
   label?: string;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
 
   style?: JSX.CSSProperties;
 

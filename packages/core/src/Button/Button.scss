@@ -61,6 +61,8 @@ button {
     }
 
     &.transparent {
+      background: transparent;
+      color: inherit;
       transition: background .2s;
 
       &:hover {

@@ -26,7 +26,16 @@ export const GrapeSLightTheme = {
     fg: new Color('#ffffff')
   },
 
-  danger: new Color('#AB4B4B'),
-  success: new Color('#259C33'),
-  warning: new Color('#DC8623')
+  danger: {
+    bg: new Color('#AB4B4B'),
+    fg: new Color('#ffffff')
+  },
+  success: {
+    bg: new Color('#259C33'),
+    fg: new Color('#ffffff')
+  },
+  warning: {
+    bg: new Color('#DC8623'),
+    fg: new Color('#ffffff')
+  }
 } satisfies Theme;

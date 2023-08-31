@@ -10,8 +10,8 @@ export const GrapeSDarkTheme = {
   },
 
   floating: {
-    bg: new Color('#181515'),
-    fg: new Color('#ffffff'),
+    bg: new Color('#292626'),
+    fg: new Color('#eeeeee'),
 
     border: new Color('#211E1E')
   },
@@ -26,7 +26,16 @@ export const GrapeSDarkTheme = {
     fg: new Color('#ffffff')
   },
 
-  success: new Color('#259C33'),
-  warning: new Color('#DC8623'),
-  danger: new Color('#d66565')
+  success: {
+    bg: new Color('#259C33'),
+    fg: new Color('#ffffff')
+  },
+  warning: {
+    bg: new Color('#DC8623'),
+    fg: new Color('#ffffff')
+  },
+  danger: {
+    bg: new Color('#d66565'),
+    fg: new Color('#ffffff')
+  }
 } satisfies Theme;

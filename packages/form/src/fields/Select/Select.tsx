@@ -25,7 +25,7 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown } from '@grapos/core';
+import { Dropdown, PossibleColors } from '@grapos/core';
 import { GrowFade } from '@grapos/transitions';
 import { KeyboardArrowDown } from '@grapos/icons';
 
@@ -42,7 +42,7 @@ export interface SelectProps<
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
 
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;

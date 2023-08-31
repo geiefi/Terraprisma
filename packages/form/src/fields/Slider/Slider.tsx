@@ -10,6 +10,7 @@ import {
   setupFieldComponent
 } from '../utils';
 
+import { PossibleColors } from '@grapos/core';
 import { canUseDocument } from '@grapos/utils';
 import { GrowFade } from '@grapos/transitions';
 import { createTooltip } from '@grapos/data-display';
@@ -27,7 +28,7 @@ export interface SliderProps<
 > extends FieldProps<OwnerFormValue, number, Name> {
   label?: JSX.Element;
 
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
   size?: 'small' | 'medium' | 'large';
 
   showTooltip?: boolean;

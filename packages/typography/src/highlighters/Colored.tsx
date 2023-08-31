@@ -3,22 +3,17 @@ import { JSX, ParentProps, createMemo } from 'solid-js';
 import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
 
 import './Colored.scss';
+import { PossibleColors } from '@grapos/core';
 
 interface ColorProps extends ParentProps {
-  color: 'accent' | `accent-${string}` | 'danger' | 'success' | 'warning';
+  color: PossibleColors;
 
   style?: JSX.CSSProperties;
 }
 
 const Colored = createComponentExtendingFromOther<ColorProps, 'span'>(
   (props, elProps) => {
-    const color = createMemo(() => {
-      if (['danger', 'success', 'warning'].includes(props.color)) {
-        return `var(--${props.color})`;
-      } else {
-        return `var(--${props.color}-bg)`;
-      }
-    });
+    const color = createMemo(() => `var(--${props.color})`);
 
     return (
       <span

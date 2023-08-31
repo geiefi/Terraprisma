@@ -16,6 +16,7 @@ import { FormValue } from '../../types';
 import { mergeClass, mergeCallbacks } from '@grapos/utils';
 
 import './Input.scss';
+import { PossibleColors } from '@grapos/core';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -50,7 +51,7 @@ export interface InputProps<
   label?: JSX.Element;
 
   type?: Type;
-  color?: 'accent' | `accent-${string}`;
+  color?: PossibleColors;
 
   onChange?: (value: string, event?: InputOnChangeEvent) => void;
 }
