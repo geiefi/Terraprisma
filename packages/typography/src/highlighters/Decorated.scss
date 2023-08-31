@@ -1,6 +1,6 @@
 .decorated {
   &.disabled {
-    color: color-mix(in srgb, var(--text-0), transparent 80%);
+    color: color-mix(in srgb, var(--normal-fg), transparent 80%);
     font-weight: bolder;
   }
   &.underlined {

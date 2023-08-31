@@ -6,25 +6,6 @@
   padding: 2px;
   --transparency: 10%;
   border-radius: 3px;
-
-  &.depth-0 {
-    background: add-transparency(var(--gray-1), var(--transparency));
-    border: 1px solid var(--gray-2);
-  }
-  &.depth-1 {
-    background: add-transparency(var(--gray-2), var(--transparency));
-    border: 1px solid var(--gray-3);
-  }
-  &.depth-2 {
-    background: add-transparency(var(--gray-3), var(--transparency));
-    border: 1px solid var(--gray-4);
-  }
-  &.depth-3 {
-    background: add-transparency(var(--gray-4), var(--transparency));
-    border: 1px solid var(--gray-5);
-  }
-  &.depth-4 {
-    background: add-transparency(var(--gray-5), var(--transparency));
-    border: 1px solid var(--gray-4);
-  }
+  background: add-transparency(var(--floating-bg), var(--transparency));
+  border: 1px solid var(--floating-border);
 }

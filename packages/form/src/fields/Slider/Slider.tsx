@@ -209,6 +209,7 @@ const Slider = setupFieldComponent<SliderProps, 'input', number>(
     'size',
     'onChange'
   ],
+  // eslint-disable-next-line solid/reactivity
   (props) => parseFloat((props.min ?? 0).toString())
 );
 
