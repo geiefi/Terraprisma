@@ -184,10 +184,12 @@ export function getGrapeSGlobalDiv(): HTMLDivElement {
  * This is supposed to be used inside a `<GrapeS>` component since it is the one whom
  * initializes the global GrapeS context.
  */
-export function useGrapeS(): GrapeSThemesProviderValue {
+export function useGrapeS<
+  Themes extends Theme[] = [typeof GrapeSLightTheme, typeof GrapeSDarkTheme]
+>(): GrapeSThemesProviderValue<Themes> {
   const providerValue = useContext<GrapeSThemesProviderValue | undefined>(
     GrapeSContext
-  );
+  ) as GrapeSThemesProviderValue<Themes> | undefined;
   if (typeof providerValue === 'undefined') {
     throw new Error(
       'GrapeS context error: You can only have a useGrapeS inside of a GrapeS context!'

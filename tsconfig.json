@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
+  "types": ["jest", "@testing-library/jest-dom"],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
@@ -9,6 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "preserve",
+    "types": ["vite/client", "jest", "node"],
+    "rootDir": "./",
     "jsxImportSource": "solid-js",
     "isolatedModules": false,
     "declaration": true

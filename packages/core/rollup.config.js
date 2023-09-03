@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import { defineConfig } from 'rollup';
 
 import styles from 'rollup-plugin-styles';
