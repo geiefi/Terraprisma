@@ -16,6 +16,12 @@
 [1m@grapos/layout[22m (imported by "src/fields/Datepicker/Datepicker.tsx" and "src/fields/RadioGroup/RadioGroup.tsx")
 [1m@grapos/data-display[22m (imported by "src/fields/Slider/Slider.tsx")
 [1msolid-js/web[22m (imported by "src/fields/utils/fields/setupFieldComponent.tsx")
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'node'.
+  The file is in the program because:
+    Entry point of type library 'node' specified in compilerOptions[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
+  The file is in the program because:
+    Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
 [1m[33m(!) Circular dependency[39m[22m
 src/Form.tsx -> src/fields/index.ts -> src/fields/Input/Input.tsx -> src/fields/utils/index.ts -> src/fields/utils/components/index.ts -> src/fields/utils/components/InputContainer/InputContainer.tsx -> src/fields/utils/fields/index.ts -> src/fields/utils/fields/setupCommunicationWithFormContext.ts -> src/Form.tsx
-[32mcreated [1m./lib/index.jsx[22m in [1m9.1s[22m[39m
+[32mcreated [1m./lib/index.jsx[22m in [1m8.9s[22m[39m

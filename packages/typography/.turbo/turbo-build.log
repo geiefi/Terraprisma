@@ -10,4 +10,10 @@
 [1msolid-js/web[22m (imported by "src/Title.tsx")
 [1m@grapos/utils[22m (imported by "src/Title.tsx", "src/Paragraph.tsx", "src/Typography.tsx", "src/highlighters/Code.tsx", "src/highlighters/Colored.tsx", "src/highlighters/Decorated.tsx" and "src/highlighters/Marked.tsx")
 [1m@grapos/layout[22m (imported by "src/Title.tsx")
-[32mcreated [1m./lib/index.jsx[22m in [1m1.6s[22m[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'node'.
+  The file is in the program because:
+    Entry point of type library 'node' specified in compilerOptions[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
+  The file is in the program because:
+    Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
+[32mcreated [1m./lib/index.jsx[22m in [1m1.5s[22m[39m

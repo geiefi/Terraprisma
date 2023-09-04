@@ -8,4 +8,10 @@
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
 [1msolid-transition-group[22m (imported by "src/GrowFade/GrowFade.tsx", "src/Fade/Fade.tsx" and "src/Collapse/Collapse.tsx")
 [1m@grapos/utils[22m (imported by "src/Collapse/Collapse.tsx")
-[32mcreated [1m./lib/index.jsx[22m in [1m1.7s[22m[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'node'.
+  The file is in the program because:
+    Entry point of type library 'node' specified in compilerOptions[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
+  The file is in the program because:
+    Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
+[32mcreated [1m./lib/index.jsx[22m in [1m1.6s[22m[39m

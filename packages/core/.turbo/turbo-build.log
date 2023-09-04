@@ -13,4 +13,10 @@
 [1m@grapos/transitions[22m (imported by "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
 [1m@grapos/layout[22m (imported by "src/Modal/Modal.tsx")
 [1mtinycolor2[22m (imported by "src/themes/Theme.ts")
-[32mcreated [1m./lib/index.jsx[22m in [1m2.2s[22m[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'node'.
+  The file is in the program because:
+    Entry point of type library 'node' specified in compilerOptions[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
+  The file is in the program because:
+    Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
+[32mcreated [1m./lib/index.jsx[22m in [1m1.9s[22m[39m

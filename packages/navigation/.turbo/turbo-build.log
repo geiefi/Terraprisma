@@ -10,4 +10,10 @@
 [1m@grapos/utils[22m (imported by "src/Steps/Steps.tsx" and "src/Pagination/Pagination.tsx")
 [1m@grapos/icons[22m (imported by "src/Steps/Steps.tsx" and "src/Pagination/Pagination.tsx")
 [1m@grapos/core[22m (imported by "src/Pagination/Pagination.tsx")
-[32mcreated [1m./lib/index.jsx[22m in [1m2.4s[22m[39m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'node'.
+  The file is in the program because:
+    Entry point of type library 'node' specified in compilerOptions[39m[22m
+[1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
+  The file is in the program because:
+    Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
+[32mcreated [1m./lib/index.jsx[22m in [1m2.3s[22m[39m

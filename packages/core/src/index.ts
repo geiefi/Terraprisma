@@ -32,7 +32,7 @@ _global.applicationComponents = {
 export default function createApplication<
   Themes extends Theme[] = [typeof GrapeSLightTheme, typeof GrapeSDarkTheme]
 >(
-  themes: Themes = [GrapeSLightTheme, GrapeSDarkTheme]
+  themes: Themes = [GrapeSLightTheme, GrapeSDarkTheme] as Themes
 ): ApplicationAssets<Themes> {
   return _global.applicationComponents;
 }
