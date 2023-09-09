@@ -1,39 +1,36 @@
-import {
-  Component,
-  ComponentProps,
-  JSX,
-  ValidComponent,
-  createMemo,
-  splitProps
-} from 'solid-js';
+import { Component, JSX, ParentProps, createMemo } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
 import { AnyProps } from '../types';
+import { ComponentWithTypeParams } from '../types/FunctionWithTypeParams';
 
+type Wrapper = (props: ParentProps) => JSX.Element;
 export type ComponentFactory<
   AddedArgs extends any[],
   AbstractedProps extends AnyProps,
   ReceivingProps extends AbstractedProps
 > = (resultingProps: ReceivingProps) => {
+  wrapper?: Wrapper;
   abstractedProps: AbstractedProps;
   addedArgs: AddedArgs;
 };
 
-type GenericComponentFactory = ComponentFactory<any, any, any>;
+export type GenericComponentFactory = ComponentFactory<any, any, any>;
 
 /**
  * @description Recursevily merges all of the props of the resulting factories into one
  * taking priority from the first to last.
  */
-type ResultingFactoriesProps<Factories extends GenericComponentFactory[]> =
+type ReceiveingFactoriesProps<Factories extends GenericComponentFactory[]> =
   Factories extends [
     infer FirstFactory extends GenericComponentFactory,
     ...infer Rest extends GenericComponentFactory[]
   ]
-    ? FirstFactory extends ComponentFactory<any, any, infer ResultingProps>
+    ? FirstFactory extends ComponentFactory<any, any, infer ReceivingProps>
       ? Rest extends []
-        ? ResultingProps
-        : ResultingProps &
-            Omit<ResultingFactoriesProps<[...Rest]>, keyof ResultingProps>
+        ? ReceivingProps
+        : ReceivingProps &
+            Omit<ReceiveingFactoriesProps<[...Rest]>, keyof ReceivingProps>
       : never
     : never;
 
@@ -50,21 +47,21 @@ type ResultingFactoriesArgs<Factories extends GenericComponentFactory[]> =
     : never;
 
 type PropsAfter<Factory extends GenericComponentFactory> =
-  Factory extends ComponentFactory<any, infer OProps, infer AddedProps>
-    ? OProps & AddedProps
+  Factory extends ComponentFactory<any, any, infer ReceivingProps>
+    ? ReceivingProps
     : never;
 
-type GetOriginalProps<FirstFactory extends GenericComponentFactory> =
-  FirstFactory extends ComponentFactory<any, infer OProps, any>
-    ? OProps
+type GetAbstractedProps<FirstFactory extends GenericComponentFactory> =
+  FirstFactory extends ComponentFactory<any, infer AbstractedProps, any>
+    ? AbstractedProps
     : never;
 
-export function makeComponents<
+export function makeComponent<
   Factory1 extends GenericComponentFactory,
   Factories extends [Factory1] = [Factory1],
-  OriginalProps extends AnyProps = GetOriginalProps<Factory1>,
+  OriginalProps extends AnyProps = GetAbstractedProps<Factory1>,
   ResultingProps extends
-    ResultingFactoriesProps<Factories> = ResultingFactoriesProps<Factories>,
+    ReceiveingFactoriesProps<Factories> = ReceiveingFactoriesProps<Factories>,
   ResultingArgs extends
     ResultingFactoriesArgs<Factories> = ResultingFactoriesArgs<Factories>
 >(
@@ -74,13 +71,13 @@ export function makeComponents<
     ...args: ResultingArgs
   ) => JSX.Element
 ): Component<ResultingProps>;
-export function makeComponents<
+export function makeComponent<
   Factory1 extends GenericComponentFactory,
   Factory2 extends ComponentFactory<any, PropsAfter<Factory1>, any>,
   Factories extends [Factory1, Factory2] = [Factory1, Factory2],
-  OriginalProps extends AnyProps = GetOriginalProps<Factory1>,
+  OriginalProps extends AnyProps = GetAbstractedProps<Factory1>,
   ResultingProps extends
-    ResultingFactoriesProps<Factories> = ResultingFactoriesProps<Factories>,
+    ReceiveingFactoriesProps<Factories> = ReceiveingFactoriesProps<Factories>,
   ResultingArgs extends
     ResultingFactoriesArgs<Factories> = ResultingFactoriesArgs<Factories>
 >(
@@ -90,18 +87,18 @@ export function makeComponents<
     ...args: ResultingArgs
   ) => JSX.Element
 ): Component<ResultingProps>;
-export function makeComponents<
+export function makeComponent<
   Factory1 extends GenericComponentFactory,
-  Factory2 extends ComponentFactory<any, PropsAfter<Factory1>, any>,
-  Factory3 extends ComponentFactory<any, PropsAfter<Factory2>, any>,
+  Factory2 extends ComponentFactory<any, any, PropsAfter<Factory1>>,
+  Factory3 extends ComponentFactory<any, any, PropsAfter<Factory2>>,
   Factories extends [Factory1, Factory2, Factory3] = [
     Factory1,
     Factory2,
     Factory3
   ],
-  OriginalProps extends AnyProps = GetOriginalProps<Factory1>,
+  OriginalProps extends AnyProps = GetAbstractedProps<Factory1>,
   ResultingProps extends
-    ResultingFactoriesProps<Factories> = ResultingFactoriesProps<Factories>,
+    ReceiveingFactoriesProps<Factories> = ReceiveingFactoriesProps<Factories>,
   ResultingArgs extends
     ResultingFactoriesArgs<Factories> = ResultingFactoriesArgs<Factories>
 >(
@@ -110,7 +107,7 @@ export function makeComponents<
     props: OriginalProps,
     ...args: ResultingArgs
   ) => JSX.Element
-): Component<ResultingProps>;
+): ComponentWithTypeParams<ResultingProps, []>;
 
 /**
  * @description A function that is used to manage and generate a proper component following
@@ -120,7 +117,7 @@ export function makeComponents<
  * Currently the only way to have this is by adding a function override for each amount of factories
  * possible, so just add a new one if you need more factories.
  */
-export function makeComponents(
+export function makeComponent(
   factories: GenericComponentFactory[],
   abstractedComponent: (props: AnyProps, ...args: any) => JSX.Element
 ): Component<AnyProps> {
@@ -129,8 +126,12 @@ export function makeComponents(
       resultingProps as AnyProps,
       [] as any[]
     ];
+    const wrappers: Array<(props: ParentProps) => JSX.Element> = [];
     for (const cursorFactory of factories) {
-      let { abstractedProps, addedArgs } = cursorFactory(cursorProps);
+      let { abstractedProps, addedArgs, wrapper } = cursorFactory(cursorProps);
+      if (wrapper) {
+        wrappers.push(wrapper);
+      }
       cursorProps = abstractedProps;
       accumulatedArgs = [...accumulatedArgs, ...addedArgs];
     }
@@ -138,8 +139,21 @@ export function makeComponents(
       abstractedComponent(cursorProps, ...accumulatedArgs)
     );
 
-    return <>{renderedElement()}</>;
+    return wrap(<>{renderedElement()}</>, wrappers);
   };
+}
+
+function wrap(element: JSX.Element, wrappers: Wrapper[]): JSX.Element {
+  if (wrappers.length === 0) {
+    return element;
+  }
+
+  return (
+    <Dynamic
+      component={wrappers[0]}
+      children={wrap(element, wrappers.slice(1))}
+    />
+  );
 }
 
 /**

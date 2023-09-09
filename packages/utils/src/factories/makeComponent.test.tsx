@@ -1,3 +1,7 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import {
   Accessor,
   children,
@@ -7,18 +11,18 @@ import {
 } from 'solid-js';
 import {
   ComponentFactory,
-  createComponent,
+  makeComponent,
   createComponentFactory
-} from './createComponent';
-import { AnyProps } from './types';
+} from './makeComponent';
+import { AnyProps } from '../types';
 
-describe('createComponent()', () => {
+describe('makeComponent()', () => {
   let dummyFactory: <Props extends AnyProps, Name extends string>(
     name: Name
   ) => ComponentFactory<
     [Accessor<number>],
     Props,
-    Props & { [key in Name]: number }
+    Props & { [K in Name]: number }
   >;
 
   beforeAll(() => {
@@ -40,13 +44,13 @@ describe('createComponent()', () => {
   it('should work properly for one factory', () => {
     createRoot((dispose) => {
       const factory = dummyFactory<{ name: string }, 'my fact'>('my fact');
-      const Testing = createComponent([factory], (props, fact) => {
+      const Testing = makeComponent([factory], (props, fact) => {
         return [props, fact()] as any;
       });
       const accessed = children(() =>
         Testing({
           name: 'hello',
-          'my fact': 99
+          'my fact': 123
         })
       );
 
@@ -54,7 +58,7 @@ describe('createComponent()', () => {
         {
           name: 'hello'
         },
-        'my fact'
+        123
       ]);
 
       dispose();
@@ -68,10 +72,9 @@ describe('createComponent()', () => {
         { name: string; first: number },
         'second'
       >('second');
-      const testing = createComponent(
+      const Testing = makeComponent(
         [firstFactory, secondFactory],
         (props, first, second) => {
-          console.log(first());
           expect(first()).toBe(123);
           expect(second()).toBe(99);
 
@@ -81,7 +84,7 @@ describe('createComponent()', () => {
         }
       );
       const accessed = children(() =>
-        testing({
+        Testing({
           name: 'my text',
           first: 123,
           second: 99
@@ -92,5 +95,13 @@ describe('createComponent()', () => {
       });
       dispose();
     });
+  });
+
+  it('the factories should have coherent receiving props', () => {
+    const firstFactory = dummyFactory<{ name: string }, 'first'>('first');
+    const secondFactory = dummyFactory<{ name: string }, 'second'>('second');
+
+    // @ts-expect-error - the factories should only be allowed if they have coherent types in the proper order
+    makeComponent([firstFactory, secondFactory], () => <></>);
   });
 });
