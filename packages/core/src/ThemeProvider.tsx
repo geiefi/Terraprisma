@@ -11,10 +11,9 @@ import {
 
 import { canUseDocument } from '@terraprisma/utils';
 
-import './ThemeProvider.scss';
+import { BgFgPair, Color, Theme } from './themes';
 
-import { DarkTheme, LightTheme } from './themes';
-import { Color, Theme, BgFgPair } from '@terraprisma/utils';
+import './ThemeProvider.scss';
 
 export type ThemesProviderValue = {
   themes: Themes;
@@ -36,7 +35,7 @@ export const GalobalWrapperID = 'terraprisma-app';
  *
  * @param defaultThemeId The theme that is going to be used by default - defaults to the first theme in {@link themes}
  */
-export function makeThemeProvider(
+export function setupTerraprisma(
   themes: Themes, // should themes be reactive as well?
   defaultThemeId: Themes[number]['id'] = themes[0].id
 ) {

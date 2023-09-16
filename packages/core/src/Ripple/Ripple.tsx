@@ -19,12 +19,12 @@ import {
   mergeClass,
   canUseDocument,
   makeComponent,
-  extendPropsFrom,
-  addColors,
-  PossibleColors
+  extendPropsFrom
 } from '@terraprisma/utils';
 
 import './Ripple.scss';
+import { addColors } from '../factories';
+import { PossibleColors } from '../themes';
 
 export interface RippleProps {
   /**

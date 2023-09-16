@@ -1,8 +1,8 @@
 import { createMemo, splitProps } from 'solid-js';
 
-import { createComponentFactory } from './makeComponent';
+import { createComponentFactory, AnyProps } from '@terraprisma/utils';
 
-import type { AnyProps, PossibleColors } from '../types';
+import { PossibleColors } from '../themes';
 
 export const addColors = <Props extends AnyProps>(
   defaultColor: PossibleColors<Themes[number]> = 'accent'

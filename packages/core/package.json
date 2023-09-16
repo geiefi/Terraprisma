@@ -71,6 +71,7 @@
     "@terraprisma/layout": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
     "@terraprisma/utils": "workspace:*",
+    "@terraprisma/globals": "workspace:*",
     "solid-js": "^1.7.11",
     "tinycolor2": "^1.6.0"
   }

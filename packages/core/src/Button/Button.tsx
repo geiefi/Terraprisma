@@ -1,13 +1,11 @@
 import { ComponentProps, createMemo, JSX } from 'solid-js';
 
-import {
-  makeComponent,
-  extendPropsFrom,
-  addColors,
-  PossibleColors
-} from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import Ripple from '../Ripple/Ripple';
+
+import { PossibleColors } from '../themes';
+import { addColors } from '../factories';
 
 import './Button.scss';
 
