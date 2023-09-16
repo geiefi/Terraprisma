@@ -91,7 +91,7 @@ export type Theme<
   success: Accent;
   warning: Accent;
   danger: Accent;
-} & (Accents extends undefined
+} & (undefined extends Accents
   ? {
       /**
        * @description The accent color for the whole website, there is also an `accents` option that

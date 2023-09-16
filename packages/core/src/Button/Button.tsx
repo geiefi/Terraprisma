@@ -4,9 +4,10 @@ import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import Ripple from '../Ripple/Ripple';
 
-import { AccentColor, addAccentColoring } from '../factories';
+import { addAccentColoring } from '../factories';
 
 import './Button.scss';
+import { Accents } from '..';
 
 export interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
@@ -27,7 +28,7 @@ export interface ButtonProps {
 const Button = makeComponent(
   [
     addAccentColoring<ButtonProps>(),
-    extendPropsFrom<ButtonProps & { color?: AccentColor }, 'button'>([
+    extendPropsFrom<ButtonProps & { color?: Accents }, 'button'>([
       'color',
       'size',
       'disabled',

@@ -14,6 +14,7 @@ import { canUseDocument } from '@terraprisma/utils';
 import { BgFgPair, Color, Theme } from './themes';
 
 import './ThemeProvider.scss';
+import { Themes } from '.';
 
 export type ThemesProviderValue = {
   themes: Themes;
@@ -80,6 +81,7 @@ export function setupTerraprisma(
               .filter((key) => value[key] instanceof Color)
               .forEach((key) => {
                 const keyKebabCase = key
+                  .toString()
                   .replace(/([a-z])([A-Z])/g, '$1-$2')
                   .toLowerCase();
                 stylesForValue[`--${kebabCaseProperty}-${keyKebabCase}`] =

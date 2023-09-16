@@ -23,8 +23,8 @@ import {
 } from '@terraprisma/utils';
 
 import './Ripple.scss';
-import { AccentColor, addAccentColoring } from '../factories';
-import { BgColors } from '../themes';
+import { addAccentColoring } from '../factories';
+import { Accents } from '..';
 
 export interface RippleProps {
   /**
@@ -80,7 +80,7 @@ function absolutePosition(el: HTMLElement): DOMRect {
 const Ripple = makeComponent(
   [
     addAccentColoring<RippleProps>(),
-    extendPropsFrom<RippleProps & { color?: AccentColor }, 'div'>([
+    extendPropsFrom<RippleProps & { color?: Accents }, 'div'>([
       'noRipple',
       'center',
       'color',
