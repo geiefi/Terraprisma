@@ -875,7 +875,7 @@ importers:
         specifier: ^7.22.5
         version: 7.22.11(@babel/core@7.22.10)
       '@grapos/core':
-        specifier: workspace:0.0.0-20230829170706
+        specifier: workspace:*
         version: link:../core/lib
       '@jest/globals':
         specifier: ^29.6.2
