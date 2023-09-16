@@ -1,9 +1,9 @@
 import { JSX, ParentProps, createMemo } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
 import './Colored.scss';
-import { PossibleColors } from '@grapos/core';
+import { PossibleColors } from '@terraprisma/core';
 
 interface ColorProps extends ParentProps {
   color: PossibleColors;

@@ -73,7 +73,7 @@ export function makeComponent<
 ): Component<ResultingProps>;
 export function makeComponent<
   Factory1 extends GenericComponentFactory,
-  Factory2 extends ComponentFactory<any, PropsAfter<Factory1>, any>,
+  Factory2 extends ComponentFactory<any, any, PropsAfter<Factory1>>,
   Factories extends [Factory1, Factory2] = [Factory1, Factory2],
   OriginalProps extends AnyProps = GetAbstractedProps<Factory1>,
   ResultingProps extends

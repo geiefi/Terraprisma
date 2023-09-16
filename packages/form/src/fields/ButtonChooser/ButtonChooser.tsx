@@ -20,9 +20,9 @@ import {
   FieldProps
 } from '../utils';
 
-import { mergeClass } from '@grapos/utils';
+import { mergeClass } from '@terraprisma/utils';
 
-import { Button, PossibleColors } from '@grapos/core';
+import { Button, PossibleColors } from '@terraprisma/core';
 
 import { FormFieldValue, FormValue } from '../../types';
 

@@ -1,4 +1,4 @@
-# @grapos/data-display
+# @terraprisma/data-display
 
 ## 0.0.0-20230829170706
 
@@ -6,11 +6,11 @@
 
 - removed the readme section from the package.json for all the packages
 - Updated dependencies
-  - @grapos/transitions@0.0.0-20230829170706
-  - @grapos/layout@0.0.0-20230829170706
-  - @grapos/icons@0.0.0-20230829170706
-  - @grapos/utils@0.0.0-20230829170706
-  - @grapos/core@0.0.0-20230829170706
+  - @terraprisma/transitions@0.0.0-20230829170706
+  - @terraprisma/layout@0.0.0-20230829170706
+  - @terraprisma/icons@0.0.0-20230829170706
+  - @terraprisma/utils@0.0.0-20230829170706
+  - @terraprisma/core@0.0.0-20230829170706
 
 ## 0.0.0-20230829170236
 
@@ -18,8 +18,8 @@
 
 - add the README to all packages
 - Updated dependencies
-  - @grapos/transitions@0.0.0-20230829170236
-  - @grapos/layout@0.0.0-20230829170236
-  - @grapos/icons@0.0.0-20230829170236
-  - @grapos/utils@0.0.0-20230829170236
-  - @grapos/core@0.0.0-20230829170236
+  - @terraprisma/transitions@0.0.0-20230829170236
+  - @terraprisma/layout@0.0.0-20230829170236
+  - @terraprisma/icons@0.0.0-20230829170236
+  - @terraprisma/utils@0.0.0-20230829170236
+  - @terraprisma/core@0.0.0-20230829170236

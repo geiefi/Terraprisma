@@ -23,13 +23,13 @@ import {
   InputContainer
 } from '../utils';
 
-import { canUseDocument, mergeCallbacks } from '@grapos/utils';
+import { canUseDocument, mergeCallbacks } from '@terraprisma/utils';
 
 import ButtonChooser from '../ButtonChooser/ButtonChooser';
-import { Box, Button, Dropdown, PossibleColors } from '@grapos/core';
-import { ArrowLeft, ArrowRight, CalendarMonth } from '@grapos/icons';
-import { Row } from '@grapos/layout';
-import { GrowFade } from '@grapos/transitions';
+import { Box, Button, Dropdown, PossibleColors } from '@terraprisma/core';
+import { ArrowLeft, ArrowRight, CalendarMonth } from '@terraprisma/icons';
+import { Row } from '@terraprisma/layout';
+import { GrowFade } from '@terraprisma/transitions';
 
 import { FormFieldValue, FormValue } from '../../types';
 

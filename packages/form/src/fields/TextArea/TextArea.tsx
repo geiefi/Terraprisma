@@ -2,8 +2,8 @@ import { JSX } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
-import { mergeCallbacks } from '@grapos/utils';
-import { PossibleColors } from '@grapos/core';
+import { mergeCallbacks } from '@terraprisma/utils';
+import { PossibleColors } from '@terraprisma/core';
 
 import {
   InputContainer,

@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther } from '@grapos/utils';
+import { createComponentExtendingFromOther } from '@terraprisma/utils';
 
 export interface ColProps extends ParentProps {
   size:

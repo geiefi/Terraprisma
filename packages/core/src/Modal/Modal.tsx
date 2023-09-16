@@ -8,18 +8,19 @@ import {
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
-import { getGrapeSGlobalDiv } from '../GrapeS';
+import { getGlobalWrapper } from '../ThemeProvider';
 
 import {
-  createComponentExtendingFromOther,
   mergeClass,
-  mergeCallbacks
-} from '@grapos/utils';
+  mergeCallbacks,
+  makeComponent,
+  extendPropsFrom
+} from '@terraprisma/utils';
 
 import Box from '../Box/Box';
 import Button from '../Button/Button';
-import { Fade } from '@grapos/transitions';
-import { Divisor } from '@grapos/layout';
+import { Fade } from '@terraprisma/transitions';
+import { Divisor } from '@terraprisma/layout';
 
 import './Modal.scss';
 
@@ -33,7 +34,7 @@ export interface CreateModalOptions
 
 export function createModal(options: CreateModalOptions) {
   createRoot((dispose) => {
-    const grapesGlobalDiv = getGrapeSGlobalDiv();
+    const terraprismaGlobalDiv = getGlobalWrapper();
 
     const container = document.createElement('div');
 
@@ -43,7 +44,7 @@ export function createModal(options: CreateModalOptions) {
         {...options}
         visible={isModalVisible()}
         onHidden={() => {
-          grapesGlobalDiv.removeChild(container);
+          terraprismaGlobalDiv.removeChild(container);
           dispose();
         }}
         onOk={(...args) => {
@@ -66,7 +67,7 @@ export function createModal(options: CreateModalOptions) {
     // eslint-disable-next-line solid/reactivity
     insert(container, modal);
 
-    grapesGlobalDiv.appendChild(container);
+    terraprismaGlobalDiv.appendChild(container);
 
     setModalVisible(true);
   });
@@ -86,11 +87,18 @@ export interface ModalProps {
   onHidden?: () => any;
 }
 
-const ModalInternal = createComponentExtendingFromOther<
-  ModalProps,
-  'div',
-  ComponentProps<typeof Box>
->(
+const ModalInternal = makeComponent(
+  [
+    extendPropsFrom<ModalProps, typeof Box>([
+      'title',
+      'extraElementsInFooter',
+      'visible',
+      'onOk',
+      'onHidden',
+      'onCancel',
+      'children'
+    ])
+  ],
   (props, elProps) => (
     <Fade onAfterExit={() => props.onHidden && props.onHidden()}>
       <Show when={props.visible}>
@@ -127,7 +135,9 @@ const ModalInternal = createComponentExtendingFromOther<
               {props.extraElementsInFooter}
 
               <div class="actions">
-                <Button.Empty onClick={props.onCancel}>Cancel</Button.Empty>
+                <Button color="danger" onClick={props.onCancel}>
+                  Cancel
+                </Button>
                 <Button onClick={props.onOk} color="accent">
                   Ok
                 </Button>
@@ -137,23 +147,14 @@ const ModalInternal = createComponentExtendingFromOther<
         </div>
       </Show>
     </Fade>
-  ),
-  [
-    'title',
-    'extraElementsInFooter',
-    'visible',
-    'onOk',
-    'onHidden',
-    'onCancel',
-    'children'
-  ]
+  )
 );
 
 const Modal = (props: ComponentProps<typeof ModalInternal>) => {
-  const grapesGlobalDiv = getGrapeSGlobalDiv();
+  const terraprismaGlobalDiv = getGlobalWrapper();
 
   return (
-    <Portal mount={grapesGlobalDiv}>
+    <Portal mount={terraprismaGlobalDiv}>
       <ModalInternal {...props} />
     </Portal>
   );

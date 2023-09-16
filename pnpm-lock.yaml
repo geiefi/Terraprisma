@@ -35,13 +35,13 @@ importers:
 
   packages/core:
     dependencies:
-      '@grapos/layout':
+      '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
-      '@grapos/transitions':
+      '@terraprisma/transitions':
         specifier: workspace:*
         version: link:../transitions/lib
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -148,19 +148,19 @@ importers:
 
   packages/data-display:
     dependencies:
-      '@grapos/core':
+      '@terraprisma/core':
         specifier: workspace:*
         version: link:../core/lib
-      '@grapos/icons':
+      '@terraprisma/icons':
         specifier: workspace:*
         version: link:../icons/lib
-      '@grapos/layout':
+      '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
-      '@grapos/transitions':
+      '@terraprisma/transitions':
         specifier: workspace:*
         version: link:../transitions/lib
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -255,27 +255,27 @@ importers:
 
   packages/form:
     dependencies:
-      '@grapos/core':
-        specifier: workspace:*
-        version: link:../core/lib
-      '@grapos/data-display':
-        specifier: workspace:*
-        version: link:../data-display/lib
-      '@grapos/icons':
-        specifier: workspace:*
-        version: link:../icons/lib
-      '@grapos/layout':
-        specifier: workspace:*
-        version: link:../layout/lib
-      '@grapos/transitions':
-        specifier: workspace:*
-        version: link:../transitions/lib
-      '@grapos/utils':
-        specifier: workspace:*
-        version: link:../utils/lib
       '@solid-primitives/input-mask':
         specifier: ^0.2.0
         version: 0.2.0(solid-js@1.7.11)
+      '@terraprisma/core':
+        specifier: workspace:*
+        version: link:../core/lib
+      '@terraprisma/data-display':
+        specifier: workspace:*
+        version: link:../data-display/lib
+      '@terraprisma/icons':
+        specifier: workspace:*
+        version: link:../icons/lib
+      '@terraprisma/layout':
+        specifier: workspace:*
+        version: link:../layout/lib
+      '@terraprisma/transitions':
+        specifier: workspace:*
+        version: link:../transitions/lib
+      '@terraprisma/utils':
+        specifier: workspace:*
+        version: link:../utils/lib
       solid-js:
         specifier: ^1.7.11
         version: 1.7.11
@@ -368,7 +368,7 @@ importers:
 
   packages/icons:
     dependencies:
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       material-symbols:
@@ -466,7 +466,7 @@ importers:
 
   packages/layout:
     dependencies:
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -561,13 +561,13 @@ importers:
 
   packages/navigation:
     dependencies:
-      '@grapos/core':
+      '@terraprisma/core':
         specifier: workspace:*
         version: link:../core/lib
-      '@grapos/icons':
+      '@terraprisma/icons':
         specifier: workspace:*
         version: link:../icons/lib
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -662,7 +662,7 @@ importers:
 
   packages/transitions:
     dependencies:
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -760,13 +760,13 @@ importers:
 
   packages/typography:
     dependencies:
-      '@grapos/core':
+      '@terraprisma/core':
         specifier: workspace:*
         version: link:../core/lib
-      '@grapos/layout':
+      '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
-      '@grapos/utils':
+      '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
       solid-js:
@@ -864,6 +864,9 @@ importers:
       solid-js:
         specifier: ^1.7.11
         version: 1.7.11
+      tinycolor2:
+        specifier: ^1.6.0
+        version: 1.6.0
     devDependencies:
       '@babel/core':
         specifier: ^7.22.5
@@ -874,9 +877,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.22.5
         version: 7.22.11(@babel/core@7.22.10)
-      '@grapos/core':
-        specifier: workspace:*
-        version: link:../core/lib
       '@jest/globals':
         specifier: ^29.6.2
         version: 29.6.2
@@ -956,36 +956,39 @@ importers:
 
   websites/demo-website:
     dependencies:
-      '@grapos/core':
-        specifier: workspace:*
-        version: link:../../packages/core/lib
-      '@grapos/data-display':
-        specifier: workspace:*
-        version: link:../../packages/data-display/lib
-      '@grapos/form':
-        specifier: workspace:*
-        version: link:../../packages/form/lib
-      '@grapos/icons':
-        specifier: workspace:*
-        version: link:../../packages/icons/lib
-      '@grapos/layout':
-        specifier: workspace:*
-        version: link:../../packages/layout/lib
-      '@grapos/navigation':
-        specifier: workspace:*
-        version: link:../../packages/navigation/lib
-      '@grapos/transitions':
-        specifier: workspace:*
-        version: link:../../packages/transitions/lib
-      '@grapos/typography':
-        specifier: workspace:*
-        version: link:../../packages/typography/lib
       '@solidjs/meta':
         specifier: ^0.28.2
         version: 0.28.6(solid-js@1.7.11)
       '@solidjs/router':
         specifier: ^0.8.2
         version: 0.8.3(solid-js@1.7.11)
+      '@terraprisma/core':
+        specifier: workspace:*
+        version: link:../../packages/core/lib
+      '@terraprisma/data-display':
+        specifier: workspace:*
+        version: link:../../packages/data-display/lib
+      '@terraprisma/form':
+        specifier: workspace:*
+        version: link:../../packages/form/lib
+      '@terraprisma/icons':
+        specifier: workspace:*
+        version: link:../../packages/icons/lib
+      '@terraprisma/layout':
+        specifier: workspace:*
+        version: link:../../packages/layout/lib
+      '@terraprisma/navigation':
+        specifier: workspace:*
+        version: link:../../packages/navigation/lib
+      '@terraprisma/transitions':
+        specifier: workspace:*
+        version: link:../../packages/transitions/lib
+      '@terraprisma/typography':
+        specifier: workspace:*
+        version: link:../../packages/typography/lib
+      '@terraprisma/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils/lib
       solid-js:
         specifier: ^1.7.11
         version: 1.7.11

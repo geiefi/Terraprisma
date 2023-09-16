@@ -8,9 +8,9 @@ import {
   Show
 } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
+import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
 
-import { ArrowDropDown } from '@grapos/icons';
+import { ArrowDropDown } from '@terraprisma/icons';
 
 import './Tooltip.scss';
 

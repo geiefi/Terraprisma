@@ -1,7 +1,7 @@
 import { type Component, type ParentProps } from 'solid-js';
 import { Transition, TransitionProps } from 'solid-transition-group';
 
-import { canUseDocument } from '@grapos/utils';
+import { canUseDocument } from '@terraprisma/utils';
 
 import './Collapse.scss';
 

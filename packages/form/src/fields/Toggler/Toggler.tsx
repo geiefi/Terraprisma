@@ -1,6 +1,6 @@
 import { JSX, Show, createMemo } from 'solid-js';
 
-import { PossibleColors } from '@grapos/core';
+import { PossibleColors } from '@terraprisma/core';
 
 import {
   FieldInternalWrapper,

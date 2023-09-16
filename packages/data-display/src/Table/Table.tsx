@@ -8,9 +8,9 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
-import { Box } from '@grapos/core';
+import { Box } from '@terraprisma/core';
 
 import './Table.scss';
 
@@ -28,7 +28,7 @@ const Table = createComponentExtendingFromOther<TableProps, 'table'>(
     const table = (
       <table
         {...elProps}
-        class={mergeClass('grapes-table', elProps.class)}
+        class={mergeClass('terraprisma-table', elProps.class)}
         classList={{
           boxed: props.boxed,
           compact: props.compact,
@@ -41,7 +41,7 @@ const Table = createComponentExtendingFromOther<TableProps, 'table'>(
     return (
       <TableContext.Provider value={props}>
         <Show when={props.boxed} fallback={table}>
-          <Box class="grapes-table-box">{table}</Box>
+          <Box class="terraprisma-table-box">{table}</Box>
         </Show>
       </TableContext.Provider>
     );

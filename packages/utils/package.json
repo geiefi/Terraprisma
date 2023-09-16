@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
-  "name": "@grapos/utils",
+  "name": "@terraprisma/utils",
   "version": "0.0.0-20230829170706",
   "type": "module",
   "main": "index.jsx",
@@ -24,21 +24,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrielmfern/grapes.git"
+    "url": "git+https://github.com/gabrielmfern/terraprisma.git"
   },
   "publishConfig": {
     "directory": "lib"
   },
   "bugs": {
-    "url": "https://github.com/gabrielmfern/grapes/issues"
+    "url": "https://github.com/gabrielmfern/terraprisma/issues"
   },
-  "homepage": "https://github.com/gabrielmfern/grapes#readme",
+  "homepage": "https://github.com/gabrielmfern/terraprisma#readme",
   "author": "Gabriel Miranda",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
-    "@grapos/core": "workspace:*",
     "@jest/globals": "^29.6.2",
     "@rollup/plugin-typescript": "^11.1.3",
     "@solidjs/testing-library": "^0.7.1",
@@ -66,6 +65,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "solid-js": "^1.7.11"
+    "solid-js": "^1.7.11",
+    "tinycolor2": "^1.6.0"
   }
 }

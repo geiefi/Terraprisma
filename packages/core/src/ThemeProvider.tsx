@@ -9,13 +9,14 @@ import {
   useContext
 } from 'solid-js';
 
-import { canUseDocument } from '@grapos/utils';
+import { canUseDocument } from '@terraprisma/utils';
 
-import './GrapeS.scss';
+import './ThemeProvider.scss';
 
-import { Theme, DarkTheme, LightTheme, Color, BgFgPair } from './themes';
+import { DarkTheme, LightTheme } from './themes';
+import { Color, Theme, BgFgPair } from '@terraprisma/utils';
 
-export type ThemesProviderValue<Themes extends Theme[] = Theme[]> = {
+export type ThemesProviderValue = {
   themes: Themes;
   currentTheme: Accessor<Themes[number]>;
 
@@ -35,13 +36,11 @@ export const GalobalWrapperID = 'terraprisma-app';
  *
  * @param defaultThemeId The theme that is going to be used by default - defaults to the first theme in {@link themes}
  */
-export function makeThemeProvider<
-  Themes extends Theme[] = [typeof DarkTheme, typeof LightTheme]
->(
-  themes: Themes = [DarkTheme, LightTheme] as Themes, // should themes be reactive as well?
+export function makeThemeProvider(
+  themes: Themes, // should themes be reactive as well?
   defaultThemeId: Themes[number]['id'] = themes[0].id
 ) {
-  (props: ParentProps) => {
+  return (props: ParentProps) => {
     const [themeId, setThemeId] =
       createSignal<Themes[number]['id']>(defaultThemeId);
 
@@ -141,15 +140,13 @@ export function getGlobalWrapper(): HTMLDivElement {
  * This is supposed to be used inside a `<ThemeProvider>` component since it is the one whom
  * initializes the global Terraprisma context.
  */
-export function useTheme<
-  Themes extends Theme[] = [typeof LightTheme, typeof DarkTheme]
->(): ThemesProviderValue<Themes> {
+export function useTheme(): ThemesProviderValue {
   const providerValue = useContext<ThemesProviderValue | undefined>(
     TerraprismaContext
-  ) as ThemesProviderValue<Themes> | undefined;
+  ) as ThemesProviderValue | undefined;
   if (typeof providerValue === 'undefined') {
     throw new Error(
-      'GrapeS context error: You can only have a useGrapeS inside of a GrapeS context!'
+      'useTheme() error: You can only have a useTheme inside of a Terraprisma context!'
     );
   }
 

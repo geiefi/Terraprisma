@@ -47,15 +47,15 @@ type RestPossibleColors<K extends string, Value> = Value extends Color
   ? `${K}-${AllPossibleColors<Value>}`
   : never;
 
-export type PossibleColors<
-  Obj extends Record<string, any> = Theme,
-  Colors extends AllPossibleColors<Obj> = AllPossibleColors<Obj>
-> =
-  | (Colors extends `${string}-${infer Clr}-bg`
-      ? Clr
-      : Colors extends `${infer Clr}-bg`
-      ? Clr
-      : never)
+type BgColorsFor<Colors extends string> =
+  Colors extends `${string}-${infer Clr}-bg`
+    ? Clr
+    : Colors extends `${infer Clr}-bg`
+    ? Clr
+    : never;
+
+export type PossibleColors<Obj extends Record<string, any> = Theme> =
+  | BgColorsFor<AllPossibleColors<Obj>>
   | 'accent';
 
 export type Theme<

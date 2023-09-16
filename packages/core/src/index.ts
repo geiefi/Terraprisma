@@ -1,52 +1,22 @@
-import GrapeS, { useGrapeS } from './GrapeS';
-import { DarkTheme, LightTheme, Theme } from './themes';
+import '@terraprisma/utils';
+
+import { useTheme, makeThemeProvider } from './ThemeProvider';
 
 import Ripple from './Ripple/Ripple';
 import Button from './Button/Button';
 import Box from './Box/Box';
 import Dropdown from './Dropdown/Dropdown';
-import ClickableSignalizer from './ClickableSignalizer/ClickableSignalizer';
 import Modal, { createModal } from './Modal/Modal';
-
-declare global {
-  /**
-   * @description This is how GrapeS maintains type-safety for theming and other things.
-   */
-  export interface ApplicationAssets<Themes extends Theme[]> {
-    GrapeS: typeof GrapeS<Themes>;
-    useGrapeS: typeof useGrapeS<Themes>;
-
-    Ripple: typeof Ripple<Themes>;
-  }
-
-  var applicationComponents: ApplicationAssets<any>;
-}
-
-const _global = typeof window !== 'undefined' ? window : global;
-_global.applicationComponents = {
-  ..._global.applicationComponents,
-  GrapeS,
-  useGrapeS
-};
-
-export default function createApplication<
-  Themes extends Theme[] = [typeof LightTheme, typeof DarkTheme]
->(
-  themes: Themes = [LightTheme, DarkTheme] as Themes
-): ApplicationAssets<Themes> {
-  return _global.applicationComponents;
-}
 
 export * from './themes';
 
 export {
-  GrapeS,
-  useGrapeS,
+  useTheme,
+  makeThemeProvider,
   Ripple,
   Button,
   Box,
   Dropdown,
-  ClickableSignalizer,
   Modal,
   createModal
 };

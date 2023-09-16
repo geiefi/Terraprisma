@@ -1,11 +1,15 @@
-import { Component, ComponentProps, createMemo, JSX } from 'solid-js';
+import { ComponentProps, createMemo, JSX } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import {
+  makeComponent,
+  extendPropsFrom,
+  addColors,
+  PossibleColors
+} from '@terraprisma/utils';
 
 import Ripple from '../Ripple/Ripple';
 
 import './Button.scss';
-import { PossibleColors } from '../themes';
 
 export interface ButtonProps {
   color?: PossibleColors | 'transparent';
@@ -13,30 +17,32 @@ export interface ButtonProps {
 
   disabled?: boolean;
 
-  rippleColor?: string;
+  rippleColor?: ComponentProps<typeof Ripple>['color'];
   rippleClass?: string;
   centerRipple?: boolean;
 
   style?: JSX.CSSProperties;
 }
 
-const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
-  (props, elProps) => {
-    const color = createMemo(() => props.color || 'accent');
-
-    const buttonBgColor = createMemo(() =>
-      color() === 'transparent' ? 'transparent' : `var(--${color()}-bg)`
-    );
-    const buttonFgColor = createMemo(() =>
-      color() === 'transparent' ? 'var(--normal-fg)' : `var(--${color()}-fg)`
-    );
-    const rippleColor = createMemo(
-      () =>
-        props.rippleColor ||
-        (color() === 'transparent'
-          ? 'var(--normal-fg)'
-          : `var(--${color()}-fg)`)
-    );
+const Button = makeComponent(
+  [
+    addColors<ButtonProps>(),
+    extendPropsFrom<
+      ButtonProps & { color?: PossibleColors<Themes[number]> },
+      'button'
+    >([
+      'color',
+      'size',
+      'disabled',
+      'rippleColor',
+      'rippleClass',
+      'centerRipple'
+    ])
+  ],
+  (props, color, elProps) => {
+    const buttonBgColor = createMemo(() => `var(--${color()}-bg)`);
+    const buttonFgColor = createMemo(() => `var(--${color()}-fg)`);
+    const rippleColor = createMemo(() => props.rippleColor);
 
     return (
       <Ripple
@@ -65,8 +71,6 @@ const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
           classList={{
             disabled: props.disabled,
 
-            transparent: color() === 'transparent',
-
             small: props.size === 'small',
             medium:
               props.size === 'medium' || typeof props.size === 'undefined',
@@ -79,52 +83,7 @@ const Button = createComponentExtendingFromOther<ButtonProps, 'button'>(
         </button>
       </Ripple>
     );
-  },
-  ['color', 'size', 'disabled', 'rippleColor', 'rippleClass', 'centerRipple']
-) as {
-  (props: ButtonProps & JSX.HTMLAttributes<HTMLButtonElement>): JSX.Element;
-  Rounded(props: ComponentProps<typeof Button>): JSX.Element;
-  Icon(props: ComponentProps<typeof Button>): JSX.Element;
-  Empty(props: ComponentProps<typeof Button>): JSX.Element;
-};
-
-const RoundedButton: Component<ComponentProps<typeof Button>> = (props) => {
-  return (
-    <Button
-      rippleClass="rounded"
-      color="transparent"
-      {...props}
-      class={mergeClass('rounded', props.class)}
-    >
-      {props.children}
-    </Button>
-  );
-};
-
-const EmptyButton: Component<ComponentProps<typeof Button>> = (props) => {
-  const color = createMemo(() => props.color || 'accent');
-
-  return (
-    <Button
-      rippleColor={color() === 'transparent' ? undefined : `var(--${color()})`}
-      {...props}
-      class={mergeClass('empty', props.class)}
-    >
-      {props.children}
-    </Button>
-  );
-};
-
-const IconButton: Component<ComponentProps<typeof Button>> = (props) => {
-  return (
-    <RoundedButton {...props} class={mergeClass('icon', props.class)}>
-      {props.children}
-    </RoundedButton>
-  );
-};
-
-Button.Rounded = RoundedButton;
-Button.Icon = IconButton;
-Button.Empty = EmptyButton;
+  }
+);
 
 export default Button;

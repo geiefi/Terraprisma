@@ -16,13 +16,13 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      // "grapos": ["../../packages/grapos/src"],
-      // "grapos/*": ["../../packages/grapos/src/*"],
+      // "terraprisma": ["../../packages/terraprisma/src"],
+      // "terraprisma/*": ["../../packages/terraprisma/src/*"],
       "~/*": ["./src/*"]
     }
   },
   "includes": ["src"]
   // "references": [
-  //   { "path": "../../packages/grapos/tsconfig.build.json" }
+  //   { "path": "../../packages/terraprisma/tsconfig.build.json" }
   // ]
 }

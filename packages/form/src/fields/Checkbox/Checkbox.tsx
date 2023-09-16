@@ -10,11 +10,11 @@ import {
   FieldProps
 } from '../utils';
 
-import { mergeCallbacks } from '@grapos/utils';
+import { mergeCallbacks } from '@terraprisma/utils';
 
-import { Check } from '@grapos/icons';
-import { GrowFade } from '@grapos/transitions';
-import { ClickableSignalizer, PossibleColors, Ripple } from '@grapos/core';
+import { Check } from '@terraprisma/icons';
+import { GrowFade } from '@terraprisma/transitions';
+import { ClickableSignalizer, PossibleColors, Ripple } from '@terraprisma/core';
 
 import { FormValue } from '../../types';
 

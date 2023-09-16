@@ -1,9 +1,9 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
-import { Button } from '@grapos/core';
-import { ArrowBackIosNew, ArrowForwardIos } from '@grapos/icons';
+import { Button } from '@terraprisma/core';
+import { ArrowBackIosNew, ArrowForwardIos } from '@terraprisma/icons';
 
 import './Pagination.scss';
 

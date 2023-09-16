@@ -1,4 +1,4 @@
-# @grapos/utils
+# @terraprisma/utils
 
 ## 0.0.0-20230829170706
 

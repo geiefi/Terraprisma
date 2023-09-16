@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
 export interface IconProps extends ParentProps {
   /**

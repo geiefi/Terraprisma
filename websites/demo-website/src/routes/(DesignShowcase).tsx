@@ -1,9 +1,9 @@
 import { Component, createRoot, createSignal, getOwner } from 'solid-js';
 
-import { Col, Row, Container, Stack } from '@grapos/layout';
-import { List, Table } from '@grapos/data-display';
-import { Box, Button, Modal, createModal, useGrapeS } from '@grapos/core';
-import { Step, Steps } from '@grapos/navigation';
+import { Col, Row, Container, Stack } from '@terraprisma/layout';
+import { List, Table } from '@terraprisma/data-display';
+import { Box, Button, Modal, createModal, useGrapeS } from '@terraprisma/core';
+import { Step, Steps } from '@terraprisma/navigation';
 import {
   RadioGroup,
   Input,
@@ -13,7 +13,7 @@ import {
   Checkbox,
   Datepicker,
   Validators
-} from '@grapos/form';
+} from '@terraprisma/form';
 import {
   CopyAll,
   Delete,
@@ -22,8 +22,8 @@ import {
   QuestionMark,
   Send,
   Star
-} from '@grapos/icons';
-import { Paragraph, Typography, Marked } from '@grapos/typography';
+} from '@terraprisma/icons';
+import { Paragraph, Typography, Marked } from '@terraprisma/typography';
 
 const confirm = (message: string) => {
   createModal({

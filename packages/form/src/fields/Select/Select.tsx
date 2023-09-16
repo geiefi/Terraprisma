@@ -13,7 +13,7 @@ import {
   ComponentProps
 } from 'solid-js';
 
-import { mergeClass, mergeCallbacks, canUseDocument } from '@grapos/utils';
+import { mergeClass, mergeCallbacks, canUseDocument } from '@terraprisma/utils';
 
 import {
   InputContainer,
@@ -25,9 +25,9 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown, PossibleColors } from '@grapos/core';
-import { GrowFade } from '@grapos/transitions';
-import { KeyboardArrowDown } from '@grapos/icons';
+import { Dropdown, PossibleColors } from '@terraprisma/core';
+import { GrowFade } from '@terraprisma/transitions';
+import { KeyboardArrowDown } from '@terraprisma/icons';
 
 import { FormValue, FormFieldValue } from '../../types';
 

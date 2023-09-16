@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
 import './Paragraph.scss';
 

@@ -1,4 +1,4 @@
-import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
+import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
 
 import './Divisor.scss';
 

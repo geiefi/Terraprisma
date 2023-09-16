@@ -13,13 +13,16 @@ import {
 import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
-import { getGrapeSGlobalDiv } from '../GrapeS';
+import { getGlobalWrapper } from '../ThemeProvider';
 
 import {
   mergeClass,
-  createComponentExtendingFromOther,
-  canUseDocument
-} from '@grapos/utils';
+  canUseDocument,
+  makeComponent,
+  extendPropsFrom,
+  addColors,
+  PossibleColors
+} from '@terraprisma/utils';
 
 import './Ripple.scss';
 
@@ -29,7 +32,6 @@ export interface RippleProps {
    */
   noRipple?: boolean;
   center?: boolean;
-  color?: string;
   wrapperProps?: Omit<ComponentProps<'div'>, 'style' | 'children'> & {
     style?: JSX.CSSProperties;
   };
@@ -75,8 +77,15 @@ function absolutePosition(el: HTMLElement): DOMRect {
   };
 }
 
-const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
-  (props, elProps) => {
+const Ripple = makeComponent(
+  [
+    addColors<RippleProps>(),
+    extendPropsFrom<
+      RippleProps & { color?: PossibleColors<Themes[number]> },
+      'div'
+    >(['noRipple', 'center', 'color', 'wrapperProps', 'children'])
+  ],
+  (props, color, elProps) => {
     const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
     const createRipple = (
@@ -149,13 +158,13 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
       });
     };
 
-    let [grapesGlobalDiv, setGrapesGlobalDiv] = createSignal<HTMLDivElement>();
+    let [globalWrapper, setGlobalWrapper] = createSignal<HTMLDivElement>();
 
     createEffect(
       on(
         () => ripples[0],
         () => {
-          setGrapesGlobalDiv(getGrapeSGlobalDiv());
+          setGlobalWrapper(getGlobalWrapper());
           if (isUpdatingRippleWrapper === false) {
             keepUpdatingRippleWrapper();
           }
@@ -193,7 +202,7 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
     return (
       <>
         <Show when={rippledElement()}>
-          <Portal mount={grapesGlobalDiv()}>
+          <Portal mount={globalWrapper()}>
             <div
               {...props.wrapperProps}
               class={mergeClass('ripple-wrapper', props.wrapperProps?.class)}
@@ -221,8 +230,8 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
                           height: `${ripple.diameter}px`,
                           left: `${ripple.left}px`,
                           top: `${ripple.top}px`,
-                          ...(props.color
-                            ? { 'background-color': props.color }
+                          ...(color
+                            ? { 'background-color': `--var(${color()}-fg)` }
                             : {})
                         }}
                       />
@@ -237,8 +246,7 @@ const Ripple = createComponentExtendingFromOther<RippleProps, 'div'>(
         {childrenList()}
       </>
     );
-  },
-  ['noRipple', 'center', 'color', 'wrapperProps', 'children']
+  }
 );
 
 export default Ripple;

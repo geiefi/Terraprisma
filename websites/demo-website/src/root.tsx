@@ -1,5 +1,6 @@
 // @refresh reload
-import { GrapeS } from '@grapos/core';
+import { DarkTheme, makeThemeProvider } from '@terraprisma/core';
+import type { Theme } from '@terraprisma/utils';
 import { onMount, Suspense } from 'solid-js';
 import {
   Body,
@@ -14,6 +15,15 @@ import {
 } from 'solid-start';
 
 import { onLCP, onFID, onCLS } from 'web-vitals';
+
+const themes = [DarkTheme];
+declare global {
+  interface Register {
+    themes: typeof themes;
+  }
+}
+
+const ThemeProvider = makeThemeProvider([DarkTheme]);
 
 export default function Root() {
   onMount(() => {
@@ -32,13 +42,13 @@ export default function Root() {
       <Body style={{ margin: 0 }}>
         <Suspense>
           <ErrorBoundary>
-            <GrapeS defaultThemeId="dark">
+            <ThemeProvider>
               <ErrorBoundary>
                 <Routes>
                   <FileRoutes />
                 </Routes>
               </ErrorBoundary>
-            </GrapeS>
+            </ThemeProvider>
           </ErrorBoundary>
         </Suspense>
         <Scripts />

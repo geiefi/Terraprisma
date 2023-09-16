@@ -10,10 +10,10 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { PossibleColors } from '@grapos/core';
-import { canUseDocument } from '@grapos/utils';
-import { GrowFade } from '@grapos/transitions';
-import { createTooltip } from '@grapos/data-display';
+import { PossibleColors } from '@terraprisma/core';
+import { canUseDocument } from '@terraprisma/utils';
+import { GrowFade } from '@terraprisma/transitions';
+import { createTooltip } from '@terraprisma/data-display';
 
 import { FormValue } from '../../types';
 

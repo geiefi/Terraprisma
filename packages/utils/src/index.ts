@@ -7,7 +7,7 @@ import { canUseDocument } from './canUseDocument';
 export * from './factories';
 export * from './types';
 
-import type { Store } from './types/Store';
+import type { Store, Theme } from './types';
 
 declare global {
   function dbg<T = any>(el: T, context?: string): T;
@@ -29,6 +29,20 @@ _global.dbg = function <T = any>(el: T, context?: string): T {
   console.groupEnd();
   return el;
 };
+
+declare global {
+  interface Register {
+    // themes: typeof myThemes;
+  }
+}
+
+declare global {
+  export type Themes = Register extends {
+    themes: infer InferredThemes extends Theme[];
+  }
+    ? InferredThemes
+    : Theme[];
+}
 
 export {
   deeplyTrack,

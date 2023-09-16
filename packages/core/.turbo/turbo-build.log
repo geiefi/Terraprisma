@@ -1,15 +1,16 @@
 
-> @grapos/core@0.0.0-20230829170706 build /home/gabrielmfern/Projects/Personal/Open-Source/Mine/websites/grapes-project/packages/core
+> @terraprisma/core@0.0.0-20230829170706 build /home/gabriel/Projects/Personal/Terraprisma/packages/core
 > rollup -c ./rollup.config.js && cp package.json lib/package.json && cp ../../README.md ./lib/README.md
 
 [36m
 [1m./src/index.ts[22m → [1m./lib/index.jsx[22m...[39m
 [1m[33m(!) Unresolved dependencies[39m[22m
 [90mhttps://rollupjs.org/troubleshooting/#warning-treating-module-as-external-dependency[39m
-[1msolid-js[22m (imported by "src/GrapeS.tsx", "src/Ripple/Ripple.tsx", "src/Button/Button.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
-[1m@grapos/utils[22m (imported by "src/GrapeS.tsx", "src/Ripple/Ripple.tsx", "src/Button/Button.tsx", "src/Box/Box.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
+[1msolid-js[22m (imported by "src/Ripple/Ripple.tsx", "src/Button/Button.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx", "src/Modal/Modal.tsx" and "src/factories/addColors.tsx")
 [1msolid-js/web[22m (imported by "src/Ripple/Ripple.tsx" and "src/Modal/Modal.tsx")
 [1msolid-js/store[22m (imported by "src/Ripple/Ripple.tsx")
+[1m@terraprisma/utils[22m (imported by "src/Ripple/Ripple.tsx")
+[1m@grapos/utils[22m (imported by "src/Button/Button.tsx", "src/Box/Box.tsx", "src/Dropdown/Dropdown.tsx", "src/ClickableSignalizer/ClickableSignalizer.tsx", "src/Modal/Modal.tsx" and "src/factories/addColors.tsx")
 [1m@grapos/transitions[22m (imported by "src/ClickableSignalizer/ClickableSignalizer.tsx" and "src/Modal/Modal.tsx")
 [1m@grapos/layout[22m (imported by "src/Modal/Modal.tsx")
 [1mtinycolor2[22m (imported by "src/themes/Theme.ts")
@@ -19,4 +20,11 @@
 [1m[33m(!) Plugin typescript: @rollup/plugin-typescript TS2688: Cannot find type definition file for 'vite/client'.
   The file is in the program because:
     Entry point of type library 'vite/client' specified in compilerOptions[39m[22m
-[32mcreated [1m./lib/index.jsx[22m in [1m1.9s[22m[39m
+[1m[31m[!] [1mRollupError: Could not resolve "./GrapeS" from "src/index.ts"[22m[1m[39m[22m
+src/index.ts
+[2m    at error (/home/gabriel/Projects/Personal/Terraprisma/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/shared/rollup.js:353:30)
+    at ModuleLoader.handleInvalidResolvedId (/home/gabriel/Projects/Personal/Terraprisma/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/shared/rollup.js:25931:24)
+    at /home/gabriel/Projects/Personal/Terraprisma/node_modules/.pnpm/rollup@3.28.1/node_modules/rollup/dist/shared/rollup.js:25893:26[22m
+
+
+ ELIFECYCLE  Command failed with exit code 1.

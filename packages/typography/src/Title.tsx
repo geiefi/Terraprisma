@@ -1,8 +1,8 @@
 import { ParentProps, Show, createMemo } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { createComponentExtendingFromOther } from '@grapos/utils';
-import { Divisor } from '@grapos/layout';
+import { createComponentExtendingFromOther } from '@terraprisma/utils';
+import { Divisor } from '@terraprisma/layout';
 
 import './Title.scss';
 

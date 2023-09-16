@@ -1,11 +1,11 @@
 import { Component, Show, createSignal } from 'solid-js';
 
-import { Table } from '@grapos/data-display';
-import { createForm, Validators, FormProviderValue } from '@grapos/form';
-import { Box } from '@grapos/core';
-import { BarcodeScanner, CreditCard, QrCode } from '@grapos/icons';
-import { Col, Row } from '@grapos/layout';
-import { Pagination } from '@grapos/navigation';
+import { Table } from '@terraprisma/data-display';
+import { createForm, Validators, FormProviderValue } from '@terraprisma/form';
+import { Box } from '@terraprisma/core';
+import { BarcodeScanner, CreditCard, QrCode } from '@terraprisma/icons';
+import { Col, Row } from '@terraprisma/layout';
+import { Pagination } from '@terraprisma/navigation';
 
 export type PaymentFormValue = {
   paymentMethod: 'cartao-de-credito' | 'boleto' | 'pix';

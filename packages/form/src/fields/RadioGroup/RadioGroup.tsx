@@ -24,11 +24,11 @@ import {
   mergeCallbacks,
   mergeClass,
   createComponentExtendingFromOther
-} from '@grapos/utils';
+} from '@terraprisma/utils';
 
-import { ClickableSignalizer, PossibleColors, Ripple } from '@grapos/core';
-import { Stack } from '@grapos/layout';
-import type { StackProps } from '@grapos/layout/Stack/Stack';
+import { ClickableSignalizer, PossibleColors, Ripple } from '@terraprisma/core';
+import { Stack } from '@terraprisma/layout';
+import type { StackProps } from '@terraprisma/layout/Stack/Stack';
 
 import { FormValue, FormFieldValue } from '../../types';
 

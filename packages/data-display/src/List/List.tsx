@@ -1,10 +1,10 @@
 import { ComponentProps, JSX, ParentProps, Show, createSignal } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
-import { Ripple } from '@grapos/core';
-import { Divisor } from '@grapos/layout';
-import { KeyboardArrowDown } from '@grapos/icons';
-import { Collapse } from '@grapos/transitions';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { Ripple } from '@terraprisma/core';
+import { Divisor } from '@terraprisma/layout';
+import { KeyboardArrowDown } from '@terraprisma/icons';
+import { Collapse } from '@terraprisma/transitions';
 
 import './List.scss';
 

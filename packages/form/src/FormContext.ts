@@ -7,7 +7,7 @@ import {
   EmptyObj,
   LeavesOfObject,
   Store
-} from '@grapos/utils';
+} from '@terraprisma/utils';
 
 import { AgnosticValidator, FieldValidator, FormValue } from './types';
 

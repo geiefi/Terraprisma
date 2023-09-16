@@ -1,6 +1,6 @@
-import { Color, Theme } from './Theme';
+import { Color, Theme } from '@terraprisma/utils';
 
-export const GrapeSLightTheme = {
+export const LightTheme = {
   id: 'light',
 
   bgBackdrop: new Color('rgba(0,0,0,.4)'),
@@ -38,4 +38,4 @@ export const GrapeSLightTheme = {
     bg: new Color('#DC8623'),
     fg: new Color('#ffffff')
   }
-} satisfies Theme;
+} as const satisfies Theme;

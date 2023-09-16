@@ -1,6 +1,6 @@
 import { JSX, ParentProps, Show } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import './Dropdown.scss';
 
@@ -40,7 +40,16 @@ export interface DropdownProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Dropdown = createComponentExtendingFromOther<DropdownProps, 'div'>(
+const Dropdown = makeComponent(
+  [
+    extendPropsFrom<DropdownProps, 'div'>([
+      'for',
+      'visible',
+      'offsetFromAnchor',
+      'style',
+      'children'
+    ])
+  ],
   (props, elProps) => (
     <Show when={props.visible}>
       <div
@@ -59,8 +68,7 @@ const Dropdown = createComponentExtendingFromOther<DropdownProps, 'div'>(
         {props.children}
       </div>
     </Show>
-  ),
-  ['for', 'visible', 'offsetFromAnchor', 'style', 'children']
+  )
 );
 
 export default Dropdown;

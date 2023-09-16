@@ -1,5 +1,5 @@
 import { ParentProps } from 'solid-js';
-import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import './Box.scss';
 
@@ -21,7 +21,8 @@ export interface BoxProps extends ParentProps {}
  * </Box>
  * ```
  */
-const Box = createComponentExtendingFromOther<BoxProps, 'div'>(
+const Box = makeComponent(
+  [extendPropsFrom<BoxProps, 'div'>(['children'])],
   (props, elProps) => (
     <div
       {...elProps}
@@ -30,8 +31,7 @@ const Box = createComponentExtendingFromOther<BoxProps, 'div'>(
     >
       {props.children}
     </div>
-  ),
-  ['children']
+  )
 );
 
 export default Box;

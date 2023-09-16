@@ -1,6 +1,6 @@
 import { InputMask } from '@solid-primitives/input-mask';
 
-import { EmptyObj } from '@grapos/utils';
+import { EmptyObj } from '@terraprisma/utils';
 
 import { FieldName, FieldPropKeys, FieldProps } from './FieldProps';
 import { FormValue, FormFieldValue } from '../../../types';

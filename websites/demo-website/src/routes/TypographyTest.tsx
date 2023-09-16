@@ -1,7 +1,7 @@
 import { Component } from 'solid-js';
 
-import { Container } from '@grapos/layout';
-import { Box } from '@grapos/core';
+import { Container } from '@terraprisma/layout';
+import { Box } from '@terraprisma/core';
 import {
   Paragraph,
   Title,
@@ -9,7 +9,7 @@ import {
   Code,
   Marked,
   Decorated
-} from '@grapos/typography';
+} from '@terraprisma/typography';
 
 const TypographyTest: Component = () => {
   return (

@@ -2,8 +2,8 @@ import { JSX, Show, createMemo } from 'solid-js';
 
 import { useField } from '../../fields';
 
-import { PossibleColors } from '@grapos/core';
-import { createComponentExtendingFromOther, mergeClass } from '@grapos/utils';
+import { PossibleColors } from '@terraprisma/core';
+import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
 
 import Label from '../Label/Label';
 

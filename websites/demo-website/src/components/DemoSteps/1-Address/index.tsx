@@ -1,9 +1,9 @@
 import { Component, on, createEffect, createSignal } from 'solid-js';
 
-import { createForm, Validators, FormProviderValue } from '@grapos/form';
-import { Col, Row } from '@grapos/layout';
-import { GrowFade } from '@grapos/transitions';
-import { Tooltip } from '@grapos/data-display';
+import { createForm, Validators, FormProviderValue } from '@terraprisma/form';
+import { Col, Row } from '@terraprisma/layout';
+import { GrowFade } from '@terraprisma/transitions';
+import { Tooltip } from '@terraprisma/data-display';
 
 export type AddressFormValue = {
   cidade: string;

@@ -13,10 +13,10 @@ import {
 } from '../utils';
 import { FormValue } from '../../types';
 
-import { mergeClass, mergeCallbacks } from '@grapos/utils';
+import { mergeClass, mergeCallbacks } from '@terraprisma/utils';
 
 import './Input.scss';
-import { PossibleColors } from '@grapos/core';
+import { PossibleColors } from '@terraprisma/core';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;

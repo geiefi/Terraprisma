@@ -13,8 +13,8 @@ import {
   ParentProps
 } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@grapos/utils';
-import { Check } from '@grapos/icons';
+import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
+import { Check } from '@terraprisma/icons';
 
 import { StepsContext } from './StepsContext';
 

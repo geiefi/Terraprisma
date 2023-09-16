@@ -1,4 +1,4 @@
-# @grapos/utils
+# @terraprisma/utils
 
-The internal utilities for GrapeS the type-safe Material Design-based UI library for SolidJS.
+The internal utilities for terraprisma the type-safe Material Design-based UI library for SolidJS.
 
