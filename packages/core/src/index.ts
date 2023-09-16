@@ -1,5 +1,5 @@
 import GrapeS, { useGrapeS } from './GrapeS';
-import { GrapeSDarkTheme, GrapeSLightTheme, Theme } from './themes';
+import { DarkTheme, LightTheme, Theme } from './themes';
 
 import Ripple from './Ripple/Ripple';
 import Button from './Button/Button';
@@ -30,9 +30,9 @@ _global.applicationComponents = {
 };
 
 export default function createApplication<
-  Themes extends Theme[] = [typeof GrapeSLightTheme, typeof GrapeSDarkTheme]
+  Themes extends Theme[] = [typeof LightTheme, typeof DarkTheme]
 >(
-  themes: Themes = [GrapeSLightTheme, GrapeSDarkTheme] as Themes
+  themes: Themes = [LightTheme, DarkTheme] as Themes
 ): ApplicationAssets<Themes> {
   return _global.applicationComponents;
 }
