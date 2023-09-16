@@ -1,1 +1,1 @@
-export * from './addColors';
+export * from './addAccentColoring';

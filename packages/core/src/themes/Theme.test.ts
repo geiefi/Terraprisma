@@ -1,12 +1,12 @@
-import { PossibleColors } from './Theme';
-import { GrapeSDarkTheme } from './GrapeSDark';
+import { BgColors } from './Theme';
+import { VoidTheme } from './void';
 
 function bShouldExtendA<A, _B extends A>() {}
 
 describe('PossibleColors type', () => {
   it('should contain "accent" in its resulting union', () => {
-    bShouldExtendA<PossibleColors<typeof GrapeSDarkTheme>, 'accent'>();
-    bShouldExtendA<PossibleColors, 'accent'>();
+    bShouldExtendA<BgColors<typeof VoidTheme>, 'accent'>();
+    bShouldExtendA<BgColors, 'accent'>();
   });
 
   it('should generate the correct colors', () => {
@@ -16,8 +16,10 @@ describe('PossibleColors type', () => {
       | 'success'
       | 'warning'
       | 'danger'
+      | 'deeper'
+      | 'muted'
       | 'floating'
       | 'normal';
-    bShouldExtendA<CorrectColors, PossibleColors<typeof GrapeSDarkTheme>>;
+    bShouldExtendA<CorrectColors, BgColors<typeof VoidTheme>>;
   });
 });

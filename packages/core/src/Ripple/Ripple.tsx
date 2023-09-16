@@ -23,8 +23,8 @@ import {
 } from '@terraprisma/utils';
 
 import './Ripple.scss';
-import { addColors } from '../factories';
-import { PossibleColors } from '../themes';
+import { AccentColor, addAccentColoring } from '../factories';
+import { BgColors } from '../themes';
 
 export interface RippleProps {
   /**
@@ -79,11 +79,14 @@ function absolutePosition(el: HTMLElement): DOMRect {
 
 const Ripple = makeComponent(
   [
-    addColors<RippleProps>(),
-    extendPropsFrom<
-      RippleProps & { color?: PossibleColors<Themes[number]> },
-      'div'
-    >(['noRipple', 'center', 'color', 'wrapperProps', 'children'])
+    addAccentColoring<RippleProps>(),
+    extendPropsFrom<RippleProps & { color?: AccentColor }, 'div'>([
+      'noRipple',
+      'center',
+      'color',
+      'wrapperProps',
+      'children'
+    ])
   ],
   (props, color, elProps) => {
     const [ripples, setRipples] = createStore<RippleConfig[]>([]);

@@ -4,14 +4,16 @@ import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import Ripple from '../Ripple/Ripple';
 
-import { PossibleColors } from '../themes';
-import { addColors } from '../factories';
+import { AccentColor, addAccentColoring } from '../factories';
 
 import './Button.scss';
 
 export interface ButtonProps {
-  color?: PossibleColors | 'transparent';
   size?: 'small' | 'medium' | 'large';
+  /**
+   * @default 'filled'
+   */
+  variant?: 'filled' | 'outlined';
 
   disabled?: boolean;
 
@@ -24,11 +26,8 @@ export interface ButtonProps {
 
 const Button = makeComponent(
   [
-    addColors<ButtonProps>(),
-    extendPropsFrom<
-      ButtonProps & { color?: PossibleColors<Themes[number]> },
-      'button'
-    >([
+    addAccentColoring<ButtonProps>(),
+    extendPropsFrom<ButtonProps & { color?: AccentColor }, 'button'>([
       'color',
       'size',
       'disabled',
@@ -40,7 +39,7 @@ const Button = makeComponent(
   (props, color, elProps) => {
     const buttonBgColor = createMemo(() => `var(--${color()}-bg)`);
     const buttonFgColor = createMemo(() => `var(--${color()}-fg)`);
-    const rippleColor = createMemo(() => props.rippleColor);
+    const buttonHoverColor = createMemo(() => `var(--${color()}-hover)`);
 
     return (
       <Ripple
@@ -52,7 +51,7 @@ const Button = makeComponent(
           medium: props.size === 'medium' || typeof props.size === 'undefined',
           large: props.size === 'large'
         }}
-        color={rippleColor()}
+        color={props.rippleColor}
         style={{
           display: 'inline-block',
           'border-radius': props.style?.['border-radius']
@@ -64,10 +63,16 @@ const Button = makeComponent(
           class={elProps.class}
           style={{
             '--bg': buttonBgColor(),
-            '--fg': buttonFgColor()
+            '--fg': buttonFgColor(),
+            '--hover': buttonHoverColor()
           }}
           classList={{
             disabled: props.disabled,
+
+            filled:
+              props.variant === 'filled' ||
+              typeof props.variant === 'undefined',
+            outlined: props.variant === 'outlined',
 
             small: props.size === 'small',
             medium:

@@ -54,12 +54,24 @@ type BgColorsFor<Colors extends string> =
     ? Clr
     : never;
 
-export type PossibleColors<Obj extends Record<string, any> = Theme> =
+export type AccentColors<T extends Theme<Record<string, Accent> | undefined>> =
+  | (T extends Theme<infer Accents extends Record<string, any>>
+      ? keyof Accents
+      : 'accent')
+  | 'success'
+  | 'warning'
+  | 'danger';
+
+export type BgColors<Obj extends Record<string, any> = Theme> =
   | BgColorsFor<AllPossibleColors<Obj>>
   | 'accent';
 
+export type Accent = BgFgPair & { hover: Color };
+
 export type Theme<
-  Accents extends Record<string, BgFgPair> | undefined = undefined
+  Accents extends Record<string, Accent> | undefined =
+    | Record<string, Accent>
+    | undefined
 > = {
   id: string;
 
@@ -67,22 +79,25 @@ export type Theme<
   normal: BgFgPair;
 
   floating: BgFgPair & { border: Color };
+  deeper: BgFgPair;
+
+  muted: BgFgPair;
 
   /**
    * @description For texts that are within the <Marked/> component
    */
   marked: BgFgPair;
 
-  success: BgFgPair;
-  warning: BgFgPair;
-  danger: BgFgPair;
+  success: Accent;
+  warning: Accent;
+  danger: Accent;
 } & (Accents extends undefined
   ? {
       /**
        * @description The accent color for the whole website, there is also an `accents` option that
        * allows for many accents.
        */
-      accent: BgFgPair;
+      accent: Accent;
     }
   : {
       mainAccent: keyof Accents;
@@ -91,3 +106,19 @@ export type Theme<
        */
       accents: Accents;
     });
+
+export function c<
+  Bg extends string,
+  Fg extends string,
+  Additional extends Record<string, Color> = {}
+>(
+  bg: Bg,
+  fg: Fg,
+  additional: Additional = {} as Additional
+): { bg: Color<Bg>; fg: Color<Fg> } & Additional {
+  return {
+    bg: new Color(bg),
+    fg: new Color(fg),
+    ...additional
+  };
+}
