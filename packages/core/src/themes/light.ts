@@ -1,4 +1,4 @@
-import { Color, Theme } from '@terraprisma/utils';
+import { Color, Theme } from './Theme';
 
 export const LightTheme = {
   id: 'light',
