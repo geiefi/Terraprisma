@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
 
 export interface ColProps extends ParentProps {
   size:
@@ -31,7 +31,8 @@ export interface ColProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Col = createComponentExtendingFromOther<ColProps, 'div'>(
+const Col = makeComponent(
+  [extendPropsFrom<ColProps, 'div'>(['size', 'children', 'style'])],
   (props, elProps) => (
     <div
       {...elProps}
@@ -43,8 +44,7 @@ const Col = createComponentExtendingFromOther<ColProps, 'div'>(
     >
       {props.children}
     </div>
-  ),
-  ['size', 'children', 'style']
+  )
 );
 
 export default Col;

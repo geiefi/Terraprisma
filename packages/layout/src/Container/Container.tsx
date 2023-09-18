@@ -1,6 +1,6 @@
 import { createMemo, JSX, ParentProps } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import './Container.scss';
 
@@ -13,7 +13,16 @@ export interface ContainerProps extends ParentProps {
   maxWidth?: LayoutWidth | number;
 }
 
-const Container = createComponentExtendingFromOther<ContainerProps, 'div'>(
+const Container = makeComponent(
+  [
+    extendPropsFrom<ContainerProps, 'div'>([
+      'horizontalAlign',
+      'verticalAlign',
+      'style',
+      'maxWidth',
+      'children'
+    ])
+  ],
   (props, elProps) => {
     const layoutWidths: Record<LayoutWidth, string> = {
       xs: '576px',
@@ -57,8 +66,7 @@ const Container = createComponentExtendingFromOther<ContainerProps, 'div'>(
         {props.children}
       </div>
     );
-  },
-  ['horizontalAlign', 'verticalAlign', 'style', 'maxWidth', 'children']
+  }
 );
 
 export default Container;

@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
 import './Stack.scss';
 
@@ -18,7 +18,17 @@ export interface StackProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Stack = createComponentExtendingFromOther<StackProps, 'div'>(
+const Stack = makeComponent(
+  [
+    extendPropsFrom<StackProps, 'div'>([
+      'spacing',
+      'align',
+      'direction',
+      'fullWidth',
+      'children',
+      'style'
+    ])
+  ],
   (props, elProps) => (
     <div
       {...elProps}
@@ -39,8 +49,7 @@ const Stack = createComponentExtendingFromOther<StackProps, 'div'>(
     >
       {props.children}
     </div>
-  ),
-  ['spacing', 'align', 'direction', 'fullWidth', 'children', 'style']
+  )
 );
 
 export default Stack;

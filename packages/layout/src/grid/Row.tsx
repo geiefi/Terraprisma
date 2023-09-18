@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
 import './Row.scss';
 
@@ -10,7 +10,8 @@ export interface RowProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Row = createComponentExtendingFromOther<RowProps, 'div'>(
+const Row = makeComponent(
+  [extendPropsFrom<RowProps, 'div'>(['gap', 'rowGap', 'children', 'style'])],
   (props, elProps) => {
     return (
       <div
@@ -26,8 +27,7 @@ const Row = createComponentExtendingFromOther<RowProps, 'div'>(
         {props.children}
       </div>
     );
-  },
-  ['gap', 'rowGap', 'children', 'style']
+  }
 );
 
 export default Row;
