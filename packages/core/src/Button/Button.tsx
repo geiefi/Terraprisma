@@ -67,6 +67,7 @@ const Button = makeComponent(
             '--fg': buttonFgColor(),
             '--hover': buttonHoverColor()
           }}
+          aria-disabled={props.disabled}
           classList={{
             disabled: props.disabled,
 
