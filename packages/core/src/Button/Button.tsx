@@ -1,11 +1,9 @@
 import { ComponentProps, createMemo, JSX } from 'solid-js';
 
 import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
-import { Accents } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 import Ripple from '../Ripple/Ripple';
-
-import { addAccentColoring } from '../factories';
 
 import './Button.scss';
 
@@ -55,7 +53,7 @@ const Button = makeComponent(
         color={props.rippleColor}
         style={{
           display: 'inline-block',
-          'border-radius': props.style?.['border-radius']
+          'border-radius': props.style?.['border-radius'] ?? '3px'
         }}
       >
         <button

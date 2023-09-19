@@ -1,7 +1,7 @@
 import { createMemo, splitProps } from 'solid-js';
 
 import { createComponentFactory, AnyProps } from '@terraprisma/utils';
-import { Accents } from '@terraprisma/theming';
+import { Accents } from '..';
 
 export const addAccentColoring = <Props extends AnyProps>(
   defaultColor: Accents = 'accent'
