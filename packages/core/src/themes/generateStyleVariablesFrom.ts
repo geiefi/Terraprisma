@@ -7,7 +7,7 @@ function toKebabCase(text: string) {
 
 export function generateStyleVariablesFrom(
   obj: Record<string, Color | Record<string, Color | Record<string, Color>>>,
-  prefixPieces: string[] = []
+  prefix?: string
 ) {
   return Object.keys(obj)
     .map((property) => {
@@ -20,13 +20,14 @@ export function generateStyleVariablesFrom(
           .filter((l) => l instanceof Color)
           .forEach((v: Color, i) => {
             stylesForValue[
-              `--${[...prefixPieces, kebabCaseProperty].join('-')}-${i}`
+              `--${[prefix, kebabCaseProperty].filter(Boolean).join('-')}-${i}`
             ] = v.toRGBA();
           });
       } else if (typeof value === 'object' && !(value instanceof Color)) {
-        const valueStyles = generateStyleVariablesFrom(value, [
+        const valueStyles = generateStyleVariablesFrom(
+          value,
           kebabCaseProperty
-        ]);
+        );
         Object.keys(valueStyles).forEach(
           (innerKey) => (stylesForValue[innerKey] = valueStyles[innerKey])
         );
@@ -40,8 +41,9 @@ export function generateStyleVariablesFrom(
         //     accents[(theme as any).mainAccent].fg.toRGBA();
         // }
       } else if (value instanceof Color) {
-        stylesForValue[`--${[...prefixPieces, kebabCaseProperty].join('-')}`] =
-          value.toRGBA();
+        stylesForValue[
+          `--${[prefix, kebabCaseProperty].filter(Boolean).join('-')}`
+        ] = value.toRGBA();
       }
       return stylesForValue;
     })
