@@ -1,7 +1,7 @@
 import { Color, Theme, c } from './Theme';
 
 export const VoidTheme = {
-  id: 'dark',
+  id: 'void',
 
   bgBackdrop: new Color('rgba(0,0,0,.4)'),
   normal: c('#000000', '#ffffff'),
