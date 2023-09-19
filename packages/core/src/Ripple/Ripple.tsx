@@ -21,10 +21,10 @@ import {
   makeComponent,
   extendPropsFrom
 } from '@terraprisma/utils';
+import { Accents } from '@terraprisma/theming';
 
 import './Ripple.scss';
 import { addAccentColoring } from '../factories';
-import { Accents } from '..';
 
 export interface RippleProps {
   /**

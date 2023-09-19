@@ -1,5 +1,6 @@
 import { BgColors } from './Theme';
-import { VoidTheme } from './void';
+
+import { VoidTheme } from './themes';
 
 function bShouldExtendA<A, _B extends A>() {}
 

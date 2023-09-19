@@ -1,13 +1,13 @@
 import { ComponentProps, createMemo, JSX } from 'solid-js';
 
 import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import { Accents } from '@terraprisma/theming';
 
 import Ripple from '../Ripple/Ripple';
 
 import { addAccentColoring } from '../factories';
 
 import './Button.scss';
-import { Accents } from '..';
 
 export interface ButtonProps {
   size?: 'small' | 'medium' | 'large';

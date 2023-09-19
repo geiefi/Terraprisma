@@ -1,4 +1,3 @@
-import { style } from 'solid-js/web';
 import { Color } from './Theme';
 
 function toKebabCase(text: string) {

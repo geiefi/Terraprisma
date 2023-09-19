@@ -10,11 +10,9 @@ import {
 } from 'solid-js';
 
 import { canUseDocument } from '@terraprisma/utils';
-
-import { generateStyleVariablesFrom } from './themes';
+import { generateStyleVariablesFrom, Themes } from '@terraprisma/theming';
 
 import './ThemeProvider.scss';
-import { Themes } from '.';
 
 export type ThemesProviderValue = {
   themes: Themes;

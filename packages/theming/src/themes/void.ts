@@ -1,4 +1,4 @@
-import { Color, Theme, c } from './Theme';
+import { Color, Theme, c } from '../Theme';
 
 export const VoidTheme = {
   id: 'void',
