@@ -100,7 +100,6 @@ export type Theme<
       accent: Accent;
     }
   : {
-      mainAccent: keyof Accents;
       /**
        * @description A list of accent colors, the first accent color is going to be the primary one.
        */

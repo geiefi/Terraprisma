@@ -11,7 +11,7 @@ import {
 
 import { canUseDocument } from '@terraprisma/utils';
 
-import { BgFgPair, Color, Theme } from './themes';
+import { generateStyleVariablesFrom } from './themes';
 
 import './ThemeProvider.scss';
 import { Themes } from '.';
@@ -55,53 +55,8 @@ export function setupTerraprisma(
 
     const globalStyles = createMemo(() => {
       const theme = currentTheme();
-      return (
-        Object.keys(currentTheme()).filter((k) => !['id'].includes(k)) as (
-          | Exclude<keyof Theme<{}>, 'id'>
-          | 'accents'
-          | 'accent'
-          | 'mainAccent'
-        )[]
-      )
-        .map((property) => {
-          const value = theme[property as keyof Theme];
-          const kebabCaseProperty = property
-            .replace(/([a-z])([A-Z])/g, '$1-$2')
-            .toLowerCase();
-
-          const stylesForValue: Record<string, string> = {};
-          if (Array.isArray(value)) {
-            value
-              .filter((l) => l instanceof Color)
-              .forEach((v: Color, i) => {
-                stylesForValue[`--${kebabCaseProperty}-${i}`] = v.toRGBA();
-              });
-          } else if (typeof value === 'object' && !(value instanceof Color)) {
-            (Object.keys(value) as (keyof typeof value)[])
-              .filter((key) => value[key] instanceof Color)
-              .forEach((key) => {
-                const keyKebabCase = key
-                  .toString()
-                  .replace(/([a-z])([A-Z])/g, '$1-$2')
-                  .toLowerCase();
-                stylesForValue[`--${kebabCaseProperty}-${keyKebabCase}`] =
-                  value[key].toRGBA();
-              });
-
-            // automatically sets the --accent-bg and --accent-fg based on the accents defined
-            if (property === 'accents') {
-              const accents = value as unknown as Record<string, BgFgPair>;
-              stylesForValue['--accent-bg'] =
-                accents[(theme as any).mainAccent].bg.toRGBA();
-              stylesForValue['--accent-fg'] =
-                accents[(theme as any).mainAccent].fg.toRGBA();
-            }
-          } else if (value instanceof Color) {
-            stylesForValue[`--${kebabCaseProperty}`] = value.toRGBA();
-          }
-          return stylesForValue;
-        })
-        .reduce((p, styles) => ({ ...p, ...styles }), {});
+      const { id, ...objWithStyles } = { ...theme };
+      return generateStyleVariablesFrom(objWithStyles);
     });
 
     return (
