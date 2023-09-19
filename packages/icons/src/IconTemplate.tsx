@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
 export interface IconProps extends ParentProps {
   /**
@@ -14,7 +14,8 @@ export type IconComponent = ReturnType<typeof createIconComponent>;
 
 // not a decorator
 const createIconComponent = (iconName: string) => {
-  return createComponentExtendingFromOther<IconProps, 'span'>(
+  return makeComponent(
+    [extendPropsFrom<IconProps, 'span'>(['variant', 'style', 'children'])],
     (props, elProps) => (
       <span
         {...elProps}
@@ -34,8 +35,7 @@ const createIconComponent = (iconName: string) => {
       >
         {iconName}
       </span>
-    ),
-    ['variant', 'style', 'children']
+    )
   );
 };
 
