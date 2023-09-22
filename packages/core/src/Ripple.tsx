@@ -13,7 +13,7 @@ import {
 import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
-import { getGlobalWrapper } from '../ThemeProvider';
+import { getGlobalWrapper } from './ThemeProvider';
 
 import {
   mergeClass,
@@ -207,26 +207,32 @@ const Ripple = makeComponent(
           <Portal mount={globalWrapper()}>
             <div
               {...props.wrapperProps}
-              class={mergeClass('ripple-wrapper', props.wrapperProps?.class)}
+              class={mergeClass(
+                'absolute cursor-none pointer-events-none',
+                props.wrapperProps?.class
+              )}
               style={{
-                '--top': (rippledElementBoundingBox()?.top ?? 0) + 'px',
-                '--left': (rippledElementBoundingBox()?.left ?? 0) + 'px',
-                '--width': (rippledElementBoundingBox()?.width ?? 0) + 'px',
-                '--height': (rippledElementBoundingBox()?.height ?? 0) + 'px',
+                top: (rippledElementBoundingBox()?.top ?? 0) + 'px',
+                left: (rippledElementBoundingBox()?.left ?? 0) + 'px',
+                width: (rippledElementBoundingBox()?.width ?? 0) + 'px',
+                height: (rippledElementBoundingBox()?.height ?? 0) + 'px',
 
                 ...props.wrapperProps?.style
               }}
             >
               <div
                 {...elProps}
-                class={mergeClass('ripple-container', elProps.class)}
+                class={mergeClass(
+                  'relative overflow-hidden w-full h-full p-0 m-0 cursor-pointer',
+                  elProps.class
+                )}
                 ref={setRippleContainer}
               >
                 <For each={ripples}>
                   {(ripple) => (
                     <Show when={ripple}>
                       <span
-                        class="ripple"
+                        class="absolute animae-[ripple_0.6s_linear] rounded-full z-[999] scale-0 ripple opacity-30 bg-[var(--normal-fg)]"
                         style={{
                           width: `${ripple.diameter}px`,
                           height: `${ripple.diameter}px`,

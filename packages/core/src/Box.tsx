@@ -1,8 +1,6 @@
 import { ParentProps } from 'solid-js';
 import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
-import './Box.scss';
-
 export interface BoxProps extends ParentProps {}
 
 /**
@@ -14,7 +12,10 @@ const Box = makeComponent(
   (props, elProps) => (
     <div
       {...elProps}
-      class={mergeClass('box', elProps.class)}
+      class={mergeClass(
+        'px-4 py-5 my-3 rounded box-border w-full border-4 border-solid bg-[var(--floating-bg)] border-[var(--floating-border)] text-[var(--floating-fg)]',
+        elProps.class
+      )}
       style={elProps.style}
     >
       {props.children}

@@ -12,8 +12,6 @@ import {
 import { canUseDocument } from '@terraprisma/utils';
 import { generateStyleVariablesFrom, Themes } from '@terraprisma/theming';
 
-import './ThemeProvider.scss';
-
 export type ThemesProviderValue = {
   themes: Themes;
   currentTheme: Accessor<Themes[number]>;
@@ -67,7 +65,11 @@ export function setupTerraprisma(
           setThemeId
         }}
       >
-        <div id={GalobalWrapperID} style={globalStyles()}>
+        <div
+          class="leading-[1.5] font-normal box-border text-[var(--text-0)]"
+          id={GalobalWrapperID}
+          style={globalStyles()}
+        >
           {props.children}
         </div>
       </TerraprismaContext.Provider>

@@ -1,16 +1,20 @@
+import './index.css';
+
 import { useTheme, setupTerraprisma } from './ThemeProvider';
 
-import Ripple from './Ripple/Ripple';
-import Button from './Button/Button';
-import Box from './Box/Box';
-import Dropdown from './Dropdown/Dropdown';
-import Modal, { createModal } from './Modal/Modal';
+import Ripple from './Ripple';
+import Button from './Buttons/Button';
+import IconButton from './Buttons/IconButton';
+import Box from './Box';
+import Dropdown from './Dropdown';
+import Modal, { createModal } from './Modal';
 
 export {
   useTheme,
   setupTerraprisma,
   Ripple,
   Button,
+  IconButton,
   Box,
   Dropdown,
   Modal,

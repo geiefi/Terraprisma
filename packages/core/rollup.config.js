@@ -1,8 +1,5 @@
 import { defineConfig } from 'rollup';
 
-import styles from 'rollup-plugin-styles';
-import typescript from '@rollup/plugin-typescript';
-
 import MagicString from 'magic-string';
 import { walk } from 'estree-walker';
 import jsx from 'acorn-jsx';
@@ -95,6 +92,13 @@ function jsxPreserve() {
   };
 }
 
+import styles from 'rollup-plugin-styles';
+import typescript from '@rollup/plugin-typescript';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
+import tailwindConfig from './tailwind.config.js';
+
 /** @type {import('rollup').RollupOptions} */
 export const baseConfig = {
   input: './src/index.ts',
@@ -109,6 +113,7 @@ export const baseConfig = {
   acornInjectPlugins: [jsx()],
   plugins: [
     styles({
+      plugins: [tailwindcss(tailwindConfig), autoprefixer()],
       mode: ['extract', 'styles.css']
     }),
     typescript({
