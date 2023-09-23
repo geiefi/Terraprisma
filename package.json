@@ -2,7 +2,8 @@
   "name": "grapes-project",
   "workspaces": [
     "packages/*",
-    "websites/*"
+    "websites/*",
+    "develpoment/*"
   ],
   "scripts": {
     "publish-packages": "npx changeset version && turbo run build && npx changeset publish"
