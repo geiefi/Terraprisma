@@ -1,6 +1,5 @@
 import MagicString from 'magic-string';
 import { walk } from 'estree-walker';
-import jsx from 'acorn-jsx';
 
 let nextId = 0;
 
