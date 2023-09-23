@@ -8,7 +8,7 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
 import { Box } from '@terraprisma/core';
 
@@ -23,7 +23,15 @@ export interface TableProps extends ParentProps {
 
 const TableContext = createContext<TableProps>();
 
-const Table = createComponentExtendingFromOther<TableProps, 'table'>(
+const Table = makeComponent(
+  [
+    extendPropsFrom<TableProps, 'table'>([
+      'identification',
+      'boxed',
+      'compact',
+      'children'
+    ])
+  ],
   (props, elProps) => {
     const table = (
       <table
@@ -45,8 +53,7 @@ const Table = createComponentExtendingFromOther<TableProps, 'table'>(
         </Show>
       </TableContext.Provider>
     );
-  },
-  ['identification', 'boxed', 'compact', 'children']
+  }
 ) as {
   (props: TableProps & ComponentProps<'table'>): JSX.Element;
   Row(props: TableRowProps & ComponentProps<'tr'>): JSX.Element;
@@ -59,22 +66,23 @@ export interface TableRowProps extends ParentProps {
 
 const RowContext = createContext<TableRowProps>();
 
-const Row = createComponentExtendingFromOther<TableRowProps, 'tr'>(
+const Row = makeComponent(
+  [extendPropsFrom<TableRowProps, 'tr'>(['headRow', 'children'])],
   (props, elProps) => {
     return (
       <RowContext.Provider value={props}>
         <tr {...elProps}>{props.children}</tr>
       </RowContext.Provider>
     );
-  },
-  ['headRow', 'children']
+  }
 );
 
 export interface TableColumnProps extends ParentProps {
   align?: 'left' | 'right' | 'center';
 }
 
-const Column = createComponentExtendingFromOther<TableColumnProps, 'td'>(
+const Column = makeComponent(
+  [extendPropsFrom<TableColumnProps, 'th'>(['align', 'children'])],
   (props, elProps) => {
     const tableProps = useContext(TableContext);
     const rowProps = useContext(RowContext);
@@ -104,8 +112,7 @@ const Column = createComponentExtendingFromOther<TableColumnProps, 'td'>(
         children={props.children}
       />
     );
-  },
-  ['align', 'children']
+  }
 );
 
 Table.Row = Row;

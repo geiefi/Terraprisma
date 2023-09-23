@@ -8,7 +8,7 @@ import {
   Show
 } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import { ArrowDropDown } from '@terraprisma/icons';
 
@@ -64,7 +64,16 @@ export function createTooltip(identification: string) {
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
-    Tooltip: createComponentExtendingFromOther<TooltipProps, 'div'>(
+    Tooltip: makeComponent(
+      [
+        extendPropsFrom<TooltipProps, 'div'>([
+          'visible',
+          'offsetFromAnchor',
+          'position',
+          'children',
+          'style'
+        ])
+      ],
       (props, elProps) => {
         const [visible, setVisible] = createSignal(props.visible);
 
@@ -125,8 +134,7 @@ export function createTooltip(identification: string) {
             </div>
           </Show>
         );
-      },
-      ['visible', 'offsetFromAnchor', 'position', 'children', 'style']
+      }
     )
   };
 }

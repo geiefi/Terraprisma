@@ -1,6 +1,6 @@
 import { ComponentProps, JSX, ParentProps, Show, createSignal } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 import { Ripple } from '@terraprisma/core';
 import { Divisor } from '@terraprisma/layout';
 import { KeyboardArrowDown } from '@terraprisma/icons';
@@ -12,7 +12,8 @@ export interface ListProps extends ParentProps {
   dense?: boolean;
 }
 
-const List = createComponentExtendingFromOther<ListProps, 'ul'>(
+const List = makeComponent(
+  [extendPropsFrom<ListProps, 'ul'>(['children', 'dense'])],
   (props, elProps) => (
     <ul
       {...elProps}
@@ -23,8 +24,7 @@ const List = createComponentExtendingFromOther<ListProps, 'ul'>(
     >
       {props.children}
     </ul>
-  ),
-  ['children', 'dense']
+  )
 ) as {
   (props: ListProps & Omit<ComponentProps<'ul'>, keyof ListProps>): JSX.Element;
   Divisor(
@@ -51,10 +51,16 @@ export interface ListItemWithDetailsProps extends ParentProps {
   active?: boolean;
 }
 
-List.ItemWithDetails = createComponentExtendingFromOther<
-  ListItemWithDetailsProps,
-  'li'
->(
+List.ItemWithDetails = makeComponent(
+  [
+    extendPropsFrom<ListItemWithDetailsProps, 'li'>([
+      'icon',
+      'children',
+      'subItems',
+      'active',
+      'children'
+    ])
+  ],
   (props, elProps) => {
     const [showingDetails, setShowingDetails] = createSignal(false);
 
@@ -98,8 +104,7 @@ List.ItemWithDetails = createComponentExtendingFromOther<
         </Collapse>
       </li>
     );
-  },
-  ['icon', 'children', 'subItems', 'active', 'children']
+  }
 );
 
 export interface ListItemProps extends ParentProps {
@@ -110,7 +115,16 @@ export interface ListItemProps extends ParentProps {
   active?: boolean;
 }
 
-List.Item = createComponentExtendingFromOther<ListItemProps, 'li'>(
+List.Item = makeComponent(
+  [
+    extendPropsFrom<ListItemProps, 'li'>([
+      'children',
+      'clickable',
+      'icon',
+      'active',
+      'action'
+    ])
+  ],
   (props, elProps) => {
     const content = (
       <div
@@ -144,8 +158,7 @@ List.Item = createComponentExtendingFromOther<ListItemProps, 'li'>(
         </Show>
       </li>
     );
-  },
-  ['children', 'clickable', 'icon', 'active', 'action']
+  }
 );
 
 export default List;
