@@ -13,10 +13,15 @@ import {
 } from '../utils';
 import { FormValue } from '../../types';
 
-import { mergeClass, mergeCallbacks } from '@terraprisma/utils';
+import {
+  mergeClass,
+  mergeCallbacks,
+  makeComponent,
+  extendPropsFrom
+} from '@terraprisma/utils';
 
 import './Input.scss';
-import { PossibleColors } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -51,101 +56,91 @@ export interface InputProps<
   label?: JSX.Element;
 
   type?: Type;
-  color?: PossibleColors;
 
   onChange?: (value: string, event?: InputOnChangeEvent) => void;
 }
 
-const Input = setupFieldComponent<
-  InputProps,
-  'input',
-  InputBaseValue<undefined>
->(
-  (props, elProps) => {
-    const {
-      elementId: id,
-      disabledS: [disabled],
-      focusedS: [_focused, setFocused],
-      valueS: [value, setValue],
-      validate
-    } = useField()!;
+const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
+  makeComponent(
+    [
+      addAccentColoring<InputProps>(),
+      extendPropsFrom<InputProps & { color?: Accents }, 'input'>([
+        'mask',
+        'label',
+        'helperText',
+        'type',
+        'color',
+        'onChange',
+        ...MaskedFieldPropsKeys
+      ])
+    ],
+    (props, color, elProps) => {
+      const {
+        elementId: id,
+        disabledS: [disabled],
+        focusedS: [_focused, setFocused],
+        valueS: [value, setValue],
+        validate
+      } = useField()!;
 
-    createEffect(() => {
-      if (
-        props.mask &&
-        typeof props.type !== 'undefined' &&
-        props.type === 'number'
-      ) {
-        throw new Error(
-          `Error with Input named ${props.name}: Cannot have a mask on a number input!`
-        );
-      }
-    });
+      createEffect(() => {
+        if (
+          props.mask &&
+          typeof props.type !== 'undefined' &&
+          props.type === 'number'
+        ) {
+          throw new Error(
+            `Error with Input named ${props.name}: Cannot have a mask on a number input!`
+          );
+        }
+      });
 
-    return (
-      <FieldInternalWrapper>
-        {/* TODO: pass the color through here to work with the new coloring variables */}
-        <InputContainer labelFor={id()} label={props.label}>
-          <input
-            {...elProps}
-            id={id()}
-            disabled={disabled()}
-            class={mergeClass('input', elProps.class)}
-            color={props.color}
-            classList={{
-              'no-label': typeof props.label === 'undefined'
-            }}
-            value={(value() || '') as string}
-            onInput={mergeCallbacks(
-              elProps.onInput as any,
-              props.mask ? createInputMask(props.mask) : undefined,
-              (
-                event: InputEvent & {
-                  target: HTMLInputElement;
-                  currentTarget: HTMLInputElement;
+      return (
+        <FieldInternalWrapper>
+          {/* TODO: pass the color through here to work with the new coloring variables */}
+          <InputContainer labelFor={id()} label={props.label}>
+            <input
+              {...elProps}
+              id={id()}
+              disabled={disabled()}
+              class={mergeClass('input', elProps.class)}
+              color={color()}
+              classList={{
+                'no-label': typeof props.label === 'undefined'
+              }}
+              value={(value() || '') as string}
+              onInput={mergeCallbacks(
+                elProps.onInput as any,
+                props.mask ? createInputMask(props.mask) : undefined,
+                (
+                  event: InputEvent & {
+                    target: HTMLInputElement;
+                    currentTarget: HTMLInputElement;
+                  }
+                ) => {
+                  const ref = event.currentTarget || event.target;
+                  if (props.onChange) {
+                    props.onChange(ref.value, event);
+                  }
+
+                  setValue(ref.value);
+                  // eslint-disable-next-line no-self-assign
+                  ref.value = ref.value;
                 }
-              ) => {
-                const ref = event.currentTarget || event.target;
-                if (props.onChange) {
-                  props.onChange(ref.value, event);
-                }
-
-                setValue(ref.value);
-                // eslint-disable-next-line no-self-assign
-                ref.value = ref.value;
-              }
-            )}
-            onFocus={mergeCallbacks(elProps.onFocus as any, () =>
-              setFocused(true)
-            )}
-            onBlur={mergeCallbacks(elProps.onBlur as any, () => {
-              validate(value());
-              setFocused(false);
-            })}
-          />
-        </InputContainer>
-      </FieldInternalWrapper>
-    );
-  },
-  [
-    'mask',
-    'label',
-    'helperText',
-    'type',
-    'color',
-    'onChange',
-    ...MaskedFieldPropsKeys
-  ]
-) as <
-  OwnerFormValue extends FormValue,
-  Type extends InputType = undefined,
-  Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<
-    OwnerFormValue,
-    InputBaseValue<Type>
-  >
->(
-  props: InputProps<OwnerFormValue, Type, Name> &
-    JSX.InputHTMLAttributes<HTMLInputElement>
-) => JSX.Element;
+              )}
+              onFocus={mergeCallbacks(elProps.onFocus as any, () =>
+                setFocused(true)
+              )}
+              onBlur={mergeCallbacks(elProps.onBlur as any, () => {
+                validate(value());
+                setFocused(false);
+              })}
+            />
+          </InputContainer>
+        </FieldInternalWrapper>
+      );
+    }
+  )
+);
 
 export default Input;

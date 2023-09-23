@@ -13,7 +13,6 @@ import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
 import { AgnosticValidator, FormValue } from './types';
 import {
-  ButtonChooser,
   Datepicker,
   Checkbox,
   Input,
@@ -26,10 +25,6 @@ import {
 import { InputBaseValue, InputProps, InputType } from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './fields/Select/Select';
-import {
-  ButtonChooserOptionProps,
-  ButtonChooserProps
-} from './fields/ButtonChooser/ButtonChooser';
 import {
   RadioGroupOptionProps,
   RadioGroupProps
@@ -73,13 +68,6 @@ export type Form<Value extends FormValue> = {
         Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof SelectProps>
     ): JSX.Element;
     Option(props: SelectOptionProps): JSX.Element;
-  };
-  ButtonChooser: {
-    <Name extends FieldName<Value, FormFieldValue>>(
-      props: ButtonChooserProps<Value, Name> &
-        Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof ButtonChooserProps>
-    ): JSX.Element;
-    Option(props: ButtonChooserOptionProps): JSX.Element;
   };
   RadioGroup: {
     <Name extends FieldName<Value, FormFieldValue>>(
@@ -164,7 +152,6 @@ export function createForm<Value extends FormValue>(
   form.Input = Input<Value>;
   form.Slider = Slider<Value>;
   form.Select = Select<Value>;
-  form.ButtonChooser = ButtonChooser<Value>;
   form.RadioGroup = RadioGroup<Value>;
   form.TextArea = TextArea<Value>;
   form.Datepicker = Datepicker<Value>;

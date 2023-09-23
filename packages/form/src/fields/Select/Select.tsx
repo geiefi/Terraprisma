@@ -13,7 +13,13 @@ import {
   ComponentProps
 } from 'solid-js';
 
-import { mergeClass, mergeCallbacks, canUseDocument } from '@terraprisma/utils';
+import {
+  mergeClass,
+  mergeCallbacks,
+  canUseDocument,
+  extendPropsFrom,
+  makeComponent
+} from '@terraprisma/utils';
 
 import {
   InputContainer,
@@ -25,13 +31,14 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown, PossibleColors } from '@terraprisma/core';
+import { Dropdown } from '@terraprisma/core';
 import { GrowFade } from '@terraprisma/transitions';
 import { KeyboardArrowDown } from '@terraprisma/icons';
 
 import { FormValue, FormFieldValue } from '../../types';
 
 import './Select.scss';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -41,8 +48,6 @@ export interface SelectProps<
   >
 > extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
   label?: JSX.Element;
-
-  color?: PossibleColors;
 
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
@@ -91,177 +96,183 @@ const Option: Component<SelectOptionProps> = (props) =>
  * </Select>
  * ```
  */
-const Select = setupFieldComponent<SelectProps, 'div'>(
-  (props, elProps) => {
-    const {
-      elementId: id,
-      disabledS: [disabled],
-      focusedS: [focused, setFocused],
-      valueS: [value, setValue],
-      validate
-    } = useField()!;
-
-    const [inputContainerRef, setInputContainerRef] =
-      createSignal<HTMLDivElement>();
-
-    const onDocumentClick = (event: MouseEvent) => {
-      if (event.target !== inputContainerRef() && focused()) {
-        setFocused(false);
-      }
-    };
-
-    onMount(() => {
-      if (canUseDocument()) document.addEventListener('click', onDocumentClick);
-    });
-    onCleanup(() => {
-      if (canUseDocument())
-        document.removeEventListener('click', onDocumentClick);
-    });
-
-    const getChildren = accessChildren(() =>
-      typeof props.children === 'function'
-        ? props.children(Option)
-        : props.children
-    );
-    const options = createMemo<SelectOptionProps[]>(() => {
-      let childrenArr: (JSX.Element | SelectOptionProps)[];
-
-      const children = getChildren();
-      if (Array.isArray(children)) {
-        childrenArr = children;
-      } else {
-        childrenArr = [children];
-      }
-
-      return childrenArr.filter((child) => {
-        return (
-          child !== null &&
-          typeof child === 'object' &&
-          Object.hasOwn(child, 'value') &&
-          Object.hasOwn(child, 'children')
-        );
-      }) as SelectOptionProps[];
-    });
-
-    const optionLabelFromValue = (value: FormFieldValue | undefined) => {
-      return options().find((opt) => opt.value === value)?.children || '';
-    };
-
-    createEffect(
-      on(
-        focused,
-        () => {
-          if (props.onFocus && focused() === true) {
-            props.onFocus();
-          }
-
-          if (focused() === false) {
-            validate(value());
-          }
-        },
-        { defer: true }
+const Select = setupFieldComponent().with(
+  makeComponent(
+    [
+      addAccentColoring<SelectProps>(),
+      extendPropsFrom<SelectProps & { color?: Accents }, typeof InputContainer>(
+        [
+          ...FieldPropKeys,
+          'label',
+          'helperText',
+          'color',
+          'children',
+          'onChange',
+          'onFocus'
+        ]
       )
-    );
+    ],
+    (props, color, elProps) => {
+      const {
+        elementId: id,
+        disabledS: [disabled],
+        focusedS: [focused, setFocused],
+        valueS: [value, setValue],
+        validate
+      } = useField()!;
 
-    const color = createMemo(() => props.color || 'accent');
+      const [inputContainerRef, setInputContainerRef] =
+        createSignal<HTMLDivElement>();
 
-    return (
-      <FieldInternalWrapper
-        style={{
-          cursor: disabled() === false ? 'pointer' : 'default'
-        }}
-      >
-        <InputContainer
-          {...elProps}
-          id={id()}
-          color={color()}
-          labelFor={id()}
-          label={props.label}
-          onClick={(e) => {
-            if (typeof elProps.onClick === 'function') {
-              elProps.onClick(e);
+      const onDocumentClick = (event: MouseEvent) => {
+        if (event.target !== inputContainerRef() && focused()) {
+          setFocused(false);
+        }
+      };
+
+      onMount(() => {
+        if (canUseDocument())
+          document.addEventListener('click', onDocumentClick);
+      });
+      onCleanup(() => {
+        if (canUseDocument())
+          document.removeEventListener('click', onDocumentClick);
+      });
+
+      const getChildren = accessChildren(() =>
+        typeof props.children === 'function'
+          ? props.children(Option)
+          : props.children
+      );
+      const options = createMemo<SelectOptionProps[]>(() => {
+        let childrenArr: (JSX.Element | SelectOptionProps)[];
+
+        const children = getChildren();
+        if (Array.isArray(children)) {
+          childrenArr = children;
+        } else {
+          childrenArr = [children];
+        }
+
+        return childrenArr.filter((child) => {
+          return (
+            child !== null &&
+            typeof child === 'object' &&
+            Object.hasOwn(child, 'value') &&
+            Object.hasOwn(child, 'children')
+          );
+        }) as SelectOptionProps[];
+      });
+
+      const optionLabelFromValue = (value: FormFieldValue | undefined) => {
+        return options().find((opt) => opt.value === value)?.children || '';
+      };
+
+      createEffect(
+        on(
+          focused,
+          () => {
+            if (props.onFocus && focused() === true) {
+              props.onFocus();
             }
 
-            if (!disabled()) {
-              setFocused((focused) => !focused);
+            if (focused() === false) {
+              validate(value());
             }
-          }}
-          icon={
-            <KeyboardArrowDown
-              variant="rounded"
-              class="select-icon"
-              classList={{
-                open: focused()
-              }}
-            />
-          }
-          ref={(ref) => {
-            if (typeof elProps.ref === 'function') {
-              elProps.ref(ref);
-            }
+          },
+          { defer: true }
+        )
+      );
 
-            setInputContainerRef(ref);
+      return (
+        <FieldInternalWrapper
+          style={{
+            cursor: disabled() === false ? 'pointer' : 'default'
           }}
         >
-          {optionLabelFromValue(value())}
-        </InputContainer>
+          <InputContainer
+            {...elProps}
+            id={id()}
+            color={color()}
+            labelFor={id()}
+            label={props.label}
+            onClick={(e) => {
+              if (typeof elProps.onClick === 'function') {
+                elProps.onClick(e);
+              }
 
-        <GrowFade>
-          <Dropdown
-            for={inputContainerRef()!}
-            class="select-dropdown"
-            visible={focused()}
-            style={{
-              '--color': `var(--${color()}-bg)`
+              if (!disabled()) {
+                setFocused((focused) => !focused);
+              }
+            }}
+            icon={
+              <KeyboardArrowDown
+                variant="rounded"
+                class="select-icon"
+                classList={{
+                  open: focused()
+                }}
+              />
+            }
+            ref={(ref) => {
+              if (typeof elProps.ref === 'function') {
+                elProps.ref(ref);
+              }
+
+              setInputContainerRef(ref);
             }}
           >
-            <For each={options()}>
-              {(optionAllProps) => {
-                const [optionProps, optionElProps] = splitProps(
-                  optionAllProps,
-                  ['value']
-                );
-                return (
-                  <div
-                    {...optionElProps}
-                    class={mergeClass('option', optionElProps.class)}
-                    classList={{
-                      active: optionProps.value === value(),
-                      ...optionElProps.classList
-                    }}
-                    onClick={mergeCallbacks<(e: MouseEvent) => void>(
-                      // eslint-disable-next-line solid/reactivity
-                      optionElProps.onClick as any,
-                      // eslint-disable-next-line solid/reactivity
-                      () => {
-                        if (props.onChange) {
-                          props.onChange(optionProps.value);
-                        }
+            {optionLabelFromValue(value())}
+          </InputContainer>
 
-                        setValue(optionProps.value as any);
-                        setFocused(false);
-                      }
-                    )}
-                  >
-                    {optionElProps.children}
-                  </div>
-                );
+          <GrowFade>
+            <Dropdown
+              for={inputContainerRef()!}
+              class="select-dropdown"
+              visible={focused()}
+              style={{
+                '--color': `var(--${color()}-bg)`
               }}
-            </For>
-          </Dropdown>
-        </GrowFade>
-      </FieldInternalWrapper>
-    );
-  },
-  [
-    ...FieldPropKeys,
-    'label',
-    'helperText',
-    'color',
-    'children',
-    'onChange',
-    'onFocus'
-  ]
+            >
+              <For each={options()}>
+                {(optionAllProps) => {
+                  const [optionProps, optionElProps] = splitProps(
+                    optionAllProps,
+                    ['value']
+                  );
+                  return (
+                    <div
+                      {...optionElProps}
+                      class={mergeClass('option', optionElProps.class)}
+                      classList={{
+                        active: optionProps.value === value(),
+                        ...optionElProps.classList
+                      }}
+                      onClick={mergeCallbacks<(e: MouseEvent) => void>(
+                        // eslint-disable-next-line solid/reactivity
+                        optionElProps.onClick as any,
+                        // eslint-disable-next-line solid/reactivity
+                        () => {
+                          if (props.onChange) {
+                            props.onChange(optionProps.value);
+                          }
+
+                          setValue(optionProps.value as any);
+                          setFocused(false);
+                        }
+                      )}
+                    >
+                      {optionElProps.children}
+                    </div>
+                  );
+                }}
+              </For>
+            </Dropdown>
+          </GrowFade>
+        </FieldInternalWrapper>
+      );
+    }
+  )
 ) as {
   <OwnerFormValue extends FormValue>(
     props: SelectProps<OwnerFormValue> &
