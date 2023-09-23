@@ -100,17 +100,15 @@ const Select = setupFieldComponent().with(
   makeComponent(
     [
       addAccentColoring<SelectProps>(),
-      extendPropsFrom<SelectProps & { color?: Accents }, typeof InputContainer>(
-        [
-          ...FieldPropKeys,
-          'label',
-          'helperText',
-          'color',
-          'children',
-          'onChange',
-          'onFocus'
-        ]
-      )
+      extendPropsFrom<SelectProps & { color?: Accents }, 'div'>([
+        ...FieldPropKeys,
+        'label',
+        'helperText',
+        'color',
+        'children',
+        'onChange',
+        'onFocus'
+      ])
     ],
     (props, color, elProps) => {
       const {

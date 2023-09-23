@@ -242,10 +242,7 @@ const Datepicker = setupFieldComponent<Date>().with(
   makeComponent(
     [
       addAccentColoring<DatepickerProps>(),
-      extendPropsFrom<
-        DatepickerProps & { color?: Accents },
-        typeof InputContainer
-      >([
+      extendPropsFrom<DatepickerProps & { color?: Accents }, 'div'>([
         ...FieldPropKeys,
         'label',
         'helperText',
