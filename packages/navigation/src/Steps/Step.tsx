@@ -12,7 +12,6 @@ import { Check } from '@terraprisma/icons';
 import { useSteps } from './Steps';
 
 export interface StepProps {
-  index: number;
   description?: string | JSX.Element;
 
   style?: JSX.CSSProperties;
@@ -20,13 +19,15 @@ export interface StepProps {
   children?: JSX.Element;
 }
 
-export const Step = (props: ComponentProps<typeof InternalStep>) => {
+export const Step = (
+  props: Omit<ComponentProps<typeof InternalStep>, 'index'>
+) => {
   return props as unknown as JSX.Element;
 };
 
 export const InternalStep = makeComponent(
   [
-    extendPropsFrom<StepProps, 'div'>([
+    extendPropsFrom<StepProps & { index: number }, 'div'>([
       'description',
       'index',
       'style',
