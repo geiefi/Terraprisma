@@ -13,8 +13,6 @@ import {
 import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
-import { getGlobalWrapper } from './ThemeProvider';
-
 import {
   mergeClass,
   canUseDocument,
@@ -160,13 +158,10 @@ const Ripple = makeComponent(
       });
     };
 
-    let [globalWrapper, setGlobalWrapper] = createSignal<HTMLDivElement>();
-
     createEffect(
       on(
         () => ripples[0],
         () => {
-          setGlobalWrapper(getGlobalWrapper());
           if (isUpdatingRippleWrapper === false) {
             keepUpdatingRippleWrapper();
           }
@@ -204,7 +199,7 @@ const Ripple = makeComponent(
     return (
       <>
         <Show when={rippledElement()}>
-          <Portal mount={globalWrapper()}>
+          <Portal>
             <div
               {...props.wrapperProps}
               class={mergeClass(

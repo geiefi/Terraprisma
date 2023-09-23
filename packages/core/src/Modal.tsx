@@ -8,8 +8,6 @@ import {
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
-import { getGlobalWrapper } from './ThemeProvider';
-
 import {
   mergeClass,
   mergeCallbacks,
@@ -111,10 +109,8 @@ const ModalInternal = makeComponent(
 );
 
 const Modal = (props: ComponentProps<typeof ModalInternal>) => {
-  const terraprismaGlobalDiv = getGlobalWrapper();
-
   return (
-    <Portal mount={terraprismaGlobalDiv}>
+    <Portal>
       <ModalInternal {...props} />
     </Portal>
   );
@@ -132,8 +128,6 @@ export interface CreateModalOptions
 
 export function createModal(options: CreateModalOptions) {
   createRoot((dispose) => {
-    const terraprismaGlobalDiv = getGlobalWrapper();
-
     const container = document.createElement('div');
 
     const [isModalVisible, setModalVisible] = createSignal(false);
@@ -142,7 +136,7 @@ export function createModal(options: CreateModalOptions) {
         {...options}
         visible={isModalVisible()}
         onHidden={() => {
-          terraprismaGlobalDiv.removeChild(container);
+          document.body.removeChild(container);
           dispose();
         }}
         onOk={(...args) => {
@@ -165,7 +159,7 @@ export function createModal(options: CreateModalOptions) {
     // eslint-disable-next-line solid/reactivity
     insert(container, modal);
 
-    terraprismaGlobalDiv.appendChild(container);
+    document.body.appendChild(container);
 
     setModalVisible(true);
   });

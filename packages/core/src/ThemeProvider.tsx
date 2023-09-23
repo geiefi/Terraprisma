@@ -4,13 +4,14 @@ import {
   createEffect,
   createMemo,
   createSignal,
+  onMount,
   ParentProps,
   Setter,
   useContext
 } from 'solid-js';
 
 import { canUseDocument } from '@terraprisma/utils';
-import { generateStyleVariablesFrom, Themes } from '@terraprisma/theming';
+import { c, generateStyleVariablesFrom, Themes } from '@terraprisma/theming';
 
 export type ThemesProviderValue = {
   themes: Themes;
@@ -55,6 +56,15 @@ export function setupTerraprisma(
       return generateStyleVariablesFrom(objWithStyles);
     });
 
+    createEffect(() => {
+      if (canUseDocument()) {
+        const styles = globalStyles();
+        Object.keys(styles).forEach((key) =>
+          document.body.style.setProperty(key, styles[key])
+        );
+      }
+    });
+
     return (
       <TerraprismaContext.Provider
         value={{
@@ -65,28 +75,16 @@ export function setupTerraprisma(
           setThemeId
         }}
       >
-        <div
-          class="leading-[1.5] font-normal box-border text-[var(--text-0)]"
-          id={GalobalWrapperID}
-          style={globalStyles()}
-        >
-          {props.children}
-        </div>
+        {/* <div */}
+        {/*   class="leading-[1.5] font-normal box-border text-[var(--text-0)]" */}
+        {/*   id={GalobalWrapperID} */}
+        {/*   style={globalStyles()} */}
+        {/* > */}
+        {props.children}
+        {/* </div> */}
       </TerraprismaContext.Provider>
     );
   };
-}
-
-export function getGlobalWrapper(): HTMLDivElement {
-  const div = document.getElementById(GalobalWrapperID);
-
-  if (!div) {
-    throw new Error(
-      "Could not find Terraprisma's global div by id, did you perhaps modify it or forget to use the ThemeProvider component?"
-    );
-  }
-
-  return div as HTMLDivElement;
 }
 
 /**
