@@ -1,7 +1,5 @@
 import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
-import './Divisor.scss';
-
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';
 }
@@ -12,11 +10,11 @@ const Divisor = makeComponent(
     return (
       <div
         {...elProps}
-        class={mergeClass('divisor', elProps.class)}
-        classList={{
-          vertical: props.direction === 'vertical',
-          ...elProps.classList
-        }}
+        class={mergeClass(
+          'h-[1px] my-2 opacity-40 bg-[var(--floating-bg)]',
+          props.direction === 'vertical' && 'w-[1px] h-full my-0 mx-2',
+          elProps.class
+        )}
       />
     );
   }

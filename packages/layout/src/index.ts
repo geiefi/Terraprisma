@@ -1,6 +1,8 @@
-import Container from './Container/Container';
-import Stack from './Stack/Stack';
-import Divisor from './Divisor/Divisor';
+import './index.css';
+
+import Container from './Container';
+import Stack from './Stack';
+import Divisor from './Divisor';
 
 export * from './grid';
 export { Container, Stack, Divisor };

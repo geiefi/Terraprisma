@@ -1,8 +1,6 @@
 import { JSX, ParentProps } from 'solid-js';
 import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
-import './Row.scss';
-
 export interface RowProps extends ParentProps {
   gap?: string;
   rowGap?: string;
@@ -16,7 +14,7 @@ const Row = makeComponent(
     return (
       <div
         {...elProps}
-        class={mergeClass('row', elProps.class)}
+        class={mergeClass('flex w-100 flex-wrap', elProps.class)}
         classList={elProps.classList}
         style={{
           '--gap': props.gap,

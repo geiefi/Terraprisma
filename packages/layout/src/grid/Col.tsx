@@ -36,7 +36,7 @@ const Col = makeComponent(
   (props, elProps) => (
     <div
       {...elProps}
-      class="col"
+      class="px-[var(--gap)] py-[var(--row-gap)]"
       style={{
         width: `${(props.size / 24) * 100}%`,
         ...props.style
