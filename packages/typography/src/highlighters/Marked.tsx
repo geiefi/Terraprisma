@@ -1,18 +1,18 @@
 import { ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import './Marked.scss';
 
-const Marked = createComponentExtendingFromOther<ParentProps, 'mark'>(
+const Marked = makeComponent(
+  [extendPropsFrom<ParentProps, 'mark'>(['children'])],
   (props, elProps) => {
     return (
       <mark {...elProps} class={mergeClass('marked', elProps.class)}>
         {props.children}
       </mark>
     );
-  },
-  ['children']
+  }
 );
 
 export default Marked;

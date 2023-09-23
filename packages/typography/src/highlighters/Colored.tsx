@@ -1,20 +1,24 @@
-import { JSX, ParentProps, createMemo } from 'solid-js';
+import { JSX, ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import './Colored.scss';
-import { PossibleColors } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
-interface ColorProps extends ParentProps {
-  color: PossibleColors;
-
+interface ColoredProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Colored = createComponentExtendingFromOther<ColorProps, 'span'>(
-  (props, elProps) => {
-    const color = createMemo(() => `var(--${props.color})`);
-
+const Colored = makeComponent(
+  [
+    addAccentColoring<ColoredProps>(),
+    extendPropsFrom<ColoredProps & { color?: Accents }, 'span'>([
+      'color',
+      'children',
+      'style'
+    ])
+  ],
+  (props, color, elProps) => {
     return (
       <span
         {...elProps}
@@ -27,8 +31,7 @@ const Colored = createComponentExtendingFromOther<ColorProps, 'span'>(
         {props.children}
       </span>
     );
-  },
-  ['color', 'children', 'style']
+  }
 );
 
 export default Colored;

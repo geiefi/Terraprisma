@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import './Decorated.scss';
 
@@ -14,7 +14,8 @@ export interface DecoratedProps extends ParentProps {
   decoration: TypographyDecoration;
 }
 
-const Decorated = createComponentExtendingFromOther<DecoratedProps, 'span'>(
+const Decorated = makeComponent(
+  [extendPropsFrom<DecoratedProps, 'span'>(['decoration', 'children'])],
   (props, elProps) => {
     return (
       <span
@@ -24,8 +25,7 @@ const Decorated = createComponentExtendingFromOther<DecoratedProps, 'span'>(
         {props.children}
       </span>
     );
-  },
-  ['decoration', 'children']
+  }
 );
 
 export default Decorated;

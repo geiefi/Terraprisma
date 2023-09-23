@@ -909,6 +909,9 @@ importers:
       '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
+      '@terraprisma/theming':
+        specifier: workspace:0.0.0-20230829170706
+        version: link:../theming/lib
       '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib

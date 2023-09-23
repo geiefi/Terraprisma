@@ -1,7 +1,7 @@
 import { ParentProps, Show, createMemo } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { createComponentExtendingFromOther } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom } from '@terraprisma/utils';
 import { Divisor } from '@terraprisma/layout';
 
 import './Title.scss';
@@ -17,7 +17,15 @@ export interface TitleProps extends ParentProps {
   showDivisor?: boolean;
 }
 
-const Title = createComponentExtendingFromOther<TitleProps, 'h1'>(
+const Title = makeComponent(
+  [
+    extendPropsFrom<TitleProps, 'h1'>([
+      'children',
+      'center',
+      'showDivisor',
+      'as'
+    ])
+  ],
   (props, elProps) => {
     const element = createMemo(() => props.as ?? 'h1');
 
@@ -50,8 +58,7 @@ const Title = createComponentExtendingFromOther<TitleProps, 'h1'>(
         </Show>
       </>
     );
-  },
-  ['children', 'center', 'showDivisor', 'as']
+  }
 );
 
 export default Title;

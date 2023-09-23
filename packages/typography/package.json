@@ -63,11 +63,12 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
-   },
+  },
   "dependencies": {
-    "@terraprisma/utils": "workspace:*",
     "@terraprisma/core": "workspace:*",
     "@terraprisma/layout": "workspace:*",
+    "@terraprisma/theming": "workspace:0.0.0-20230829170706",
+    "@terraprisma/utils": "workspace:*",
     "solid-js": "^1.7.11"
   }
 }
