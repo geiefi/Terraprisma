@@ -1,0 +1,17 @@
+{
+  "name": "jsx-preserve",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Gabriel Miranda",
+  "dependencies": {
+    "rollup": "^3.28.1",
+    "rollup-plugin-jsx": "^1.0.3",
+    "rollup-plugin-styles": "^4.0.0",
+    "magic-string": "^0.30.3",
+    "estree-walker": "^3.0.3"
+  },
+  "license": "MIT"
+}
