@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
 import './Label.scss';
 
@@ -9,7 +9,8 @@ export interface LabelProps extends ParentProps {
   hasErrors: boolean;
 }
 
-const Label = createComponentExtendingFromOther<LabelProps, 'label'>(
+const Label = makeComponent(
+  [extendPropsFrom<LabelProps, 'label'>(['for', 'hasErrors', 'children'])],
   (props, elProps) => (
     <label
       for={props.for}
@@ -22,8 +23,7 @@ const Label = createComponentExtendingFromOther<LabelProps, 'label'>(
     >
       {props.children}
     </label>
-  ),
-  ['for', 'hasErrors', 'children']
+  )
 );
 
 export default Label;

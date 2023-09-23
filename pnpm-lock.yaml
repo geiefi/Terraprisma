@@ -294,6 +294,9 @@ importers:
       '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
+      '@terraprisma/theming':
+        specifier: workspace:0.0.0-20230829170706
+        version: link:../theming/lib
       '@terraprisma/transitions':
         specifier: workspace:*
         version: link:../transitions/lib
@@ -1184,9 +1187,6 @@ importers:
       '@terraprisma/layout':
         specifier: workspace:*
         version: link:../../packages/layout/lib
-      '@terraprisma/theming':
-        specifier: workspace:*
-        version: link:../../packages/theming/lib
       '@terraprisma/utils':
         specifier: workspace:*
         version: link:../../packages/utils/lib

@@ -1,27 +1,32 @@
-import { JSX, Show, createMemo } from 'solid-js';
+import { JSX, ParentProps, Show, createMemo } from 'solid-js';
 
 import { useField } from '../../fields';
 
-import { PossibleColors } from '@terraprisma/core';
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { addAccentColoring, Accents } from '@terraprisma/theming';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import Label from '../Label/Label';
 
 import './InputContainer.scss';
 
-export interface InputContainerProps {
+export interface InputContainerProps extends ParentProps {
   labelFor: string;
   label?: JSX.Element;
 
-  color?: PossibleColors;
   icon?: JSX.Element;
 }
 
-const InputContainer = createComponentExtendingFromOther<
-  InputContainerProps,
-  'div'
->(
-  (props, elProps) => {
+const InputContainer = makeComponent(
+  [
+    addAccentColoring<InputContainerProps>(),
+    extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
+      'children',
+      'labelFor',
+      'label',
+      'icon'
+    ])
+  ],
+  (props, color, elProps) => {
     const {
       focusedS: [focused],
       disabledS: [disabled],
@@ -29,14 +34,12 @@ const InputContainer = createComponentExtendingFromOther<
       hasContent
     } = useField()!;
 
-    const color = createMemo(() => props.color || 'accent');
-
     return (
       <div
         {...elProps}
         class={mergeClass('input-container', elProps.class)}
         style={{
-          '--choosen-accent-bg': `var(--${color()}-bg)`
+          '--bg': `var(--${color()}-bg)`
         }}
         classList={{
           focused: focused(),
@@ -53,13 +56,12 @@ const InputContainer = createComponentExtendingFromOther<
           </Label>
         </Show>
 
-        {elProps.children}
+        {props.children}
 
         <span class="input-container-icon">{props.icon}</span>
       </div>
     );
-  },
-  ['labelFor', 'label', 'color', 'icon']
+  }
 );
 
 export default InputContainer;

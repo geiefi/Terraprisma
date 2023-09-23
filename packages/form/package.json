@@ -65,13 +65,14 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@terraprisma/core": "workspace:*",
-    "@terraprisma/icons": "workspace:*",
-    "@terraprisma/data-display": "workspace:*",
-    "@terraprisma/transitions": "workspace:*",
-    "@terraprisma/layout": "workspace:*",
-    "@terraprisma/utils": "workspace:*",
     "@solid-primitives/input-mask": "^0.2.0",
+    "@terraprisma/core": "workspace:*",
+    "@terraprisma/data-display": "workspace:*",
+    "@terraprisma/icons": "workspace:*",
+    "@terraprisma/layout": "workspace:*",
+    "@terraprisma/theming": "workspace:0.0.0-20230829170706",
+    "@terraprisma/transitions": "workspace:*",
+    "@terraprisma/utils": "workspace:*",
     "solid-js": "^1.7.11"
   }
 }
