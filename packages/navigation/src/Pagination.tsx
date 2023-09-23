@@ -1,11 +1,9 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { createComponentExtendingFromOther, mergeClass } from '@terraprisma/utils';
+import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
-import { Button } from '@terraprisma/core';
+import { Button, IconButton } from '@terraprisma/core';
 import { ArrowBackIosNew, ArrowForwardIos } from '@terraprisma/icons';
-
-import './Pagination.scss';
 
 export interface PaginationProps {
   current: number;
@@ -24,7 +22,14 @@ export interface PaginationProps {
   onChangePage?: (newPage: number, event?: MouseEvent) => any;
 }
 
-const Pagination = createComponentExtendingFromOther<PaginationProps, 'div'>(
+const Pagination = makeComponent(
+  [
+    extendPropsFrom<PaginationProps, 'div'>([
+      'current',
+      'total',
+      'onChangePage'
+    ])
+  ],
   (props, elProps) => {
     const maximumAppearingChoices = createMemo(
       () => props.maximumAppearingChoices || 5 - 2
@@ -60,32 +65,36 @@ const Pagination = createComponentExtendingFromOther<PaginationProps, 'div'>(
     });
 
     const PageNumber = (p: { pageN: number }) => (
-      <Button.Icon
-        color={p.pageN === props.current ? 'accent' : undefined}
-        class="page-number"
-        size="small"
-        centerRipple
-        onClick={(e: MouseEvent) => handleChangePage(p.pageN, e)}
-      >
-        {p.pageN}
-      </Button.Icon>
+      <>
+        TODO: find the best way to have the icon button here
+        {/* <IconButton */}
+        {/*   class={mergeClass( */}
+        {/*     p.pageN === props.current && '!bg-[var(--bg)] !text-[var(--fg)]' */}
+        {/*   )} */}
+        {/*   size="small" */}
+        {/*   centerRipple */}
+        {/*   onClick={(e: MouseEvent) => handleChangePage(p.pageN, e)} */}
+        {/* > */}
+        {/*   {p.pageN} */}
+        {/* </IconButton> */}
+      </>
     );
 
-    const Etc = () => <div class="etc-icon"> ... </div>;
+    const Etc = () => <div class="flex self-end pb-2 select-none"> ... </div>;
 
     return (
       <div
         {...elProps}
-        class={mergeClass('pagination-container', elProps.class)}
+        class={mergeClass('w-full flex gap-3 flex-row my-1', elProps.class)}
       >
-        <Button.Icon
-          class="back"
-          disabled={props.current === 1}
-          size="small"
-          onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
-        >
-          <ArrowBackIosNew />
-        </Button.Icon>
+        {/* <Button.Icon */}
+        {/*   class="back" */}
+        {/*   disabled={props.current === 1} */}
+        {/*   size="small" */}
+        {/*   onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)} */}
+        {/* > */}
+        {/*   <ArrowBackIosNew /> */}
+        {/* </Button.Icon> */}
 
         <Show when={!range().includes(1)}>
           <PageNumber pageN={1} />
@@ -105,18 +114,17 @@ const Pagination = createComponentExtendingFromOther<PaginationProps, 'div'>(
           <PageNumber pageN={props.total} />
         </Show>
 
-        <Button.Icon
-          class="next"
-          disabled={props.current === props.total}
-          onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
-          size="small"
-        >
-          <ArrowForwardIos />
-        </Button.Icon>
+        {/* <Button.Icon */}
+        {/*   class="next" */}
+        {/*   disabled={props.current === props.total} */}
+        {/*   onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)} */}
+        {/*   size="small" */}
+        {/* > */}
+        {/*   <ArrowForwardIos /> */}
+        {/* </Button.Icon> */}
       </div>
     );
-  },
-  ['current', 'total', 'onChangePage']
+  }
 );
 
 export default Pagination;

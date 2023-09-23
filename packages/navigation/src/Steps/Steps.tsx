@@ -1,101 +1,25 @@
 import {
   Accessor,
   children as accessChildren,
-  Component,
   createEffect,
   createMemo,
-  createSignal,
   For,
   JSX,
-  Show,
-  splitProps,
   useContext,
+  createContext,
   ParentProps
 } from 'solid-js';
 
-import { mergeClass, createComponentExtendingFromOther } from '@terraprisma/utils';
-import { Check } from '@terraprisma/icons';
+import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
 
-import { StepsContext } from './StepsContext';
+import { InternalStep, StepProps } from './Step';
 
-import './Steps.scss';
+export type StepsContextProviderValue = [
+  current: Accessor<number>,
+  count: Accessor<number>
+];
 
-export interface StepProps extends JSX.HTMLAttributes<HTMLDivElement> {
-  description?: string | JSX.Element;
-
-  style?: JSX.CSSProperties;
-}
-
-export const Step: Component<StepProps> = (props) => {
-  return props as unknown as JSX.Element;
-};
-
-const InternalStep: Component<{ index: number } & StepProps> = (allProps) => {
-  const [props, elProps] = splitProps(allProps, ['description', 'index']);
-
-  const [current] = useSteps()!;
-
-  const [descriptionPRef, setDescriptionPRef] =
-    createSignal<HTMLParagraphElement>();
-  const [stepInfoRef, setStepInfoRef] = createSignal<HTMLSpanElement>();
-  const [descriptionOffset, setDescriptionOffset] = createSignal<string>('0px');
-  createEffect(() => {
-    const descriptionP = descriptionPRef();
-    const stepInfo = stepInfoRef();
-    if (descriptionP && stepInfo) {
-      let offset = descriptionP.offsetWidth - stepInfo.offsetWidth;
-      offset = Math.max(offset, 0);
-
-      setDescriptionOffset(`${offset}px`);
-    }
-  });
-
-  const [contentWidth, setContentWidth] = createSignal<string>('0px');
-  const [contentHeight, setContentHeight] = createSignal<string>('0px');
-  const [contentRef, setContentRef] = createSignal<HTMLSpanElement>();
-  createEffect(() => {
-    setContentWidth(`${contentRef()?.offsetWidth || 0}px`);
-    setContentHeight(`${contentRef()?.offsetHeight || 0}px`);
-  });
-
-  return (
-    <div
-      {...elProps}
-      class={mergeClass('step', elProps.class)}
-      classList={{
-        'current-step': current() === props.index,
-        'done-step': current() > props.index,
-        ...elProps.classList
-      }}
-      style={{
-        '--step-content-width': contentWidth(),
-        '--step-content-height': contentHeight(),
-
-        '--description-offset': descriptionOffset(),
-
-        ...elProps.style
-      }}
-    >
-      <span class="step-content" ref={setContentRef}>
-        <span class="step-circle">
-          <Show when={current() <= props.index} fallback={<Check />}>
-            {props.index + 1}
-          </Show>
-        </span>
-
-        <span class="step-info" ref={setStepInfoRef}>
-          <p class="step-title">{elProps.children}</p>
-
-          <Show when={props.description}>
-            <p class="step-description" ref={setDescriptionPRef}>
-              {props.description}
-            </p>
-          </Show>
-        </span>
-      </span>
-    </div>
-  );
-};
+export const StepsContext = createContext<StepsContextProviderValue>();
 
 function isElementAStepProps(el: unknown): el is StepProps {
   return typeof el === 'object' && Object.hasOwn(el || {}, 'children');
@@ -105,14 +29,23 @@ export interface StepsProps extends ParentProps {
   identification: string;
   current: number;
 
-  direction?: 'horizontal' | 'vertical';
+  // TODO: implement vertical steps
+  // direction?: 'horizontal' | 'vertical';
 
   onFinish?: () => void;
 }
 
 export class StepsError extends Error {}
 
-const Steps = createComponentExtendingFromOther<StepsProps, 'div'>(
+const Steps = makeComponent(
+  [
+    extendPropsFrom<StepsProps, 'div'>([
+      'identification',
+      'current',
+      'onFinish',
+      'children'
+    ])
+  ],
   (props, elProps) => {
     const childrenAccessor = accessChildren(() => props.children);
     const steps: Accessor<StepProps[]> = createMemo(() => {
@@ -143,14 +76,10 @@ const Steps = createComponentExtendingFromOther<StepsProps, 'div'>(
       <StepsContext.Provider value={[current, stepsCount]}>
         <div
           {...elProps}
-          class={mergeClass('steps-container', elProps.class)}
-          classList={{
-            vertical: props.direction === 'vertical',
-            horizontal:
-              props.direction === 'horizontal' ||
-              typeof props.direction === 'undefined',
-            ...elProps.classList
-          }}
+          class={mergeClass(
+            'relative flex justify-between my-8 w-full px-2',
+            elProps.class
+          )}
         >
           <For each={steps()}>
             {(step, i) => <InternalStep {...step} index={i()} />}
@@ -158,8 +87,7 @@ const Steps = createComponentExtendingFromOther<StepsProps, 'div'>(
         </div>
       </StepsContext.Provider>
     );
-  },
-  ['identification', 'current', 'direction', 'onFinish', 'children']
+  }
 );
 
 export default Steps;
