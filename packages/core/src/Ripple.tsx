@@ -23,7 +23,7 @@ import {
 } from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/theming';
 
-import './Ripple.scss';
+import './Ripple.css';
 
 export interface RippleProps {
   /**
