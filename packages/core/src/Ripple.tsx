@@ -189,6 +189,13 @@ const Ripple = makeComponent(
       }
     });
 
+    const borderRadius = createMemo<string | undefined>(() => {
+      const el = rippledElement();
+      if (el) {
+        return getComputedStyle(el).borderRadius;
+      }
+    });
+
     onCleanup(() => {
       const el = rippledElement();
       if (el) {
@@ -211,6 +218,8 @@ const Ripple = makeComponent(
                 left: (rippledElementBoundingBox()?.left ?? 0) + 'px',
                 width: (rippledElementBoundingBox()?.width ?? 0) + 'px',
                 height: (rippledElementBoundingBox()?.height ?? 0) + 'px',
+
+                'border-radius': borderRadius(),
 
                 ...props.wrapperProps?.style
               }}
