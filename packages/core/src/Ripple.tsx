@@ -218,7 +218,7 @@ const Ripple = makeComponent(
               <div
                 {...elProps}
                 class={mergeClass(
-                  'relative overflow-hidden w-full h-full p-0 m-0 cursor-pointer',
+                  'relative overflow-hidden w-full h-full p-0 m-0',
                   elProps.class
                 )}
                 ref={setRippleContainer}
@@ -227,15 +227,13 @@ const Ripple = makeComponent(
                   {(ripple) => (
                     <Show when={ripple}>
                       <span
-                        class="absolute animae-[ripple_0.6s_linear] rounded-full z-[999] scale-0 ripple opacity-30 bg-[var(--normal-fg)]"
+                        class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-20 bg-[var(--bg)]"
                         style={{
                           width: `${ripple.diameter}px`,
                           height: `${ripple.diameter}px`,
                           left: `${ripple.left}px`,
                           top: `${ripple.top}px`,
-                          ...(color
-                            ? { 'background-color': `--var(${color()}-fg)` }
-                            : {})
+                          '--bg': `var(--${color()}-fg)`
                         }}
                       />
                     </Show>
