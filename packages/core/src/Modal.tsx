@@ -14,11 +14,12 @@ import {
   makeComponent,
   extendPropsFrom
 } from '@terraprisma/utils';
+import { Fade } from '@terraprisma/transitions';
+import { Divisor } from '@terraprisma/layout';
 
 import Box from './Box';
 import Button from './Buttons/Button';
-import { Fade } from '@terraprisma/transitions';
-import { Divisor } from '@terraprisma/layout';
+import OutlinedButton from './Buttons/OutlinedButton';
 
 export interface ModalProps {
   visible?: boolean;
@@ -88,14 +89,13 @@ const ModalInternal = makeComponent(
               {props.extraElementsInFooter}
 
               <div class="ml-auto flex gap-4 &>*">
-                <Button
+                <OutlinedButton
                   class="h-full"
-                  variant="outlined"
                   color="danger"
                   onClick={props.onCancel}
                 >
                   Cancel
-                </Button>
+                </OutlinedButton>
                 <Button class="h-full" onClick={props.onOk} color="accent">
                   Ok
                 </Button>
