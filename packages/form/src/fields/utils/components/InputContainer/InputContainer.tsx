@@ -18,15 +18,14 @@ export interface InputContainerProps extends ParentProps {
 
 const InputContainer = makeComponent(
   [
-    addAccentColoring<InputContainerProps>(),
-    extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
+    extendPropsFrom<InputContainerProps, 'div'>([
       'children',
       'labelFor',
       'label',
       'icon'
     ])
   ],
-  (props, color, elProps) => {
+  (props, elProps) => {
     const {
       focusedS: [focused],
       disabledS: [disabled],
@@ -38,9 +37,6 @@ const InputContainer = makeComponent(
       <div
         {...elProps}
         class={mergeClass('input-container', elProps.class)}
-        style={{
-          '--bg': `var(--${color()}-bg)`
-        }}
         classList={{
           focused: focused(),
           'has-content': hasContent(),
@@ -58,7 +54,9 @@ const InputContainer = makeComponent(
 
         {props.children}
 
-        <span class="input-container-icon">{props.icon}</span>
+        <Show when={props.icon}>
+          <span class="input-container-icon">{props.icon}</span>
+        </Show>
       </div>
     );
   }

@@ -5,45 +5,35 @@
   margin: 0;
   padding: 0;
   position: relative;
-  border-radius: 7px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 10px;
 
-  padding-inline: 12px;
-  padding-top: 19px;
-  padding-bottom: 8px;
+  font-size: 14px;
+  padding-inline: 20px;
+  padding-block: 14px;
 
   transition: .2s filter linear,
     .2s background-color linear;
 
   // these are the default values
-  --text-color: var(--floating-fg);
-  --label-color: var(--floating-fg);
-  --focused-label-color: var(--choosen-accent-bg);
-  --background-color: var(--floating-bg);
-  --border-color: var(--floating-border);
-
-  &.focused {
-    --label-color: var(--focused-label-color);
-  }
+  --bg: var(--deeper-bg);
+  --fg: var(--deeper-fg);
 
   &.error {
-    --label-color: var(--danger);
-    --text-color: var(--danger);
+    --fg: var(--danger-bg);
   }
 
   // sets the colors based on the variables created above
-  background: var(--background-color);
-  border-bottom: 2px solid var(--border-color);
-  color: var(--text-color);
+  background: var(--bg);
+  color: var(--fg);
 
   .input-container-icon {
     --icon-font-size: 16px;
+    background: var(--bg);
 
     position: absolute;
     width: min-content;
     height: min-content;
-    left: calc(100% - var(--icon-font-size) - 8px);
+    left: calc(100% - var(--icon-font-size) - 20px);
     top: calc(50% - var(--icon-font-size) / 2);
 
     box-sizing: content-box;
@@ -58,65 +48,35 @@
   }
 
   label {
-    color: var(--label-color);
-    font-weight: 800;
+    color: var(--fg);
+    font-weight: bolder;
+    font-size: 12px;
 
     position: absolute;
-    left: 12px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     transform-origin: top left;
   }
 
+  &.focused, &.has-content {
+    padding-top: 20px;
+    padding-bottom: 8px;
+  }
+
   &.focused label,
   &.has-content label {
-    color: var(--focused-label-color);
-
-    top: 15.5px;
+    font-weight: bold;
+    top: 18px;
+    left: 21px;
     opacity: 0.7;
-    transform: translateY(-50%) scale(0.7);
+    transform: translateY(-50%) scale(0.666);
   }
-
-  &:hover:not(.focused) {
-    filter: brightness(94%);
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    width: 0;
-    height: 1px;
-    transform: translateX(-50%);
-    transition: .2s width ease-out;
-    background: var(--choosen-accent-bg);
-  }
-
-  &.focused::after {
-    width: 100%;
-    height: 2px;
-  }
-}
-
-.error .input-container,
-.error.input-container {
-  border-bottom: 3px solid var(--danger);
-
-  &::after {
-    transition: .2s width ease-out,
-      .2s height ease-out !important;
-    background: var(--danger);
-    width: 100%;
-  }
-}
-
-@function add-transparency($color, $percentage) {
-  @return color-mix(in srgb, $color, transparent $percentage);
 }
 
 .input-container.disabled {
-  opacity: 0.4;
-  filter: brightness(95%) !important;
+  --bg: var(--muted-bg);
+  --fg: var(--muted-fg);
+  cursor: none;
 }
 
