@@ -15,8 +15,8 @@ export interface ButtonProps extends ParentProps {
   style?: JSX.CSSProperties;
 
   /**
-   * @description Removes the styling that is used by default, making the button css reset
-   * so that it is easy to customize. For example, this is used internally to style the button variants.
+   * @description Removes the styling that is used to make the button fille so that it is easy to customize.
+   * For example, this is used internally to style the button variants.
    *
    * @default false
    */
@@ -45,10 +45,10 @@ const Button = makeComponent(
           type="button"
           {...elProps}
           class={mergeClass(
-            'inline-flex bap-1 rounded-sm items-center h-max w-fit box-border outline-none shadow-none select-none align-middle',
+            'inline-flex gap-1 text-center items-center justify-center h-max w-fit box-border outline-none shadow-none select-none align-middle ease-in transition-colors !duration-300',
             !props.disabled &&
               !props.unstyled &&
-              'border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)] ease-in transition-colors !duration-300',
+              'rounded-sm border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
             props.disabled &&
               'bg-[var(--muted-bg)] text-[var(--muted-fg)] shadow-none',
             size() === 'small' && 'px-2 py-1 text-sm',
@@ -59,7 +59,8 @@ const Button = makeComponent(
           style={{
             '--bg': `var(--${color()}-bg)`,
             '--fg': `var(--${color()}-fg)`,
-            '--hover': `var(--${color()}-hover)`
+            '--hover': `var(--${color()}-hover)`,
+            ...props.style
           }}
           aria-disabled={props.disabled}
         >

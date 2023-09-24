@@ -19,7 +19,11 @@ const OutlinedButton = makeComponent(
         class={mergeClass(
           !dftProps.disabled &&
             !dftProps.unstyled &&
-            'bg-transparent border-2 border-solid border-[var(--bg)] text-[var(--bg)] hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+            'rounded-sm border-2 border-solid border-[var(--bg)] hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+          !dftProps.disabled &&
+            !dftProps.unstyled &&
+            !props.active &&
+            'bg-transparent text-[var(--bg)]',
           !dftProps.disabled &&
             !dftProps.unstyled &&
             props.active &&
