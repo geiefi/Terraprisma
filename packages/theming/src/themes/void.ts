@@ -5,7 +5,7 @@ export const VoidTheme = {
 
   bgBackdrop: new Color('rgba(0,0,0,.4)'),
   normal: c('#000000', '#ffffff'),
-  deeper: c('#0D0D0D', '#ffffff'),
+  deeper: c('#151515', '#ffffff'),
   floating: c('#000000', '#ffffff', { border: new Color('#303030') }),
 
   accent: c('#ffffff', '#000000', { hover: new Color('#A9A9A9') }),
