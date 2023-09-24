@@ -19,7 +19,7 @@ const TextButton = makeComponent(
         class={mergeClass(
           !dftProps.disabled &&
             !dftProps.unstyled &&
-            'rounded-sm border-none hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+            'rounded-[3px] border-none hover:bg-[var(--bg)] hover:text-[var(--fg)]',
           !dftProps.disabled &&
             !dftProps.unstyled &&
             !props.active &&
