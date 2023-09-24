@@ -10,7 +10,8 @@ import {
   createEffect,
   on,
   splitProps,
-  ComponentProps
+  ComponentProps,
+  Show
 } from 'solid-js';
 
 import {
@@ -31,9 +32,9 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown } from '@terraprisma/core';
+import { Dropdown, Ripple } from '@terraprisma/core';
 import { GrowFade } from '@terraprisma/transitions';
-import { KeyboardArrowDown } from '@terraprisma/icons';
+import { Check, KeyboardArrowDown } from '@terraprisma/icons';
 
 import { FormValue, FormFieldValue } from '../../types';
 
@@ -183,16 +184,12 @@ const Select = setupFieldComponent().with(
       );
 
       return (
-        <FieldInternalWrapper
-          style={{
-            cursor: disabled() === false ? 'pointer' : 'default'
-          }}
-        >
+        <FieldInternalWrapper>
           <InputContainer
             {...elProps}
             id={id()}
-            color={color()}
             labelFor={id()}
+            style={{ cursor: 'pointer' }}
             label={props.label}
             onClick={(e) => {
               if (typeof elProps.onClick === 'function') {
@@ -223,14 +220,16 @@ const Select = setupFieldComponent().with(
             {optionLabelFromValue(value())}
           </InputContainer>
 
-          <GrowFade>
+          <GrowFade growingOrigin="top">
             <Dropdown
               for={inputContainerRef()!}
               class="select-dropdown"
               visible={focused()}
               style={{
-                '--color': `var(--${color()}-bg)`
+                '--color/10': `var(--${color()}-bg\\/10)`,
+                '--hover/10': `var(--${color()}-hover\\/10)`
               }}
+              offsetFromAnchor={8}
             >
               <For each={options()}>
                 {(optionAllProps) => {
@@ -261,6 +260,12 @@ const Select = setupFieldComponent().with(
                       )}
                     >
                       {optionElProps.children}
+
+                      <Show when={optionProps.value === value()}>
+                        <span class="active-check">
+                          <Check variant="rounded" />
+                        </span>
+                      </Show>
                     </div>
                   );
                 }}
