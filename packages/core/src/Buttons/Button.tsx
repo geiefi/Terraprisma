@@ -47,25 +47,25 @@ const Button = makeComponent(
         center={props.centerRipple}
         color={color()}
         {...props.rippleProps}
-        class={mergeClass('inline-block rounded-sm', props.rippleProps?.class)}
+        class={mergeClass('rounded-sm', props.rippleProps?.class)}
       >
         <button
           type="button"
           {...elProps}
           class={mergeClass(
-            'inline-flex gap-1 rounded-sm items-center h-max w-fit box-border border-none outline-none select-none align-middle',
-            'ease-in duration-300 transition-colors',
+            'inline-flex bap-1 rounded-sm items-center h-max w-fit box-border outline-none shadow-none select-none align-middle',
+            'ease-in transition-colors !duration-300',
             !props.disabled &&
               variant() === 'filled' &&
-              'bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
+              'border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
             !props.disabled &&
               variant() === 'outlined' &&
-              'outline-2 outline-[var(--bg)] text-[var(--bg)] hover:bg-[var(--hover)] hover:text-[var(--fg)]',
+              'bg-transparent border-2 border-solid border-[var(--bg)] text-[var(--bg)] hover:bg-[var(--bg)] hover:text-[var(--fg)]',
             props.disabled &&
               'bg-[var(--muted-bg)] text-[var(--muted-fg)] shadow-none',
-            size() === 'small' && 'px-1 py-2 text-sm',
-            size() === 'medium' && 'px-2 py-3 text-base',
-            size() === 'medium' && 'px-3 py-5 text-lg',
+            size() === 'small' && 'px-2 py-1 text-sm',
+            size() === 'medium' && 'px-4 py-2 text-base',
+            size() === 'large' && 'px-5 py-3 text-lg',
             elProps.class
           )}
           style={{
