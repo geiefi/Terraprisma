@@ -1,23 +1,26 @@
-import { ComponentProps, createMemo, JSX } from 'solid-js';
+import { ComponentProps, createMemo, JSX, ParentProps } from 'solid-js';
 
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 import Ripple from '../Ripple';
 
-export interface ButtonProps {
+export interface ButtonProps extends ParentProps {
   size?: 'small' | 'medium' | 'large';
-  /**
-   * @default 'filled'
-   */
-  variant?: 'filled' | 'outlined';
 
   disabled?: boolean;
 
-  centerRipple?: boolean;
   rippleProps?: Omit<ComponentProps<typeof Ripple>, 'children'>;
 
   style?: JSX.CSSProperties;
+
+  /**
+   * @description Removes the styling that is used by default, making the button css reset
+   * so that it is easy to customize. For example, this is used internally to style the button variants.
+   *
+   * @default false
+   */
+  unstyled?: boolean;
 }
 
 const Button = makeComponent(
@@ -26,41 +29,26 @@ const Button = makeComponent(
     extendPropsFrom<ButtonProps & { color?: Accents }, 'button'>([
       'color',
       'size',
-      'variant',
       'disabled',
-      'centerRipple',
       'rippleProps',
-      'style'
+      'style',
+      'unstyled',
+      'children'
     ])
   ],
   (props, color, elProps) => {
-    const buttonBgColor = createMemo(() => `var(--${color()}-bg)`);
-    const buttonFgColor = createMemo(() => `var(--${color()}-fg)`);
-    const buttonHoverColor = createMemo(() => `var(--${color()}-hover)`);
-
-    const variant = createMemo(() => props.variant ?? 'filled');
     const size = createMemo(() => props.size ?? 'medium');
 
     return (
-      <Ripple
-        noRipple={props.disabled}
-        center={props.centerRipple}
-        color={color()}
-        {...props.rippleProps}
-        class={mergeClass('rounded-sm', props.rippleProps?.class)}
-      >
+      <Ripple noRipple={props.disabled} color={color()} {...props.rippleProps}>
         <button
           type="button"
           {...elProps}
           class={mergeClass(
             'inline-flex bap-1 rounded-sm items-center h-max w-fit box-border outline-none shadow-none select-none align-middle',
-            'ease-in transition-colors !duration-300',
             !props.disabled &&
-              variant() === 'filled' &&
-              'border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
-            !props.disabled &&
-              variant() === 'outlined' &&
-              'bg-transparent border-2 border-solid border-[var(--bg)] text-[var(--bg)] hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+              !props.unstyled &&
+              'border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)] ease-in transition-colors !duration-300',
             props.disabled &&
               'bg-[var(--muted-bg)] text-[var(--muted-fg)] shadow-none',
             size() === 'small' && 'px-2 py-1 text-sm',
@@ -69,13 +57,13 @@ const Button = makeComponent(
             elProps.class
           )}
           style={{
-            '--bg': buttonBgColor(),
-            '--fg': buttonFgColor(),
-            '--hover': buttonHoverColor()
+            '--bg': `var(--${color()}-bg)`,
+            '--fg': `var(--${color()}-fg)`,
+            '--hover': `var(--${color()}-hover)`
           }}
           aria-disabled={props.disabled}
         >
-          {elProps.children}
+          {props.children}
         </button>
       </Ripple>
     );
