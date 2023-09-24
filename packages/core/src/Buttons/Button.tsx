@@ -49,8 +49,7 @@ const Button = makeComponent(
             !props.disabled &&
               !props.unstyled &&
               'rounded-sm border-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
-            props.disabled &&
-              'bg-[var(--muted-bg)] text-[var(--muted-fg)] shadow-none',
+            props.disabled && '!bg-[var(--muted-bg)] !text-[var(--muted-fg)]',
             size() === 'small' && 'px-2 py-1 text-sm',
             size() === 'medium' && 'px-4 py-2 text-base',
             size() === 'large' && 'px-5 py-3 text-lg',
