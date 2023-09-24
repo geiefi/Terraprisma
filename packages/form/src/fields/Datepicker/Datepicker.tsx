@@ -30,7 +30,13 @@ import {
   mergeCallbacks
 } from '@terraprisma/utils';
 
-import { Box, Dropdown, IconButton } from '@terraprisma/core';
+import {
+  Button,
+  Dropdown,
+  IconButton,
+  OutlinedButton,
+  TextButton
+} from '@terraprisma/core';
 import { ArrowLeft, ArrowRight, CalendarMonth } from '@terraprisma/icons';
 import { Row } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
@@ -146,14 +152,13 @@ const DatepickerInternalDayPicker: Component<{
           >
             <IconButton
               size="small"
-              centerRipple
-              classList={{
-                active:
-                  props.selectedDate.getMonth() === day.dateAtDay.getMonth() &&
-                  props.selectedDate.getDate() === day.dateAtDay.getDate() &&
-                  props.selectedDate.getFullYear() ===
-                    day.dateAtDay.getFullYear()
-              }}
+              squarish
+              rippleProps={{ center: true }}
+              active={
+                props.selectedDate.getMonth() === day.dateAtDay.getMonth() &&
+                props.selectedDate.getDate() === day.dateAtDay.getDate() &&
+                props.selectedDate.getFullYear() === day.dateAtDay.getFullYear()
+              }
               onClick={() => props.onDayClicked(day.dateAtDay)}
             >
               {day.day}
@@ -179,17 +184,16 @@ const DatepickerInternalMonthPicker: Component<{
       <Index each={props.monthNames}>
         {(month, monthNumber) => (
           <span class="entry">
-            <IconButton
+            <TextButton
               size="small"
-              classList={{
-                active:
-                  monthNumber === props.selectedDate.getMonth() &&
-                  props.year === props.selectedDate.getFullYear()
-              }}
+              active={
+                monthNumber === props.selectedDate.getMonth() &&
+                props.year === props.selectedDate.getFullYear()
+              }
               onClick={() => props.onMonthClicked(monthNumber)}
             >
               {month()}
-            </IconButton>
+            </TextButton>
           </span>
         )}
       </Index>
@@ -220,17 +224,16 @@ const DatepickerIntenralYearPicker: Component<{
       <Index each={years()}>
         {(year) => (
           <span class="entry">
-            <IconButton
+            <TextButton
               size="small"
-              classList={{
-                active:
-                  props.month === props.selectedDate.getMonth() &&
-                  year() === props.selectedDate.getFullYear()
-              }}
+              active={
+                props.month === props.selectedDate.getMonth() &&
+                year() === props.selectedDate.getFullYear()
+              }
               onClick={() => props.onYearClicked(year())}
             >
               {year()}
-            </IconButton>
+            </TextButton>
           </span>
         )}
       </Index>
@@ -433,109 +436,106 @@ const Datepicker = setupFieldComponent<Date>().with(
               class="datepicker-dropdown"
               ref={setDropdownRef}
             >
-              <Box class="datepicker-dropdown-inner">
-                <div class="dropdown-header">
-                  <IconButton
-                    size="small"
-                    class="arrow-previous"
-                    onClick={handlePrevious}
-                  >
-                    <ArrowLeft />
-                  </IconButton>
+              <div class="dropdown-header">
+                <IconButton
+                  size="small"
+                  class="arrow-previous"
+                  onClick={handlePrevious}
+                >
+                  <ArrowLeft />
+                </IconButton>
 
-                  {/* <ButtonChooser */}
-                  {/*   name="dateSelectionType" */}
-                  {/*   class="selection-type-button-chooser" */}
-                  {/*   value={datepickerSelectionType()} */}
-                  {/*   manuallyControlled */}
-                  {/*   onChange={(v: any) => { */}
-                  {/*     if (v === datepickerSelectionType()) { */}
-                  {/*       setDatepickerSelectionType('day'); */}
-                  {/*     } else { */}
-                  {/*       setDatepickerSelectionType(v as any); */}
-                  {/*     } */}
-                  {/*   }} */}
-                  {/* > */}
-                  {/*   {(Option) => [ */}
-                  {/*     <Option */}
-                  {/*       size="medium" */}
-                  {/*       class="selection-type-button" */}
-                  {/*       value="month" */}
-                  {/*     > */}
-                  {/*       {monthNames[viewedMonth()]} */}
-                  {/*     </Option>, */}
-                  {/*     <Option */}
-                  {/*       size="medium" */}
-                  {/*       class="selection-type-button" */}
-                  {/*       value="year" */}
-                  {/*     > */}
-                  {/*       {viewedYear()} */}
-                  {/*     </Option> */}
-                  {/*   ]} */}
-                  {/* </ButtonChooser> */}
-
-                  <IconButton
+                <div class="selection-type-button-chooser">
+                  <OutlinedButton
                     size="small"
-                    class="arrow-next"
-                    onClick={handleNext}
+                    active={datepickerSelectionType() === 'month'}
+                    onClick={() => {
+                      if (datepickerSelectionType() === 'month') {
+                        setDatepickerSelectionType('day');
+                      } else {
+                        setDatepickerSelectionType('month');
+                      }
+                    }}
                   >
-                    <ArrowRight />
-                  </IconButton>
+                    {monthNames[viewedMonth()]}
+                  </OutlinedButton>
+
+                  <OutlinedButton
+                    size="small"
+                    active={datepickerSelectionType() === 'year'}
+                    onClick={() => {
+                      if (datepickerSelectionType() === 'year') {
+                        setDatepickerSelectionType('day');
+                      } else {
+                        setDatepickerSelectionType('year');
+                      }
+                    }}
+                  >
+                    {viewedYear()}
+                  </OutlinedButton>
                 </div>
 
-                <Row class="dropdown-content">
-                  <Switch>
-                    <Match when={typeof value() === 'undefined'}>...</Match>
-                    <Match when={datepickerSelectionType() === 'day'}>
-                      <DatepickerInternalDayPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        onDayClicked={(newDate) => setValue(newDate)}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                    <Match when={datepickerSelectionType() === 'month'}>
-                      <DatepickerInternalMonthPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        monthNames={monthNames}
-                        onMonthClicked={(month) => {
-                          setValue(
-                            new Date(
-                              viewedYear(),
-                              month,
-                              Math.min(
-                                amountOfDaysInMonth(viewedYear(), month),
-                                value()?.getDate() || 1
-                              )
+                <IconButton
+                  size="small"
+                  class="arrow-next"
+                  onClick={handleNext}
+                >
+                  <ArrowRight />
+                </IconButton>
+              </div>
+
+              <Row class="dropdown-content">
+                <Switch>
+                  <Match when={typeof value() === 'undefined'}>...</Match>
+                  <Match when={datepickerSelectionType() === 'day'}>
+                    <DatepickerInternalDayPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      onDayClicked={(newDate) => setValue(newDate)}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                  <Match when={datepickerSelectionType() === 'month'}>
+                    <DatepickerInternalMonthPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      monthNames={monthNames}
+                      onMonthClicked={(month) => {
+                        setValue(
+                          new Date(
+                            viewedYear(),
+                            month,
+                            Math.min(
+                              amountOfDaysInMonth(viewedYear(), month),
+                              value()?.getDate() || 1
                             )
-                          );
-                        }}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                    <Match when={datepickerSelectionType() === 'year'}>
-                      <DatepickerIntenralYearPicker
-                        year={viewedYear()}
-                        month={viewedMonth()}
-                        onYearClicked={(year) => {
-                          setValue(
-                            new Date(
-                              year,
-                              viewedMonth(),
-                              Math.min(
-                                amountOfDaysInMonth(year, viewedMonth()),
-                                value()?.getDate() || 1
-                              )
+                          )
+                        );
+                      }}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                  <Match when={datepickerSelectionType() === 'year'}>
+                    <DatepickerIntenralYearPicker
+                      year={viewedYear()}
+                      month={viewedMonth()}
+                      onYearClicked={(year) => {
+                        setValue(
+                          new Date(
+                            year,
+                            viewedMonth(),
+                            Math.min(
+                              amountOfDaysInMonth(year, viewedMonth()),
+                              value()?.getDate() || 1
                             )
-                          );
-                        }}
-                        selectedDate={value()!}
-                      />
-                    </Match>
-                  </Switch>
-                </Row>
-              </Box>
+                          )
+                        );
+                      }}
+                      selectedDate={value()!}
+                    />
+                  </Match>
+                </Switch>
+              </Row>
             </Dropdown>
           </GrowFade>
         </FieldInternalWrapper>
