@@ -2,7 +2,15 @@ import { Component, createRoot, createSignal, getOwner } from 'solid-js';
 
 import { Col, Row, Container, Stack } from '@terraprisma/layout';
 import { List, Table } from '@terraprisma/data-display';
-import { Box, Button, Modal, createModal, useGrapeS } from '@terraprisma/core';
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  OutlinedButton,
+  createModal,
+  useGrapeS
+} from '@terraprisma/core';
 import { Step, Steps } from '@terraprisma/navigation';
 import {
   RadioGroup,
@@ -120,14 +128,16 @@ const DesignShowcase: Component = () => {
                 validators={[Validators.isEqual('terraria')]}
                 value="minecraft"
               >
-                <RadioGroup.Option value="terraria">Terraria</RadioGroup.Option>
-                <RadioGroup.Option value="minecraft">
-                  Minecraft
-                </RadioGroup.Option>
-                <RadioGroup.Option value="roblox" disabled>
-                  Roblox
-                </RadioGroup.Option>
-                <RadioGroup.Option value="necesse">Necesse</RadioGroup.Option>
+                {(Option) => (
+                  <>
+                    <Option value="terraria">Terraria</Option>
+                    <Option value="minecraft">Minecraft</Option>
+                    <Option value="roblox" disabled>
+                      Roblox
+                    </Option>
+                    <Option value="necesse">Necesse</Option>
+                  </>
+                )}
               </RadioGroup>
             </Box>
           </Col>
@@ -150,31 +160,31 @@ const DesignShowcase: Component = () => {
                   <Button color="accent">Secondary</Button>
                   <Button color="accent">Tertiary</Button>
                 </Stack>
+                {/* <Stack direction="horizontal" align="center" spacing={5}> */}
+                {/*   <Button.Rounded color="accent"> */}
+                {/*     Send <Send /> */}
+                {/*   </Button.Rounded> */}
+                {/*   <Button.Rounded color="transparent"> */}
+                {/*     Are you sure? <QuestionMark /> */}
+                {/*   </Button.Rounded> */}
+                {/*   <Button.Rounded color="accent"> */}
+                {/*     Delete <Delete /> */}
+                {/*   </Button.Rounded> */}
+                {/* </Stack> */}
                 <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button.Rounded color="accent">
-                    Send <Send />
-                  </Button.Rounded>
-                  <Button.Rounded color="transparent">
-                    Are you sure? <QuestionMark />
-                  </Button.Rounded>
-                  <Button.Rounded color="accent">
-                    Delete <Delete />
-                  </Button.Rounded>
+                  <OutlinedButton>Cancel</OutlinedButton>
+                  <OutlinedButton>Confirm</OutlinedButton>
                 </Stack>
                 <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button.Empty>Cancel</Button.Empty>
-                  <Button.Empty>Confirm</Button.Empty>
-                </Stack>
-                <Stack direction="horizontal" align="center" spacing={5}>
-                  <Button.Icon color="primary">
+                  <IconButton>
                     <Send />
-                  </Button.Icon>
-                  <Button.Icon color="secondary">
+                  </IconButton>
+                  <IconButton>
                     <CopyAll />
-                  </Button.Icon>
-                  <Button.Icon color="tertiary">
+                  </IconButton>
+                  <IconButton>
                     <Delete />
-                  </Button.Icon>
+                  </IconButton>
                 </Stack>
               </Stack>
             </Box>

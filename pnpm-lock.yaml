@@ -65,6 +65,9 @@ importers:
       '@terraprisma/utils':
         specifier: workspace:*
         version: link:../utils/lib
+      fdbg:
+        specifier: ^1.0.0
+        version: 1.0.0
       solid-js:
         specifier: ^1.7.11
         version: 1.7.12
@@ -1126,6 +1129,9 @@ importers:
       '@terraprisma/navigation':
         specifier: workspace:*
         version: link:../../packages/navigation/lib
+      '@terraprisma/theming':
+        specifier: workspace:*
+        version: link:../../packages/theming/lib
       '@terraprisma/transitions':
         specifier: workspace:*
         version: link:../../packages/transitions/lib
@@ -6165,6 +6171,10 @@ packages:
     dependencies:
       bser: 2.1.1
     dev: true
+
+  /fdbg@1.0.0:
+    resolution: {integrity: sha512-m5ijI7tfWv7GFtnt6dGN2ZsGx57XfkH1JF6WFkic2ZVgc/WSwqTDARy7IRRmEM1qGC6wpFosob4ctwf9umzAZg==}
+    dev: false
 
   /file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}

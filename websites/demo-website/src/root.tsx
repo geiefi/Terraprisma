@@ -1,6 +1,7 @@
 // @refresh reload
-import { DarkTheme, makeThemeProvider } from '@terraprisma/core';
-import type { Theme } from '@terraprisma/utils';
+import { setupTerraprisma } from '@terraprisma/core';
+import { VoidTheme } from '@terraprisma/theming';
+
 import { onMount, Suspense } from 'solid-js';
 import {
   Body,
@@ -16,14 +17,14 @@ import {
 
 import { onLCP, onFID, onCLS } from 'web-vitals';
 
-const themes = [DarkTheme];
-declare global {
+const themes = [VoidTheme];
+declare module '@terraprisma/theming' {
   interface Register {
     themes: typeof themes;
   }
 }
 
-const ThemeProvider = makeThemeProvider([DarkTheme]);
+const ThemeProvider = setupTerraprisma(themes);
 
 export default function Root() {
   onMount(() => {
@@ -35,21 +36,17 @@ export default function Root() {
   return (
     <Html lang="pt-br">
       <Head>
-        <Title>GrapeS - Demo website</Title>
+        <Title>Terraprisma - demo</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body style={{ margin: 0 }}>
         <Suspense>
-          <ErrorBoundary>
-            <ThemeProvider>
-              <ErrorBoundary>
-                <Routes>
-                  <FileRoutes />
-                </Routes>
-              </ErrorBoundary>
-            </ThemeProvider>
-          </ErrorBoundary>
+          <ThemeProvider>
+            <Routes>
+              <FileRoutes />
+            </Routes>
+          </ThemeProvider>
         </Suspense>
         <Scripts />
       </Body>
