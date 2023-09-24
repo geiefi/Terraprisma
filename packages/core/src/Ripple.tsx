@@ -189,12 +189,14 @@ const Ripple = makeComponent(
       }
     });
 
-    const borderRadius = createMemo<string | undefined>(() => {
-      const el = rippledElement();
-      if (el) {
-        return getComputedStyle(el).borderRadius;
-      }
-    });
+    const borderRadius = createMemo<string | undefined>(
+      on(rippledElementBoundingBox, () => {
+        const el = rippledElement();
+        if (el) {
+          return getComputedStyle(el).borderRadius;
+        }
+      })
+    );
 
     onCleanup(() => {
       const el = rippledElement();
