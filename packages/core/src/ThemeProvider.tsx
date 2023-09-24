@@ -4,14 +4,19 @@ import {
   createEffect,
   createMemo,
   createSignal,
-  onMount,
   ParentProps,
   Setter,
   useContext
 } from 'solid-js';
 
 import { canUseDocument } from '@terraprisma/utils';
-import { c, generateStyleVariablesFrom, Themes } from '@terraprisma/theming';
+import {
+  Accent,
+  AnyTheme,
+  generateStyleVariablesFrom,
+  Theme,
+  Themes
+} from '@terraprisma/theming';
 
 export type ThemesProviderValue = {
   themes: Themes;
@@ -52,8 +57,20 @@ export function setupTerraprisma(
 
     const globalStyles = createMemo(() => {
       const theme = currentTheme();
-      const { id, ...objWithStyles } = { ...theme };
-      return generateStyleVariablesFrom(objWithStyles);
+      let obj: any;
+      if ('mainAccent' in theme && 'accents' in theme) {
+        const { id, mainAccent, ...objWithStyles } = {
+          ...(theme as Theme<Record<string, Accent>>)
+        };
+        obj = {
+          ...objWithStyles,
+          accent: objWithStyles.accents[mainAccent]
+        };
+      } else {
+        const { id, ...objWithStyles } = { ...theme };
+        obj = objWithStyles;
+      }
+      return generateStyleVariablesFrom(obj);
     });
 
     createEffect(() => {
@@ -75,13 +92,7 @@ export function setupTerraprisma(
           setThemeId
         }}
       >
-        {/* <div */}
-        {/*   class="leading-[1.5] font-normal box-border text-[var(--text-0)]" */}
-        {/*   id={GalobalWrapperID} */}
-        {/*   style={globalStyles()} */}
-        {/* > */}
         {props.children}
-        {/* </div> */}
       </TerraprismaContext.Provider>
     );
   };

@@ -68,6 +68,8 @@ export type BgColors<Obj extends Record<string, any> = Theme> =
 
 export type Accent = BgFgPair & { hover: Color };
 
+export type AnyTheme = Theme<Record<string, Accent>> | Theme<undefined>;
+
 export type Theme<
   Accents extends Record<string, Accent> | undefined =
     | Record<string, Accent>
@@ -100,24 +102,51 @@ export type Theme<
       accent: Accent;
     }
   : {
+      mainAccent: keyof Accents;
       /**
        * @description A list of accent colors, the first accent color is going to be the primary one.
        */
       accents: Accents;
     });
 
-export function c<
+export function cbf<Bg extends string, Fg extends string>(
+  bg: Bg,
+  fg: Fg
+): { bg: Color<Bg>; fg: Color<Fg> } {
+  return {
+    bg: new Color(bg),
+    fg: new Color(fg)
+  };
+}
+
+export function cbfb<
   Bg extends string,
   Fg extends string,
-  Additional extends Record<string, Color> = {}
+  Border extends string
 >(
   bg: Bg,
   fg: Fg,
-  additional: Additional = {} as Additional
-): { bg: Color<Bg>; fg: Color<Fg> } & Additional {
+  border: Border
+): { bg: Color<Bg>; fg: Color<Fg>; border: Color<Border> } {
   return {
     bg: new Color(bg),
     fg: new Color(fg),
-    ...additional
+    border: new Color(border)
+  };
+}
+
+export function cbfh<
+  Bg extends string,
+  Fg extends string,
+  HoverBg extends string
+>(
+  bg: Bg,
+  fg: Fg,
+  hoverBg: HoverBg
+): { bg: Color<Bg>; fg: Color<Fg>; hover: Color<HoverBg> } {
+  return {
+    bg: new Color(bg),
+    fg: new Color(fg),
+    hover: new Color(hoverBg)
   };
 }

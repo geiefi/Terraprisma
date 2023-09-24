@@ -1,18 +1,18 @@
-import { Color, Theme, c } from '../Theme';
+import { Color, Theme, cbf, cbfb, cbfh } from '../Theme';
 
 export const VoidTheme = {
   id: 'void',
 
   bgBackdrop: new Color('rgba(0,0,0,.4)'),
-  normal: c('#000000', '#ffffff'),
-  deeper: c('#151515', '#ffffff'),
-  floating: c('#000000', '#ffffff', { border: new Color('#303030') }),
+  normal: cbf('#000000', '#ffffff'),
+  deeper: cbf('#151515', '#ffffff'),
+  floating: cbfb('#000000', '#ffffff', '#303030'),
 
-  accent: c('#ffffff', '#000000', { hover: new Color('#A9A9A9') }),
-  muted: c('#6B6B6B', '#898989'),
-  marked: c('#4555A2', '#ffffff'),
+  accent: cbfh('#ffffff', '#000000', '#A9A9A9'),
+  muted: cbf('#6B6B6B', '#898989'),
+  marked: cbf('#4555A2', '#ffffff'),
 
-  success: c('#578F49', '#FFFFFF', { hover: new Color('#427036') }),
-  warning: c('#A97931', '#FFFFFF', { hover: new Color('#9A7031') }),
-  danger: c('#AB2B2B', '#FFFFFF', { hover: new Color('#872424') })
+  success: cbfh('#578F49', '#FFFFFF', '#427036'),
+  warning: cbfh('#A97931', '#FFFFFF', '#9A7031'),
+  danger: cbfh('#AB2B2B', '#FFFFFF', '#872424')
 } as const satisfies Theme;

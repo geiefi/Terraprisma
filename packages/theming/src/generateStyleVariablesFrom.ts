@@ -1,4 +1,4 @@
-import { Color } from './Theme';
+import { Accent, Color } from './Theme';
 
 function toKebabCase(text: string) {
   return text.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -30,15 +30,6 @@ export function generateStyleVariablesFrom(
         Object.keys(valueStyles).forEach(
           (innerKey) => (stylesForValue[innerKey] = valueStyles[innerKey])
         );
-
-        // automatically sets the --accent-bg and --accent-fg based on the accents defined
-        // if (property === 'accents') {
-        //   const accents = value as unknown as Record<string, BgFgPair>;
-        //   stylesForValue['--accent-bg'] =
-        //     accents[(theme as any).mainAccent].bg.toRGBA();
-        //   stylesForValue['--accent-fg'] =
-        //     accents[(theme as any).mainAccent].fg.toRGBA();
-        // }
       } else if (value instanceof Color) {
         stylesForValue[
           `--${[prefix, kebabCaseProperty].filter(Boolean).join('-')}`
