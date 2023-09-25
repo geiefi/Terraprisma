@@ -1,83 +1,82 @@
 .checkbox {
+  input {
+    appearance: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   position: relative;
   width: fit-content;
   height: fit-content;
 
-  &.small {
-    --size: 14px;
+  display: block;
+
+  background: transparent;
+  border: 2px solid var(--color);
+
+  width: var(--size);
+  height: var(--size);
+
+  margin: 0;
+  padding: 0;
+
+  transition: background .2s ease-in-out, border .2s ease-in-out;
+  border-radius: 2px;
+
+  * {
+    user-select: none;
   }
 
-  &.medium {
-    --size: 20px;
+  &:hover {
+    background: var(--color\/10);
   }
 
-  &.large {
-    --size: 28px;
-  }
-
-  &:not(.disabled) + *,
-  &:not(.disabled) {
-    cursor: pointer;
-  }
-
-  &:not(.checked) .checkbox-internal {
-    background: transparent;
-    border: 2px solid var(--gray-5);
-  }
-
-  &.checked .checkbox-internal {
+  &.checked {
     border: 2px solid var(--color);
     background: var(--color);
   }
 
-  &.disabled .checkbox-internal {
+  & .checked-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: transparent;
+
+    width: var(--size);
+    height: var(--size);
+    font-weight: bold;
+    color: var(--check-color);
+    margin: 0;
+
+    scale: 1 !important;
+
+    pointer-events: none;
+    font-size: var(--size) !important;
+    user-select: none;
+    user-drag: none;
+
+    transform: translate(-50%, -50%);
+  }
+
+  &.disabled {
     opacity: 0.3;
-    --color: var(--gray-5);
-    filter: brightness(95%);
-    cursor: default;
+    --color: var(--muted-bg);
+    --check-color: var(--muted-fg);
 
     & + .checked-icon {
       color: var(--gray-0);
     }
   }
 
-  & .checkbox-internal {
-    display: block;
+  &.small {
+    --size: 1rem;
+  }
 
-    input {
-      appearance: none;
-      opacity: 0;
-      pointer-events: none;
-    }
+  &.medium {
+    --size: 1.42rem;
+  }
 
-    width: var(--size);
-    height: var(--size);
-
-    margin: 0;
-    padding: 0;
-
-    transition: background .2s ease-in-out
-      border .2s ease-in-out;
-    border-radius: 2px;
-
-    & .checked-icon {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      background: transparent;
-
-      width: var(--size);
-      height: var(--size);
-      color: var(--check-color);
-      scale: 1 !important;
-      margin: 0;
-
-      pointer-events: none;
-      font-size: calc(var(--size) / 1.4) !important;
-      user-select: none;
-      user-drag: none;
-
-      transform: translate(-50%, -50%);
-    }
+  &.large {
+    --size: 2rem;
   }
 }

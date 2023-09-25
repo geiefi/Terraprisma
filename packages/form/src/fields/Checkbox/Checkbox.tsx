@@ -74,6 +74,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
             class="checkbox"
             style={{
               '--color': `var(--${color()}-bg)`,
+              '--color/10': `var(--${color()}-bg\\/10)`,
               '--check-color': `var(--${color()}-fg)`
             }}
             classList={{
@@ -99,36 +100,26 @@ const Checkbox = setupFieldComponent<boolean>().with(
             onMouseEnter={() => setFocused(true)}
             onMouseLeave={() => setFocused(false)}
           >
-            {/* <ClickableSignalizer */}
-            {/*   show={focused() && !disabled()} */}
-            {/*   color={value() ? `var(--${color()}-bg)` : undefined} */}
-            {/*   class="checkbox-internal" */}
-            {/* > */}
-            <Ripple color={color()} center>
-              <input
-                {...elProps}
-                id={id()}
-                type="checkbox"
-                onBlur={mergeCallbacks<() => void>(
-                  // eslint-disable-next-line solid/reactivity
-                  elProps.onBlur as any,
-                  () => setFocused(false)
-                )}
-                onFocus={mergeCallbacks<() => void>(
-                  // eslint-disable-next-line solid/reactivity
-                  elProps.onFocus as any,
-                  () => setFocused(true)
-                )}
-                value={value() ? 'on' : 'off'}
-              />
+            <input
+              {...elProps}
+              id={id()}
+              type="checkbox"
+              onBlur={mergeCallbacks<() => void>(
+                // eslint-disable-next-line solid/reactivity
+                elProps.onBlur as any,
+                () => setFocused(false)
+              )}
+              onFocus={mergeCallbacks<() => void>(
+                // eslint-disable-next-line solid/reactivity
+                elProps.onFocus as any,
+                () => setFocused(true)
+              )}
+              value={value() ? 'on' : 'off'}
+            />
 
-              <GrowFade>
-                <Show when={value() === true}>
-                  <Check class="checked-icon" variant="rounded" />
-                </Show>
-              </GrowFade>
-            </Ripple>
-            {/* </ClickableSignalizer> */}
+            <Show when={value() === true}>
+              <Check class="checked-icon" variant="rounded" />
+            </Show>
           </div>
         </FieldInternalWrapper>
       );
