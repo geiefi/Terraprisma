@@ -172,7 +172,7 @@ const Slider = setupFieldComponent<number>().with(
             }}
             style={{
               '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
-              '--color': `${color()}-bg`
+              '--color': `var(--${color()}-bg)`
             }}
           >
             <span class="trunk" draggable={false} />

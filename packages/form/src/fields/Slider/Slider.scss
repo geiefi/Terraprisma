@@ -20,18 +20,18 @@
   }
 
   &.small {
-    --height: 4px;
-    --thumb-diameter: 10px;
+    --height: 0.25rem;
+    --thumb-diameter: 0.7rem;
   }
 
   &.medium {
-    --height: 6px;
-    --thumb-diameter: 16px;
+    --height: 0.45rem;
+    --thumb-diameter: 0.9rem;
   }
 
   &.large {
-    --height: 12px;
-    --thumb-diameter: 24px;
+    --height: 0.65rem;
+    --thumb-diameter: 1.2rem;
   }
 
   * {
@@ -52,15 +52,19 @@
     width: 100%;
     height: var(--height);
 
-    background: var(--gray-4);
+    background: var(--deeper-bg);
     border-radius: calc(var(--height) / 3);
   }
 
   &.disabled {
+    & > .rail {
+      background: var(--muted-bg);
+    }
+
     opacity: 0.4;
     filter: brightness(95%);
 
-    --color: var(--normal-bg);
+    --color: var(--muted-fg);
   }
 
   & > .trunk {
