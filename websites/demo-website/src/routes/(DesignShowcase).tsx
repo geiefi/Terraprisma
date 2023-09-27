@@ -220,6 +220,7 @@ const DesignShowcase: Component = () => {
                 <Col size={8}>
                   <Datepicker
                     name="datepickerField"
+                    label="Datepicker field"
                     value={new Date()}
                     focused
                   />

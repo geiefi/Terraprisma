@@ -104,7 +104,9 @@ export function setupFieldComponent<
         // eslint-disable-next-line solid/reactivity
         const [focused, setFocused] = createSignal<boolean>(false);
 
-        createEffect(() => setFocused(props.focused || false));
+        createEffect(() => {
+          setFocused((f) => props.focused ?? f);
+        });
 
         onMount(() => {
           if (props.validateOnStartup) {
