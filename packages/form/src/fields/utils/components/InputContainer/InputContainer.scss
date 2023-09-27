@@ -11,6 +11,11 @@
   padding-inline: 20px;
   padding-block: 14px;
 
+  &.has-label {
+    padding-top: 20px;
+    padding-bottom: 8px;
+  }
+
   transition: .2s filter linear,
     .2s background-color linear;
 
@@ -57,11 +62,6 @@
     top: 50%;
     transform: translateY(-50%);
     transform-origin: top left;
-  }
-
-  &.focused, &.has-content {
-    padding-top: 20px;
-    padding-bottom: 8px;
   }
 
   &.focused label,

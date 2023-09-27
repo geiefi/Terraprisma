@@ -42,6 +42,7 @@ const InputContainer = makeComponent(
           'has-content': hasContent(),
           disabled: disabled(),
           error: hasErrors(),
+          'has-label': typeof props.label !== 'undefined',
 
           ...elProps.classList
         }}
