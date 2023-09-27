@@ -31,13 +31,12 @@ import {
 } from '@terraprisma/utils';
 
 import {
-  Button,
   Dropdown,
   IconButton,
   OutlinedButton,
   TextButton
 } from '@terraprisma/core';
-import { ArrowLeft, ArrowRight, CalendarMonth } from '@terraprisma/icons';
+import { CalendarMonth, ChevronLeft, ChevronRight } from '@terraprisma/icons';
 import { Row } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
 
@@ -67,7 +66,7 @@ interface DatepickerDay {
 const amountOfDaysInMonth = (year: number, month: number) =>
   new Date(year, month + 1, 0).getDate();
 
-const DatepickerInternalDayPicker: Component<{
+const DayPicker: Component<{
   month: number;
   year: number;
 
@@ -170,7 +169,7 @@ const DatepickerInternalDayPicker: Component<{
   );
 };
 
-const DatepickerInternalMonthPicker: Component<{
+const MonthPicker: Component<{
   month: number;
   year: number;
 
@@ -201,7 +200,7 @@ const DatepickerInternalMonthPicker: Component<{
   );
 };
 
-const DatepickerIntenralYearPicker: Component<{
+const YearPicker: Component<{
   month: number;
   year: number;
 
@@ -362,15 +361,7 @@ const Datepicker = setupFieldComponent<Date>().with(
         }
       };
 
-      createEffect(
-        on(
-          value,
-          () => {
-            setFocused(false);
-          },
-          { defer: true }
-        )
-      );
+      createEffect(on(value, () => setFocused(false), { defer: true }));
 
       const monthNames = [
         'January',
@@ -442,7 +433,7 @@ const Datepicker = setupFieldComponent<Date>().with(
                   class="arrow-previous"
                   onClick={handlePrevious}
                 >
-                  <ArrowLeft />
+                  <ChevronLeft />
                 </IconButton>
 
                 <div class="selection-type-button-chooser">
@@ -480,7 +471,7 @@ const Datepicker = setupFieldComponent<Date>().with(
                   class="arrow-next"
                   onClick={handleNext}
                 >
-                  <ArrowRight />
+                  <ChevronRight />
                 </IconButton>
               </div>
 
@@ -488,7 +479,7 @@ const Datepicker = setupFieldComponent<Date>().with(
                 <Switch>
                   <Match when={typeof value() === 'undefined'}>...</Match>
                   <Match when={datepickerSelectionType() === 'day'}>
-                    <DatepickerInternalDayPicker
+                    <DayPicker
                       year={viewedYear()}
                       month={viewedMonth()}
                       onDayClicked={(newDate) => setValue(newDate)}
@@ -496,7 +487,7 @@ const Datepicker = setupFieldComponent<Date>().with(
                     />
                   </Match>
                   <Match when={datepickerSelectionType() === 'month'}>
-                    <DatepickerInternalMonthPicker
+                    <MonthPicker
                       year={viewedYear()}
                       month={viewedMonth()}
                       monthNames={monthNames}
@@ -516,7 +507,7 @@ const Datepicker = setupFieldComponent<Date>().with(
                     />
                   </Match>
                   <Match when={datepickerSelectionType() === 'year'}>
-                    <DatepickerIntenralYearPicker
+                    <YearPicker
                       year={viewedYear()}
                       month={viewedMonth()}
                       onYearClicked={(year) => {
