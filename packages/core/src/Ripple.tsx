@@ -238,7 +238,7 @@ const Ripple = makeComponent(
                   {(ripple) => (
                     <Show when={ripple}>
                       <span
-                        class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-20 bg-[var(--bg)]"
+                        class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-10 bg-[var(--bg)]"
                         style={{
                           width: `${ripple.diameter}px`,
                           height: `${ripple.diameter}px`,
