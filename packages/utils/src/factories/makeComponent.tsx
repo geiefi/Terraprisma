@@ -135,11 +135,17 @@ export function makeComponent(
       cursorProps = abstractedProps;
       accumulatedArgs = [...accumulatedArgs, ...addedArgs];
     }
-    const renderedElement = createMemo(() =>
-      abstractedComponent(cursorProps, ...accumulatedArgs)
-    );
 
-    return wrap(<>{renderedElement()}</>, wrappers);
+    return wrap(
+      <Dynamic
+        component={(p: { cursorProps: AnyProps; accumulatedArgs: any[] }) =>
+          abstractedComponent(p.cursorProps, ...p.accumulatedArgs)
+        }
+        cursorProps={cursorProps}
+        accumulatedArgs={accumulatedArgs}
+      />,
+      wrappers
+    );
   };
 }
 
