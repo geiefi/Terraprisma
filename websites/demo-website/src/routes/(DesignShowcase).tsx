@@ -203,6 +203,14 @@ const DesignShowcase: Component = () => {
                     name="maskedInputField"
                   />
                 </Col>
+                <Col size={8}>
+                  <Datepicker
+                    name="datepickerField"
+                    label="Datepicker field"
+                    value={new Date()}
+                    focused
+                  />
+                </Col>
                 <Col size={4}>
                   <Select
                     label="Select Field"
@@ -216,14 +224,6 @@ const DesignShowcase: Component = () => {
                     <Select.Option value="dolorSit">Dolor Sit</Select.Option>
                     <Select.Option value="ametIpsum">Amet Ipsum</Select.Option>
                   </Select>
-                </Col>
-                <Col size={8}>
-                  <Datepicker
-                    name="datepickerField"
-                    label="Datepicker field"
-                    value={new Date()}
-                    focused
-                  />
                 </Col>
                 <Col size={4}>
                   <Slider

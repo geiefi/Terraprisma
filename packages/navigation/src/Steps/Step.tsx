@@ -66,10 +66,9 @@ export const InternalStep = makeComponent(
         {...elProps}
         class={mergeClass(
           'relative flex',
-          'last-of-type:box-content last-of-type:pr-[var(--description-offset)] last-of-type:w-[var(--step-content-width)] last-of-type:after:!hidden',
-          'after:absolute after:top-1/2 after:left-[calc(var(--step-content-width) + 10px)] after:h-1 after:bg-[var(--deeper-bg)]',
-          current() === props.index &&
-            'after:bg-[var(--accent-bg)] after:text-[var(--accent-fg)] after:transition-colors',
+          'w-full last-of-type:box-content last-of-type:pr-[var(--description-offset)] last-of-type:w-[var(--step-content-width)] last-of-type:after:!hidden',
+          'after:content-[""] after:w-[calc(100%-var(--step-content-width)-1.5rem)] after:display after:absolute after:top-1/2 after:left-[calc(var(--step-content-width)+0.7rem)] after:h-1 after:bg-[var(--muted-bg)] after:transition-colors',
+          current() >= props.index && 'after:!bg-[var(--accent-bg)]',
           elProps.class
         )}
         style={{
@@ -82,13 +81,15 @@ export const InternalStep = makeComponent(
         }}
       >
         <span
-          class="flex items-center gap-2 relative h-fit"
+          class="flex items-center gap-2 relative h-fit w-max"
           ref={setContentRef}
         >
           <span
             class={mergeClass(
-              'rounded-full transition-colors duration-500 bg-[var(--floating-bg)] text-[var(--floating-fg)] select-none w-8 h-8 min-w-[2em] min-h-[2em] flex justify-center items-center',
-              current() === props.index &&
+              'rounded-full transition-colors duration-500 select-none w-8 h-8 min-w-[2em] min-h-[2em] flex justify-center items-center',
+              current() < props.index &&
+                'bg-[var(--deeper-bg)] text-[var(--deeper-fg)]',
+              current() >= props.index &&
                 'bg-[var(--accent-bg)] text-[var(--accent-fg)]'
             )}
           >
@@ -97,13 +98,14 @@ export const InternalStep = makeComponent(
             </Show>
           </span>
 
-          <span class="relative" ref={setStepInfoRef}>
+          <span class="relative w-fit" ref={setStepInfoRef}>
             <p
               class={mergeClass(
-                'font-bold max-w-full text-sm m-0 whitespace-nowrap duration-500 text-[var(--normal-fg)]',
+                'font-extrabold max-w-full text-sm m-0 whitespace-nowrap duration-500',
+                current() < props.index && 'text-[var(--muted-fg)]',
                 current() === props.index &&
                   current() > props.index &&
-                  'font-extrabold text-[var(--normal-fg)] leading-6'
+                  'text-[var(--normal-fg)] leading-6'
               )}
             >
               {props.children}
@@ -111,7 +113,7 @@ export const InternalStep = makeComponent(
 
             <Show when={props.description}>
               <p
-                class="absolute w-max font-bold max-w-[200px] text-sm text-[var(--floating-fg)] left-0 top-[3px]"
+                class="absolute w-max font-bold max-w-[200px] text-sm text-[var(--muted-fg)] left-0 top-[3px]"
                 ref={setDescriptionPRef}
               >
                 {props.description}
