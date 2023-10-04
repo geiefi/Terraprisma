@@ -70,7 +70,7 @@
     "@terraprisma/data-display": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/layout": "workspace:*",
-    "@terraprisma/theming": "workspace:0.0.0-20230829170706",
+    "@terraprisma/theming": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
     "@terraprisma/utils": "workspace:*",
     "solid-js": "^1.7.11"
