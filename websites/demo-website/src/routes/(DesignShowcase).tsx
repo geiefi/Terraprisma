@@ -239,7 +239,11 @@ const DesignShowcase: Component = () => {
                       <Toggler value={false} name="togglerField" />
                     </Col>
                     <Col size={4}>
-                      <Toggler value name="checkedTogglerField" />
+                      <Toggler
+                        color="success"
+                        value
+                        name="checkedTogglerField"
+                      />
                     </Col>
                     <Col size={4}>
                       <Toggler disabled name="disabledTogglerField" />

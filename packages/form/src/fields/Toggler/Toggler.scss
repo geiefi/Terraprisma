@@ -1,80 +1,73 @@
-@function add-transparency($color, $percentage) {
-  @return color-mix(in srgb, $color, transparent $percentage);
-}
-
 .toggler-container {
   width: fit-content;
 
   & > .toggler {
     width: fit-content;
     box-sizing: content-box;
-    padding-inline: 7px;
-    padding-block: 2px;
 
     & > input {
-      &.on {
-        --color: var(--on-color);
-      }
-
-      &.off {
-        --color: var(--floating-bg);
-      }
-
-      &.disabled {
-        opacity: 0.3;
-        --color: var(--normal-bg);
-        filter: brightness(95%);
-      }
-
       &.small {
-        --width: 24px;
+        --width: 25px;
       }
       &.medium {
-        --width: 32px;
+        --width: 40px;
       }
       &.large {
-        --width: 40px
+        --width: 64px;
       }
 
       -webkit-appearance: none;
       appearance: none;
 
-      background: add-transparency(var(--color), 40%);
-      transition: background .2s ease-in-out;
-      border-radius: calc(var(--width) / 2);
+      background: var(--deeper-bg);
+      --circle-bg: var(--normal-bg);
 
-      &:not(.disabled) {
-        cursor: pointer;
+      &.on {
+        background: var(--on-color);
+        --circle-bg: var(--on-circle-color);
       }
 
+      transition: background .2s ease-in-out;
+
+      cursor: pointer;
+
       height: calc(var(--width) / 2);
+      border-radius: calc(var(--width) / 2 + 3px);
       width: var(--width);
       display: block;
 
       position: relative;
       margin-block: 5px;
 
+      &.disabled {
+        cursor: default;
+        opacity: 0.3;
+
+        background: var(--muted-fg);
+        --circle-bg: var(--muted-bg);
+      }
+
       &::after {
         content: '';
         position: absolute;
-        background: var(--color);
+        background: var(--circle-bg);
 
-        width: calc(var(--width) * 0.625);
-        height: calc(var(--width) * 0.625);
+        width: calc(var(--width) * 0.4);
+        height: calc(var(--width) * 0.4);
         border-radius: 50%;
-        transform: translate(-50%, -50%);
+
+        transform: translateY(-50%);
+        left: 3px;
+        top: 50%;
 
         transition: left .2s ease-in-out,
+          transform .2s ease-in-out,
           background .2s ease-in-out;
       }
 
       &.on::after {
-        left: 100%;
-        top: 50%;
-      }
-      &.off::after {
-        left: 0%;
-        top: 50%;
+        left: calc(100% - 3px);
+        transform: translate(-100%, -50%);
       }
     }
   }

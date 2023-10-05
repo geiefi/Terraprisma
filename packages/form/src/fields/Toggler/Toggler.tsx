@@ -69,11 +69,11 @@ const Toggler = setupFieldComponent<boolean>().with(
               type="checkbox"
               class={elProps.class}
               style={{
-                '--on-color': `--${color()}-bg`
+                '--on-color': `var(--${color()}-bg)`,
+                '--on-circle-color': `var(--${color()}-fg)`
               }}
               classList={{
                 on: value() === true,
-                off: value() === false || typeof value() === 'undefined',
 
                 disabled: disabled(),
 
