@@ -3,6 +3,7 @@ import { splitTupleAccessor } from './splitTupleAccessor';
 import { mergeCallbacks } from './mergeCallbacks';
 import { mergeClass } from './mergeClass';
 import { canUseDocument } from './canUseDocument';
+import { getAbsoluteBoundingRect } from './getAbsoluteBoundingRect';
 
 export * from './factories';
 export * from './types';
@@ -35,7 +36,8 @@ export {
   splitTupleAccessor,
   mergeClass,
   mergeCallbacks,
-  canUseDocument
+  canUseDocument,
+  getAbsoluteBoundingRect
 };
 
 export type { Store };
