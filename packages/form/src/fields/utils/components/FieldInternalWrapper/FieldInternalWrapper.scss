@@ -3,19 +3,17 @@
   height: 100%;
   display: inline-block;
   padding-inline: 8px;
+  margin-block: 5px;
 
   .helper-text {
     transition: .2s;
     color: var(--text-5);
     opacity: 0.8;
-    margin-left: 5px;
     font-size: 10px;
     font-weight: 700;
   }
 
-  &.error {
-    .helper-text { // the helper text shoes the error message in this situation
-      color: var(--danger);
-    }
+  &.error .helper-text { // the helper text shows the error message in this situation
+    color: var(--danger-bg);
   }
 }
