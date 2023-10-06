@@ -1,4 +1,4 @@
-.terraprisma-table-box.box {
+.terraprisma-table-box {
   padding: 0;
   padding-inline: 0;
   padding-block: 0;
@@ -21,41 +21,40 @@
     margin: 0;
 
     tr, th, td {
-      border: 1px solid var(--gray-5);
+      border-block: 1px solid var(--floating-border);
     }
+  }
+
+  td, th {
+    padding-block: 9px;
+    padding-inline: 18px;
   }
 
   &.compact {
     td, th {
-      padding-block: 4px;
-      padding-inline: 10px;
+      padding-block: 5px;
+      padding-inline: 12px;
     }
   }
 
   tr {
     &:not(:first-of-type) {
-      border-top: 1px solid var(--gray-5);
+      border-top: 1px solid var(--floating-border);
     }
 
     td {
-      padding-block: 15px;
-
       color: var(--normal-fg);
       font-weight: 600;
       font-size: 15px;
     }
 
     th {
-      padding-block: 12px;
-
       color: var(--floating-fg);
       font-weight: bolder;
       font-size: 15px;
     }
 
     th, td {
-      padding-inline: 12px;
-
       &.align-left {
         text-align: left;
       }
