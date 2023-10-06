@@ -23,6 +23,7 @@ export function generateStyleVariablesFrom(
           .forEach((v: Color, i) => {
             stylesForValue[`--${varName}-${i}`] = v.toRGBA();
             stylesForValue[`--${varName}-${i}/10`] = v.withAlpha(0.1).toRGBA();
+            stylesForValue[`--${varName}-${i}/20`] = v.withAlpha(0.2).toRGBA();
             stylesForValue[`--${varName}-${i}/30`] = v.withAlpha(0.3).toRGBA();
           });
       } else if (typeof value === 'object' && !(value instanceof Color)) {
@@ -36,6 +37,7 @@ export function generateStyleVariablesFrom(
       } else if (value instanceof Color) {
         stylesForValue[`--${varName}`] = value.toRGBA();
         stylesForValue[`--${varName}/10`] = value.withAlpha(0.1).toRGBA();
+        stylesForValue[`--${varName}/20`] = value.withAlpha(0.2).toRGBA();
         stylesForValue[`--${varName}/30`] = value.withAlpha(0.3).toRGBA();
       }
       return stylesForValue;
