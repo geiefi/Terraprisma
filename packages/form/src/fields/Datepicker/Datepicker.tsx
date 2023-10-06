@@ -12,6 +12,7 @@ import {
   onMount,
   Switch
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 
 import {
   setupFieldComponent,
@@ -420,115 +421,117 @@ const Datepicker = setupFieldComponent<Date>().with(
             {displayDate()}
           </InputContainer>
 
-          <GrowFade>
-            <Dropdown
-              for={inputContainerRef()!}
-              visible={focused()}
-              class="datepicker-dropdown"
-              ref={setDropdownRef}
-            >
-              <div class="dropdown-header">
-                <IconButton
-                  size="small"
-                  class="arrow-previous"
-                  onClick={handlePrevious}
-                >
-                  <ChevronLeft />
-                </IconButton>
-
-                <div class="selection-type-button-chooser">
-                  <OutlinedButton
+          <Portal>
+            <GrowFade growingOrigin="top">
+              <Dropdown
+                for={inputContainerRef()!}
+                visible={focused()}
+                class="datepicker-dropdown"
+                ref={setDropdownRef}
+              >
+                <div class="dropdown-header">
+                  <IconButton
                     size="small"
-                    active={datepickerSelectionType() === 'month'}
-                    onClick={() => {
-                      if (datepickerSelectionType() === 'month') {
-                        setDatepickerSelectionType('day');
-                      } else {
-                        setDatepickerSelectionType('month');
-                      }
-                    }}
+                    class="arrow-previous"
+                    onClick={handlePrevious}
                   >
-                    {monthNames[viewedMonth()]}
-                  </OutlinedButton>
+                    <ChevronLeft />
+                  </IconButton>
 
-                  <OutlinedButton
+                  <div class="selection-type-button-chooser">
+                    <OutlinedButton
+                      size="small"
+                      active={datepickerSelectionType() === 'month'}
+                      onClick={() => {
+                        if (datepickerSelectionType() === 'month') {
+                          setDatepickerSelectionType('day');
+                        } else {
+                          setDatepickerSelectionType('month');
+                        }
+                      }}
+                    >
+                      {monthNames[viewedMonth()]}
+                    </OutlinedButton>
+
+                    <OutlinedButton
+                      size="small"
+                      active={datepickerSelectionType() === 'year'}
+                      onClick={() => {
+                        if (datepickerSelectionType() === 'year') {
+                          setDatepickerSelectionType('day');
+                        } else {
+                          setDatepickerSelectionType('year');
+                        }
+                      }}
+                    >
+                      {viewedYear()}
+                    </OutlinedButton>
+                  </div>
+
+                  <IconButton
                     size="small"
-                    active={datepickerSelectionType() === 'year'}
-                    onClick={() => {
-                      if (datepickerSelectionType() === 'year') {
-                        setDatepickerSelectionType('day');
-                      } else {
-                        setDatepickerSelectionType('year');
-                      }
-                    }}
+                    class="arrow-next"
+                    onClick={handleNext}
                   >
-                    {viewedYear()}
-                  </OutlinedButton>
+                    <ChevronRight />
+                  </IconButton>
                 </div>
 
-                <IconButton
-                  size="small"
-                  class="arrow-next"
-                  onClick={handleNext}
-                >
-                  <ChevronRight />
-                </IconButton>
-              </div>
-
-              <Row class="dropdown-content">
-                <Switch>
-                  <Match when={typeof value() === 'undefined'}>...</Match>
-                  <Match when={datepickerSelectionType() === 'day'}>
-                    <DayPicker
-                      year={viewedYear()}
-                      month={viewedMonth()}
-                      onDayClicked={(newDate) => setValue(newDate)}
-                      selectedDate={value()!}
-                    />
-                  </Match>
-                  <Match when={datepickerSelectionType() === 'month'}>
-                    <MonthPicker
-                      year={viewedYear()}
-                      month={viewedMonth()}
-                      monthNames={monthNames}
-                      onMonthClicked={(month) => {
-                        setValue(
-                          new Date(
-                            viewedYear(),
-                            month,
-                            Math.min(
-                              amountOfDaysInMonth(viewedYear(), month),
-                              value()?.getDate() || 1
+                <Row class="dropdown-content">
+                  <Switch>
+                    <Match when={typeof value() === 'undefined'}>...</Match>
+                    <Match when={datepickerSelectionType() === 'day'}>
+                      <DayPicker
+                        year={viewedYear()}
+                        month={viewedMonth()}
+                        onDayClicked={(newDate) => setValue(newDate)}
+                        selectedDate={value()!}
+                      />
+                    </Match>
+                    <Match when={datepickerSelectionType() === 'month'}>
+                      <MonthPicker
+                        year={viewedYear()}
+                        month={viewedMonth()}
+                        monthNames={monthNames}
+                        onMonthClicked={(month) => {
+                          setValue(
+                            new Date(
+                              viewedYear(),
+                              month,
+                              Math.min(
+                                amountOfDaysInMonth(viewedYear(), month),
+                                value()?.getDate() || 1
+                              )
                             )
-                          )
-                        );
-                      }}
-                      selectedDate={value()!}
-                    />
-                  </Match>
-                  <Match when={datepickerSelectionType() === 'year'}>
-                    <YearPicker
-                      year={viewedYear()}
-                      month={viewedMonth()}
-                      onYearClicked={(year) => {
-                        setValue(
-                          new Date(
-                            year,
-                            viewedMonth(),
-                            Math.min(
-                              amountOfDaysInMonth(year, viewedMonth()),
-                              value()?.getDate() || 1
+                          );
+                        }}
+                        selectedDate={value()!}
+                      />
+                    </Match>
+                    <Match when={datepickerSelectionType() === 'year'}>
+                      <YearPicker
+                        year={viewedYear()}
+                        month={viewedMonth()}
+                        onYearClicked={(year) => {
+                          setValue(
+                            new Date(
+                              year,
+                              viewedMonth(),
+                              Math.min(
+                                amountOfDaysInMonth(year, viewedMonth()),
+                                value()?.getDate() || 1
+                              )
                             )
-                          )
-                        );
-                      }}
-                      selectedDate={value()!}
-                    />
-                  </Match>
-                </Switch>
-              </Row>
-            </Dropdown>
-          </GrowFade>
+                          );
+                        }}
+                        selectedDate={value()!}
+                      />
+                    </Match>
+                  </Switch>
+                </Row>
+              </Dropdown>
+            </GrowFade>
+          </Portal>
         </FieldInternalWrapper>
       );
     }

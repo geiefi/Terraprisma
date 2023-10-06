@@ -32,7 +32,7 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown, Ripple } from '@terraprisma/core';
+import { Dropdown } from '@terraprisma/core';
 import { GrowFade } from '@terraprisma/transitions';
 import { Check, KeyboardArrowDown } from '@terraprisma/icons';
 
@@ -40,6 +40,7 @@ import { FormValue, FormFieldValue } from '../../types';
 
 import './Select.scss';
 import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Portal } from 'solid-js/web';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -220,57 +221,59 @@ const Select = setupFieldComponent().with(
             {optionLabelFromValue(value())}
           </InputContainer>
 
-          <GrowFade growingOrigin="top">
-            <Dropdown
-              for={inputContainerRef()!}
-              class="select-dropdown"
-              visible={focused()}
-              style={{
-                '--color/10': `var(--${color()}-bg\\/10)`,
-                '--hover/10': `var(--${color()}-hover\\/10)`
-              }}
-            >
-              <For each={options()}>
-                {(optionAllProps) => {
-                  const [optionProps, optionElProps] = splitProps(
-                    optionAllProps,
-                    ['value']
-                  );
-                  return (
-                    <div
-                      {...optionElProps}
-                      class={mergeClass('option', optionElProps.class)}
-                      classList={{
-                        active: optionProps.value === value(),
-                        ...optionElProps.classList
-                      }}
-                      onClick={mergeCallbacks<(e: MouseEvent) => void>(
-                        // eslint-disable-next-line solid/reactivity
-                        optionElProps.onClick as any,
-                        // eslint-disable-next-line solid/reactivity
-                        () => {
-                          if (props.onChange) {
-                            props.onChange(optionProps.value);
-                          }
-
-                          setValue(optionProps.value as any);
-                          setFocused(false);
-                        }
-                      )}
-                    >
-                      {optionElProps.children}
-
-                      <Show when={optionProps.value === value()}>
-                        <span class="active-check">
-                          <Check variant="rounded" />
-                        </span>
-                      </Show>
-                    </div>
-                  );
+          <Portal>
+            <GrowFade growingOrigin="top">
+              <Dropdown
+                for={inputContainerRef()!}
+                class="select-dropdown"
+                visible={focused()}
+                style={{
+                  '--color/10': `var(--${color()}-bg\\/10)`,
+                  '--hover/10': `var(--${color()}-hover\\/10)`
                 }}
-              </For>
-            </Dropdown>
-          </GrowFade>
+              >
+                <For each={options()}>
+                  {(optionAllProps) => {
+                    const [optionProps, optionElProps] = splitProps(
+                      optionAllProps,
+                      ['value']
+                    );
+                    return (
+                      <div
+                        {...optionElProps}
+                        class={mergeClass('option', optionElProps.class)}
+                        classList={{
+                          active: optionProps.value === value(),
+                          ...optionElProps.classList
+                        }}
+                        onClick={mergeCallbacks<(e: MouseEvent) => void>(
+                          // eslint-disable-next-line solid/reactivity
+                          optionElProps.onClick as any,
+                          // eslint-disable-next-line solid/reactivity
+                          () => {
+                            if (props.onChange) {
+                              props.onChange(optionProps.value);
+                            }
+
+                            setValue(optionProps.value as any);
+                            setFocused(false);
+                          }
+                        )}
+                      >
+                        {optionElProps.children}
+
+                        <Show when={optionProps.value === value()}>
+                          <span class="active-check">
+                            <Check variant="rounded" />
+                          </span>
+                        </Show>
+                      </div>
+                    );
+                  }}
+                </For>
+              </Dropdown>
+            </GrowFade>
+          </Portal>
         </FieldInternalWrapper>
       );
     }

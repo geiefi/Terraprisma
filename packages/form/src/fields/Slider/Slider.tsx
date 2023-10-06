@@ -15,13 +15,14 @@ import {
   makeComponent,
   extendPropsFrom
 } from '@terraprisma/utils';
-import { GrowFade } from '@terraprisma/transitions';
 import { createTooltip } from '@terraprisma/data-display';
 
 import { FormValue } from '../../types';
 
 import './Slider.scss';
 import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { GrowFade } from '@terraprisma/transitions';
+import { Portal } from 'solid-js/web';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -198,20 +199,22 @@ const Slider = setupFieldComponent<number>().with(
                 : props.showTooltip
             }
           >
-            <GrowFade growingOrigin="bottom">
-              <Tooltip
-                visible={focused()}
-                class="slider-value-tooltip"
-                style={{
-                  '--color': `var(--${color()}-bg)`,
-                  '--text-color': `var(--${color()}-fg)`
-                }}
-              >
-                <Show when={props.renderTooltipContent} fallback={value()}>
-                  {props.renderTooltipContent!(value() || min())}
-                </Show>
-              </Tooltip>
-            </GrowFade>
+            <Portal>
+              <GrowFade growingOrigin="bottom">
+                <Tooltip
+                  visible={focused()}
+                  class="slider-value-tooltip"
+                  style={{
+                    '--color': `var(--${color()}-bg)`,
+                    '--text-color': `var(--${color()}-fg)`
+                  }}
+                >
+                  <Show when={props.renderTooltipContent} fallback={value()}>
+                    {props.renderTooltipContent!(value() || min())}
+                  </Show>
+                </Tooltip>
+              </GrowFade>
+            </Portal>
           </Show>
         </FieldInternalWrapper>
       );
