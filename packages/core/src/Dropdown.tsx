@@ -49,7 +49,7 @@ const Dropdown = makeComponent(
     ])
   ],
   (props, elProps) => {
-    const offset = createMemo(() => props.offsetFromAnchor || 5);
+    const offset = createMemo(() => props.offsetFromAnchor ?? 10);
     return (
       <Show when={props.visible}>
         <div

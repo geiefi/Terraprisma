@@ -229,7 +229,6 @@ const Select = setupFieldComponent().with(
                 '--color/10': `var(--${color()}-bg\\/10)`,
                 '--hover/10': `var(--${color()}-hover\\/10)`
               }}
-              offsetFromAnchor={8}
             >
               <For each={options()}>
                 {(optionAllProps) => {
