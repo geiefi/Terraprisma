@@ -1,8 +1,7 @@
-import { JSX, ParentProps, Show, createMemo } from 'solid-js';
+import { JSX, ParentProps, Show } from 'solid-js';
 
 import { useField } from '../../fields';
 
-import { addAccentColoring, Accents } from '@terraprisma/theming';
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import Label from '../Label/Label';

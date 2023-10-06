@@ -5,6 +5,8 @@
   margin: 0;
   padding: 0;
   position: relative;
+
+  border: 1px solid var(--floating-border);
   border-radius: 10px;
 
   font-size: 14px;
@@ -20,8 +22,8 @@
     .2s background-color linear;
 
   // these are the default values
-  --bg: var(--deeper-bg);
-  --fg: var(--deeper-fg);
+  --bg: var(--floating-bg);
+  --fg: var(--floating-fg);
 
   &.error {
     --fg: var(--danger-bg);
