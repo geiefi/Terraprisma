@@ -1,6 +1,11 @@
-import { JSX, ParentProps, Show, createMemo } from 'solid-js';
+import { JSX, ParentProps, Show, createMemo, on } from 'solid-js';
 
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  makeComponent,
+  extendPropsFrom,
+  getAbsoluteBoundingRect
+} from '@terraprisma/utils';
 
 export interface DropdownProps extends ParentProps {
   /**
@@ -50,6 +55,13 @@ const Dropdown = makeComponent(
   ],
   (props, elProps) => {
     const offset = createMemo(() => props.offsetFromAnchor ?? 10);
+    const boundingRect = createMemo(
+      on(
+        () => [props.for, props.visible],
+        () => getAbsoluteBoundingRect(props.for)
+      )
+    );
+
     return (
       <Show when={props.visible}>
         <div
@@ -60,9 +72,9 @@ const Dropdown = makeComponent(
             elProps.class
           )}
           style={{
-            left: `${props.for.offsetLeft}px`,
-            top: `${props.for.offsetTop + props.for.clientHeight + offset()}px`,
-            width: `${props.for.clientWidth}px`,
+            left: `${boundingRect().left}px`,
+            top: `${boundingRect().top + boundingRect().height + offset()}px`,
+            width: `${boundingRect().width}px`,
 
             ...props.style
           }}

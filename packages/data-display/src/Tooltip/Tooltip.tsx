@@ -8,7 +8,12 @@ import {
   Show
 } from 'solid-js';
 
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  makeComponent,
+  extendPropsFrom,
+  getAbsoluteBoundingRect
+} from '@terraprisma/utils';
 
 import { ArrowDropDown } from '@terraprisma/icons';
 
@@ -83,7 +88,7 @@ export function createTooltip(identification: string) {
         updateBoundingBox = () => {
           const anchor = anchorRef();
           if (anchor) {
-            setBoundingRect(anchor.getBoundingClientRect());
+            setBoundingRect(getAbsoluteBoundingRect(anchor));
           } else {
             console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
             Are your forgetting to call setAnchor for it?`);
