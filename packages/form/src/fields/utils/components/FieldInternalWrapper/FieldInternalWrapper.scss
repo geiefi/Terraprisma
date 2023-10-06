@@ -5,15 +5,16 @@
   padding-inline: 8px;
   margin-block: 5px;
 
+  &.error .helper-text { // the helper text shows the error message in this situation
+    transition: none;
+    font-weight: bolder;
+    color: var(--danger-bg);
+  }
+
   .helper-text {
     transition: .2s;
-    color: var(--text-5);
     opacity: 0.8;
     font-size: 10px;
     font-weight: 700;
-  }
-
-  &.error .helper-text { // the helper text shows the error message in this situation
-    color: var(--danger-bg);
   }
 }
