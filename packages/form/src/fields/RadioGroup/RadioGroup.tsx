@@ -90,40 +90,31 @@ const RadioInternal = makeComponent(
         <div
           class="radio"
           style={{
-            '--color': `var(--${color()}-bg)`,
-            '--check-color': `var(--${color()}-fg)`
+            '--color': `var(--${color()}-bg)`
           }}
           classList={{
             small: props.size === 'small',
             medium: props.size === 'medium',
             large: props.size === 'large',
 
+            focused: isRadioFocused() === true,
+
             checked: isChecked(),
             disabled: isDisabled()
           }}
-          onMouseEnter={() => setRadioToFocused(true)}
-          onMouseLeave={() => setRadioToFocused(false)}
         >
-          {/* <ClickableSignalizer */}
-          {/*   color={isChecked() ? `var(--${props.color})` : undefined} */}
-          {/*   show={isRadioFocused() && !isDisabled()} */}
-          {/*   class="radio-internal" */}
-          {/* > */}
-          <Ripple noRipple={isDisabled()} color={color()} center>
-            <input
-              {...elProps}
-              id={id()}
-              type="radio"
-              value={groupValue()}
-              onFocus={mergeCallbacks(elProps.onFocus as any, () =>
-                setRadioToFocused(true)
-              )}
-              onBlur={mergeCallbacks(elProps.onBlur as any, () =>
-                setRadioToFocused(false)
-              )}
-            />
-          </Ripple>
-          {/* </ClickableSignalizer> */}
+          <input
+            {...elProps}
+            id={id()}
+            type="radio"
+            value={groupValue()}
+            onFocus={mergeCallbacks(elProps.onFocus as any, () =>
+              setRadioToFocused(true)
+            )}
+            onBlur={mergeCallbacks(elProps.onBlur as any, () =>
+              setRadioToFocused(false)
+            )}
+          />
         </div>
 
         <Show when={props.children}>

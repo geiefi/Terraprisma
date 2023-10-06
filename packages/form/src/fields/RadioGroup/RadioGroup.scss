@@ -23,34 +23,50 @@
     width: var(--size);
     height: var(--size);
 
+    display: block;
+    appearance: none;
+    z-index: 2;
+
+    input {
+      appearance: none;
+      opacity: 0;
+    }
+
+    position: relative;
+    width: var(--size) !important;
+    height: var(--size) !important;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 50%;
+
+    background: transparent;
+    border: 2px solid var(--deeper-fg);
+
+    transition: border .2s ease-in-out;
+
     &:not(.disabled) {
       & + label {
         cursor: pointer !important;
         pointer-events: inherit !important;
       }
 
-      & {
-        cursor: pointer;
+      cursor: pointer;
 
-        &.checked .radio-internal {
-          border-color: var(--color);
-        }
+      &.checked {
+        border-color: var(--color);
       }
     }
 
     &.disabled {
-      & .ripple-container {
-        cursor: default;
-      }
+      border-color: var(--muted-bg);
 
-      & .radio-internal,
       & + label {
         opacity: 0.3;
-        --color: var(--gray-5);
-        filter: brightness(95%);
 
         & + .checked-icon {
-          color: var(--gray-0);
+          color: var(--muted-fg);
         }
       }
     }
@@ -59,37 +75,12 @@
       opacity: 1;
     }
 
-    & .radio-internal {
-      display: block;
-      appearance: none;
-      z-index: 2;
-
-      input {
-        appearance: none;
-        opacity: 0;
-      }
-
-      position: relative;
-      width: var(--size) !important;
-      height: var(--size) !important;
-
-      margin: 0;
-      padding: 0;
-
-      border-radius: 50%;
-
-      background: transparent;
-      border: 2px solid var(--gray-5);
-
-      transition: border .2s ease-in-out;
-    }
-
     &::after {
       content: '';
       position: absolute;
 
-      left: calc(50% + 0.3px);
-      top: calc(50% + 0.3px);
+      left: calc(50%);
+      top: calc(50%);
 
       width: 65%;
       height: 65%;
