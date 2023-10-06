@@ -10,8 +10,8 @@
   background: var(--floating-bg);
   color: var(--floating-fg);
 
-  padding-inline: 12px;
-  padding-block: 8px;
+  padding-inline: 8px;
+  padding-block: 2px;
 
   &.top {
     left: calc(var(--anchor-left) + var(--anchor-width) / 2);
@@ -65,6 +65,7 @@
     position: relative;
 
     & > .icon {
+      margin-top: -5px;
       position: absolute;
       font-size: 36px;
       color: var(--normal-bg);

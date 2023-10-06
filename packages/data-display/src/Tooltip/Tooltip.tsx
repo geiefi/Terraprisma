@@ -133,7 +133,7 @@ export function createTooltip(identification: string) {
                 {props.children}
 
                 <span class="icon">
-                  <ArrowDropDown />
+                  <ArrowDropDown variant="rounded" />
                 </span>
               </div>
             </div>
