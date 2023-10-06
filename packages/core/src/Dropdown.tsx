@@ -56,7 +56,7 @@ const Dropdown = makeComponent(
           {...elProps}
           class={mergeClass(
             'absolute z-10 h-fit overflow-y-auto overflow-x-hidden rounded-xl box-border p-2',
-            'bg-[var(--deeper-bg)] text-[var(--deeper-fg)]',
+            'bg-[var(--floating-bg)] text-[var(--floating-fg)] border border-solid border-[var(--floating-border)]',
             elProps.class
           )}
           style={{
