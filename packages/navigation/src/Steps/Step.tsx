@@ -68,7 +68,7 @@ export const InternalStep = makeComponent(
           'relative flex',
           'w-full last-of-type:box-content last-of-type:pr-[var(--description-offset)] last-of-type:w-[var(--step-content-width)] last-of-type:after:!hidden',
           'after:content-[""] after:w-[calc(100%-var(--step-content-width)-1.5rem)] after:display after:absolute after:top-1/2 after:left-[calc(var(--step-content-width)+0.7rem)] after:h-1 after:bg-[var(--muted-bg)] after:transition-colors',
-          current() >= props.index && 'after:!bg-[var(--accent-bg)]',
+          current() - 1 >= props.index && 'after:!bg-[var(--accent-bg)]',
           elProps.class
         )}
         style={{
