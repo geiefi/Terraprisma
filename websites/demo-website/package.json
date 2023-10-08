@@ -10,7 +10,7 @@
   "devDependencies": {
     "@types/node": "^18.11.18",
     "esbuild": "^0.14.54",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.31",
     "prettier": "^2.8.8",
     "sass": "^1.62.1",
     "solid-start-node": "^0.3.4",
