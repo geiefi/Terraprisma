@@ -1,3 +1,5 @@
+import { createMemo } from "solid-js";
+
 type BoundCallback<Data, Args extends any[], ReturnType> = {
   1: Data;
   0: (data: Data, ...args: Args) => ReturnType;
@@ -37,18 +39,19 @@ function isCallbackBound<Args extends any[], ReturnType>(
  */
 export function mergeCallbacks<Args extends any[], ReturnType = void>(
   ...callbacks: (Callback<Args, ReturnType> | undefined)[]
-): ((...args: Args) => ReturnType) | undefined {
-  const callbacksToCall = callbacks
+): (...args: Args) => (ReturnType | undefined) {
+  const callbacksToCallMem = createMemo(() => callbacks
     .filter(Boolean)
     .map((callback) =>
       isCallbackBound(callback)
         ? (...args: any) => callback[0](callback[1], ...args)
         : callback!
-    );
-
-  if (callbacksToCall.length === 0) return;
+    ));
 
   return (...args: Args) => {
+    const callbacksToCall = callbacksToCallMem();
+    if (callbacksToCall.length === 0) return;
+
     for (const callback of callbacksToCall.slice(0, -1)) {
       callback(...args);
     }
