@@ -1,4 +1,4 @@
-import { JSX } from 'solid-js';
+import { JSX, createEffect, createMemo } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -36,6 +36,15 @@ export interface TextAreaProps<
 > extends MaskedFieldProps<OwnerFormValue, string, Name> {
   label?: JSX.Element;
 
+  /**
+   * @default true
+   */
+  resizable?: boolean;
+  /**
+   * @default 'both' or 'none' if {@link resizable} is false
+   */
+  reisizingDrection?: JSX.CSSProperties['resize'];
+
   onChange?: (newValue: string, event?: TextAreaChangeEvent) => any;
 }
 
@@ -46,7 +55,9 @@ const TextArea = setupFieldComponent<string>().with(
       extendPropsFrom<TextAreaProps & { color?: Accents }, 'textarea'>([
         ...MaskedFieldPropsKeys,
         'label',
-        'helperText',
+        'color',
+        'resizable',
+        'reisizingDrection',
         'onChange'
       ])
     ],
@@ -61,11 +72,26 @@ const TextArea = setupFieldComponent<string>().with(
         validate
       } = useField<string>()!;
 
+      let textarea: HTMLTextAreaElement;
+
+      const resizingDirection = createMemo(() =>
+        props.resizable ?? true ? props.reisizingDrection ?? 'both' : 'none'
+      );
+
       return (
         <FieldInternalWrapper>
-          <InputContainer labelFor={id()} color={color()} label={props.label}>
+          <InputContainer
+            class="textarea-container"
+            style={{
+              '--resize-direction': resizingDirection()
+            }}
+            labelFor={id()}
+            color={color()}
+            label={props.label}
+          >
             <textarea
               {...elProps}
+              ref={(t) => (textarea = t)}
               id={id()}
               value={(value() || '').toString()}
               disabled={disabled()}
@@ -75,31 +101,11 @@ const TextArea = setupFieldComponent<string>().with(
                 ...elProps.classList
               }}
               onInput={mergeCallbacks(
-                elProps.onInput as any,
-                props.mask ? createInputMask(props.mask) : undefined,
-                (
-                  event: InputEvent & {
-                    target: HTMLTextAreaElement;
-                    currentTarget: HTMLTextAreaElement;
-                  }
-                ) => {
-                  event.target.style.height = '0px';
-                  const scrollHeight = Math.max(event.target.scrollHeight, 54);
-                  event.target.style.height = `${scrollHeight}px`;
-
-                  event.target.parentElement!.style.height = `${scrollHeight}px`;
-
-                  if (props.onChange) {
-                    props.onChange(event.currentTarget.value, event);
-                  }
-
-                  setValue(event.currentTarget.value);
-                }
+                elProps.onInput,
+                props.mask ? createInputMask(props.mask) : undefined
               )}
-              onFocus={mergeCallbacks(elProps.onFocus as any, () => {
-                setFocused(true);
-              })}
-              onBlur={mergeCallbacks(elProps.onBlur as any, () => {
+              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
+              onBlur={mergeCallbacks(elProps.onBlur, () => {
                 validate(value());
                 setFocused(false);
               })}
