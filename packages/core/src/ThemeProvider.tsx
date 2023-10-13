@@ -12,7 +12,6 @@ import {
 import { canUseDocument } from '@terraprisma/utils';
 import {
   Accent,
-  AnyTheme,
   generateStyleVariablesFrom,
   Theme,
   Themes
@@ -49,11 +48,6 @@ export function setupTerraprisma(
     const currentTheme = createMemo(
       () => themes.find((t) => t.id === themeId())!
     );
-
-    createEffect(() => {
-      if (canUseDocument())
-        document.body.style.backgroundColor = currentTheme().normal.bg.toRGBA();
-    });
 
     const globalStyles = createMemo(() => {
       const theme = currentTheme();
