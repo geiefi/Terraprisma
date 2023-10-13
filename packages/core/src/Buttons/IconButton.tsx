@@ -17,40 +17,32 @@ const IconButton = makeComponent(
       'children'
     ])
   ],
-  (props, dftProps) => (
+  (props, defaultProps) => (
     <TextButton
-      {...dftProps}
+      {...defaultProps}
       rippleProps={{
         center: true,
-        ...dftProps.rippleProps
+        ...defaultProps.rippleProps
       }}
       unstyled
       class={mergeClass(
         '!p-0',
-        !dftProps.disabled &&
-          !dftProps.unstyled &&
-          'border-none aspect-square hover:bg-[var(--bg)] hover:text-[var(--fg)]',
-        !dftProps.disabled &&
-          !dftProps.unstyled &&
-          !props.squarish &&
-          'rounded-full',
-        !dftProps.disabled &&
-          !dftProps.unstyled &&
-          props.squarish &&
-          'rounded-lg',
-        !dftProps.disabled &&
-          !dftProps.unstyled &&
-          !dftProps.active &&
-          'bg-transparent text-[var(--bg)]',
-        !dftProps.disabled &&
-          !dftProps.unstyled &&
-          dftProps.active &&
-          'bg-[var(--bg)] text-[var(--fg)]',
-        dftProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
-        (dftProps.size === 'medium' || typeof dftProps.size === 'undefined') &&
+        !defaultProps.unstyled && [
+          'border-none aspect-square',
+          (!defaultProps.active || defaultProps.disabled) &&
+            'bg-transparent text-[var(--bg)]',
+          !defaultProps.disabled && [
+            'hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+            defaultProps.active && 'bg-[var(--bg)] text-[var(--fg)]'
+          ],
+          props.squarish ? 'rounded-lg' : 'rounded-full'
+        ],
+        defaultProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
+        (defaultProps.size === 'medium' ||
+          typeof defaultProps.size === 'undefined') &&
           'min-w-[3rem] min-h-[3rem]',
-        dftProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
-        dftProps.class
+        defaultProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
+        defaultProps.class
       )}
     >
       {props.children}
