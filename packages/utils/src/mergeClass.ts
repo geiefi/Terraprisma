@@ -18,7 +18,7 @@ type AllowedValue =
  */
 export function mergeClass(...classes: AllowedValue[]) {
   return classes
-    .flat()
+    .flat(10)
     .filter(Boolean)
     .map((c) => {
       if (typeof c === 'object' && c !== null && !Array.isArray(c)) {
