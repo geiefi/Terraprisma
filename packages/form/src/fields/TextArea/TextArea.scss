@@ -19,7 +19,8 @@ textarea {
   top: 0;
   box-sizing: border-box;
   resize: none;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   transition: opacity .2s;
   opacity: 1;
