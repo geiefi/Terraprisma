@@ -1,4 +1,4 @@
-import { JSX, createEffect, createMemo } from 'solid-js';
+import { JSX, createMemo } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -72,8 +72,6 @@ const TextArea = setupFieldComponent<string>().with(
         validate
       } = useField<string>()!;
 
-      let textarea: HTMLTextAreaElement;
-
       const resizingDirection = createMemo(() =>
         props.resizable ?? true ? props.reisizingDrection ?? 'both' : 'none'
       );
@@ -91,7 +89,6 @@ const TextArea = setupFieldComponent<string>().with(
           >
             <textarea
               {...elProps}
-              ref={(t) => (textarea = t)}
               id={id()}
               value={(value() || '').toString()}
               disabled={disabled()}
@@ -103,7 +100,23 @@ const TextArea = setupFieldComponent<string>().with(
               onInput={mergeCallbacks(
                 elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
-                (e) => setValue(e.target.value)
+                (event) => {
+                  event.target.style.height = '0px';
+                  requestAnimationFrame(() => {
+                    const scrollHeight = Math.max(
+                      event.target.scrollHeight,
+                      event.target.parentElement!.getBoundingClientRect()
+                        .height - 1
+                    );
+                    event.target.style.height = `${scrollHeight}px`;
+                  });
+
+                  if (props.onChange) {
+                    props.onChange(event.currentTarget.value, event);
+                  }
+
+                  setValue(event.currentTarget.value);
+                }
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
               onBlur={mergeCallbacks(elProps.onBlur, () => {
