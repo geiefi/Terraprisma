@@ -40,7 +40,12 @@ const Button = makeComponent(
     const size = createMemo(() => props.size ?? 'medium');
 
     return (
-      <Ripple noRipple={props.disabled} color={color()} {...props.rippleProps}>
+      <Ripple
+        noRipple={props.disabled}
+        contrastWithBg
+        color={color()}
+        {...props.rippleProps}
+      >
         <button
           type="button"
           {...elProps}
@@ -59,6 +64,7 @@ const Button = makeComponent(
             '--bg': `var(--${color()}-bg)`,
             '--fg': `var(--${color()}-fg)`,
             '--hover': `var(--${color()}-hover)`,
+            '--hover-10': `var(--${color()}-hover-10)`,
             ...props.style
           }}
           aria-disabled={props.disabled}

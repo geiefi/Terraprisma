@@ -16,13 +16,17 @@ const TextButton = makeComponent(
       <Button
         {...dftProps}
         unstyled
+        rippleProps={{
+          contrastWithBg: props.active ?? false,
+          ...dftProps.rippleProps
+        }}
         class={mergeClass(
           !dftProps.disabled &&
             !dftProps.unstyled && [
-              'rounded-[3px] border-none hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+              'rounded-[3px] border-none',
               props.active
                 ? 'bg-[var(--bg)] text-[var(--fg)]'
-                : 'bg-transparent text-[var(--bg)]'
+                : 'bg-transparent text-[var(--bg)] hover:bg-[var(--hover-10)]'
             ],
           dftProps.class
         )}

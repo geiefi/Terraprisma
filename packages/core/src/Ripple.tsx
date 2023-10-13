@@ -30,6 +30,10 @@ export interface RippleProps {
    */
   noRipple?: boolean;
   center?: boolean;
+  /**
+   * @default false
+   */
+  contrastWithBg?: boolean;
   wrapperProps?: Omit<ComponentProps<'div'>, 'style' | 'children'> & {
     style?: JSX.CSSProperties;
   };
@@ -49,6 +53,7 @@ const Ripple = makeComponent(
       'noRipple',
       'center',
       'color',
+      'contrastWithBg',
       'wrapperProps',
       'children'
     ])
@@ -212,7 +217,10 @@ const Ripple = makeComponent(
                           height: `${ripple.diameter}px`,
                           left: `${ripple.left}px`,
                           top: `${ripple.top}px`,
-                          '--bg': `var(--${color()}-fg)`
+                          '--bg':
+                            props.contrastWithBg ?? false
+                              ? `var(--${color()}-fg)`
+                              : `var(--${color()}-bg)`
                         }}
                       />
                     </Show>

@@ -22,6 +22,7 @@ const IconButton = makeComponent(
       {...defaultProps}
       rippleProps={{
         center: true,
+        contrastWithBg: true,
         ...defaultProps.rippleProps
       }}
       unstyled

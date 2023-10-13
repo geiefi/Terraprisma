@@ -1,15 +1,16 @@
-import { Component, createRoot, createSignal, getOwner } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 
-import { Col, Row, Container, Stack } from '@terraprisma/layout';
-import { List, Table } from '@terraprisma/data-display';
+import { Col, Row, Container, Stack, Divisor } from '@terraprisma/layout';
+import { Table } from '@terraprisma/data-display';
 import {
   Box,
   Button,
   IconButton,
-  Modal,
+  Dialog,
+  List,
+  ListItem,
   OutlinedButton,
-  createModal,
-  useGrapeS
+  createDialog
 } from '@terraprisma/core';
 import { Pagination, Step, Steps } from '@terraprisma/navigation';
 import {
@@ -23,19 +24,11 @@ import {
   Validators,
   TextArea
 } from '@terraprisma/form';
-import {
-  CopyAll,
-  Delete,
-  Drafts,
-  Inbox,
-  QuestionMark,
-  Send,
-  Star
-} from '@terraprisma/icons';
+import { CopyAll, Delete, Drafts, Inbox, Send, Star } from '@terraprisma/icons';
 import { Paragraph, Typography, Marked } from '@terraprisma/typography';
 
 const confirm = (message: string) => {
-  createModal({
+  createDialog({
     identification: 'Confirmation',
     title: message,
     body: <></>,
@@ -52,35 +45,36 @@ const DesignShowcase: Component = () => {
       <Box>
         <Row gap="5px">
           <Col size={8}>
-            <Box style={{ padding: 0 }}>
-              <List>
-                <List.Item
-                  icon={<Inbox variant="rounded" />}
-                  onClick={() => confirm('Are you bananas!?')}
-                  clickable
-                >
-                  Inbox
-                </List.Item>
+            <Box>
+              <List identification="Testing list" boxed>
+                <ListItem clickable>Inbox</ListItem>
+                <ListItem clickable>Stuff</ListItem>
+                <ListItem>Closure</ListItem>
+                <ListItem clickable active>
+                  Minecraft
+                </ListItem>
 
-                <List.Divisor />
+                <Divisor />
 
-                <List.ItemWithDetails
-                  icon={<Drafts variant="rounded" />}
-                  subItems={
-                    <List.Item icon={<Star variant="rounded" />} clickable>
-                      Star
-                    </List.Item>
-                  }
-                >
-                  Drafts
-                </List.ItemWithDetails>
+                <ListItem>Stuff</ListItem>
+
+                {/* <List.ItemWithDetails */}
+                {/*   icon={<Drafts variant="rounded" />} */}
+                {/*   subItems={ */}
+                {/*     <List.Item icon={<Star variant="rounded" />} clickable> */}
+                {/*       Star */}
+                {/*     </List.Item> */}
+                {/*   } */}
+                {/* > */}
+                {/*   Drafts */}
+                {/* </List.ItemWithDetails> */}
               </List>
             </Box>
           </Col>
           <Col size={16}>
             <Button onClick={() => setModalOpen(true)}>Open modal</Button>
 
-            <Modal
+            <Dialog
               title="Hello, this is a modal"
               visible={modalOpen()}
               onOk={() => setModalOpen(false)}
@@ -98,7 +92,7 @@ const DesignShowcase: Component = () => {
                   still not have enough of it. Have fun!
                 </Paragraph>
               </Typography>
-            </Modal>
+            </Dialog>
           </Col>
           <Col size={14}>
             <Box>
