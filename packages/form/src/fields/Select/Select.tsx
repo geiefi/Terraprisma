@@ -228,8 +228,8 @@ const Select = setupFieldComponent().with(
                 class="select-dropdown"
                 visible={focused()}
                 style={{
-                  '--color/10': `var(--${color()}-bg)`,
-                  '--hover/10': `var(--${color()}-hover\\/10)`
+                  '--color-10': `var(--${color()}-bg)`,
+                  '--hover-10': `var(--${color()}-hover-10)`
                 }}
               >
                 <For each={options()}>

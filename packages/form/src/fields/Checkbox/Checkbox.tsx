@@ -74,7 +74,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
             class="checkbox"
             style={{
               '--color': `var(--${color()}-bg)`,
-              '--color/10': `var(--${color()}-bg\\/10)`,
+              '--color-10': `var(--${color()}-bg-10)`,
               '--check-color': `var(--${color()}-fg)`
             }}
             classList={{
