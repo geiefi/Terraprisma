@@ -228,7 +228,7 @@ const Select = setupFieldComponent().with(
                 class="select-dropdown"
                 visible={focused()}
                 style={{
-                  '--color/10': `var(--${color()}-bg\\/10)`,
+                  '--color/10': `var(--${color()}-bg)`,
                   '--hover/10': `var(--${color()}-hover\\/10)`
                 }}
               >
@@ -246,19 +246,14 @@ const Select = setupFieldComponent().with(
                           active: optionProps.value === value(),
                           ...optionElProps.classList
                         }}
-                        onClick={mergeCallbacks<(e: MouseEvent) => void>(
-                          // eslint-disable-next-line solid/reactivity
-                          optionElProps.onClick as any,
-                          // eslint-disable-next-line solid/reactivity
-                          () => {
-                            if (props.onChange) {
-                              props.onChange(optionProps.value);
-                            }
-
-                            setValue(optionProps.value as any);
-                            setFocused(false);
+                        onClick={mergeCallbacks(optionElProps.onClick, () => {
+                          if (props.onChange) {
+                            props.onChange(optionProps.value);
                           }
-                        )}
+
+                          setValue(optionProps.value as any);
+                          setFocused(false);
+                        })}
                       >
                         {optionElProps.children}
 
