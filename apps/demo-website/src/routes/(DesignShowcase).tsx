@@ -11,7 +11,7 @@ import {
   createModal,
   useGrapeS
 } from '@terraprisma/core';
-import { Step, Steps } from '@terraprisma/navigation';
+import { Pagination, Step, Steps } from '@terraprisma/navigation';
 import {
   RadioGroup,
   Input,
@@ -101,24 +101,35 @@ const DesignShowcase: Component = () => {
             </Modal>
           </Col>
           <Col size={14}>
-            <Table identification="MostPopulatedCountries" boxed>
-              <Table.Row headRow>
-                <Table.Column> Country </Table.Column>
-                <Table.Column> Population </Table.Column>
-              </Table.Row>
-              <Table.Row>
-                <Table.Column> China </Table.Column>
-                <Table.Column> 1,439,323,776 </Table.Column>
-              </Table.Row>
-              <Table.Row>
-                <Table.Column> India </Table.Column>
-                <Table.Column> 1,380,004,385 </Table.Column>
-              </Table.Row>
-              <Table.Row>
-                <Table.Column> United States </Table.Column>
-                <Table.Column> 331,002,651 </Table.Column>
-              </Table.Row>
-            </Table>
+            <Box>
+              <Table identification="MostPopulatedCountries" boxed>
+                <Table.Row headRow>
+                  <Table.Column> Country </Table.Column>
+                  <Table.Column> Population </Table.Column>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Column> China </Table.Column>
+                  <Table.Column> 1,439,323,776 </Table.Column>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Column> India </Table.Column>
+                  <Table.Column> 1,380,004,385 </Table.Column>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Column> United States </Table.Column>
+                  <Table.Column> 331,002,651 </Table.Column>
+                </Table.Row>
+              </Table>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  'justify-content': 'flex-end'
+                }}
+              >
+                <Pagination current={1} total={100} />
+              </div>
+            </Box>
           </Col>
           <Col size={10} style={{ display: 'flex' }}>
             <Box style={{ width: '100%', margin: 'auto' }}>

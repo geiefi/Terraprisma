@@ -2,8 +2,9 @@ import { For, Show, createMemo } from 'solid-js';
 
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
-import { Button, IconButton } from '@terraprisma/core';
+import { IconButton } from '@terraprisma/core';
 import { ArrowBackIosNew, ArrowForwardIos } from '@terraprisma/icons';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 export interface PaginationProps {
   current: number;
@@ -22,15 +23,40 @@ export interface PaginationProps {
   onChangePage?: (newPage: number, event?: MouseEvent) => any;
 }
 
+const PageNumber = (props: {
+  pageNumber: number;
+  active: boolean;
+  onClick: (e: MouseEvent) => void;
+  color: Accents;
+}) => (
+  <>
+    <IconButton
+      active={props.active}
+      color={props.color}
+      rippleProps={{ center: false }}
+      squarish
+      size="small"
+      onClick={(e: MouseEvent) => props.onClick(e)}
+    >
+      {props.pageNumber}
+    </IconButton>
+  </>
+);
+
+const Etc = () => <div class="flex self-end pb-2 select-none"> ... </div>;
+
 const Pagination = makeComponent(
   [
-    extendPropsFrom<PaginationProps, 'div'>([
+    addAccentColoring<PaginationProps>(),
+    extendPropsFrom<PaginationProps & { color?: Accents }, 'div'>([
       'current',
+      'color',
+      'maximumAppearingChoices',
       'total',
       'onChangePage'
     ])
   ],
-  (props, elProps) => {
+  (props, color, elProps) => {
     const maximumAppearingChoices = createMemo(
       () => props.maximumAppearingChoices || 5 - 2
     );
@@ -64,64 +90,69 @@ const Pagination = makeComponent(
       return pagesSurroundingCurrent.sort((a, b) => a - b);
     });
 
-    const PageNumber = (p: { pageN: number }) => (
-      <>
-        TODO: find the best way to have the icon button here
-        {/* <IconButton */}
-        {/*   class={mergeClass( */}
-        {/*     p.pageN === props.current && '!bg-[var(--bg)] !text-[var(--fg)]' */}
-        {/*   )} */}
-        {/*   size="small" */}
-        {/*   centerRipple */}
-        {/*   onClick={(e: MouseEvent) => handleChangePage(p.pageN, e)} */}
-        {/* > */}
-        {/*   {p.pageN} */}
-        {/* </IconButton> */}
-      </>
-    );
-
-    const Etc = () => <div class="flex self-end pb-2 select-none"> ... </div>;
-
     return (
       <div
         {...elProps}
-        class={mergeClass('w-full flex gap-3 flex-row my-1', elProps.class)}
+        class={mergeClass('w-fit flex gap-3 flex-row my-1', elProps.class)}
       >
-        {/* <Button.Icon */}
-        {/*   class="back" */}
-        {/*   disabled={props.current === 1} */}
-        {/*   size="small" */}
-        {/*   onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)} */}
-        {/* > */}
-        {/*   <ArrowBackIosNew /> */}
-        {/* </Button.Icon> */}
+        <IconButton
+          class="back"
+          disabled={props.current === 1}
+          squarish
+          rippleProps={{ center: false }}
+          size="small"
+          onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
+        >
+          <ArrowBackIosNew />
+        </IconButton>
 
         <Show when={!range().includes(1)}>
-          <PageNumber pageN={1} />
+          <PageNumber
+            pageNumber={1}
+            active={props.current === 1}
+            color={color()}
+            onClick={(e) => handleChangePage(1, e)}
+          />
         </Show>
 
         <Show when={!range().includes(2)}>
           <Etc />
         </Show>
 
-        <For each={range()}>{(pageN) => <PageNumber pageN={pageN} />}</For>
+        <For each={range()}>
+          {(pageNumber) => (
+            <PageNumber
+              pageNumber={pageNumber}
+              active={props.current === pageNumber}
+              color={color()}
+              onClick={(e) => handleChangePage(pageNumber, e)}
+            />
+          )}
+        </For>
 
         <Show when={!range().includes(props.total - 1)}>
           <Etc />
         </Show>
 
         <Show when={!range().includes(props.total)}>
-          <PageNumber pageN={props.total} />
+          <PageNumber
+            pageNumber={props.total}
+            active={props.current === props.total}
+            color={color()}
+            onClick={(e) => handleChangePage(props.total, e)}
+          />
         </Show>
 
-        {/* <Button.Icon */}
-        {/*   class="next" */}
-        {/*   disabled={props.current === props.total} */}
-        {/*   onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)} */}
-        {/*   size="small" */}
-        {/* > */}
-        {/*   <ArrowForwardIos /> */}
-        {/* </Button.Icon> */}
+        <IconButton
+          class="next"
+          squarish
+          disabled={props.current === props.total}
+          rippleProps={{ center: false }}
+          onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
+          size="small"
+        >
+          <ArrowForwardIos />
+        </IconButton>
       </div>
     );
   }
