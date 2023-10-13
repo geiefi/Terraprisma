@@ -11,7 +11,7 @@ const Divisor = makeComponent(
       <div
         {...elProps}
         class={mergeClass(
-          'h-[1px] my-2 opacity-40 bg-[var(--floating-bg)]',
+          'h-[1px] my-2 opacity-40 bg-[var(--floating-border)]',
           props.direction === 'vertical' && 'w-[1px] h-full my-0 mx-2',
           elProps.class
         )}
