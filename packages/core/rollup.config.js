@@ -5,6 +5,7 @@ import jsx from 'acorn-jsx';
 import styles from 'rollup-plugin-styles';
 import typescript from '@rollup/plugin-typescript';
 import tailwindcss from 'tailwindcss';
+// import keysTransformer from 'ts-transformer-keys/transformer';
 import autoprefixer from 'autoprefixer';
 
 import tailwindConfig from './tailwind.config.js';
@@ -28,6 +29,12 @@ export const baseConfig = {
     typescript({
       declaration: true,
       declarationDir: './lib/'
+      // transformers: [
+      //   (service) => ({
+      //     before: [keysTransformer(service.getProgram())],
+      //     after: {}
+      //   })
+      // ]
     }),
     jsxPreserve()
   ]
