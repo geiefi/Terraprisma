@@ -3,7 +3,6 @@
   height: 100%;
   display: inline-block;
   padding-inline: 8px;
-  margin-block: 5px;
 
   &.error .helper-text { // the helper text shows the error message in this situation
     transition: none;
@@ -12,6 +11,7 @@
   }
 
   .helper-text {
+    padding-top: 5px;
     transition: .2s;
     opacity: 0.8;
     font-size: 10px;
