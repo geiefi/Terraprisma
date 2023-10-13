@@ -102,7 +102,8 @@ const TextArea = setupFieldComponent<string>().with(
               }}
               onInput={mergeCallbacks(
                 elProps.onInput,
-                props.mask ? createInputMask(props.mask) : undefined
+                props.mask ? createInputMask(props.mask) : undefined,
+                (e) => setValue(e.target.value)
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
               onBlur={mergeCallbacks(elProps.onBlur, () => {
