@@ -9,7 +9,7 @@ import OutlinedButton from './Buttons/OutlinedButton';
 import IconButton from './Buttons/IconButton';
 import Box from './Box';
 import Dropdown from './Dropdown';
-import Modal, { createModal } from './Modal';
+import Dialog, { createDialog } from './Dialog';
 
 export {
   useTheme,
@@ -21,6 +21,6 @@ export {
   IconButton,
   Box,
   Dropdown,
-  Modal,
-  createModal
+  Dialog,
+  createDialog
 };

@@ -21,7 +21,7 @@ import Box from './Box';
 import Button from './Buttons/Button';
 import OutlinedButton from './Buttons/OutlinedButton';
 
-export interface ModalProps {
+export interface DialogProps {
   visible?: boolean;
 
   title: JSX.Element;
@@ -35,9 +35,9 @@ export interface ModalProps {
   onHidden?: () => any;
 }
 
-const ModalInternal = makeComponent(
+const DialogInternal = makeComponent(
   [
-    extendPropsFrom<ModalProps, typeof Box>([
+    extendPropsFrom<DialogProps, typeof Box>([
       'title',
       'extraElementsInFooter',
       'visible',
@@ -73,7 +73,7 @@ const ModalInternal = makeComponent(
               }
             )}
             class={mergeClass(
-              'absolute left-1/2 top-1/2 w-full h-fit max-w-[568px] translate-x-1/2 translate-y-1/2 border-none',
+              'absolute left-1/2 top-1/2 w-full h-fit max-w-[568px] translate-x-[-50%] translate-y-[-50%]',
               elProps.class
             )}
           >
@@ -108,31 +108,31 @@ const ModalInternal = makeComponent(
   )
 );
 
-const Modal = (props: ComponentProps<typeof ModalInternal>) => {
+const Dialog = (props: ComponentProps<typeof DialogInternal>) => {
   return (
     <Portal>
-      <ModalInternal {...props} />
+      <DialogInternal {...props} />
     </Portal>
   );
 };
 
-export default Modal;
+export default Dialog;
 
 export interface CreateModalOptions
-  extends Omit<ComponentProps<typeof ModalInternal>, 'visible' | 'children'> {
+  extends Omit<ComponentProps<typeof DialogInternal>, 'visible' | 'children'> {
   identification: string;
 
   body: JSX.Element;
   ref?: HTMLDivElement | ((modal: HTMLDivElement) => any);
 }
 
-export function createModal(options: CreateModalOptions) {
+export function createDialog(options: CreateModalOptions) {
   createRoot((dispose) => {
     const container = document.createElement('div');
 
     const [isModalVisible, setModalVisible] = createSignal(false);
     const modal = createMemo(() => (
-      <ModalInternal
+      <DialogInternal
         {...options}
         visible={isModalVisible()}
         onHidden={() => {
@@ -153,7 +153,7 @@ export function createModal(options: CreateModalOptions) {
         }}
       >
         {options.body}
-      </ModalInternal>
+      </DialogInternal>
     ));
 
     // eslint-disable-next-line solid/reactivity
