@@ -29,7 +29,7 @@ const IconButton = makeComponent(
       class={mergeClass(
         '!p-0',
         !defaultProps.unstyled && [
-          'border-none aspect-square',
+          'aspect-square outline-none',
           (!defaultProps.active || defaultProps.disabled) &&
             'bg-transparent text-[var(--bg)]',
           !defaultProps.disabled && [

@@ -23,7 +23,7 @@ const TextButton = makeComponent(
         class={mergeClass(
           !dftProps.disabled &&
             !dftProps.unstyled && [
-              'rounded-[3px] border-none',
+              'rounded-md outline-none',
               props.active
                 ? 'bg-[var(--bg)] text-[var(--fg)]'
                 : 'bg-transparent text-[var(--bg)] hover:bg-[var(--hover-10)]'
