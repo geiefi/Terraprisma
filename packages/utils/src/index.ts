@@ -10,27 +10,6 @@ export * from './types';
 
 import type { Store } from './types';
 
-declare global {
-  function dbg<T = any>(el: T, context?: string): T;
-}
-
-const _global = typeof window !== 'undefined' ? window : global;
-/**
- * @description `console.log`'s the `el` then returns it
- *
- * This function is inspired in Rust's `dbg!` macro.
- */
-_global.dbg = function <T = any>(el: T, context?: string): T {
-  if (context) {
-    console.groupCollapsed(`${context}:`, el);
-  } else {
-    console.groupCollapsed(el);
-  }
-  console.trace('for this dbg() call');
-  console.groupEnd();
-  return el;
-};
-
 export {
   deeplyTrack,
   splitTupleAccessor,
