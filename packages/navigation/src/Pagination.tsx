@@ -3,7 +3,7 @@ import { For, Show, createMemo } from 'solid-js';
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import { IconButton } from '@terraprisma/core';
-import { ArrowBackIosNew, ArrowForwardIos } from '@terraprisma/icons';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
 import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 export interface PaginationProps {
@@ -103,7 +103,7 @@ const Pagination = makeComponent(
           size="small"
           onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
         >
-          <ArrowBackIosNew />
+          <KeyboardArrowLeft />
         </IconButton>
 
         <Show when={!range().includes(1)}>
@@ -151,7 +151,7 @@ const Pagination = makeComponent(
           onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
           size="small"
         >
-          <ArrowForwardIos />
+          <KeyboardArrowRight />
         </IconButton>
       </div>
     );
