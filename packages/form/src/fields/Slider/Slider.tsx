@@ -7,6 +7,16 @@ import {
   onCleanup,
   Show
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
+
+import {
+  canUseDocument,
+  makeComponent,
+  extendPropsFrom
+} from '@terraprisma/utils';
+import { createTooltip } from '@terraprisma/data-display';
+import { Accents, addAccentColoring } from '@terraprisma/core';
+import { GrowFade } from '@terraprisma/transitions';
 
 import {
   FieldInternalWrapper,
@@ -18,19 +28,9 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import {
-  canUseDocument,
-  makeComponent,
-  extendPropsFrom
-} from '@terraprisma/utils';
-import { createTooltip } from '@terraprisma/data-display';
-
 import { FormValue } from '../../types';
 
 import './Slider.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
-import { GrowFade } from '@terraprisma/transitions';
-import { Portal } from 'solid-js/web';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,

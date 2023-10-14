@@ -2,7 +2,7 @@ import { Component, Show, createSignal } from 'solid-js';
 
 import { Table } from '@terraprisma/data-display';
 import { createForm, Validators, FormProviderValue } from '@terraprisma/form';
-import { Box } from '@terraprisma/core';
+import { Box } from '@terraprisma/general';
 import { BarcodeScanner, CreditCard, QrCode } from '@terraprisma/icons';
 import { Col, Row } from '@terraprisma/layout';
 import { Pagination } from '@terraprisma/navigation';

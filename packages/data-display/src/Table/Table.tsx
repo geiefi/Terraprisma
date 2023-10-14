@@ -10,7 +10,7 @@ import { Dynamic } from 'solid-js/web';
 
 import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
-import { Box } from '@terraprisma/core';
+import { Box } from '@terraprisma/general';
 
 import './Table.scss';
 

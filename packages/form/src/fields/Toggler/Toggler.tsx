@@ -1,5 +1,8 @@
 import { JSX, Show } from 'solid-js';
 
+import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
+import { Accents, addAccentColoring } from '@terraprisma/core';
+
 import {
   FieldInternalWrapper,
   Label,
@@ -13,8 +16,6 @@ import {
 import { FormValue } from '../../types';
 
 import './Toggler.scss';
-import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,

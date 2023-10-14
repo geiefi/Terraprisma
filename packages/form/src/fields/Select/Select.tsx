@@ -13,6 +13,7 @@ import {
   ComponentProps,
   Show
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 
 import {
   mergeClass,
@@ -21,6 +22,10 @@ import {
   extendPropsFrom,
   makeComponent
 } from '@terraprisma/utils';
+import { Dropdown, List, ListItem } from '@terraprisma/general';
+import { GrowFade } from '@terraprisma/transitions';
+import { Check, KeyboardArrowDown } from '@terraprisma/icons';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import {
   InputContainer,
@@ -32,15 +37,9 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown, List, ListItem } from '@terraprisma/core';
-import { GrowFade } from '@terraprisma/transitions';
-import { Check, KeyboardArrowDown } from '@terraprisma/icons';
-
 import { FormValue, FormFieldValue } from '../../types';
 
 import './Select.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
-import { Portal } from 'solid-js/web';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,

@@ -17,11 +17,11 @@ import {
 } from '@terraprisma/utils';
 
 import { Check } from '@terraprisma/icons';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import { FormValue } from '../../types';
 
 import './Checkbox.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,

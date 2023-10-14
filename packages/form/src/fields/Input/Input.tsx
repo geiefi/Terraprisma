@@ -2,6 +2,14 @@ import { JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
+import { Accents, addAccentColoring } from '@terraprisma/core';
+import {
+  mergeClass,
+  mergeCallbacks,
+  makeComponent,
+  extendPropsFrom
+} from '@terraprisma/utils';
+
 import {
   InputContainer,
   FieldInternalWrapper,
@@ -13,15 +21,7 @@ import {
 } from '../utils';
 import { FormValue } from '../../types';
 
-import {
-  mergeClass,
-  mergeCallbacks,
-  makeComponent,
-  extendPropsFrom
-} from '@terraprisma/utils';
-
 import './Input.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;

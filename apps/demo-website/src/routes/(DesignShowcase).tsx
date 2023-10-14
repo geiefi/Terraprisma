@@ -12,7 +12,7 @@ import {
   OutlinedButton,
   createDialog,
   ListItemWithDetails
-} from '@terraprisma/core';
+} from '@terraprisma/general';
 import { Pagination, Step, Steps } from '@terraprisma/navigation';
 import {
   RadioGroup,
@@ -25,7 +25,7 @@ import {
   Validators,
   TextArea
 } from '@terraprisma/form';
-import { CopyAll, Delete, Drafts, Inbox, Send, Star } from '@terraprisma/icons';
+import { CopyAll, Delete, Send } from '@terraprisma/icons';
 import { Paragraph, Typography, Marked } from '@terraprisma/typography';
 
 const confirm = (message: string) => {

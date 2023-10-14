@@ -1,6 +1,6 @@
 import { Component, createSignal, Match, Switch } from 'solid-js';
 
-import { Box, Button } from '@terraprisma/core';
+import { Box, Button } from '@terraprisma/general';
 import { Stack, Container, Divisor } from '@terraprisma/layout';
 import { Steps, Step } from '@terraprisma/navigation';
 import type { FormProviderValue } from '@terraprisma/form/FormContext';

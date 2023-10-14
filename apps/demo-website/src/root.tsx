@@ -1,5 +1,5 @@
 // @refresh reload
-import { setupTerraprisma } from '@terraprisma/core';
+import { setupTerraprisma } from '@terraprisma/general';
 import { VoidTheme } from '@terraprisma/core';
 
 import { onMount, Suspense } from 'solid-js';

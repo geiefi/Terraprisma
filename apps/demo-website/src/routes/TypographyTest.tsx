@@ -1,7 +1,7 @@
 import { Component } from 'solid-js';
 
 import { Container } from '@terraprisma/layout';
-import { Box } from '@terraprisma/core';
+import { Box } from '@terraprisma/general';
 import {
   Paragraph,
   Title,

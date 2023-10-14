@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup';
 
-import { baseConfig } from '../core/rollup.config.js';
+import { baseConfig } from '../general/rollup.config.js';
 
 export default defineConfig({
   ...baseConfig,

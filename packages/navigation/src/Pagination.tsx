@@ -1,8 +1,7 @@
 import { For, Show, createMemo } from 'solid-js';
 
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
-
-import { IconButton } from '@terraprisma/core';
+import { IconButton } from '@terraprisma/general';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 

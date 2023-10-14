@@ -61,6 +61,7 @@
     "rollup-plugin-styles": "^4.0.0",
     "sass": "^1.66.1",
     "solid-devtools": "^0.27.3",
+    "jsx-preserve": "workspace:*",
     "solid-jest": "^0.2.0",
     "solid-testing-library": "^0.5.1",
     "ts-jest": "^29.1.1",

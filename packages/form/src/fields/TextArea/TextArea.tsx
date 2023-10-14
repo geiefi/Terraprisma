@@ -2,6 +2,7 @@ import { JSX, createMemo } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
+import { Accents, addAccentColoring } from '@terraprisma/core';
 import {
   extendPropsFrom,
   makeComponent,
@@ -20,7 +21,6 @@ import {
 import { FormValue } from '../../types';
 
 import './TextArea.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
