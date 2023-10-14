@@ -237,7 +237,6 @@ const Select = setupFieldComponent().with(
                         <ListItem
                           {...optionElProps}
                           clickable
-                          tabindex={-1}
                           class={mergeClass('option', optionElProps.class)}
                           active={optionProps.value === value()}
                           onClick={mergeCallbacks(optionElProps.onClick, () => {
