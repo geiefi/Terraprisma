@@ -14,7 +14,7 @@
   padding-inline: 20px;
   padding-block: 14px;
 
-  &:focus-visible, &:focus, &.focused {
+  &.focused, &:focus, &:focus-visible {
     border-color: var(--color);
   }
 
@@ -25,7 +25,7 @@
 
   transition: .2s filter linear,
     .2s background-color linear,
-    .2s border linear;
+    .1s border linear;
 
   // these are the default values
   --bg: var(--floating-bg);
