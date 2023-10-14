@@ -72,6 +72,7 @@
   "dependencies": {
     "@terraprisma/layout": "workspace:*",
     "@terraprisma/theming": "workspace:*",
+    "@terraprisma/icons": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
     "@terraprisma/utils": "workspace:*",
     "solid-js": "^1.7.11",

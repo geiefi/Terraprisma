@@ -9,6 +9,7 @@ import OutlinedButton from './Buttons/OutlinedButton';
 import IconButton from './Buttons/IconButton';
 import List from './List/List';
 import ListItem from './List/ListItem';
+import ListItemWithDetails from './List/ListItemWithDetails';
 import Box from './Box';
 import Dropdown from './Dropdown';
 import Dialog, { createDialog } from './Dialog';
@@ -22,6 +23,7 @@ export {
   OutlinedButton,
   IconButton,
   List,
+  ListItemWithDetails,
   ListItem,
   Box,
   Dropdown,
