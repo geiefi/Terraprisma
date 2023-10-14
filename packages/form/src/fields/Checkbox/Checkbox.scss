@@ -1,6 +1,9 @@
 .checkbox {
   input {
-    appearance: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     pointer-events: none;
   }
@@ -12,9 +15,8 @@
 
   background: transparent;
   --border-color: var(--muted-bg);
-  --inner-border-size: 0;
-  outline: 1px solid var(--border-color);
-  border-radius: 2px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
 
   width: var(--size);
   height: var(--size);
@@ -22,17 +24,21 @@
   margin: 0;
   padding: 0;
 
-  transition: background .2s ease-in-out, box-shadow .2s ease-in-out;
-
-  box-shadow: inset 0 0 0 var(--inner-border-size) var(--border-color);
+  transition: background .2s ease-in-out, border .1s linear, box-shadow .1s linear;
 
   user-select: none !important;
   * {
     user-select: none !important;
   }
 
-  &:hover:not(.disabled) {
-    --inner-border-size: 2px;
+  &:not(.disabled) {
+    &:hover, &.focused {
+      --border-color: var(--color);
+    }
+
+    &.focused {
+      box-shadow: 0 0 4px 3px var(--color-20);
+    }
   }
 
   &.checked {

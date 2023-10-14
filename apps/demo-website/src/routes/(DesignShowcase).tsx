@@ -255,7 +255,7 @@ const DesignShowcase: Component = () => {
                     name="sliderField"
                   />
                 </Col>
-                <Col size={8}>
+                <Col size={24}>
                   <Row>
                     <Col size={4}>
                       <Toggler value={false} name="togglerField" />
@@ -277,11 +277,6 @@ const DesignShowcase: Component = () => {
                         name="disabledCheckedTogglerField"
                       />
                     </Col>
-                  </Row>
-                </Col>
-                <Col size={14} />
-                <Col size={8}>
-                  <Row>
                     <Col size={3}>
                       <Checkbox name="checkbox" />
                     </Col>

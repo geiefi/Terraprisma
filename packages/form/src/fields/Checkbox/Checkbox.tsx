@@ -17,8 +17,6 @@ import {
 } from '@terraprisma/utils';
 
 import { Check } from '@terraprisma/icons';
-import { GrowFade } from '@terraprisma/transitions';
-import { Ripple } from '@terraprisma/core';
 
 import { FormValue } from '../../types';
 
@@ -36,7 +34,18 @@ export interface CheckboxProps<
   helperText?: JSX.Element;
   size?: 'small' | 'medium' | 'large';
 
-  onChange?: (value: boolean, event: MouseEvent) => any;
+  onChange?: (
+    value: boolean,
+    event:
+      | (MouseEvent & {
+          currentTarget: HTMLDivElement;
+          target: Element;
+        })
+      | (KeyboardEvent & {
+          currentTarget: HTMLDivElement;
+          target: Element;
+        })
+  ) => any;
 }
 
 const Checkbox = setupFieldComponent<boolean>().with(
@@ -57,10 +66,32 @@ const Checkbox = setupFieldComponent<boolean>().with(
         elementId: id,
         disabledS: [disabled],
         valueS: [value, setValue],
-        focusedS: [, setFocused],
+        focusedS: [focused, setFocused],
         validate,
         hasErrors
       } = useField<boolean>()!;
+
+      const swapValue = (
+        e:
+          | (MouseEvent & {
+              currentTarget: HTMLDivElement;
+              target: Element;
+            })
+          | (KeyboardEvent & {
+              currentTarget: HTMLDivElement;
+              target: Element;
+            })
+      ) => {
+        if (!disabled()) {
+          const newValue = !value();
+          setValue(newValue);
+          validate(newValue);
+
+          if (props.onChange) {
+            props.onChange(newValue, e);
+          }
+        }
+      };
 
       return (
         <FieldInternalWrapper>
@@ -74,7 +105,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
             class="checkbox"
             style={{
               '--color': `var(--${color()}-bg)`,
-              '--color-10': `var(--${color()}-bg-10)`,
+              '--color-20': `var(--${color()}-bg-20)`,
               '--check-color': `var(--${color()}-fg)`
             }}
             classList={{
@@ -83,38 +114,24 @@ const Checkbox = setupFieldComponent<boolean>().with(
                 typeof props.size === 'undefined' || props.size === 'medium',
               large: props.size === 'large',
 
+              focused: focused(),
               checked: value() === true,
               disabled: disabled()
             }}
-            onClick={(e) => {
-              if (!disabled()) {
-                const newValue = !value();
-                setValue(newValue);
-                validate(newValue);
-
-                if (props.onChange) {
-                  props.onChange(newValue, e);
-                }
+            onKeyUp={(e) => {
+              if (e.key === 'space') {
+                swapValue(e);
               }
             }}
-            onMouseEnter={() => setFocused(true)}
-            onMouseLeave={() => setFocused(false)}
+            onClick={swapValue}
           >
             <input
               {...elProps}
               id={id()}
               type="checkbox"
-              onBlur={mergeCallbacks<() => void>(
-                // eslint-disable-next-line solid/reactivity
-                elProps.onBlur as any,
-                () => setFocused(false)
-              )}
-              onFocus={mergeCallbacks<() => void>(
-                // eslint-disable-next-line solid/reactivity
-                elProps.onFocus as any,
-                () => setFocused(true)
-              )}
-              value={value() ? 'on' : 'off'}
+              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
+              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
+              value={value() ? 'true' : 'false'}
             />
 
             <Show when={value() === true}>
