@@ -1,6 +1,6 @@
 import { FormFieldValue } from './types';
 
-const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 type Optional<T> = T | null | undefined;
 
