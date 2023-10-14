@@ -24,12 +24,12 @@ const Validators = {
   /**
    * Validates weather or not the field matches a Regex email.
    *
-   * Regex: `/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g`
+   * Regex: `/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/`
    */
   email: (value: Optional<string>) =>
     typeof value === 'undefined' ||
     value === null ||
-    emailRegex.test(value.toString().trim())
+    !emailRegex.test(value.toString().trim())
       ? 'This is not a valid email!'
       : undefined,
 
