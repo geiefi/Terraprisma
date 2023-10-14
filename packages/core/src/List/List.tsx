@@ -10,7 +10,7 @@ const List = makeComponent(
     <ul
       {...elProps}
       class={mergeClass(
-        'list-none flex flex-col h-fit w-full gap-1 py-2 p-0 m-0',
+        'list-none flex flex-col h-fit w-full gap-2 py-2 p-0 m-0',
         elProps.class
       )}
     >
