@@ -407,11 +407,6 @@ const Datepicker = setupFieldComponent<Date>().with(
             tabindex="0"
             onFocus={() => !disabled() && setFocused(true)}
             onBlur={() => !disabled() && setFocused(false)}
-            onClick={mergeCallbacks(elProps.onClick, () => {
-              if (!disabled()) {
-                setFocused((focused) => !focused);
-              }
-            })}
             icon={<CalendarMonth variant="rounded" />}
             ref={(ref) => {
               if (typeof elProps.ref === 'function') {

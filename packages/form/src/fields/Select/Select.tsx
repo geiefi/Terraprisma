@@ -195,10 +195,6 @@ const Select = setupFieldComponent().with(
             tabindex="0"
             onFocus={() => !disabled() && setFocused(true)}
             onBlur={() => !disabled() && setFocused(false)}
-            onClick={mergeCallbacks(
-              elProps.onClick,
-              () => !disabled() && setFocused((focused) => !focused)
-            )}
             icon={
               <KeyboardArrowDown
                 variant="rounded"
@@ -232,7 +228,7 @@ const Select = setupFieldComponent().with(
               >
                 <List>
                   <For each={options()}>
-                    {(optionAllProps, i) => {
+                    {(optionAllProps) => {
                       const [optionProps, optionElProps] = splitProps(
                         optionAllProps,
                         ['value']
@@ -240,8 +236,8 @@ const Select = setupFieldComponent().with(
                       return (
                         <ListItem
                           {...optionElProps}
-                          tabindex={i()}
                           clickable
+                          tabindex={-1}
                           class={mergeClass('option', optionElProps.class)}
                           active={optionProps.value === value()}
                           onClick={mergeCallbacks(optionElProps.onClick, () => {
