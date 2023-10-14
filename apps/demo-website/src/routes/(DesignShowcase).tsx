@@ -101,8 +101,8 @@ const DesignShowcase: Component = () => {
                   the user's screen.
                 </Paragraph>
                 <Paragraph>
-                  You can create many modals with <Marked>GrapeS</Marked> and
-                  still not have enough of it. Have fun!
+                  You can create many dialogs with <Marked>Terraprisma</Marked>{' '}
+                  and still not have enough of it. Have fun!
                 </Paragraph>
               </Typography>
             </Dialog>

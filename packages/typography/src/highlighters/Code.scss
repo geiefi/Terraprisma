@@ -1,11 +1,7 @@
-@function add-transparency($color, $percentage) {
-  @return color-mix(in srgb, $color, transparent $percentage);
-}
-
 .code-inline {
-  padding: 2px;
+  padding-inline: 0.4rem;
+  padding-block: 0.2rem;
   --transparency: 10%;
   border-radius: 3px;
-  background: add-transparency(var(--floating-bg), var(--transparency));
-  border: 1px solid var(--floating-border);
+  background: var(--deeper-bg-30);
 }
