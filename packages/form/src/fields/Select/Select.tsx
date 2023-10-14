@@ -32,7 +32,7 @@ import {
   setupFieldComponent
 } from '../utils';
 
-import { Dropdown } from '@terraprisma/core';
+import { Dropdown, List, ListItem } from '@terraprisma/core';
 import { GrowFade } from '@terraprisma/transitions';
 import { Check, KeyboardArrowDown } from '@terraprisma/icons';
 
@@ -67,7 +67,7 @@ export interface SelectProps<
 
 export interface SelectOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue
-> extends JSX.HTMLAttributes<HTMLDivElement> {
+> extends Omit<ComponentProps<typeof ListItem>, 'value' | 'children'> {
   value: AllowedValue;
   children: JSX.Element;
 }
@@ -228,44 +228,45 @@ const Select = setupFieldComponent().with(
                 class="select-dropdown"
                 visible={focused()}
                 style={{
-                  '--color-10': `var(--${color()}-bg)`,
+                  '--color': `var(--${color()}-bg)`,
                   '--hover-10': `var(--${color()}-hover-10)`
                 }}
               >
-                <For each={options()}>
-                  {(optionAllProps) => {
-                    const [optionProps, optionElProps] = splitProps(
-                      optionAllProps,
-                      ['value']
-                    );
-                    return (
-                      <div
-                        {...optionElProps}
-                        class={mergeClass('option', optionElProps.class)}
-                        classList={{
-                          active: optionProps.value === value(),
-                          ...optionElProps.classList
-                        }}
-                        onClick={mergeCallbacks(optionElProps.onClick, () => {
-                          if (props.onChange) {
-                            props.onChange(optionProps.value);
-                          }
+                <List>
+                  <For each={options()}>
+                    {(optionAllProps, i) => {
+                      const [optionProps, optionElProps] = splitProps(
+                        optionAllProps,
+                        ['value']
+                      );
+                      return (
+                        <ListItem
+                          {...optionElProps}
+                          tabindex={i()}
+                          clickable
+                          class={mergeClass('option', optionElProps.class)}
+                          active={optionProps.value === value()}
+                          onClick={mergeCallbacks(optionElProps.onClick, () => {
+                            if (props.onChange) {
+                              props.onChange(optionProps.value);
+                            }
 
-                          setValue(optionProps.value as any);
-                          setFocused(false);
-                        })}
-                      >
-                        {optionElProps.children}
+                            setValue(optionProps.value as any);
+                            setFocused(false);
+                          })}
+                        >
+                          {optionElProps.children}
 
-                        <Show when={optionProps.value === value()}>
-                          <span class="active-check">
-                            <Check variant="rounded" />
-                          </span>
-                        </Show>
-                      </div>
-                    );
-                  }}
-                </For>
+                          <Show when={optionProps.value === value()}>
+                            <span class="active-check">
+                              <Check variant="rounded" />
+                            </span>
+                          </Show>
+                        </ListItem>
+                      );
+                    }}
+                  </For>
+                </List>
               </Dropdown>
             </GrowFade>
           </Portal>

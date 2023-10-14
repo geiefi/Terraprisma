@@ -15,43 +15,14 @@
   max-height: calc(26px * 5 + 7px * 4); // at most five options appearing at once
 
   .option {
-    display: block;
     position: relative;
 
-    background: none;
-    transition: .2s background;
-    font-size: 18px;
-    line-height: 20px;
-
-    border-radius: 8px;
-
-    padding: 12px;
-
-    cursor: default;
-
-    overflow-x: hidden;
-    overflow-y: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    &:hover:not(.active) {
-      background: var(--hover-10);
+    & > .active-check {
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translate(calc(-100% - 12px), -50%);
     }
-  }
-
-  .option.active {
-    background: var(--color);
-  }
-
-  .option.active .active-check {
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    transform: translate(calc(-100% - 12px), -50%);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--color);
   }
 }
 

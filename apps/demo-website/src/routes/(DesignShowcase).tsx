@@ -10,7 +10,8 @@ import {
   List,
   ListItem,
   OutlinedButton,
-  createDialog
+  createDialog,
+  ListItemWithDetails
 } from '@terraprisma/core';
 import { Pagination, Step, Steps } from '@terraprisma/navigation';
 import {
@@ -58,6 +59,18 @@ const DesignShowcase: Component = () => {
 
                 <ListItem>Stuff</ListItem>
 
+                <ListItemWithDetails
+                  details={
+                    <List>
+                      <ListItem active clickable>
+                        I am active!
+                      </ListItem>
+                      <ListItem>I just show information</ListItem>
+                    </List>
+                  }
+                >
+                  Find out if you are gay
+                </ListItemWithDetails>
                 {/* <List.ItemWithDetails */}
                 {/*   icon={<Drafts variant="rounded" />} */}
                 {/*   subItems={ */}

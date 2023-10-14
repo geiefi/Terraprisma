@@ -175,6 +175,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@terraprisma/icons':
+        specifier: workspace:*
+        version: link:../icons/lib
       '@terraprisma/layout':
         specifier: workspace:*
         version: link:../layout/lib
@@ -407,9 +410,6 @@ importers:
       '@solid-primitives/input-mask':
         specifier: ^0.2.0
         version: 0.2.0(solid-js@1.8.1)
-      '@solid-primitives/resize-observer':
-        specifier: ^2.0.22
-        version: 2.0.22(solid-js@1.8.1)
       '@terraprisma/core':
         specifier: workspace:*
         version: link:../core/lib
@@ -3571,6 +3571,7 @@ packages:
     dependencies:
       '@solid-primitives/utils': 6.2.1(solid-js@1.8.1)
       solid-js: 1.8.1
+    dev: true
 
   /@solid-primitives/input-mask@0.2.0(solid-js@1.8.1):
     resolution: {integrity: sha512-bMvx9pOXc2gIvbj2hfU6hHrFDR02ZQFCpU6GaA5CGflgDBbjurO4Wu2qy9Cm5n/1p9wCcu1j/WnnVcAHD+Aoow==}
@@ -3632,6 +3633,7 @@ packages:
       '@solid-primitives/static-store': 0.0.5(solid-js@1.8.1)
       '@solid-primitives/utils': 6.2.1(solid-js@1.8.1)
       solid-js: 1.8.1
+    dev: true
 
   /@solid-primitives/rootless@1.4.2(solid-js@1.8.1):
     resolution: {integrity: sha512-ynI/2aEOPyc14IKCX6yDBqnsAYCoLbaP9V/jejEWMVKOT2ZdV2ZxdftaLimOpWPpvjyti5DUJIGTOfLaNb7jlg==}
@@ -3640,6 +3642,7 @@ packages:
     dependencies:
       '@solid-primitives/utils': 6.2.1(solid-js@1.8.1)
       solid-js: 1.8.1
+    dev: true
 
   /@solid-primitives/scheduled@1.4.1(solid-js@1.8.1):
     resolution: {integrity: sha512-OLcNXwYpX7HUOEqNPcmR31dkyI1E2imkMDBRlqsGT0ZhJV1L2g0TEREpo4nm/kUhh8LVQzkfnxS+GONx9kh90A==}
@@ -3665,6 +3668,7 @@ packages:
     dependencies:
       '@solid-primitives/utils': 6.2.1(solid-js@1.8.1)
       solid-js: 1.8.1
+    dev: true
 
   /@solid-primitives/styles@0.0.110(solid-js@1.8.1):
     resolution: {integrity: sha512-PSaM1Rl4+zwpOfxil8KlY87UC+R1rQy8b2EiCMjgTWakRK1TjvFM78KY5/ohFg42bp2V/DWRx2QaL/Unjm3HMg==}
