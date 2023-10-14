@@ -36,8 +36,8 @@ const Container = makeComponent(
           elProps.class
         )}
         style={{
-          'justify-content': props.verticalAlign,
-          'align-items': props.horizontalAlign,
+          'justify-content': props.horizontalAlign,
+          'align-items': props.verticalAlign,
           ...props.style
         }}
       >
