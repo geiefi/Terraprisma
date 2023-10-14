@@ -46,7 +46,7 @@ const DesignShowcase: Component = () => {
         <Row gap="5px">
           <Col size={8}>
             <Box>
-              <List identification="Testing list" boxed>
+              <List>
                 <ListItem clickable>Inbox</ListItem>
                 <ListItem clickable>Stuff</ListItem>
                 <ListItem>Closure</ListItem>

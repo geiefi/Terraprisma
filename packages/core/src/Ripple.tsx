@@ -202,7 +202,7 @@ const Ripple = makeComponent(
               <div
                 {...elProps}
                 class={mergeClass(
-                  'relative overflow-hidden w-full h-full p-0 m-0',
+                  'relative overflow-hidden w-full h-full rounded-[inherit] p-0 m-0',
                   elProps.class
                 )}
                 ref={setRippleContainer}
