@@ -106,7 +106,7 @@ const TextArea = setupFieldComponent<string>().with(
                     const scrollHeight = Math.max(
                       event.target.scrollHeight,
                       event.target.parentElement!.getBoundingClientRect()
-                        .height - 1
+                        .height - 2
                     );
                     event.target.style.height = `${scrollHeight}px`;
                   });
