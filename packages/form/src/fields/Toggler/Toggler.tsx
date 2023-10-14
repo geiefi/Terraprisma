@@ -68,6 +68,8 @@ const Toggler = setupFieldComponent<boolean>().with(
               id={id()}
               type="checkbox"
               class={elProps.class}
+              disabled={disabled()}
+              aria-disabled={disabled()}
               style={{
                 '--on-color': `var(--${color()}-bg)`,
                 '--on-circle-color': `var(--${color()}-fg)`
