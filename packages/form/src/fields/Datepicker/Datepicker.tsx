@@ -404,7 +404,10 @@ const Datepicker = setupFieldComponent<Date>().with(
               cursor: disabled() === false ? 'pointer' : 'default',
               ...props.style
             }}
-            onClick={mergeCallbacks(elProps.onClick as any, () => {
+            tabindex="0"
+            onFocus={() => !disabled() && setFocused(true)}
+            onBlur={() => !disabled() && setFocused(false)}
+            onClick={mergeCallbacks(elProps.onClick, () => {
               if (!disabled()) {
                 setFocused((focused) => !focused);
               }

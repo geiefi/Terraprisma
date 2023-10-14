@@ -8,10 +8,15 @@
 
   border: 1px solid var(--floating-border);
   border-radius: 10px;
+  outline: none !important;
 
   font-size: 14px;
   padding-inline: 20px;
   padding-block: 14px;
+
+  &:focus-visible, &:focus, &.focused {
+    border-color: var(--color);
+  }
 
   &.has-label {
     padding-top: 20px;
@@ -19,7 +24,8 @@
   }
 
   transition: .2s filter linear,
-    .2s background-color linear;
+    .2s background-color linear,
+    .2s border linear;
 
   // these are the default values
   --bg: var(--floating-bg);

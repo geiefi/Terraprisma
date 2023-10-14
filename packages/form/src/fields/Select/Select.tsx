@@ -192,15 +192,13 @@ const Select = setupFieldComponent().with(
             labelFor={id()}
             style={{ cursor: 'pointer' }}
             label={props.label}
-            onClick={(e) => {
-              if (typeof elProps.onClick === 'function') {
-                elProps.onClick(e);
-              }
-
-              if (!disabled()) {
-                setFocused((focused) => !focused);
-              }
-            }}
+            tabindex="0"
+            onFocus={() => !disabled() && setFocused(true)}
+            onBlur={() => !disabled() && setFocused(false)}
+            onClick={mergeCallbacks(
+              elProps.onClick,
+              () => !disabled() && setFocused((focused) => !focused)
+            )}
             icon={
               <KeyboardArrowDown
                 variant="rounded"

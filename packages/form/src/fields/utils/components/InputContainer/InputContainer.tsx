@@ -7,24 +7,28 @@ import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 import Label from '../Label/Label';
 
 import './InputContainer.scss';
+import { Accents, addAccentColoring } from '@terraprisma/theming';
 
 export interface InputContainerProps extends ParentProps {
   labelFor: string;
   label?: JSX.Element;
 
   icon?: JSX.Element;
+  style?: JSX.CSSProperties;
 }
 
 const InputContainer = makeComponent(
   [
-    extendPropsFrom<InputContainerProps, 'div'>([
+    addAccentColoring<InputContainerProps>(),
+    extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
       'children',
       'labelFor',
       'label',
+      'style',
       'icon'
     ])
   ],
-  (props, elProps) => {
+  (props, color, elProps) => {
     const {
       focusedS: [focused],
       disabledS: [disabled],
@@ -36,6 +40,10 @@ const InputContainer = makeComponent(
       <div
         {...elProps}
         class={mergeClass('input-container', elProps.class)}
+        style={{
+          '--color': `var(--${color()}-bg)`,
+          ...props.style
+        }}
         classList={{
           focused: focused(),
           'has-content': hasContent(),

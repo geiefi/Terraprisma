@@ -1,4 +1,12 @@
-import { createEffect, createMemo, JSX, on, onCleanup, Show } from 'solid-js';
+import {
+  createEffect,
+  createMemo,
+  createSignal,
+  JSX,
+  on,
+  onCleanup,
+  Show
+} from 'solid-js';
 
 import {
   FieldInternalWrapper,
@@ -69,6 +77,8 @@ const Slider = setupFieldComponent<number>().with(
         hasErrors
         // eslint-disable-next-line solid/reactivity
       } = useField<number>()!;
+      const [isFocusedThroughKeyboard, setFocusedThroughKeyboard] =
+        createSignal(false);
 
       // eslint-disable-next-line prefer-const
       let slider: HTMLDivElement = undefined as any;
@@ -103,12 +113,13 @@ const Slider = setupFieldComponent<number>().with(
         if (focused()) {
           const newValue = updateValueBasedOnMouseX(e.x);
           setFocused(false);
+          setFocusedThroughKeyboard(false); // set it to false in case it is true at this point
           validate(newValue);
         }
       };
 
       const handleMouseMove = (e: MouseEvent) => {
-        if (focused()) {
+        if (focused() && !isFocusedThroughKeyboard()) {
           updateValueBasedOnMouseX(e.x);
         }
       };
@@ -148,6 +159,33 @@ const Slider = setupFieldComponent<number>().with(
         })
       );
 
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (value()) {
+          const key = e.key.toLowerCase();
+          console.log(key);
+          const stepToMoveBy = step();
+          const minVal = min();
+          const maxVal = max();
+          if (key === 'arrowleft' || key === 'arrowdown') {
+            setValue((val) => {
+              if (val! - stepToMoveBy >= minVal) {
+                return val! - stepToMoveBy;
+              } else {
+                return val;
+              }
+            });
+          } else if (key === 'arrowup' || key === 'arrowright') {
+            setValue((val) => {
+              if (val! + stepToMoveBy <= maxVal) {
+                return val! + stepToMoveBy;
+              } else {
+                return val;
+              }
+            });
+          }
+        }
+      };
+
       return (
         <FieldInternalWrapper>
           <Show when={props.label}>
@@ -160,6 +198,7 @@ const Slider = setupFieldComponent<number>().with(
             class="slider"
             ref={slider}
             draggable={false}
+            onKeyDown={handleKeyDown}
             classList={{
               focused: focused(),
               disabled: disabled(),
@@ -186,6 +225,14 @@ const Slider = setupFieldComponent<number>().with(
                 step={step()}
                 id={id()}
                 value={(value() || '').toString()}
+                onFocus={() => {
+                  setFocused(true);
+                  setFocusedThroughKeyboard(true);
+                }}
+                onBlur={() => {
+                  setFocused(false);
+                  setFocusedThroughKeyboard(false);
+                }}
                 type="range"
                 disabled={disabled()}
               />

@@ -99,8 +99,10 @@
     transition: .2s opacity ease-in;
   }
 
-  &.focused::after {
-    opacity: 0.32;
+  &.focused {
+    &::after {
+      opacity: 0.32;
+    }
   }
 
   & > .thumb {
@@ -129,6 +131,10 @@
       cursor: pointer;
 
       direction: ltr;
+
+      &:focus-visible {
+        outline: none;
+      }
     }
   }
 }
