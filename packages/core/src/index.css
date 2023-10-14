@@ -38,6 +38,11 @@ a:visited, a:link:hover:not(:visited) {
   background: var(--accent-bg-20);
 }
 
+:focus-visible {
+  border: 1px solid var(--accent-bg);
+  outline: none;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 4px;
