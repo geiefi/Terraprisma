@@ -7,7 +7,7 @@ import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 import Label from '../Label/Label';
 
 import './InputContainer.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface InputContainerProps extends ParentProps {
   labelFor: string;

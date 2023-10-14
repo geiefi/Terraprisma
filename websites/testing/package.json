@@ -15,7 +15,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@terraprisma/core": "workspace:*",
+    "@terraprisma/general": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/layout": "workspace:*",
     "@terraprisma/utils": "workspace:*",

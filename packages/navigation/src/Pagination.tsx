@@ -4,7 +4,7 @@ import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import { IconButton } from '@terraprisma/core';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface PaginationProps {
   current: number;

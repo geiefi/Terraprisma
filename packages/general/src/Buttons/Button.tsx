@@ -1,7 +1,7 @@
 import { ComponentProps, createMemo, JSX, ParentProps } from 'solid-js';
 
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import Ripple from '../Ripple';
 

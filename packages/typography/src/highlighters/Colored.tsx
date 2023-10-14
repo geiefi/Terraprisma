@@ -3,7 +3,7 @@ import { JSX, ParentProps } from 'solid-js';
 import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
 
 import './Colored.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 interface ColoredProps extends ParentProps {
   style?: JSX.CSSProperties;

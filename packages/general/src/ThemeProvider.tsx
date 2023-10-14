@@ -15,7 +15,7 @@ import {
   generateStyleVariablesFrom,
   Theme,
   Themes
-} from '@terraprisma/theming';
+} from '@terraprisma/core';
 
 export type ThemesProviderValue = {
   themes: Themes;

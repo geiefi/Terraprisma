@@ -44,7 +44,7 @@ import { GrowFade } from '@terraprisma/transitions';
 import { FormFieldValue, FormValue } from '../../types';
 
 import './Datepicker.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface DatepickerProps<
   OwnerFormValue extends FormValue = FormValue,

@@ -20,7 +20,7 @@ import {
 import { FormValue } from '../../types';
 
 import './TextArea.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;

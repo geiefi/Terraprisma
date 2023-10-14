@@ -28,7 +28,7 @@ import { createTooltip } from '@terraprisma/data-display';
 import { FormValue } from '../../types';
 
 import './Slider.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 import { GrowFade } from '@terraprisma/transitions';
 import { Portal } from 'solid-js/web';
 

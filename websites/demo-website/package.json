@@ -20,9 +20,9 @@
   },
   "dependencies": {
     "@terraprisma/core": "workspace:*",
+    "@terraprisma/general": "workspace:*",
     "@terraprisma/data-display": "workspace:*",
     "@terraprisma/form": "workspace:*",
-    "@terraprisma/theming": "workspace:*",
     "@terraprisma/utils": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/layout": "workspace:*",

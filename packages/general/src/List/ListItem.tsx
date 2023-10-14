@@ -1,7 +1,7 @@
 import { JSX, Match, ParentProps, Switch, createMemo } from 'solid-js';
 
 import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 import Ripple from '../Ripple';
 
 export interface ListItemProps extends ParentProps {

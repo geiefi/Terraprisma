@@ -22,7 +22,7 @@
     "@terraprisma/core": "workspace:*",
     "@terraprisma/data-display": "workspace:*",
     "@terraprisma/form": "workspace:*",
-    "@terraprisma/theming": "workspace:*",
+    "@terraprisma/core": "workspace:*",
     "@terraprisma/utils": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/layout": "workspace:*",

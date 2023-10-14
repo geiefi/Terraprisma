@@ -1,6 +1,6 @@
 // @refresh reload
 import { setupTerraprisma } from '@terraprisma/core';
-import { VoidTheme } from '@terraprisma/theming';
+import { VoidTheme } from '@terraprisma/core';
 
 import { onMount, Suspense } from 'solid-js';
 import {
@@ -18,7 +18,7 @@ import {
 import { onLCP, onFID, onCLS } from 'web-vitals';
 
 const themes = [VoidTheme];
-declare module '@terraprisma/theming' {
+declare module '@terraprisma/core' {
   interface Register {
     themes: typeof themes;
   }

@@ -34,7 +34,7 @@ import type { StackProps } from '@terraprisma/layout/Stack/Stack';
 import { FormValue, FormFieldValue } from '../../types';
 
 import './RadioGroup.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface RadioGroupOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue

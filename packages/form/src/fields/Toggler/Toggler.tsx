@@ -14,7 +14,7 @@ import { FormValue } from '../../types';
 
 import './Toggler.scss';
 import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,

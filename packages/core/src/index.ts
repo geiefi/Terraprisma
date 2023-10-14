@@ -1,32 +1,19 @@
-import './index.css';
+import { AccentColors, BgColors, Theme } from './Theme';
 
-import { useTheme, setupTerraprisma } from './ThemeProvider';
+export interface Register {
+  // themes: typeof myThemes;
+}
 
-import Ripple from './Ripple';
-import Button from './Buttons/Button';
-import TextButton from './Buttons/TextButton';
-import OutlinedButton from './Buttons/OutlinedButton';
-import IconButton from './Buttons/IconButton';
-import List from './List/List';
-import ListItem from './List/ListItem';
-import ListItemWithDetails from './List/ListItemWithDetails';
-import Box from './Box';
-import Dropdown from './Dropdown';
-import Dialog, { createDialog } from './Dialog';
+export type Themes = Register extends {
+  themes: infer InferredThemes extends Theme[];
+}
+  ? InferredThemes
+  : Theme[];
+export type Accents<T extends Themes = Themes> = AccentColors<T[number]>;
+export type Bgs<T extends Themes = Themes> = BgColors<T[number]>;
 
-export {
-  useTheme,
-  setupTerraprisma,
-  Ripple,
-  Button,
-  TextButton,
-  OutlinedButton,
-  IconButton,
-  List,
-  ListItemWithDetails,
-  ListItem,
-  Box,
-  Dropdown,
-  Dialog,
-  createDialog
-};
+export * from './themes';
+export * from './factories';
+
+export * from './Theme';
+export * from './generateStyleVariablesFrom';

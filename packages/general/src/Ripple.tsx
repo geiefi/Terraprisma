@@ -20,7 +20,7 @@ import {
   extendPropsFrom,
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import './Ripple.css';
 

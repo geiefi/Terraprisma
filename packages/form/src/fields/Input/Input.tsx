@@ -21,7 +21,7 @@ import {
 } from '@terraprisma/utils';
 
 import './Input.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;

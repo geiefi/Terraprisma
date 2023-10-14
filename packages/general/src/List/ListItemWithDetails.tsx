@@ -6,7 +6,7 @@ import {
   mergeCallbacks,
   mergeClass
 } from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 import { Collapse } from '@terraprisma/transitions';
 import { KeyboardArrowDown } from '@terraprisma/icons';
 

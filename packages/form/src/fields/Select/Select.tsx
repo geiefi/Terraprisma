@@ -39,7 +39,7 @@ import { Check, KeyboardArrowDown } from '@terraprisma/icons';
 import { FormValue, FormFieldValue } from '../../types';
 
 import './Select.scss';
-import { Accents, addAccentColoring } from '@terraprisma/theming';
+import { Accents, addAccentColoring } from '@terraprisma/core';
 import { Portal } from 'solid-js/web';
 
 export interface SelectProps<
