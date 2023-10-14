@@ -29,6 +29,23 @@ const TerraprismaContext = createContext<ThemesProviderValue>();
 
 export const GalobalWrapperID = 'terraprisma-app';
 
+const getStylesFromTheme = (theme: Themes[number]) => {
+  let obj: any;
+  if ('mainAccent' in theme && 'accents' in theme) {
+    const { id, mainAccent, ...objWithStyles } = {
+      ...(theme as Theme<Record<string, Accent>>)
+    };
+    obj = {
+      ...objWithStyles,
+      accent: objWithStyles.accents[mainAccent]
+    };
+  } else {
+    const { id, ...objWithStyles } = { ...theme };
+    obj = objWithStyles;
+  }
+  return generateStyleVariablesFrom(obj);
+};
+
 /**
  * A component that creates Terraprisma's global context with the themes defined and creates
  * the signal that will hold the current theme.
@@ -41,55 +58,47 @@ export function setupTerraprisma(
   themes: Themes, // should themes be reactive as well?
   defaultThemeId: Themes[number]['id'] = themes[0].id
 ) {
-  return (props: ParentProps) => {
-    const [themeId, setThemeId] =
-      createSignal<Themes[number]['id']>(defaultThemeId);
+  const initialTheme = themes.find((t) => t.id === defaultThemeId)!;
+  const initialStyles = getStylesFromTheme(initialTheme);
 
-    const currentTheme = createMemo(
-      () => themes.find((t) => t.id === themeId())!
-    );
+  return [
+    (props: ParentProps) => {
+      const [themeId, setThemeId] =
+        createSignal<Themes[number]['id']>(defaultThemeId);
 
-    const globalStyles = createMemo(() => {
-      const theme = currentTheme();
-      let obj: any;
-      if ('mainAccent' in theme && 'accents' in theme) {
-        const { id, mainAccent, ...objWithStyles } = {
-          ...(theme as Theme<Record<string, Accent>>)
-        };
-        obj = {
-          ...objWithStyles,
-          accent: objWithStyles.accents[mainAccent]
-        };
-      } else {
-        const { id, ...objWithStyles } = { ...theme };
-        obj = objWithStyles;
-      }
-      return generateStyleVariablesFrom(obj);
-    });
+      const currentTheme = createMemo(
+        () => themes.find((t) => t.id === themeId())!
+      );
 
-    createEffect(() => {
-      if (canUseDocument()) {
-        const styles = globalStyles();
-        Object.keys(styles).forEach((key) =>
-          document.body.style.setProperty(key, styles[key])
-        );
-      }
-    });
+      const currentGlobalStyles = createMemo(() =>
+        getStylesFromTheme(currentTheme())
+      );
 
-    return (
-      <TerraprismaContext.Provider
-        value={{
-          themes,
-          currentTheme,
+      createEffect(() => {
+        if (canUseDocument()) {
+          const styles = currentGlobalStyles();
+          Object.keys(styles).forEach((key) =>
+            document.body.style.setProperty(key, styles[key])
+          );
+        }
+      });
 
-          themeId,
-          setThemeId
-        }}
-      >
-        {props.children}
-      </TerraprismaContext.Provider>
-    );
-  };
+      return (
+        <TerraprismaContext.Provider
+          value={{
+            themes,
+            currentTheme,
+
+            themeId,
+            setThemeId
+          }}
+        >
+          {props.children}
+        </TerraprismaContext.Provider>
+      );
+    },
+    initialStyles
+  ] as const;
 }
 
 /**
