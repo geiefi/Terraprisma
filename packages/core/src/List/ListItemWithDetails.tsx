@@ -64,7 +64,7 @@ const ListItemWithDetails = makeComponent(
 
         <Collapse>
           <Show when={isDetailsOpen()}>
-            <div class="w-full h-fit pl-5 m-0">{props.details}</div>
+            <div class="w-full h-fit pl-0 m-0">{props.details}</div>
           </Show>
         </Collapse>
       </>
