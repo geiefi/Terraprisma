@@ -22,13 +22,6 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
     fieldProps
   } = useField()!;
 
-  const shouldRenderHelperText = createMemo(
-    () =>
-      (typeof fieldProps.validators !== 'undefined' &&
-        fieldProps.validators.length !== 0) ||
-      typeof fieldProps.helperText !== 'undefined'
-  );
-
   return (
     <div
       {...divProps}
@@ -40,17 +33,15 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
     >
       {divProps.children}
 
-      <Show when={shouldRenderHelperText()}>
-        <div class="helper-text">
-          <Show
-            when={hasErrors() && !isDisabled()}
-            fallback={fieldProps.helperText}
-          >
-            {errors![0]}
-          </Show>
-          &nbsp;
-        </div>
-      </Show>
+      <div class="helper-text">
+        <Show
+          when={hasErrors() && !isDisabled()}
+          fallback={fieldProps.helperText}
+        >
+          {errors![0]}
+        </Show>
+        &nbsp;
+      </div>
     </div>
   );
 };
