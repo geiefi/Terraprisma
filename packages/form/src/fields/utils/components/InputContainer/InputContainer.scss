@@ -28,20 +28,13 @@
     .1s border linear;
 
   // these are the default values
-  --bg: var(--floating-bg);
-  --fg: var(--floating-fg);
-
-  &.error {
-    --fg: var(--danger-bg);
-  }
-
   // sets the colors based on the variables created above
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--floating-bg);
+  color: var(--floating-fg);
 
   .input-container-icon {
     --icon-font-size: 16px;
-    background: var(--bg);
+    background: var(--floating-bg);
 
     position: absolute;
     width: min-content;
@@ -61,7 +54,6 @@
   }
 
   label {
-    color: var(--fg);
     font-weight: bolder;
     font-size: 12px;
 
