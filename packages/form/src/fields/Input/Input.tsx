@@ -1,4 +1,4 @@
-import { JSX, createEffect } from 'solid-js';
+import { JSX, createEffect, onMount } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -95,10 +95,16 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
         }
       });
 
+      onMount(() => {
+        const inputEl: HTMLInputElement = document.getElementById(
+          id()
+        )! as HTMLInputElement;
+        setValue(inputEl.value);
+      });
+
       return (
         <FieldInternalWrapper>
-          {/* TODO: pass the color through here to work with the new coloring variables */}
-          <InputContainer labelFor={id()} label={props.label}>
+          <InputContainer color={color()} labelFor={id()} label={props.label}>
             <input
               {...elProps}
               id={id()}
@@ -108,7 +114,7 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
               classList={{
                 'no-label': typeof props.label === 'undefined'
               }}
-              value={(value() || '') as string}
+              value={(value() ?? '') as string}
               onInput={mergeCallbacks(
                 elProps.onInput as any,
                 props.mask ? createInputMask(props.mask) : undefined,
