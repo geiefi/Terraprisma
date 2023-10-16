@@ -129,6 +129,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
                 {...elProps}
                 id={id()}
                 type="checkbox"
+                value={value() ? 'true' : 'false'}
                 onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
                 onFocus={mergeCallbacks(elProps.onFocus, () =>
                   setFocused(true)

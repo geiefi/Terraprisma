@@ -95,11 +95,9 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
         }
       });
 
-      onMount(() => {
-        const inputEl: HTMLInputElement = document.getElementById(
-          id()
-        )! as HTMLInputElement;
-        setValue(inputEl.value);
+      createEffect(() => {
+        const inputEl = document.getElementById(id())! as HTMLInputElement;
+        inputEl.value = (value() ?? '').toString();
       });
 
       return (
@@ -114,16 +112,10 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
               classList={{
                 'no-label': typeof props.label === 'undefined'
               }}
-              value={(value() ?? '') as string}
               onInput={mergeCallbacks(
-                elProps.onInput as any,
+                elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
-                (
-                  event: InputEvent & {
-                    target: HTMLInputElement;
-                    currentTarget: HTMLInputElement;
-                  }
-                ) => {
+                (event) => {
                   const ref = event.currentTarget || event.target;
                   if (props.onChange) {
                     props.onChange(ref.value, event);
@@ -134,10 +126,8 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
                   ref.value = ref.value;
                 }
               )}
-              onFocus={mergeCallbacks(elProps.onFocus as any, () =>
-                setFocused(true)
-              )}
-              onBlur={mergeCallbacks(elProps.onBlur as any, () => {
+              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
+              onBlur={mergeCallbacks(elProps.onBlur, () => {
                 validate(value());
                 setFocused(false);
               })}

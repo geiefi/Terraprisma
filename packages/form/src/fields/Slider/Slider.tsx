@@ -186,6 +186,11 @@ const Slider = setupFieldComponent<number>().with(
         }
       };
 
+      createEffect(() => {
+        const inputEl = document.getElementById(id())! as HTMLInputElement;
+        inputEl.value = (value() ?? '').toString();
+      });
+
       return (
         <FieldInternalWrapper>
           <Show when={props.label}>
@@ -224,7 +229,6 @@ const Slider = setupFieldComponent<number>().with(
                 max={max()}
                 step={step()}
                 id={id()}
-                value={(value() || '').toString()}
                 onFocus={() => {
                   setFocused(true);
                   setFocusedThroughKeyboard(true);

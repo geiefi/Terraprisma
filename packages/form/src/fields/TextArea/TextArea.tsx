@@ -1,4 +1,4 @@
-import { JSX, createMemo } from 'solid-js';
+import { JSX, createEffect, createMemo } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 
@@ -76,6 +76,11 @@ const TextArea = setupFieldComponent<string>().with(
         props.resizable ?? true ? props.reisizingDrection ?? 'both' : 'none'
       );
 
+      createEffect(() => {
+        const inputEl = document.getElementById(id())! as HTMLInputElement;
+        inputEl.value = (value() ?? '').toString();
+      });
+
       return (
         <FieldInternalWrapper>
           <InputContainer
@@ -90,7 +95,6 @@ const TextArea = setupFieldComponent<string>().with(
             <textarea
               {...elProps}
               id={id()}
-              value={(value() || '').toString()}
               disabled={disabled()}
               class={elProps.class}
               classList={{

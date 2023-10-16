@@ -7,7 +7,8 @@ import {
   Show,
   createMemo,
   createSignal,
-  Component
+  Component,
+  createEffect
 } from 'solid-js';
 
 import {
@@ -107,10 +108,10 @@ const RadioInternal = makeComponent(
             id={id()}
             type="radio"
             value={groupValue()}
-            onFocus={mergeCallbacks(elProps.onFocus as any, () =>
+            onFocus={mergeCallbacks(elProps.onFocus, () =>
               setRadioToFocused(true)
             )}
-            onBlur={mergeCallbacks(elProps.onBlur as any, () =>
+            onBlur={mergeCallbacks(elProps.onBlur, () =>
               setRadioToFocused(false)
             )}
           />
