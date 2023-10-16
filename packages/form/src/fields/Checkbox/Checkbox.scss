@@ -1,3 +1,10 @@
+.checkbox-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  gap: 0.5rem;
+}
+
 .checkbox {
   input {
     left: 0;

@@ -1,4 +1,4 @@
-import { JSX, Show } from 'solid-js';
+import { JSX, Show, createEffect } from 'solid-js';
 
 import {
   Label,
@@ -95,48 +95,50 @@ const Checkbox = setupFieldComponent<boolean>().with(
 
       return (
         <FieldInternalWrapper>
-          <Show when={props.label}>
-            <Label for={id()} hasErrors={hasErrors()}>
-              {props.label}
-            </Label>
-          </Show>
-
-          <div
-            class="checkbox"
-            style={{
-              '--color': `var(--${color()}-bg)`,
-              '--color-20': `var(--${color()}-bg-20)`,
-              '--check-color': `var(--${color()}-fg)`
-            }}
-            classList={{
-              small: props.size === 'small',
-              medium:
-                typeof props.size === 'undefined' || props.size === 'medium',
-              large: props.size === 'large',
-
-              focused: focused(),
-              checked: value() === true,
-              disabled: disabled()
-            }}
-            onKeyUp={(e) => {
-              if (e.key === 'space') {
-                swapValue(e);
-              }
-            }}
-            onClick={swapValue}
-          >
-            <input
-              {...elProps}
-              id={id()}
-              type="checkbox"
-              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
-              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              value={value() ? 'true' : 'false'}
-            />
-
-            <Show when={value() === true}>
-              <Check class="checked-icon" variant="rounded" />
+          <div class="checkbox-container" onClick={swapValue}>
+            <Show when={props.label}>
+              <Label for={id()} hasErrors={hasErrors()}>
+                {props.label}
+              </Label>
             </Show>
+
+            <div
+              class="checkbox"
+              style={{
+                '--color': `var(--${color()}-bg)`,
+                '--color-20': `var(--${color()}-bg-20)`,
+                '--check-color': `var(--${color()}-fg)`
+              }}
+              classList={{
+                small: props.size === 'small',
+                medium:
+                  typeof props.size === 'undefined' || props.size === 'medium',
+                large: props.size === 'large',
+
+                focused: focused(),
+                checked: value() === true,
+                disabled: disabled()
+              }}
+              onKeyUp={(e) => {
+                if (e.key === 'space') {
+                  swapValue(e);
+                }
+              }}
+            >
+              <input
+                {...elProps}
+                id={id()}
+                type="checkbox"
+                onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
+                onFocus={mergeCallbacks(elProps.onFocus, () =>
+                  setFocused(true)
+                )}
+              />
+
+              <Show when={value() === true}>
+                <Check class="checked-icon" variant="rounded" />
+              </Show>
+            </div>
           </div>
         </FieldInternalWrapper>
       );
