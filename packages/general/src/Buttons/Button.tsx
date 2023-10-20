@@ -50,7 +50,7 @@ const Button = makeComponent(
           type="button"
           {...elProps}
           class={mergeClass(
-            'inline-flex gap-1 text-center items-center justify-center border-none h-min w-fit box-border shadow-none select-none align-middle ease-in transition-colors !duration-300',
+            'inline-flex gap-1 text-center items-center justify-center border-none h-min w-fit box-border shadow-none select-none align-middle ease-in transition-colors !duration-150',
             !props.disabled &&
               !props.unstyled &&
               'rounded-md outline-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
