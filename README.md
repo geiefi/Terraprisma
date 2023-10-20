@@ -2,7 +2,7 @@
 
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/gabrielmfern/Terraprisma/master/showcase.png"
+    src="https://github.com/gabrielmfern/Terraprisma/blob/3498e6a4054e1f345299658978b7468851717ca8/showcase.png"
     alt="components showcase"
   />
 </p>
