@@ -1,81 +1,57 @@
-# GrapeS: Opinionated SolidJS UI Library based on Material Design
+# Terraprisma
 
 <p align="center">
   <img
-    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/grapos.png"
-    alt="GrapeS Logo"
+    src="https://raw.githubusercontent.com/gabrielmfern/Terraprisma/master/showcase.png"
+    alt="components showcase"
   />
 </p>
 
-<p align="center">
-  <img
-    src="https://raw.githubusercontent.com/gabrielmfern/GrapeS/master/Components%20showcase.png"
-    alt="Components Showcase"
-  />
-</p>
+A WIP batteries-included UI library for SolidJS.
 
-WARNING: Anything that is currently said here may still be changed due to me not being so satified with the current APIs,
-so the README may still not be updated.
+## What makes Terraprisma special?
 
----
+Terraprisma is not just another UI library, it tries to improve on various key points
+of discomfort that other UI libraries (of all frameworks) have and tries to take the DX to the next level.
 
-Hey there! I'm Gabriel, the creator of GrapeS, and I'm excited to introduce you to a whole new way of building user interfaces with SolidJS. GrapeS is not just another UI library; it's my personal project that's been crafted with love and care, bringing together the power of SolidJS and the elegance of Material Design.
+### The principles
 
-## What Makes GrapeS Special
+What really makes the DX great, is the principles that are used to guide the development
+of Terraprisma.
 
-GrapeS isn't your typical run-of-the-mill UI library. It's shaped by a set of guiding principles that I believe make it stand out from the crowd.
+#### Type-safety, because peace of mind matters to us
 
-### Type-Safety, because Peace of Mind Matters
+On Terraprisma, you should not have to worry about things like:
+- using validators that should not be used on a certail field,
+- types in the value of a Form not matching the field in the actual markup like trying to
+associate a `type=number` input to a field that is supposed to be a string.
+- when a component needs to have a `color` that is based on the defined theme the allowed colors
+are communicated globally through special types so that you have type-safety on your theme colors as well.
 
-With GrapeS, type-safety isn't just a checkbox on the list – it's a core principle. I've taken the extra step to align form field names and values with their type counterparts. This not only enhances your development experience but also ensures that your code is more reliable and bug-resistant.
+#### Flexbility that feels like HTML
 
-### Clarity in Errors, for Swift Debugging
+While Terraprisma is not going to provide the same flexbility as something like `shadcn`,
+(which I think we will soon also have with Solid), you can still have flexbility that can take you really far
+on the spectrum of changes you can make.
 
-You are not alone, I've been there when we have problems debugging some UI library thrown error that just does not point
-you to the right place properly and it requires lots of annoyting debugging to find.
+Two of the ways this is currently manifested are:
+- Always forwarding the main element's props to the component's props so you can set anything like the normal element
+  * Keep in mind this means you won't really be able to easily change properties of elements that are still of the component but that are wrapping the element somehow
+- Always trying to make components as composable as possible, with littles pieces, like lego, you can put together to make the resulting UX
 
-So my thoughts were: bebugging should be a breeze, not a headache. That's why I've introduced the `identification` prop (with some variations for form fields components), a simple yet powerful tool that accompanies every GrapeS component that can error.
+#### Error traceability even when you don't have source maps
 
-When things go awry, this prop points you directly to the source of the issue, helping you get to the bottom of problems *faster*.
+We are going to always try to take the error messages so that they are as informative and as good as possible
+for you to be able to debug errors even if you don't have source maps and the code running in production
+is not minified and uglified.
 
-### Flexibility with a Familiar Touch
+One of the ways this is manifested is with the `identification` prop. All components that may error, will, for the most part,
+require an `identification` prop that will be used in the error messages so it makes it much easier for you to narrow down
+what is the problem, or where it is coming from once you have them.
 
-Flexibility is key, but I believe in providing it in a familiar way. Each GrapeS component receives native props that you'd expect for the main internal element. For example, the `Button` component integrates seamlessly with the button element-specific props, giving you the control you need without compromising simplicity.
+## Okay, cool, when can I use it?
 
-Though the implementation of flexibility for GrapeS follows this pattern currently, there are some considerations of mine
-to try improving it further without giving up simplicity, flexibility nor readability.
+Currently we don't really have any npm package published, but we plan on publishing at least a `0.1.0`
+by the end of **2023** so that we have a more *solid* API nailed down for everything that is already developed.
 
----
-
-## Getting Started: A Smooth Setup Process
-
-Setting up GrapeS is as smooth as sipping a *☕ pingado*. Just install the `grapos` npm package, where all the components, transitions, and helpers reside.
-
-Here's a quick peek at how to incorporate GrapeS into your project:
-
-```tsx
-import { GrapeS } from 'grapos';
-
-const App = () => {
-  return (
-    <GrapeS defaultThemeId='dark'>
-      {/* Your components and content here */}
-    </GrapeS>
-  );
-};
-```
-
-Yes, it's that easy! The global context within GrapeS manages your current theme, and you can easily switch between the light and dark default themes. But wait, there's more! If you want to get fancy, you can specify your own themes with the `themes` prop and use the `defaultThemeId` to make your mark.
-
-## A Note of Caution: Almost There, but Not Quite
-
-Before you dive headfirst into the GrapeS world, there's something I'd like to clarify. While GrapeS is hanging out on `npm`, it's not quite ready for all the prime time action. This means you might stumble upon many quirks, bugs, or missing features. But hey, that's where you come in! I'm eager to hear your thoughts, ideas, and yes, even the bugs you discover – just open an issue, and we'll tackle it together, maybe even a pretty PR.
-
-## Unveiling the Road Ahead: Missing Pieces and Beyond
-
-GrapeS is like a work of art that's constantly evolving. Some components are still a work in progress, and I've got a detailed to-do list to make GrapeS even better. Accessibility, flexibility, and various other aspects are on my radar, and I'm weaving in ideas from different patterns to make GrapeS a complete and delightful experience for you.
-
-Thank you for joining me on this journey to reshape UI development with GrapeS. I can't wait to share version 0.1.0 with you by the end of the year! Stay tuned, and let's craft some amazing user interfaces together.
-
-Cheers,
-*Gabriel*
+So yeah, that's basically it, thanks for reading.
