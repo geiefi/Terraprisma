@@ -8,17 +8,11 @@ import {
   JSX,
   Match,
   on,
-  onCleanup,
-  onMount,
   Switch
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import {
-  canUseDocument,
-  extendPropsFrom,
-  makeComponent
-} from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
 import {
   Dropdown,
   IconButton,

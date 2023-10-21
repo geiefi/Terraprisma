@@ -70,6 +70,6 @@
     "@terraprisma/layout": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
-    "solid-js": "^1.7.11"
+    "solid-js": "^1.8.3"
   }
 }

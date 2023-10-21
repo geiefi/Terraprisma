@@ -1,7 +1,7 @@
 import { Tooltip } from '@terraprisma/data-display';
 import { Validators, createForm } from '@terraprisma/form';
 import { Box, Button, OutlinedButton } from '@terraprisma/general';
-import { Send } from '@terraprisma/icons';
+import { Female, Male } from '@terraprisma/icons';
 import { Container, Stack } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
 import { createSignal } from 'solid-js';
@@ -12,6 +12,7 @@ type FormValue = {
   email: string;
   password: string;
 
+  gender: 'male' | 'female';
   birthDate: Date;
 
   rememberMe: boolean;
@@ -68,6 +69,18 @@ export default function Index() {
                       : 'Minimum of 6 characters is required!'
                 ]}
               />
+              <IndexForm.Select name="gender" label="Gender">
+                {(Option) => (
+                  <>
+                    <Option value="male">
+                      <Male /> Male
+                    </Option>
+                    <Option value="female">
+                      <Female /> Female
+                    </Option>
+                  </>
+                )}
+              </IndexForm.Select>
               <IndexForm.Datepicker
                 name="birthDate"
                 label="Birth date"

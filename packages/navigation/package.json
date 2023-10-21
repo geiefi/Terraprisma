@@ -72,6 +72,6 @@
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/general": "workspace:*",
     "@terraprisma/utils": "workspace:*",
-    "solid-js": "^1.7.11"
+    "solid-js": "^1.8.3"
   }
 }
