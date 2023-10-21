@@ -15,7 +15,7 @@ import {
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
 
-import { ArrowDropDown } from '@terraprisma/icons';
+import { ArrowDropDown, ExpandMore } from '@terraprisma/icons';
 
 import './Tooltip.scss';
 
@@ -104,40 +104,36 @@ export function createTooltip(identification: string) {
         let tooltipEl: HTMLDivElement;
 
         return (
-          <Show when={visible()}>
-            <div
-              {...elProps}
-              class={mergeClass('tooltip', elProps.class)}
-              ref={tooltipEl!}
-              style={{
-                '--anchor-left': `${boundingRect()?.x}px`,
-                '--anchor-top': `${boundingRect()?.y}px`,
-                '--anchor-width': `${boundingRect()?.width}px`,
-                '--anchor-height': `${boundingRect()?.height}px`,
+          <>
+            <Show when={visible()}>
+              <div
+                {...elProps}
+                class={mergeClass('tooltip', elProps.class)}
+                ref={tooltipEl!}
+                style={{
+                  '--anchor-left': `${boundingRect()?.x}px`,
+                  '--anchor-top': `${boundingRect()?.y}px`,
+                  '--anchor-width': `${boundingRect()?.width}px`,
+                  '--anchor-height': `${boundingRect()?.height}px`,
 
-                '--offset-from-anchor': props.offsetFromAnchor || '12px',
+                  '--offset-from-anchor': props.offsetFromAnchor || '12px',
 
-                ...props.style
-              }}
-              classList={{
-                top:
-                  props.position === 'top' ||
-                  typeof props.position === 'undefined',
-                bottom: props.position === 'bottom',
-                left: props.position === 'left',
-                right: props.position === 'right',
-                ...elProps.classList
-              }}
-            >
-              <div class="tooltip-content">
+                  ...props.style
+                }}
+                classList={{
+                  top:
+                    props.position === 'top' ||
+                    typeof props.position === 'undefined',
+                  bottom: props.position === 'bottom',
+                  left: props.position === 'left',
+                  right: props.position === 'right',
+                  ...elProps.classList
+                }}
+              >
                 {props.children}
-
-                <span class="icon">
-                  <ArrowDropDown variant="rounded" />
-                </span>
               </div>
-            </div>
-          </Show>
+            </Show>
+          </>
         );
       }
     )
