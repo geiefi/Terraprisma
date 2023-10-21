@@ -31,7 +31,13 @@ export function useField<
   Value extends FormFieldValue = FormFieldValue,
   OwnerFormValue extends FormValue = EmptyObj
 >() {
-  return useContext(FieldContext) as
-    | FieldProviderValue<Value, OwnerFormValue>
-    | undefined;
+  const context = useContext(FieldContext);
+
+  if (typeof context === 'undefined') {
+    throw new Error(
+      'useField error: This cannot be used outside of a field context, maybe you are using some internal component?'
+    );
+  }
+
+  return context as unknown as FieldProviderValue<Value, OwnerFormValue>;
 }
