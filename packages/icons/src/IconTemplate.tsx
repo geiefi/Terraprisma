@@ -23,7 +23,6 @@ const createIconComponent = (iconName: string) => {
           `material-symbols-${props.variant || 'outlined'}`,
           elProps.class
         )}
-        classList={elProps.classList}
         style={{
           'font-size': 'inherit',
           scale: '1.4',

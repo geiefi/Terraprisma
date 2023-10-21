@@ -43,7 +43,7 @@ const InputContainer = makeComponent(
       disabledS: [disabled],
       hasErrors,
       hasContent
-    } = useField()!;
+    } = useField();
 
     return (
       <div
@@ -71,9 +71,7 @@ const InputContainer = makeComponent(
 
         {props.children}
 
-        <Show when={props.icon}>
-          <span class="input-container-icon">{props.icon}</span>
-        </Show>
+        <span class="input-container-icon">{props.icon}</span>
       </div>
     );
   }
