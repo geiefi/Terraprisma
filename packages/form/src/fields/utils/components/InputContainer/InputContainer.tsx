@@ -13,6 +13,14 @@ export interface InputContainerProps extends ParentProps {
   labelFor: string;
   label?: JSX.Element;
 
+  /**
+   * @description As the input container has a label inside and the position of the label is changed
+   * based on weather the field has content or not, this is the way you can force the label to act like
+   * the field has content.
+   *
+   * @default false
+   */
+  actLikeHasContent?: boolean;
   icon?: JSX.Element;
   style?: JSX.CSSProperties;
 }
@@ -23,6 +31,7 @@ const InputContainer = makeComponent(
     extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
       'children',
       'labelFor',
+      'actLikeHasContent',
       'label',
       'style',
       'icon'
@@ -46,7 +55,7 @@ const InputContainer = makeComponent(
         }}
         classList={{
           focused: focused(),
-          'has-content': hasContent(),
+          'has-content': hasContent() || props.actLikeHasContent,
           disabled: disabled(),
           error: hasErrors(),
           'has-label': typeof props.label !== 'undefined',

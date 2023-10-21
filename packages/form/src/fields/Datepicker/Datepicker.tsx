@@ -153,9 +153,13 @@ const DayPicker: Component<{
               squarish
               rippleProps={{ center: true }}
               active={
-                props.selectedDate.getMonth() === day.dateAtDay.getMonth() &&
-                props.selectedDate.getDate() === day.dateAtDay.getDate() &&
-                props.selectedDate.getFullYear() === day.dateAtDay.getFullYear()
+                props.selectedDate
+                  ? props.selectedDate.getMonth() ===
+                      day.dateAtDay.getMonth() &&
+                    props.selectedDate.getDate() === day.dateAtDay.getDate() &&
+                    props.selectedDate.getFullYear() ===
+                      day.dateAtDay.getFullYear()
+                  : false
               }
               onClick={() => props.onDayClicked(day.dateAtDay)}
             >
@@ -185,8 +189,10 @@ const MonthPicker: Component<{
             <TextButton
               size="small"
               active={
-                monthNumber === props.selectedDate.getMonth() &&
-                props.year === props.selectedDate.getFullYear()
+                props.selectedDate
+                  ? monthNumber === props.selectedDate.getMonth() &&
+                    props.year === props.selectedDate.getFullYear()
+                  : false
               }
               onClick={() => props.onMonthClicked(monthNumber)}
             >
@@ -225,8 +231,10 @@ const YearPicker: Component<{
             <TextButton
               size="small"
               active={
-                props.month === props.selectedDate.getMonth() &&
-                year() === props.selectedDate.getFullYear()
+                props.selectedDate
+                  ? props.month === props.selectedDate.getMonth() &&
+                    year() === props.selectedDate.getFullYear()
+                  : false
               }
               onClick={() => props.onYearClicked(year())}
             >
@@ -262,30 +270,8 @@ const Datepicker = setupFieldComponent<Date>().with(
         validate
       } = useField<Date>()!;
 
-      const [inputContainerRef, setInputContainerRef] =
-        createSignal<HTMLDivElement>();
-      const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
-
-      const onDocumentClick = (event: MouseEvent) => {
-        if (
-          event.target !== inputContainerRef() &&
-          event.target !== dropdownRef() &&
-          !dropdownRef()?.contains(event.target as HTMLElement) &&
-          focused()
-        ) {
-          setFocused(false);
-        }
-      };
-
-      onMount(() => {
-        if (canUseDocument())
-          document.addEventListener('click', onDocumentClick);
-      });
-
-      onCleanup(() => {
-        if (canUseDocument())
-          document.removeEventListener('click', onDocumentClick);
-      });
+      let inputContainerRef!: HTMLDivElement;
+      let dropdownRef: HTMLDivElement;
 
       const [datepickerSelectionType, setDatepickerSelectionType] =
         createSignal<'day' | 'month' | 'year'>('day');
@@ -404,14 +390,24 @@ const Datepicker = setupFieldComponent<Date>().with(
             }}
             tabindex="0"
             onFocus={() => !disabled() && setFocused(true)}
-            onBlur={() => !disabled() && setFocused(false)}
+            onBlur={(event) => {
+              if (
+                !(event.relatedTarget instanceof HTMLElement) ||
+                (event.relatedTarget !== dropdownRef &&
+                  !dropdownRef.contains(event.relatedTarget))
+              ) {
+                // if the new focused element is not the dropdown, or not inside the dropdown
+                !disabled() && setFocused(false);
+              }
+            }}
             icon={<CalendarMonth variant="rounded" />}
+            actLikeHasContent
             ref={(ref) => {
               if (typeof elProps.ref === 'function') {
                 elProps.ref(ref);
               }
 
-              setInputContainerRef(ref);
+              inputContainerRef = ref;
             }}
           >
             {displayDate()}
@@ -420,10 +416,11 @@ const Datepicker = setupFieldComponent<Date>().with(
           <Portal>
             <GrowFade growingOrigin="top">
               <Dropdown
-                for={inputContainerRef()!}
+                for={inputContainerRef}
+                ref={(ref) => (dropdownRef = ref)}
+                tabindex="0"
                 visible={focused()}
                 class="datepicker-dropdown"
-                ref={setDropdownRef}
               >
                 <div class="dropdown-header">
                   <IconButton
@@ -475,7 +472,6 @@ const Datepicker = setupFieldComponent<Date>().with(
 
                 <Row class="dropdown-content">
                   <Switch>
-                    <Match when={typeof value() === 'undefined'}>...</Match>
                     <Match when={datepickerSelectionType() === 'day'}>
                       <DayPicker
                         year={viewedYear()}
