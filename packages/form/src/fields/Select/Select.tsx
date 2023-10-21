@@ -120,23 +120,8 @@ const Select = setupFieldComponent().with(
         validate
       } = useField()!;
 
-      const [inputContainerRef, setInputContainerRef] =
-        createSignal<HTMLDivElement>();
-
-      const onDocumentClick = (event: MouseEvent) => {
-        if (event.target !== inputContainerRef() && focused()) {
-          setFocused(false);
-        }
-      };
-
-      onMount(() => {
-        if (canUseDocument())
-          document.addEventListener('click', onDocumentClick);
-      });
-      onCleanup(() => {
-        if (canUseDocument())
-          document.removeEventListener('click', onDocumentClick);
-      });
+      let inputContainerRef!: HTMLDivElement;
+      let dropdownRef!: HTMLDivElement;
 
       const getChildren = accessChildren(() =>
         typeof props.children === 'function'
@@ -189,11 +174,21 @@ const Select = setupFieldComponent().with(
             {...elProps}
             id={id()}
             labelFor={id()}
-            style={{ cursor: 'pointer' }}
+            class="select-value-container"
+            style={{ cursor: 'pointer', display: 'flex', gap: '10px' }}
             label={props.label}
             tabindex="0"
             onFocus={() => !disabled() && setFocused(true)}
-            onBlur={() => !disabled() && setFocused(false)}
+            onBlur={(event) => {
+              if (
+                !(event.relatedTarget instanceof HTMLElement) ||
+                (event.relatedTarget !== dropdownRef &&
+                  !dropdownRef.contains(event.relatedTarget))
+              ) {
+                // if the new focused element is not the dropdown, or not inside the dropdown
+                !disabled() && setFocused(false);
+              }
+            }}
             icon={
               <KeyboardArrowDown
                 variant="rounded"
@@ -208,7 +203,7 @@ const Select = setupFieldComponent().with(
                 elProps.ref(ref);
               }
 
-              setInputContainerRef(ref);
+              inputContainerRef = ref;
             }}
           >
             {optionLabelFromValue(value())}
@@ -217,7 +212,8 @@ const Select = setupFieldComponent().with(
           <Portal>
             <GrowFade growingOrigin="top">
               <Dropdown
-                for={inputContainerRef()!}
+                for={inputContainerRef}
+                ref={(ref) => (dropdownRef = ref)}
                 class="select-dropdown"
                 visible={focused()}
                 style={{

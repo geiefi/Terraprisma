@@ -1,3 +1,10 @@
+.select-value-container, .option {
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  gap: 10px;
+}
+
 .select-icon {
   transition: transform .2s linear;
   transform-origin: center;
