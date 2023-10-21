@@ -107,6 +107,7 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
               {...elProps}
               id={id()}
               disabled={disabled()}
+              type={props.type}
               class={mergeClass('input', elProps.class)}
               color={color()}
               classList={{
