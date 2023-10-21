@@ -2,7 +2,7 @@
 import { setupTerraprisma } from '@terraprisma/general';
 import { VoidTheme } from '@terraprisma/core';
 
-import { onMount, Suspense } from 'solid-js';
+import { Suspense } from 'solid-js';
 import {
   Body,
   ErrorBoundary,
@@ -15,8 +15,6 @@ import {
   Title
 } from 'solid-start';
 
-import { onLCP, onFID, onCLS } from 'web-vitals';
-
 const themes = [VoidTheme];
 declare module '@terraprisma/core' {
   interface Register {
@@ -24,14 +22,14 @@ declare module '@terraprisma/core' {
   }
 }
 
-const ThemeProvider = setupTerraprisma(themes);
+const [ThemeProvider, initialStyles] = setupTerraprisma(themes);
 
 export default function Root() {
-  onMount(() => {
-    onCLS(console.log);
-    onFID(console.log);
-    onLCP(console.log);
-  });
+  // onMount(() => {
+  //   onCLS(console.log);
+  //   onFID(console.log);
+  //   onLCP(console.log);
+  // });
 
   return (
     <Html lang="pt-br">
@@ -40,15 +38,17 @@ export default function Root() {
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Body style={{ margin: 0 }}>
-        <Suspense>
+      <Body style={{ margin: 0, ...initialStyles }}>
+        <ErrorBoundary>
           <ThemeProvider>
-            <Routes>
-              <FileRoutes />
-            </Routes>
+            <Suspense>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </Suspense>
+            <Scripts />
           </ThemeProvider>
-        </Suspense>
-        <Scripts />
+        </ErrorBoundary>
       </Body>
     </Html>
   );

@@ -16,9 +16,8 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      // "terraprisma": ["../../packages/terraprisma/src"],
-      // "terraprisma/*": ["../../packages/terraprisma/src/*"],
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@terraprisma/*": ["../../packages/*/src"]
     }
   },
   "includes": ["src"]

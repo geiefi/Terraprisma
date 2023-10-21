@@ -20,7 +20,6 @@ const TypographyTest: Component = () => {
       verticalAlign="center"
     >
       <Box
-        depth={3}
         style={{
           width: '100%',
           'max-width': '768px',
