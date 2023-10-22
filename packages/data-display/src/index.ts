@@ -1,3 +1,5 @@
+import './index.css';
+
 import Tooltip, { createTooltip } from './Tooltip/Tooltip';
 import Table from './Table/Table';
 
