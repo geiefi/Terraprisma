@@ -3,8 +3,7 @@ import { Component, createSignal, Match, Switch } from 'solid-js';
 import { Box, Button } from '@terraprisma/general';
 import { Stack, Container, Divisor } from '@terraprisma/layout';
 import { Steps, Step } from '@terraprisma/navigation';
-import type { FormProviderValue } from '@terraprisma/form/FormContext';
-import { FormValue } from '@terraprisma/form/types';
+import type { FormValue, FormProviderValue } from '@terraprisma/form';
 
 import Address from '../components/DemoSteps/1-Address';
 import PaymentMethod from '../components/DemoSteps/2-PaymentMethod';

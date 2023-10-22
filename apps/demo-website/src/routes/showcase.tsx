@@ -26,7 +26,6 @@ import {
   TextArea
 } from '@terraprisma/form';
 import { CopyAll, Delete, Send } from '@terraprisma/icons';
-import { Paragraph, Typography, Marked } from '@terraprisma/typography';
 
 const confirm = (message: string) => {
   createDialog({
@@ -93,40 +92,42 @@ const DesignShowcase: Component = () => {
               onOk={() => setModalOpen(false)}
               onCancel={() => setModalOpen(false)}
             >
-              <Typography>
-                <Paragraph>
+              <article>
+                <p>
                   A modal consists of a dialog box that can be used for almost
                   anything when you want to add something new to the website
                   without needing to find a way to add too much information on
                   the user's screen.
-                </Paragraph>
-                <Paragraph>
-                  You can create many dialogs with <Marked>Terraprisma</Marked>{' '}
-                  and still not have enough of it. Have fun!
-                </Paragraph>
-              </Typography>
+                </p>
+                <p>
+                  You can create many dialogs with <code>Terraprisma</code> and
+                  still not have enough of it. Have fun!
+                </p>
+              </article>
             </Dialog>
           </Col>
           <Col size={14}>
             <Box>
-              <Table identification="MostPopulatedCountries" boxed>
-                <Table.Row headRow>
-                  <Table.Column> Country </Table.Column>
-                  <Table.Column> Population </Table.Column>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Column> China </Table.Column>
-                  <Table.Column> 1,439,323,776 </Table.Column>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Column> India </Table.Column>
-                  <Table.Column> 1,380,004,385 </Table.Column>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Column> United States </Table.Column>
-                  <Table.Column> 331,002,651 </Table.Column>
-                </Table.Row>
-              </Table>
+              <Box class="!p-0">
+                <Table identification="MostPopulatedCountries">
+                  <Table.Row headRow>
+                    <Table.Column> Country </Table.Column>
+                    <Table.Column> Population </Table.Column>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Column> China </Table.Column>
+                    <Table.Column> 1,439,323,776 </Table.Column>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Column> India </Table.Column>
+                    <Table.Column> 1,380,004,385 </Table.Column>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Column> United States </Table.Column>
+                    <Table.Column> 331,002,651 </Table.Column>
+                  </Table.Row>
+                </Table>
+              </Box>
               <div
                 style={{
                   display: 'flex',

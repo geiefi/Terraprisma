@@ -1,11 +1,12 @@
-import { Tooltip } from '@terraprisma/data-display';
-import { Validators, createForm } from '@terraprisma/form';
-import { Box, Button, OutlinedButton, TextButton } from '@terraprisma/general';
-import { Female, Male, QrCode } from '@terraprisma/icons';
-import { Col, Container, Row, Stack } from '@terraprisma/layout';
-import { GrowFade } from '@terraprisma/transitions';
 import { createSignal } from 'solid-js';
 import { Title } from 'solid-start';
+
+import { Tooltip } from '@terraprisma/data-display';
+import { Validators, createForm } from '@terraprisma/form';
+import { Box, Button, TextButton } from '@terraprisma/general';
+import { Female, Male } from '@terraprisma/icons';
+import { Col, Container, Row, Stack } from '@terraprisma/layout';
+import { GrowFade } from '@terraprisma/transitions';
 
 type FormValue = {
   name: string;

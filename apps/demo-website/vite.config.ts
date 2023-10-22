@@ -25,8 +25,7 @@ export default defineConfig({
       '@terraprisma/icons': getAliasFor('icons'),
       '@terraprisma/layout': getAliasFor('layout'),
       '@terraprisma/navigation': getAliasFor('navigation'),
-      '@terraprisma/transitions': getAliasFor('transitions'),
-      '@terraprisma/typography': getAliasFor('typography')
+      '@terraprisma/transitions': getAliasFor('transitions')
     }
   }
 });
