@@ -1,6 +1,7 @@
 import {
   ComponentProps,
   createEffect,
+  createMemo,
   createSignal,
   JSX,
   on,
@@ -14,8 +15,6 @@ import {
   extendPropsFrom,
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
-
-import { ArrowDropDown, ExpandMore } from '@terraprisma/icons';
 
 import './Tooltip.scss';
 
@@ -101,6 +100,8 @@ export function createTooltip(identification: string) {
           setVisible(props.visible);
         });
 
+        const position = createMemo(() => props.position ?? 'top');
+
         let tooltipEl: HTMLDivElement;
 
         return (
@@ -108,7 +109,18 @@ export function createTooltip(identification: string) {
             <Show when={visible()}>
               <div
                 {...elProps}
-                class={mergeClass('tooltip', elProps.class)}
+                class={mergeClass(
+                  'tooltip absolute w-fit z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
+                  position() === 'top' &&
+                    'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[var(--anchor-top)] top',
+                  position() === 'left' &&
+                    'left-[var(--anchor-left)] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] left',
+                  position() === 'right' &&
+                    'left-[calc(var(--anchor-left)+var(--anchor-width)+var(--offset-from-anchor))] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] right',
+                  position() === 'bottom' &&
+                    'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[calc(var(--anchor-top)+var(--anchor-height)+var(--offset-from-anchor))] bottom',
+                  elProps.class
+                )}
                 ref={tooltipEl!}
                 style={{
                   '--anchor-left': `${boundingRect()?.x}px`,
@@ -119,15 +131,6 @@ export function createTooltip(identification: string) {
                   '--offset-from-anchor': props.offsetFromAnchor || '12px',
 
                   ...props.style
-                }}
-                classList={{
-                  top:
-                    props.position === 'top' ||
-                    typeof props.position === 'undefined',
-                  bottom: props.position === 'bottom',
-                  left: props.position === 'left',
-                  right: props.position === 'right',
-                  ...elProps.classList
                 }}
               >
                 {props.children}

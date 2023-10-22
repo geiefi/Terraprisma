@@ -2,23 +2,18 @@ import {
   ComponentProps,
   JSX,
   ParentProps,
-  Show,
   createContext,
+  createMemo,
   useContext
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
 import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 
-import { Box } from '@terraprisma/general';
-
-import './Table.scss';
-
 export interface TableProps extends ParentProps {
   identification: string;
 
   compact?: boolean;
-  boxed?: boolean;
 }
 
 const TableContext = createContext<TableProps>();
@@ -27,30 +22,22 @@ const Table = makeComponent(
   [
     extendPropsFrom<TableProps, 'table'>([
       'identification',
-      'boxed',
       'compact',
       'children'
     ])
   ],
   (props, elProps) => {
-    const table = (
-      <table
-        {...elProps}
-        class={mergeClass('terraprisma-table', elProps.class)}
-        classList={{
-          boxed: props.boxed,
-          compact: props.compact,
-          ...elProps.classList
-        }}
-      >
-        {props.children}
-      </table>
-    );
     return (
       <TableContext.Provider value={props}>
-        <Show when={props.boxed} fallback={table}>
-          <Box class="terraprisma-table-box">{table}</Box>
-        </Show>
+        <table
+          {...elProps}
+          class={mergeClass(
+            'table w-full border-collapse border-spacing-0 m-0 appearance-none box-border',
+            elProps.class
+          )}
+        >
+          {props.children}
+        </table>
       </TableContext.Provider>
     );
   }
@@ -87,28 +74,37 @@ const Column = makeComponent(
     const tableProps = useContext(TableContext);
     const rowProps = useContext(RowContext);
 
-    if (typeof rowProps === 'undefined') {
-      if (typeof tableProps !== 'undefined') {
-        throw new Error(
-          `Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`
-        );
-      } else {
-        throw new Error(
-          'A <Table.Column> must be inside a <Table.Row>! Also, could not determine the Table which it belong to either!'
-        );
-      }
+    if (typeof tableProps === 'undefined') {
+      throw new Error('A <Table.Column> must be inside a <Table>!');
     }
+
+    if (typeof rowProps === 'undefined') {
+      throw new Error(
+        `Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`
+      );
+    }
+
+    const colType = createMemo(() => (rowProps.headRow ? 'th' : 'td'));
+    const alignment = createMemo(() => props.align ?? 'left');
 
     return (
       <Dynamic
-        component={rowProps.headRow ? 'th' : 'td'}
+        component={colType()}
         {...elProps}
-        classList={{
-          'align-left':
-            props.align === 'left' || typeof props.align === 'undefined',
-          'align-right': props.align === 'right',
-          'align-center': props.align === 'center'
-        }}
+        class={mergeClass(
+          'text-[inherit]',
+          !tableProps.compact && 'py-1.5 px-3',
+          !!tableProps.compact && 'py-2 px-4',
+          colType() === 'td' &&
+            'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
+          colType() === 'th' && ' border-none font-extrabold',
+
+          alignment() === 'left' && 'text-left',
+          alignment() === 'right' && 'text-right',
+          alignment() === 'center' && 'text-center',
+
+          elProps.class
+        )}
         children={props.children}
       />
     );

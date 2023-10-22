@@ -1,40 +1,17 @@
 .tooltip {
-  position: absolute;
-  width: fit-content;
-  z-index: 13;
-
-  pointer-events: none;
-  user-select: none;
-
-  border-radius: 5px;
-  background: var(--deeper-bg);
-  color: var(--deeper-fg);
-
-  padding-inline: 8px;
-  padding-block: 2px;
-
   &.top {
-    left: calc(var(--anchor-left) + var(--anchor-width) / 2);
-    top: var(--anchor-top);
     translate: -50% calc(-100% - var(--offset-from-anchor));
   }
 
   &.left {
-    left: var(--anchor-left);
-    top: calc(var(--anchor-top) + var(--anchor-height) / 2);
     translate: calc(-100% - var(--offset-from-anchor)) -50%;
   }
 
   &.right {
-    left: calc(var(--anchor-left) + var(--anchor-width) + var(--offset-from-anchor));
-    top: calc(var(--anchor-top) + var(--anchor-height) / 2);
     translate: 0 -50%;
-    transform: translateY(-50%);
   }
 
   &.bottom {
-    left: calc(var(--anchor-left) + var(--anchor-width) / 2);
-    top: calc(var(--anchor-top) + var(--anchor-height) + var(--offset-from-anchor));
     translate: -50%;
   }
 }

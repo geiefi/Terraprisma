@@ -9,7 +9,7 @@ function getAliasFor(pkg: string) {
 
 export default defineConfig({
   base: './',
-  plugins: [solid({ ssr: true })],
+  plugins: [solid({ ssr: false })],
   build: {
     target: 'esnext'
   },
