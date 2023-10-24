@@ -5,6 +5,7 @@
   "type": "module",
   "main": "index.js",
   "keywords": [],
+  "private": true,
   "author": "Gabriel Miranda",
   "dependencies": {
     "rollup": "^3.28.1",

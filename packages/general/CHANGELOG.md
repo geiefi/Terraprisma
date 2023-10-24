@@ -1,5 +1,17 @@
 # @terraprisma/core
 
+## 0.0.0
+
+### Patch Changes
+
+- made lots of changes, going to test on a real app through npm
+- Updated dependencies
+  - @terraprisma/transitions@0.0.0
+  - @terraprisma/core@0.0.0
+  - @terraprisma/icons@0.0.0
+  - @terraprisma/layout@0.0.0
+  - @terraprisma/utils@0.0.0
+
 ## 0.0.0-20230829170706
 
 ### Patch Changes

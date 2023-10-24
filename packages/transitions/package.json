@@ -1,10 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "@terraprisma/transitions",
-  "version": "0.0.0-20230829170706",
+  "version": "0.0.0",
   "type": "module",
   "main": "index.jsx",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
+  "private": false,
   "license": "MIT",
   "keywords": [
     "ui",
