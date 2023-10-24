@@ -7,8 +7,7 @@ import {
   Show,
   createMemo,
   createSignal,
-  Component,
-  createEffect
+  Component
 } from 'solid-js';
 
 import {
@@ -19,7 +18,7 @@ import {
   FieldProps,
   FieldPropKeys,
   useField
-} from '../utils';
+} from './utils';
 
 import {
   extendPropsFrom,
@@ -32,9 +31,7 @@ import { Accents, addAccentColoring } from '@terraprisma/core';
 import { Stack } from '@terraprisma/layout';
 import type { StackProps } from '@terraprisma/layout/Stack/Stack';
 
-import { FormValue, FormFieldValue } from '../../types';
-
-import './RadioGroup.scss';
+import { FormValue, FormFieldValue } from '../types';
 
 export interface RadioGroupOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue
@@ -78,9 +75,11 @@ const RadioInternal = makeComponent(
     const isDisabled = createMemo(() => props.disabled || groupDisabled());
     const isChecked = createMemo(() => props.value === groupValue());
 
+    const size = createMemo(() => props.size ?? 'medium');
+
     return (
       <div
-        class="radio-container"
+        class="flex flex-row items-center gap-2"
         onClick={(e) => {
           if (props.onClick && !isDisabled()) {
             props.onClick(e);
@@ -88,23 +87,30 @@ const RadioInternal = makeComponent(
         }}
       >
         <div
-          class="radio"
+          class={mergeClass(
+            'relative block appearance-none m-0 p-0 rounded-full bg-transparent transition-colors z-[2]',
+            'border-2 border-solid',
+            'after:absolute after:left-1/2 after:top-1/2 after:w-2/3 after:-translate-x-1/2 after:-translate-y-1/2 after:h-2/3 after:rounded-full transition-opacity',
+            isChecked() ? 'after:opacity-100' : 'after:opacity-0',
+            isDisabled()
+              ? 'border-[var(--muted-bg)] after:bg-[var(--muted-bg)]'
+              : [
+                  'cursor-pointer after:bg-[var(--color)]',
+                  isChecked()
+                    ? 'border-[var(--color)]'
+                    : 'border-[var(--deeper-fg)]'
+                ],
+            size() === 'small' && '!w-4 !h-4',
+            size() === 'medium' && '!w-6 !h-6',
+            size() === 'large' && '!w-8 !h-8'
+          )}
           style={{
             '--color': `var(--${color()}-bg)`
-          }}
-          classList={{
-            small: props.size === 'small',
-            medium: props.size === 'medium',
-            large: props.size === 'large',
-
-            focused: isRadioFocused() === true,
-
-            checked: isChecked(),
-            disabled: isDisabled()
           }}
         >
           <input
             {...elProps}
+            class={mergeClass('appearance-none opacity-0', elProps.class)}
             id={id()}
             type="radio"
             value={groupValue()}
@@ -118,7 +124,14 @@ const RadioInternal = makeComponent(
         </div>
 
         <Show when={props.children}>
-          <Label for={id()} hasErrors={hasErrors()}>
+          <Label
+            for={id()}
+            class={mergeClass(
+              'pointer-events-none',
+              isDisabled() && 'opacity-30'
+            )}
+            hasErrors={hasErrors()}
+          >
             {props.children}
           </Label>
         </Show>

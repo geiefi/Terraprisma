@@ -12,7 +12,9 @@ import { Portal } from 'solid-js/web';
 import {
   canUseDocument,
   makeComponent,
-  extendPropsFrom
+  extendPropsFrom,
+  mergeCallbacks,
+  mergeClass
 } from '@terraprisma/utils';
 import { createTooltip } from '@terraprisma/data-display';
 import { Accents, addAccentColoring } from '@terraprisma/core';
@@ -30,7 +32,8 @@ import {
 
 import { FormValue } from '../../types';
 
-import './Slider.scss';
+import './Slider.css';
+import { mergeRefs } from '@solid-primitives/refs';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -186,10 +189,15 @@ const Slider = setupFieldComponent<number>().with(
         }
       };
 
+      let input: HTMLInputElement;
+
       createEffect(() => {
-        const inputEl = document.getElementById(id())! as HTMLInputElement;
-        inputEl.value = (value() ?? '').toString();
+        if (input) {
+          input.value = (value() ?? '').toString();
+        }
       });
+
+      const size = createMemo(() => props.size ?? 'medium');
 
       return (
         <FieldInternalWrapper>
@@ -200,43 +208,74 @@ const Slider = setupFieldComponent<number>().with(
           </Show>
 
           <div
-            class="slider"
+            class={mergeClass(
+              'w-full h-min py-1 relative',
+              'after:absolute after:left-[var(--value-percentage)] after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:scale-150 after:rounded-full after:pointer-events-none after:transition-opacity',
+              focused() && 'after:opacity-30',
+              disabled() ? 'opacity-40 bg-[var(--muted-fg)]' : 'cursor-pointer',
+              size() === 'small' && 'after:h-2 after:w-2',
+              size() === 'medium' && 'after:h-4 after:w-4',
+              size() === 'large' && 'after:h-5 after:w-5'
+            )}
             ref={slider}
             draggable={false}
             onKeyDown={handleKeyDown}
-            classList={{
-              focused: focused(),
-              disabled: disabled(),
-
-              'has-label': typeof props.label !== 'undefined',
-
-              small: props.size === 'small',
-              medium:
-                props.size === 'medium' || typeof props.size === 'undefined',
-              large: props.size === 'large'
-            }}
             style={{
               '--value-percentage': `${valuePercentageToMaxFromMin()}%`,
               '--color': `var(--${color()}-bg)`
             }}
           >
-            <span class="trunk" draggable={false} />
-            <span class="rail" draggable={false} />
-            <span class="thumb" ref={setAnchor} draggable={false}>
+            <span
+              class={mergeClass(
+                'block absolute left-0 top-1/2 -translate-y-1/2 w-[var(--value-percentage)] bg-[var(--color)]',
+                size() === 'small' && 'h-1 rounded-[0.166rem]',
+                size() === 'medium' && 'h-2 rounded-[0.333rem]',
+                size() === 'large' && 'h-2.5 rounded-[0.416rem]'
+              )}
+              draggable={false}
+            />
+            <span
+              // rail
+              class={mergeClass(
+                'block w-full',
+                size() === 'small' && 'h-1 rounded-[0.083rem]',
+                size() === 'medium' && 'h-2 rounded-[0.166rem]',
+                size() === 'large' && 'h-2.5 rounded-[0.208rem]',
+                disabled() ? 'bg-[var(--muted-fg)]' : 'bg-[var(--deeper-bg)]'
+              )}
+              draggable={false}
+            />
+            <span
+              // thumb
+              class={mergeClass(
+                'absolute bg-[var(--color)] left-[var(--value-percentage)] top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2',
+                'pointer-events-none transition-opacity',
+                size() === 'small' && 'h-2 w-2',
+                size() === 'medium' && 'h-4 w-4',
+                size() === 'large' && 'h-5 w-5'
+              )}
+              ref={setAnchor}
+              draggable={false}
+            >
               <input
                 {...elProps}
+                ref={mergeRefs(elProps.ref, (ref) => (input = ref))}
+                class={mergeClass(
+                  'slider-input w-full h-full overflow-hidden whitespace-nowrap border-none absolute cursor-pointer',
+                  elProps.class
+                )}
                 min={min()}
                 max={max()}
                 step={step()}
                 id={id()}
-                onFocus={() => {
+                onFocus={mergeCallbacks(elProps.onFocus, () => {
                   setFocused(true);
                   setFocusedThroughKeyboard(true);
-                }}
-                onBlur={() => {
+                })}
+                onBlur={mergeCallbacks(elProps.onBlur, () => {
                   setFocused(false);
                   setFocusedThroughKeyboard(false);
-                }}
+                })}
                 type="range"
                 disabled={disabled()}
               />
@@ -254,7 +293,7 @@ const Slider = setupFieldComponent<number>().with(
               <GrowFade growingOrigin="bottom">
                 <Tooltip
                   visible={focused()}
-                  class="slider-value-tooltip"
+                  class="!bg-[var(--color)] !text-[var(--text-color)]"
                   style={{
                     '--color': `var(--${color()}-bg)`,
                     '--text-color': `var(--${color()}-fg)`

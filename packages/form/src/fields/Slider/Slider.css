@@ -1,0 +1,5 @@
+.slider-input {
+  clip: rect(0px, 0px, 0px, 0px);
+  direction: ltr;
+  outline: none !important;
+}

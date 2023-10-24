@@ -1,10 +1,7 @@
 import {
-  Component,
   createEffect,
   createMemo,
   createSignal,
-  For,
-  Index,
   JSX,
   Match,
   on,
@@ -12,13 +9,10 @@ import {
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
-import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
-import {
-  Dropdown,
-  IconButton,
-  OutlinedButton,
-  TextButton
-} from '@terraprisma/general';
+import { mergeRefs } from '@solid-primitives/refs';
+
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import { Dropdown, IconButton, OutlinedButton } from '@terraprisma/general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '@terraprisma/icons';
 import { Row } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
@@ -36,7 +30,9 @@ import {
 
 import { FormFieldValue, FormValue } from '../../types';
 
-import './Datepicker.scss';
+import DayPicker, { amountOfDaysInMonth } from './DayPicker';
+import MonthPicker from './MonthPicker';
+import YearPicker from './YearPicker';
 
 export interface DatepickerProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -49,197 +45,6 @@ export interface DatepickerProps<
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
 }
-
-interface DatepickerDay {
-  weekday: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  dateAtDay: Date;
-  day: number;
-}
-
-const amountOfDaysInMonth = (year: number, month: number) =>
-  new Date(year, month + 1, 0).getDate();
-
-const DayPicker: Component<{
-  month: number;
-  year: number;
-
-  selectedDate: Date;
-
-  onDayClicked: (newDate: Date) => any;
-}> = (props) => {
-  const amountOfDaysInCurrentMonth = createMemo(() =>
-    amountOfDaysInMonth(props.year, props.month)
-  );
-
-  const daysOfCurrentMonth = createMemo(() => {
-    const daysAmonut = amountOfDaysInCurrentMonth();
-
-    const days: DatepickerDay[] = [];
-
-    for (let index = 0; index < daysAmonut; index++) {
-      const day = index + 1;
-      const dateAtDay = new Date(props.year, props.month, day);
-      days.push({
-        day,
-        dateAtDay,
-        weekday: dateAtDay.getDay() as any
-      });
-    }
-
-    return days;
-  });
-
-  const daysToShow = createMemo(() => {
-    const days = [...daysOfCurrentMonth()];
-    if (days.length > 0) {
-      const month = props.month;
-      const year = props.year;
-
-      const firstDay = days[0];
-      // loops through all days from monday to the first day
-      // of the month
-      for (let i = 0; i < firstDay.weekday; i++) {
-        const date = new Date(year, month, -i);
-        days.unshift({
-          day: date.getDate(),
-          weekday: date.getDay() as any,
-          dateAtDay: date
-        });
-      }
-
-      const lastDay = days[days.length - 1];
-      const daysMissingTo42 = 42 - days.length;
-      for (let i = 0; i < daysMissingTo42; i++) {
-        const date = new Date(year, month, lastDay.day + i + 1);
-        days.push({
-          day: date.getDate(),
-          weekday: date.getDay() as any,
-          dateAtDay: date
-        });
-      }
-
-      return days;
-    } else {
-      return [];
-    }
-  });
-
-  return (
-    <div class="days-listing">
-      <span class="entry header">S</span>
-      <span class="entry header">M</span>
-      <span class="entry header">T</span>
-      <span class="entry header">W</span>
-      <span class="entry header">T</span>
-      <span class="entry header">F</span>
-      <span class="entry header">S</span>
-
-      <For each={daysToShow()}>
-        {(day) => (
-          <span
-            class="entry"
-            classList={{
-              'outside-of-view': day.dateAtDay.getMonth() !== props.month
-            }}
-          >
-            <IconButton
-              size="small"
-              squarish
-              rippleProps={{ center: true }}
-              active={
-                props.selectedDate
-                  ? props.selectedDate.getMonth() ===
-                      day.dateAtDay.getMonth() &&
-                    props.selectedDate.getDate() === day.dateAtDay.getDate() &&
-                    props.selectedDate.getFullYear() ===
-                      day.dateAtDay.getFullYear()
-                  : false
-              }
-              onClick={() => props.onDayClicked(day.dateAtDay)}
-            >
-              {day.day}
-            </IconButton>
-          </span>
-        )}
-      </For>
-    </div>
-  );
-};
-
-const MonthPicker: Component<{
-  month: number;
-  year: number;
-
-  monthNames: string[];
-  selectedDate: Date;
-
-  onMonthClicked: (month: number) => any;
-}> = (props) => {
-  return (
-    <div class="months-listing">
-      <Index each={props.monthNames}>
-        {(month, monthNumber) => (
-          <span class="entry">
-            <TextButton
-              size="small"
-              active={
-                props.selectedDate
-                  ? monthNumber === props.selectedDate.getMonth() &&
-                    props.year === props.selectedDate.getFullYear()
-                  : false
-              }
-              onClick={() => props.onMonthClicked(monthNumber)}
-            >
-              {month()}
-            </TextButton>
-          </span>
-        )}
-      </Index>
-    </div>
-  );
-};
-
-const YearPicker: Component<{
-  month: number;
-  year: number;
-
-  selectedDate: Date;
-
-  onYearClicked: (month: number) => any;
-}> = (props) => {
-  const years = createMemo(() => {
-    const result = [];
-    const start = props.year - 7;
-    const end = props.year + 8;
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-    return result;
-  });
-
-  return (
-    <div class="years-listing">
-      <Index each={years()}>
-        {(year) => (
-          <span class="entry">
-            <TextButton
-              size="small"
-              active={
-                props.selectedDate
-                  ? props.month === props.selectedDate.getMonth() &&
-                    year() === props.selectedDate.getFullYear()
-                  : false
-              }
-              onClick={() => props.onYearClicked(year())}
-            >
-              {year()}
-            </TextButton>
-          </span>
-        )}
-      </Index>
-    </div>
-  );
-};
 
 const Datepicker = setupFieldComponent<Date>().with(
   makeComponent(
@@ -396,13 +201,7 @@ const Datepicker = setupFieldComponent<Date>().with(
             }}
             icon={<CalendarMonth variant="rounded" />}
             actLikeHasContent
-            ref={(ref) => {
-              if (typeof elProps.ref === 'function') {
-                elProps.ref(ref);
-              }
-
-              inputContainerRef = ref;
-            }}
+            ref={mergeRefs(elProps.ref, (ref) => (inputContainerRef = ref))}
           >
             {displayDate()}
           </InputContainer>
@@ -414,18 +213,16 @@ const Datepicker = setupFieldComponent<Date>().with(
                 ref={(ref) => (dropdownRef = ref)}
                 tabindex="0"
                 visible={focused()}
-                class="datepicker-dropdown"
+                class={mergeClass(
+                  'h-[330px] !w-[330px] overflow-hidden cursor-default grid grid-cols-1 grid-rows-[2fr_8fr]'
+                )}
               >
-                <div class="dropdown-header">
-                  <IconButton
-                    size="small"
-                    class="arrow-previous"
-                    onClick={handlePrevious}
-                  >
+                <div class="px-4 relative flex flex-row items-center justify-between">
+                  <IconButton size="small" onClick={handlePrevious}>
                     <ChevronLeft />
                   </IconButton>
 
-                  <div class="selection-type-button-chooser">
+                  <div class="w-fit flex gap-1.5">
                     <OutlinedButton
                       size="small"
                       active={datepickerSelectionType() === 'month'}
@@ -455,16 +252,12 @@ const Datepicker = setupFieldComponent<Date>().with(
                     </OutlinedButton>
                   </div>
 
-                  <IconButton
-                    size="small"
-                    class="arrow-next"
-                    onClick={handleNext}
-                  >
+                  <IconButton size="small" onClick={handleNext}>
                     <ChevronRight />
                   </IconButton>
                 </div>
 
-                <Row class="dropdown-content">
+                <Row class="px-4 py-2.5 grid h-full overflow-x-hidden overflow-y-auto">
                   <Switch>
                     <Match when={datepickerSelectionType() === 'day'}>
                       <DayPicker

@@ -1,12 +1,14 @@
 import { JSX, createEffect, createMemo } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
+import { mergeRefs } from '@solid-primitives/refs';
 
 import { Accents, addAccentColoring } from '@terraprisma/core';
 import {
   extendPropsFrom,
   makeComponent,
-  mergeCallbacks
+  mergeCallbacks,
+  mergeClass
 } from '@terraprisma/utils';
 
 import {
@@ -20,7 +22,7 @@ import {
 } from '../utils';
 import { FormValue } from '../../types';
 
-import './TextArea.scss';
+import './TextArea.css';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
@@ -68,25 +70,28 @@ const TextArea = setupFieldComponent<string>().with(
         disabledS: [disabled],
         valueS: [value, setValue],
 
-        focusedS: [_focused, setFocused],
-        validate
+        focusedS: [focused, setFocused],
+        hasContent
       } = useField<string>()!;
 
       const resizingDirection = createMemo(() =>
         props.resizable ?? true ? props.reisizingDrection ?? 'both' : 'none'
       );
 
+      let textarea: HTMLTextAreaElement;
+
       createEffect(() => {
-        const inputEl = document.getElementById(id())! as HTMLInputElement;
-        inputEl.value = (value() ?? '').toString();
+        if (textarea) {
+          textarea.value = (value() ?? '').toString();
+        }
       });
 
       return (
         <FieldInternalWrapper>
           <InputContainer
-            class="textarea-container"
+            class="max-w-full max-h-full w-full h-full overflow-x-hidden overflow-y-auto"
             style={{
-              '--resize-direction': resizingDirection()
+              resize: resizingDirection()
             }}
             labelFor={id()}
             color={color()}
@@ -95,12 +100,15 @@ const TextArea = setupFieldComponent<string>().with(
             <textarea
               {...elProps}
               id={id()}
+              ref={mergeRefs(elProps.ref, (r) => (textarea = r))}
               disabled={disabled()}
-              class={elProps.class}
-              classList={{
-                'no-label': typeof props.label === 'undefined',
-                ...elProps.classList
-              }}
+              class={mergeClass(
+                'border-none outline-none appearance-none bg-transparent w-full h-full min-h-full m-0 p-[inherit] absolute left-0 top-0',
+                'overflow-hidden resize-none transition-opacity opacity-100',
+                typeof props.label === 'undefined' && 'py-2',
+                !focused() && !hasContent() && '!opacity-0',
+                elProps.class
+              )}
               onInput={mergeCallbacks(
                 elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
@@ -123,10 +131,7 @@ const TextArea = setupFieldComponent<string>().with(
                 }
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => {
-                validate(value());
-                setFocused(false);
-              })}
+              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
             />
           </InputContainer>
         </FieldInternalWrapper>

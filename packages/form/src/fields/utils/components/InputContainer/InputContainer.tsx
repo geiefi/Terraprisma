@@ -1,13 +1,19 @@
-import { JSX, ParentProps, Show } from 'solid-js';
+import { JSX, ParentProps, Show, createEffect } from 'solid-js';
 
 import { useField } from '../../fields';
 
-import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
+import {
+  makeComponent,
+  extendPropsFrom,
+  mergeClass,
+  mergeCallbacks
+} from '@terraprisma/utils';
 
 import Label from '../Label/Label';
 
-import './InputContainer.scss';
+// import './InputContainer.scss';
 import { Accents, addAccentColoring } from '@terraprisma/core';
+import { mergeRefs } from '@solid-primitives/refs';
 
 export interface InputContainerProps extends ParentProps {
   labelFor: string;
@@ -45,33 +51,51 @@ const InputContainer = makeComponent(
       hasContent
     } = useField();
 
+    let inputContainer: HTMLDivElement;
+
     return (
       <div
         {...elProps}
-        class={mergeClass('input-container', elProps.class)}
+        ref={mergeRefs(elProps.ref, (r) => (r = inputContainer))}
+        class={mergeClass(
+          'w-full min-h-[54px] h-fit text-sm',
+          'relative m-0 px-5',
+          'bg-[var(--bg)] text-[var(--fg)] transition-colors',
+          '!outline-none rounded-[0.7rem] border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
+          focused()
+            ? 'border-[var(--color)]'
+            : 'border-[var(--floating-border)]',
+          disabled() && '!cursor-none',
+          props.label ? 'pt-5 pb-2' : 'py-3.5',
+          elProps.class
+        )}
         style={{
           '--color': `var(--${color()}-bg)`,
+          '--bg': disabled() ? 'var(--muted-bg)' : 'var(--floating-bg)',
+          '--fg': disabled() ? 'var(--muted-fg)' : 'var(--floating-fg)',
           ...props.style
-        }}
-        classList={{
-          focused: focused(),
-          'has-content': hasContent() || props.actLikeHasContent,
-          disabled: disabled(),
-          error: hasErrors(),
-          'has-label': typeof props.label !== 'undefined',
-
-          ...elProps.classList
         }}
       >
         <Show when={props.label}>
-          <Label for={props.labelFor} hasErrors={hasErrors()}>
+          <Label
+            class={mergeClass(
+              'font-extrabold text-xs absolute origin-top-left left-5 -translate-y-1/2 transition-all',
+              focused() || props.actLikeHasContent || hasContent()
+                ? 'top-[1.125rem] scale-[0.666] opacity-70'
+                : 'top-7'
+            )}
+            for={props.labelFor}
+            hasErrors={hasErrors()}
+          >
             {props.label}
           </Label>
         </Show>
 
         {props.children}
 
-        <span class="input-container-icon">{props.icon}</span>
+        <span class="bg-[var(--floating-bg)] absolute w-min h-min left-[calc(100%-36px)] top-[calc(50%-8px)] text-[var(--label-color)] text-base select-none pointer-events-none">
+          {props.icon}
+        </span>
       </div>
     );
   }

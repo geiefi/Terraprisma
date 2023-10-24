@@ -2,10 +2,7 @@ import {
   Component,
   createMemo,
   children as accessChildren,
-  createSignal,
   JSX,
-  onCleanup,
-  onMount,
   For,
   createEffect,
   on,
@@ -15,10 +12,11 @@ import {
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
+import { mergeRefs } from '@solid-primitives/refs';
+
 import {
   mergeClass,
   mergeCallbacks,
-  canUseDocument,
   extendPropsFrom,
   makeComponent
 } from '@terraprisma/utils';
@@ -35,11 +33,9 @@ import {
   FieldProps,
   useField,
   setupFieldComponent
-} from '../utils';
+} from './utils';
 
-import { FormValue, FormFieldValue } from '../../types';
-
-import './Select.scss';
+import { FormValue, FormFieldValue } from '../types';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -52,6 +48,8 @@ export interface SelectProps<
 
   onChange?: (newValue: FormFieldValue) => any;
   onFocus?: () => any;
+
+  style?: JSX.CSSProperties;
 
   children:
     | JSX.Element
@@ -108,6 +106,7 @@ const Select = setupFieldComponent().with(
         'color',
         'children',
         'onChange',
+        'style',
         'onFocus'
       ])
     ],
@@ -173,9 +172,9 @@ const Select = setupFieldComponent().with(
           <InputContainer
             {...elProps}
             id={id()}
+            style={props.style}
             labelFor={id()}
-            class="select-value-container"
-            style={{ cursor: 'pointer', display: 'flex', gap: '10px' }}
+            class="flex items-center align-middle gap-3 cursor-pointer"
             label={props.label}
             tabindex="0"
             onFocus={() => !disabled() && setFocused(true)}
@@ -192,19 +191,13 @@ const Select = setupFieldComponent().with(
             icon={
               <KeyboardArrowDown
                 variant="rounded"
-                class="select-icon"
-                classList={{
-                  open: focused()
-                }}
+                class={mergeClass(
+                  'transition-transform origin-center',
+                  focused() ? 'rotate-180' : 'rotate-0'
+                )}
               />
             }
-            ref={(ref) => {
-              if (typeof elProps.ref === 'function') {
-                elProps.ref(ref);
-              }
-
-              inputContainerRef = ref;
-            }}
+            ref={mergeRefs(elProps.ref, (ref) => (inputContainerRef = ref))}
           >
             {optionLabelFromValue(value())}
           </InputContainer>
@@ -214,7 +207,8 @@ const Select = setupFieldComponent().with(
               <Dropdown
                 for={inputContainerRef}
                 ref={(ref) => (dropdownRef = ref)}
-                class="select-dropdown"
+                class="flex flex-col gap-2 max-h-[10rem]"
+                tabindex="0"
                 visible={focused()}
                 style={{
                   '--color': `var(--${color()}-bg)`,
@@ -232,7 +226,10 @@ const Select = setupFieldComponent().with(
                         <ListItem
                           {...optionElProps}
                           clickable
-                          class={mergeClass('option', optionElProps.class)}
+                          class={mergeClass(
+                            'relative flex items-center align-middle gap-3 cursor-pointer',
+                            optionElProps.class
+                          )}
                           active={optionProps.value === value()}
                           onClick={mergeCallbacks(optionElProps.onClick, () => {
                             if (props.onChange) {
@@ -246,7 +243,7 @@ const Select = setupFieldComponent().with(
                           {optionElProps.children}
 
                           <Show when={optionProps.value === value()}>
-                            <span class="active-check">
+                            <span class="absolute left-full top-1/2 -translate-x-[calc(100%+0.75rem)] -translate-y-1/2">
                               <Check variant="rounded" />
                             </span>
                           </Show>

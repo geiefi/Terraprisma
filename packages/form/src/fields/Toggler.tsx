@@ -1,6 +1,6 @@
-import { JSX, Show } from 'solid-js';
+import { JSX, Show, createMemo } from 'solid-js';
 
-import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
+import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import {
@@ -11,11 +11,11 @@ import {
   FieldProps,
   useField,
   setupFieldComponent
-} from '../utils';
+} from './utils';
 
-import { FormValue } from '../../types';
+import { FormValue } from '../types';
 
-import './Toggler.scss';
+// import './Toggler.scss';
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -55,20 +55,46 @@ const Toggler = setupFieldComponent<boolean>().with(
         hasErrors
       } = useField<boolean>()!;
 
+      const size = createMemo(() => props.size ?? 'medium');
+
       return (
-        <FieldInternalWrapper class="toggler-container">
+        <FieldInternalWrapper class="w-fit">
           <Show when={props.label}>
             <Label for={id()} hasErrors={hasErrors()}>
               {props.label}
             </Label>
           </Show>
 
-          <div class="toggler">
+          <div class="w-fit box-content">
             <input
               {...elProps}
               id={id()}
               type="checkbox"
-              class={elProps.class}
+              class={mergeClass(
+                'appearance-none transition-colors relative',
+                'after after:absolute after:top-1/2 after:rounded-full after:-translate-y-1/2 after:transition-all',
+                size() === 'small' &&
+                  'w-6 h-3 after:w-2.5 after:h-2.5 rounded-[0.75rem]',
+                size() === 'medium' &&
+                  'w-10 h-5 after:w-4 after:h-4 rounded-[1.3rem]',
+                size() === 'large' &&
+                  'w-16 h-8 after:w-6.5 after:h-6.5 rounded-[4.1rem]',
+
+                value() === true
+                  ? 'after:left-[calc(100%-0.25rem)] after:-translate-x-full'
+                  : 'after:left-1',
+
+                disabled()
+                  ? 'cursor-default bg-[var(--muted-bg)] after:bg-[var(--muted-fg)] opacity-30'
+                  : [
+                      'cursor-pointer',
+                      value() === true
+                        ? 'bg-[var(--on-color)] after:bg-[var(--on-circle-color)]'
+                        : 'bg-[var(--deeper-bg)] after:bg-[var(--normal-bg)]'
+                    ],
+
+                elProps.class
+              )}
               disabled={disabled()}
               aria-disabled={disabled()}
               style={{

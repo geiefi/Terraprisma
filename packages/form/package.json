@@ -66,13 +66,15 @@
   },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",
+    "@solid-primitives/refs": "^1.0.5",
     "@terraprisma/core": "workspace:*",
     "@terraprisma/data-display": "workspace:*",
+    "@terraprisma/general": "workspace:*",
     "@terraprisma/icons": "workspace:*",
     "@terraprisma/layout": "workspace:*",
-    "@terraprisma/general": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
     "@terraprisma/utils": "workspace:*",
+    "date-fns": "^2.30.0",
     "solid-js": "^1.8.3"
   }
 }

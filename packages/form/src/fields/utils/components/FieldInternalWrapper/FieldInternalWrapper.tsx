@@ -1,10 +1,10 @@
-import { Component, ComponentProps, createMemo, Show } from 'solid-js';
+import { Component, ComponentProps, Show } from 'solid-js';
 
 import { mergeClass } from '@terraprisma/utils';
 
 import { useField } from '../../fields/FieldContext';
 
-import './FieldInternalWrapper.scss';
+import { Collapse } from '@terraprisma/transitions';
 
 /**
  * @description A integral GrapeS wrapper component that helps with handling
@@ -25,23 +25,27 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
   return (
     <div
       {...divProps}
-      class={mergeClass('field', divProps.class)}
-      classList={{
-        error: hasErrors(),
-        ...divProps.classList
-      }}
+      class={mergeClass('w-full h-full inline-block px-2', divProps.class)}
     >
       {divProps.children}
 
-      <div class="helper-text">
-        <Show
-          when={hasErrors() && !isDisabled()}
-          fallback={fieldProps.helperText}
-        >
-          {errors![0]}
+      <Collapse>
+        <Show when={fieldProps.helperText || hasErrors()}>
+          <div
+            class={mergeClass(
+              'pt-1.5 opacity-80 text-xs font-bold',
+              hasErrors() && 'font-extrabold text-[var(--danger-bg)]'
+            )}
+          >
+            <Show
+              when={hasErrors() && !isDisabled()}
+              fallback={fieldProps.helperText}
+            >
+              {errors![0]}
+            </Show>
+          </div>
         </Show>
-        &nbsp;
-      </div>
+      </Collapse>
     </div>
   );
 };

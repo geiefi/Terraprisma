@@ -1,6 +1,7 @@
-import { JSX, createEffect, onMount } from 'solid-js';
+import { JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
+import { mergeRefs } from '@solid-primitives/refs';
 
 import { Accents, addAccentColoring } from '@terraprisma/core';
 import {
@@ -21,7 +22,7 @@ import {
 } from '../utils';
 import { FormValue } from '../../types';
 
-import './Input.scss';
+import './Input.css';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -78,9 +79,9 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
       const {
         elementId: id,
         disabledS: [disabled],
-        focusedS: [_focused, setFocused],
+        focusedS: [focused, setFocused],
         valueS: [value, setValue],
-        validate
+        hasContent
       } = useField()!;
 
       createEffect(() => {
@@ -95,9 +96,12 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
         }
       });
 
+      let input: HTMLInputElement;
+
       createEffect(() => {
-        const inputEl = document.getElementById(id())! as HTMLInputElement;
-        inputEl.value = (value() ?? '').toString();
+        if (input) {
+          input.value = (value() ?? '').toString();
+        }
       });
 
       return (
@@ -106,13 +110,16 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
             <input
               {...elProps}
               id={id()}
+              ref={mergeRefs(elProps.ref, (r) => (input = r))}
               disabled={disabled()}
               type={props.type}
-              class={mergeClass('input', elProps.class)}
+              class={mergeClass(
+                'border-none outline-none bg-transparent w-full h-min box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
+                typeof props.label === 'undefined' && 'py-2',
+                !focused() && !hasContent() && '!opacity-0',
+                elProps.class
+              )}
               color={color()}
-              classList={{
-                'no-label': typeof props.label === 'undefined'
-              }}
               onInput={mergeCallbacks(
                 elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
@@ -128,10 +135,7 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
                 }
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => {
-                validate(value());
-                setFocused(false);
-              })}
+              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
             />
           </InputContainer>
         </FieldInternalWrapper>

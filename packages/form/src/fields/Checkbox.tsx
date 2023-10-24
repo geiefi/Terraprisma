@@ -1,4 +1,4 @@
-import { JSX, Show, createEffect } from 'solid-js';
+import { JSX, Show, createMemo } from 'solid-js';
 
 import {
   Label,
@@ -8,20 +8,19 @@ import {
   FieldName,
   FieldPropKeys,
   FieldProps
-} from '../utils';
+} from './utils';
 
 import {
   extendPropsFrom,
   makeComponent,
-  mergeCallbacks
+  mergeCallbacks,
+  mergeClass
 } from '@terraprisma/utils';
 
 import { Check } from '@terraprisma/icons';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 
-import { FormValue } from '../../types';
-
-import './Checkbox.scss';
+import { FormValue } from '../types';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -93,9 +92,14 @@ const Checkbox = setupFieldComponent<boolean>().with(
         }
       };
 
+      const size = createMemo(() => props.size ?? 'medium');
+
       return (
         <FieldInternalWrapper>
-          <div class="checkbox-container" onClick={swapValue}>
+          <div
+            class="flex flex-row-reverse justify-start gap-2"
+            onClick={swapValue}
+          >
             <Show when={props.label}>
               <Label for={id()} hasErrors={hasErrors()}>
                 {props.label}
@@ -103,21 +107,29 @@ const Checkbox = setupFieldComponent<boolean>().with(
             </Show>
 
             <div
-              class="checkbox"
+              class={mergeClass(
+                'relative cursor-pointer block rounded-md m-0 p-0 select-none border-2 border-solid transition-colors',
+                size() === 'small' && 'w-4 h-4',
+                size() === 'medium' && 'w-6 h-6',
+                size() === 'large' && 'w-8 h-8',
+                value() === false && 'bg-transparent',
+                disabled()
+                  ? [
+                      'opacity-30 cursor-default',
+                      value() === true && 'bg-[var(--muted-bg)]'
+                    ]
+                  : [
+                      'hover:border-[var(--color)]',
+                      value() === true && 'bg-[var(--color)]',
+                      focused()
+                        ? 'border-[var(--color)] shadow-[0_0_4px_3px_var(--color-20)]'
+                        : 'shadow-[0_0_4px_3px_transparent]'
+                    ]
+              )}
               style={{
                 '--color': `var(--${color()}-bg)`,
                 '--color-20': `var(--${color()}-bg-20)`,
                 '--check-color': `var(--${color()}-fg)`
-              }}
-              classList={{
-                small: props.size === 'small',
-                medium:
-                  typeof props.size === 'undefined' || props.size === 'medium',
-                large: props.size === 'large',
-
-                focused: focused(),
-                checked: value() === true,
-                disabled: disabled()
               }}
               onKeyUp={(e) => {
                 if (e.key === 'space') {
@@ -129,6 +141,10 @@ const Checkbox = setupFieldComponent<boolean>().with(
                 {...elProps}
                 id={id()}
                 type="checkbox"
+                class={mergeClass(
+                  'left-0 top-0 w-full h-full opacity-0 pointer-events-none',
+                  elProps.class
+                )}
                 value={value() ? 'true' : 'false'}
                 onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
                 onFocus={mergeCallbacks(elProps.onFocus, () =>
@@ -137,7 +153,19 @@ const Checkbox = setupFieldComponent<boolean>().with(
               />
 
               <Show when={value() === true}>
-                <Check class="checked-icon" variant="rounded" />
+                <Check
+                  style={{ scale: '1 !important' }}
+                  class={mergeClass(
+                    'absolute left-1/2 top-1/2 bg-transparent font-bold m-0 pointer-events-none select-none -translate-x-1/2 -translate-y-1/2',
+                    disabled()
+                      ? 'text-[var(--muted-fg)]'
+                      : 'text-[var(--check-color)]',
+                    size() === 'small' && 'w-4 h-4 text-2xl',
+                    size() === 'medium' && 'w-6 h-6 text-4xl',
+                    size() === 'large' && 'w-8 h-8 text-6xl'
+                  )}
+                  variant="rounded"
+                />
               </Show>
             </div>
           </div>
