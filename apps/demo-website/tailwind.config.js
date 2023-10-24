@@ -1,14 +1,7 @@
-import { resolve } from 'path';
+import config from '../../packages/general/tailwind.config';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './src/**/*.tsx',
-    '../../packages/**/*.tsx'
-  ],
-  corePlugins: {
-    preflight: false
-  },
-  theme: {},
-  plugins: []
+  ...config,
+  content: ['./src/**/*.tsx', '../../packages/**/*.tsx']
 };

@@ -108,7 +108,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
 
             <div
               class={mergeClass(
-                'relative cursor-pointer block rounded-md m-0 p-0 select-none border-2 border-solid transition-colors',
+                'relative cursor-pointer block rounded-md m-1 p-0 select-none border-2 border-solid transition-colors',
                 size() === 'small' && 'w-4 h-4',
                 size() === 'medium' && 'w-6 h-6',
                 size() === 'large' && 'w-8 h-8',

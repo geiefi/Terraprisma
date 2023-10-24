@@ -4,7 +4,16 @@ const config = {
   corePlugins: {
     preflight: false
   },
-  theme: {},
+  theme: {
+    extend: {
+      fontSize: {
+        base: ['14px', { lineHeight: '20px' }]
+      },
+      transitionDuration: {
+        DEFAULT: '225ms'
+      }
+    }
+  },
   plugins: []
 };
 

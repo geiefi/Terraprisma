@@ -1,11 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-const config = {
-  content: ['./src/**/*.tsx'],
-  corePlugins: {
-    preflight: false
-  },
-  theme: {},
-  plugins: []
-};
+import baseConfig from '../general/tailwind.config';
 
-export default config;
+export default { ...baseConfig };
