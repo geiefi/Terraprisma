@@ -18,6 +18,11 @@ export interface ListItemWithDetailsProps extends ParentProps {
    */
   disabled?: boolean;
 
+  /**
+   * @default false
+   */
+  active?: boolean;
+
   style?: JSX.CSSProperties;
 
   onShowDetails?: () => any;
@@ -31,6 +36,7 @@ const ListItemWithDetails = makeComponent(
       'children',
       'color',
       'details',
+      'active',
       'onShowDetails',
       'disabled'
     ])
@@ -44,6 +50,8 @@ const ListItemWithDetails = makeComponent(
           {...elProps}
           class={mergeClass('relative', elProps.class)}
           color={color()}
+          active={props.active}
+          style={props.style}
           clickable
           onClick={mergeCallbacks(elProps.onClick, () =>
             setDetailsOpen((isOpen) => !isOpen)
@@ -64,7 +72,17 @@ const ListItemWithDetails = makeComponent(
 
         <Collapse>
           <Show when={isDetailsOpen()}>
-            <div class="w-full h-fit pl-0 m-0">{props.details}</div>
+            <div
+              style={{
+                '--color-10': `var(--${color()}-bg-10)`
+              }}
+              class={mergeClass(
+                'w-full h-fit pl-0 m-0',
+                !props.disabled && props.active && 'bg-[var(--color-10)]'
+              )}
+            >
+              {props.details}
+            </div>
           </Show>
         </Collapse>
       </>

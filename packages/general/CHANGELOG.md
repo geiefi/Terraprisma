@@ -1,5 +1,11 @@
 # @terraprisma/core
 
+## 0.0.1
+
+### Patch Changes
+
+- add an active option to the lsit item with details
+
 ## 0.0.0
 
 ### Patch Changes

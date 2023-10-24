@@ -1,5 +1,12 @@
 # @terraprisma/data-display
 
+## 0.0.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/general@0.0.1
+
 ## 0.0.0
 
 ### Patch Changes
