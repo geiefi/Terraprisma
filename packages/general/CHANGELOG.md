@@ -1,5 +1,11 @@
 # @terraprisma/core
 
+## 0.0.2
+
+### Patch Changes
+
+- remove margins from the Box component
+
 ## 0.0.1
 
 ### Patch Changes

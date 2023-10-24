@@ -13,7 +13,7 @@ const Box = makeComponent(
     <div
       {...elProps}
       class={mergeClass(
-        'px-4 py-5 my-3 rounded-lg box-border w-full border border-solid bg-[var(--floating-bg)] border-[var(--floating-border)] text-[var(--floating-fg)]',
+        'px-4 py-5 rounded-lg box-border w-full border border-solid bg-[var(--floating-bg)] border-[var(--floating-border)] text-[var(--floating-fg)]',
         elProps.class
       )}
       style={elProps.style}

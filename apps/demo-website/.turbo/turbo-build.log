@@ -1,0 +1,46 @@
+
+> demo-website@ build /home/gabriel/Projects/Personal/Open-Source/Mine/Websites/Terraprisma/apps/demo-website
+> solid-start build
+
+ solid-start build 
+ version  0.3.7
+ adapter  node
+
+solid-start building client...
+solid-start rendering index.html...
+solid-start index.html rendered in: 1.787s
+vite v4.4.11 building for production...
+transforming...
+../../node_modules/.pnpm/solid-start@0.3.7_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.8.3_solid-start-node@0.3.6_vite@4.4.11/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.7_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.8.3_solid-start-node@0.3.6_vite@4.4.11/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 174 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/public/.solid/index.html                                    0.19 kB │ gzip:  0.16 kB
+dist/public/manifest.json                                        2.80 kB │ gzip:  0.52 kB
+dist/public/ssr-manifest.json                                   22.38 kB │ gzip:  1.60 kB
+dist/public/assets/material-symbols-sharp-5e8b2862.woff2     2,535.64 kB
+dist/public/assets/material-symbols-outlined-ba77dc83.woff2  2,852.45 kB
+dist/public/assets/material-symbols-rounded-e7c5b465.woff2   3,697.10 kB
+dist/public/assets/Step-d2f18bf9.css                            22.21 kB │ gzip:  4.09 kB
+dist/public/assets/Validators-6c5cdba0.css                      24.24 kB │ gzip:  4.32 kB
+dist/public/assets/index-674d1aef.css                           26.36 kB │ gzip:  5.07 kB
+dist/public/assets/index-a0cbcf01.js                             2.04 kB │ gzip:  0.87 kB
+dist/public/assets/Demo-d0c5ced4.js                              4.94 kB │ gzip:  1.69 kB
+dist/public/assets/Step-56781ae6.js                              5.02 kB │ gzip:  2.05 kB
+dist/public/assets/showcase-b81d6828.js                          6.27 kB │ gzip:  2.11 kB
+dist/public/assets/Validators-ec066bd0.js                       39.44 kB │ gzip: 11.88 kB
+dist/public/assets/index-96c9f28a.js                           200.22 kB │ gzip: 77.26 kB
+✓ built in 4.72s
+solid-start client built in: 6.554s
+
+solid-start building server...
+vite v4.4.11 building SSR bundle for production...
+transforming...
+../../node_modules/.pnpm/solid-start@0.3.7_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.8.3_solid-start-node@0.3.6_vite@4.4.11/node_modules/solid-start/islands/A.tsx (1:0) Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/solid-start@0.3.7_@solidjs+meta@0.28.6_@solidjs+router@0.8.3_solid-js@1.8.3_solid-start-node@0.3.6_vite@4.4.11/node_modules/solid-start/islands/A.tsx" was ignored.
+✓ 117 modules transformed.
+rendering chunks...
+.solid/server/manifest.json      0.37 kB
+.solid/server/entry-server.js  100.93 kB
+✓ built in 1.23s
+solid-start server built in: 1.253s
+
