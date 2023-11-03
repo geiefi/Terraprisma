@@ -10,9 +10,7 @@
     "esModuleInterop": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "composite": true,
     "isolatedModules": false,
-    "rootDir": "src",
     "declaration": true,
     "declarationMap": true,
     "paths": {
@@ -20,7 +18,7 @@
       "@terraprisma/*": ["../../packages/*/src"]
     }
   },
-  "includes": ["src"]
+  "includes": ["src", "../../packages/*/src"]
   // "references": [
   //   { "path": "../../packages/terraprisma/tsconfig.build.json" }
   // ]
