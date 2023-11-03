@@ -24,15 +24,12 @@ import {
 } from './fields';
 import { InputBaseValue, InputProps, InputType } from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
-import { SelectOptionProps, SelectProps } from './fields/Select/Select';
-import {
-  RadioGroupOptionProps,
-  RadioGroupProps
-} from './fields/RadioGroup/RadioGroup';
+import { SelectOptionProps, SelectProps } from './fields/Select';
+import { RadioGroupOptionProps, RadioGroupProps } from './fields/RadioGroup';
 import { TextAreaProps } from './fields/TextArea/TextArea';
 import { DatepickerProps } from './fields/Datepicker/Datepicker';
-import { TogglerProps } from './fields/Toggler/Toggler';
-import { CheckboxProps } from './fields/Checkbox/Checkbox';
+import { TogglerProps } from './fields/Toggler';
+import { CheckboxProps } from './fields/Checkbox';
 import { FieldName } from './fields/utils/types/FieldProps';
 import { FormFieldValue } from './types/FormFieldValue';
 
