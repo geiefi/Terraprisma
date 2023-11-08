@@ -5,18 +5,22 @@ import type { ComponentFactory } from './componentBuilder';
 
 export function extendPropsFrom<
   BaseProps extends AnyProps,
-  ExtendFrom extends ValidComponent
+  ExtendFrom extends ValidComponent,
+  ElementProps extends Omit<ComponentProps<ExtendFrom>, keyof BaseProps> = Omit<
+    ComponentProps<ExtendFrom>,
+    keyof BaseProps
+  >
 >(keys: (keyof BaseProps)[]) {
-  return ((propsIntoFactory: BaseProps & ComponentProps<ExtendFrom>) => {
+  return ((propsIntoFactory: BaseProps & ElementProps) => {
     const [props, elProps] = splitProps(propsIntoFactory, keys);
 
     return {
       baseProps: props as BaseProps,
-      args: [elProps] as [ComponentProps<ExtendFrom>]
+      args: [elProps] as [elProps: ElementProps]
     };
   }) satisfies ComponentFactory<
     BaseProps,
-    BaseProps & ComponentProps<ExtendFrom>,
-    [elProps: ComponentProps<ExtendFrom>]
+    BaseProps & ElementProps,
+    [elProps: ElementProps]
   >;
 }
