@@ -1,21 +1,25 @@
-import { createMemo, splitProps } from 'solid-js';
+import { Accessor, createMemo, splitProps } from 'solid-js';
 
-import { createComponentFactory, AnyProps } from '@terraprisma/utils';
-import { Accents } from '..';
+import { AnyProps } from '@terraprisma/utils';
 
-export const addAccentColoring = <Props extends AnyProps>(
+import type { Accents } from '..';
+import type { ComponentFactory } from '@terraprisma/utils';
+
+export const addAccentColoring = <BaseProps extends AnyProps>(
   defaultColor: Accents = 'accent'
 ) => {
-  return createComponentFactory<Props, Props & { color?: Accents }>().setup(
-    (allProps) => {
-      const [colorObj, props] = splitProps(allProps, ['color']);
+  return ((propsIntoFactory: BaseProps & { color?: Accents }) => {
+    const [colorObj, props] = splitProps(propsIntoFactory, ['color']);
 
-      const color = createMemo(() => colorObj.color || defaultColor);
+    const color = createMemo(() => colorObj.color || defaultColor);
 
-      return {
-        abstractedProps: props as Props,
-        addedArgs: [color]
-      };
-    }
-  );
+    return {
+      baseProps: props as BaseProps,
+      args: [color] as [Accessor<Accents>]
+    };
+  }) satisfies ComponentFactory<
+    BaseProps,
+    BaseProps & { color: Accents },
+    [Accessor<Accents>]
+  >;
 };
