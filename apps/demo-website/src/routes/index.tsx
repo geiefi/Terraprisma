@@ -4,7 +4,15 @@ import { Title } from 'solid-start';
 import { Tooltip } from '@terraprisma/data-display';
 import { Validators, createForm } from '@terraprisma/form';
 import { Box, Button, TextButton } from '@terraprisma/general';
-import { Female, Male } from '@terraprisma/icons';
+import { Menu, MenuItem } from '@terraprisma/navigation';
+import {
+  Female,
+  Help,
+  Logout,
+  Male,
+  Person,
+  Settings
+} from '@terraprisma/icons';
 import { Col, Container, Row, Stack } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
 
@@ -25,13 +33,44 @@ export default function Index() {
   let passwordInput: HTMLInputElement;
   const [isPasswordInputVisible, setPasswordInputVisible] = createSignal(false);
 
+  let profileButton: HTMLButtonElement;
+  const [isShowingProfileMenu, setShowingProfileMenu] = createSignal(false);
+
   return (
     <main>
       <Title>Index login form</Title>
-      <Container horizontalAlign="center">
-        <Box class="max-w-[568px]">
+      <div class="w-full flex flex-row-reverse h-fit px-10 py-5 border-0 border-b border-solid border-b-[var(--floating-border)] mb-auto">
+        <TextButton
+          onClick={() => setShowingProfileMenu((v) => !v)}
+          ref={(ref) => (profileButton = ref)}
+        >
+          menu
+        </TextButton>
+
+        <GrowFade growingOrigin="top">
+          <Menu visible={isShowingProfileMenu()} for={profileButton!}>
+            <MenuItem class="flex gap-2">
+              <Person /> profile
+            </MenuItem>
+            <MenuItem class="flex gap-2">
+              <Settings /> settings
+            </MenuItem>
+            <MenuItem class="flex gap-2">
+              <Logout /> logout
+            </MenuItem>
+            <MenuItem class="flex gap-2">
+              <Help /> help
+            </MenuItem>
+          </Menu>
+        </GrowFade>
+      </div>
+
+      <Container class="h-screen flex">
+        <Box class="max-w-[568px] mx-auto mb-auto my-20">
           <IndexForm>
             <Stack direction="vertical">
+              <h1 class="text-center">login</h1>
+
               <Stack direction="vertical" class="py-5" spacing={20}>
                 <Row>
                   <Col size={12}>
