@@ -1,6 +1,10 @@
 import { JSX, Match, ParentProps, Switch, createMemo } from 'solid-js';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 import Ripple from '../Ripple';
 
@@ -24,9 +28,9 @@ export interface ListItemProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const ListItem = makeComponent(
-  [
-    addAccentColoring<ListItemProps>(),
+const ListItem = componentBuilder<ListItemProps>()
+  .factory(addAccentColoring<ListItemProps>())
+  .factory(
     extendPropsFrom<ListItemProps & { color?: Accents }, 'li'>([
       'children',
       'disabled',
@@ -35,8 +39,8 @@ const ListItem = makeComponent(
       'style',
       'color'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const clickable = createMemo(() => props.clickable ?? false);
     const disabled = createMemo(() => props.disabled ?? false);
     const active = createMemo(() => props.active ?? false);
@@ -85,7 +89,6 @@ const ListItem = makeComponent(
         </Match>
       </Switch>
     );
-  }
-);
+  });
 
 export default ListItem;

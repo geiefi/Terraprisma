@@ -16,7 +16,7 @@ import { createStore, produce } from 'solid-js/store';
 import {
   mergeClass,
   canUseDocument,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
@@ -46,9 +46,9 @@ interface RippleConfig {
   top: number;
 }
 
-const Ripple = makeComponent(
-  [
-    addAccentColoring<RippleProps>(),
+const Ripple = componentBuilder<RippleProps>()
+  .factory(addAccentColoring<RippleProps>())
+  .factory(
     extendPropsFrom<RippleProps & { color?: Accents }, 'div'>([
       'noRipple',
       'center',
@@ -57,8 +57,8 @@ const Ripple = makeComponent(
       'wrapperProps',
       'children'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
     const createRipple = (
@@ -234,7 +234,6 @@ const Ripple = makeComponent(
         {childrenList()}
       </>
     );
-  }
-);
+  });
 
 export default Ripple;

@@ -1,6 +1,10 @@
 import { ComponentProps, createMemo, JSX, ParentProps } from 'solid-js';
 
-import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
+import {
+  componentBuilder,
+  extendPropsFrom,
+  mergeClass
+} from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import Ripple from '../Ripple';
@@ -23,9 +27,9 @@ export interface ButtonProps extends ParentProps {
   unstyled?: boolean;
 }
 
-const Button = makeComponent(
-  [
-    addAccentColoring<ButtonProps>(),
+const Button = componentBuilder<ButtonProps>()
+  .factory(addAccentColoring<ButtonProps>())
+  .factory(
     extendPropsFrom<ButtonProps & { color?: Accents }, 'button'>([
       'color',
       'size',
@@ -35,8 +39,8 @@ const Button = makeComponent(
       'unstyled',
       'children'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const size = createMemo(() => props.size ?? 'medium');
 
     return (
@@ -73,7 +77,6 @@ const Button = makeComponent(
         </button>
       </Ripple>
     );
-  }
-);
+  });
 
 export default Button;

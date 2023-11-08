@@ -2,7 +2,7 @@ import { JSX, ParentProps, Show, createSignal } from 'solid-js';
 
 import {
   extendPropsFrom,
-  makeComponent,
+  componentBuilder,
   mergeCallbacks,
   mergeClass
 } from '@terraprisma/utils';
@@ -29,9 +29,9 @@ export interface ListItemWithDetailsProps extends ParentProps {
   details: JSX.Element;
 }
 
-const ListItemWithDetails = makeComponent(
-  [
-    addAccentColoring<ListItemWithDetailsProps>(),
+const ListItemWithDetails = componentBuilder<ListItemWithDetailsProps>()
+  .factory(addAccentColoring<ListItemWithDetailsProps>())
+  .factory(
     extendPropsFrom<ListItemWithDetailsProps & { color?: Accents }, 'li'>([
       'children',
       'color',
@@ -40,8 +40,8 @@ const ListItemWithDetails = makeComponent(
       'onShowDetails',
       'disabled'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const [isDetailsOpen, setDetailsOpen] = createSignal(false);
 
     return (
@@ -87,7 +87,6 @@ const ListItemWithDetails = makeComponent(
         </Collapse>
       </>
     );
-  }
-);
+  });
 
 export default ListItemWithDetails;

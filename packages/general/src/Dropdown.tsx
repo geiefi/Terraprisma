@@ -2,7 +2,7 @@ import { JSX, ParentProps, Show, createMemo, on } from 'solid-js';
 
 import {
   mergeClass,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
@@ -43,8 +43,8 @@ export interface DropdownProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Dropdown = makeComponent(
-  [
+const Dropdown = componentBuilder<DropdownProps>()
+  .factory(
     extendPropsFrom<DropdownProps, 'div'>([
       'for',
       'visible',
@@ -52,8 +52,8 @@ const Dropdown = makeComponent(
       'style',
       'children'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     const offset = createMemo(() => props.offsetFromAnchor ?? 10);
     const boundingRect = createMemo(
       on(
@@ -84,7 +84,6 @@ const Dropdown = makeComponent(
         </div>
       </Show>
     );
-  }
-);
+  });
 
 export default Dropdown;

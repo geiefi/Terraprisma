@@ -1,12 +1,16 @@
-import { ParentProps, Show } from 'solid-js';
+import { ParentProps } from 'solid-js';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 export interface ListProps extends ParentProps {}
 
-const List = makeComponent(
-  [extendPropsFrom<ListProps, 'ul'>(['children'])],
-  (props, elProps) => (
+const List = componentBuilder<ListProps>()
+  .factory(extendPropsFrom<ListProps, 'ul'>(['children']))
+  .create((props, elProps) => (
     <ul
       {...elProps}
       class={mergeClass(
@@ -16,7 +20,6 @@ const List = makeComponent(
     >
       {props.children}
     </ul>
-  )
-);
+  ));
 
 export default List;

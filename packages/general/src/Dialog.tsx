@@ -11,7 +11,7 @@ import { Portal, insert } from 'solid-js/web';
 import {
   mergeClass,
   mergeCallbacks,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom
 } from '@terraprisma/utils';
 import { Fade } from '@terraprisma/transitions';
@@ -35,8 +35,8 @@ export interface DialogProps {
   onHidden?: () => any;
 }
 
-const DialogInternal = makeComponent(
-  [
+const DialogInternal = componentBuilder<DialogProps>()
+  .factory(
     extendPropsFrom<DialogProps, typeof Box>([
       'title',
       'extraElementsInFooter',
@@ -46,8 +46,8 @@ const DialogInternal = makeComponent(
       'onCancel',
       'children'
     ])
-  ],
-  (props, elProps) => (
+  )
+  .create((props, elProps) => (
     <Fade onAfterExit={() => props.onHidden && props.onHidden()}>
       <Show when={props.visible}>
         <div
@@ -105,8 +105,7 @@ const DialogInternal = makeComponent(
         </div>
       </Show>
     </Fade>
-  )
-);
+  ));
 
 const Dialog = (props: ComponentProps<typeof DialogInternal>) => {
   return (

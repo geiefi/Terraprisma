@@ -1,5 +1,9 @@
 import { ParentProps } from 'solid-js';
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  extendPropsFrom,
+  componentBuilder
+} from '@terraprisma/utils';
 
 export interface BoxProps extends ParentProps {}
 
@@ -7,9 +11,9 @@ export interface BoxProps extends ParentProps {}
  * @description A component used for having a kind of box.
  * It uses the `floating.bg` and `floating.fg` for its *background* and *text* color respectively.
  */
-const Box = makeComponent(
-  [extendPropsFrom<BoxProps, 'div'>(['children'])],
-  (props, elProps) => (
+const Box = componentBuilder<BoxProps>()
+  .factory(extendPropsFrom<BoxProps, 'div'>(['children']))
+  .create((props, elProps) => (
     <div
       {...elProps}
       class={mergeClass(
@@ -20,7 +24,6 @@ const Box = makeComponent(
     >
       {props.children}
     </div>
-  )
-);
+  ));
 
 export default Box;

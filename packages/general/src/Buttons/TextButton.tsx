@@ -1,4 +1,8 @@
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 import Button from './Button';
 
@@ -9,9 +13,9 @@ export interface TextButtonProps {
   active?: boolean;
 }
 
-const TextButton = makeComponent(
-  [extendPropsFrom<TextButtonProps, typeof Button>(['active'])],
-  (props, dftProps) => {
+const TextButton = componentBuilder<TextButtonProps>()
+  .factory(extendPropsFrom<TextButtonProps, typeof Button>(['active']))
+  .create((props, dftProps) => {
     return (
       <Button
         {...dftProps}
@@ -34,7 +38,6 @@ const TextButton = makeComponent(
         {dftProps.children}
       </Button>
     );
-  }
-);
+  });
 
 export default TextButton;

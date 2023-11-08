@@ -1,4 +1,8 @@
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 import { ParentProps } from 'solid-js';
 
 import TextButton from './TextButton';
@@ -10,14 +14,14 @@ export interface IconButtonProps extends ParentProps {
   squarish?: boolean;
 }
 
-const IconButton = makeComponent(
-  [
+const IconButton = componentBuilder<IconButtonProps>()
+  .factory(
     extendPropsFrom<IconButtonProps, typeof TextButton>([
       'squarish',
       'children'
     ])
-  ],
-  (props, defaultProps) => (
+  )
+  .create((props, defaultProps) => (
     <TextButton
       {...defaultProps}
       rippleProps={{
@@ -48,7 +52,6 @@ const IconButton = makeComponent(
     >
       {props.children}
     </TextButton>
-  )
-);
+  ));
 
 export default IconButton;
