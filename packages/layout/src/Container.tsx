@@ -26,7 +26,8 @@ const Container = makeComponent(
       <div
         {...elProps}
         class={mergeClass(
-          'container flex mx-auto',
+          'container mx-auto',
+          (props.horizontalAlign || props.verticalAlign) && 'flex flex-col',
           props.maxWidth === 'xs' && '!max-w-full',
           props.maxWidth === 'sm' && '!max-w-[640px]',
           props.maxWidth === 'md' && '!max-w-[768px]',
