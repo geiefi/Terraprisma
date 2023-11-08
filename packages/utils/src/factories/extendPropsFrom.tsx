@@ -1,25 +1,22 @@
 import { ComponentProps, ValidComponent, splitProps } from 'solid-js';
 
-import { createComponentFactory } from './makeComponent';
-
 import type { AnyProps } from '../types';
+import type { ComponentFactory } from './componentBuilder';
 
-export const extendPropsFrom = <
-  Props extends AnyProps,
-  Comp extends ValidComponent,
-  CompProps extends ComponentProps<Comp> = ComponentProps<Comp>
->(
-  propKeys: (keyof Props)[]
-) => {
-  return createComponentFactory<
-    Props,
-    Props & Omit<CompProps, keyof Props>
-  >().setup((allProps) => {
-    const [props, extendedProps] = splitProps(allProps, propKeys);
+export function extendPropsFrom<
+  BaseProps extends AnyProps,
+  ExtendFrom extends ValidComponent
+>(keys: (keyof BaseProps)[]) {
+  return ((propsIntoFactory: BaseProps & ComponentProps<ExtendFrom>) => {
+    const [props, elProps] = splitProps(propsIntoFactory, keys);
 
     return {
-      abstractedProps: props,
-      addedArgs: [extendedProps as Omit<CompProps, keyof Props>]
+      baseProps: props as BaseProps,
+      args: [elProps] as [ComponentProps<ExtendFrom>]
     };
-  });
-};
+  }) satisfies ComponentFactory<
+    BaseProps,
+    BaseProps & ComponentProps<ExtendFrom>,
+    [elProps: ComponentProps<ExtendFrom>]
+  >;
+}

@@ -1,2 +1,2 @@
-export * from './makeComponent';
+export * from './componentBuilder';
 export * from './extendPropsFrom';
