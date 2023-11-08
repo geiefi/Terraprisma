@@ -1,8 +1,7 @@
-import { Component, JSX, ParentProps, createMemo } from 'solid-js';
+import { Component, JSX, ParentProps } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
 import { AnyProps } from '../types';
-import { ComponentWithTypeParams } from '../types/FunctionWithTypeParams';
 
 type Wrapper = (props: ParentProps) => JSX.Element;
 export type ComponentFactory<
@@ -70,7 +69,7 @@ export function makeComponent<
     props: OriginalProps,
     ...args: ResultingArgs
   ) => JSX.Element
-): Component<ResultingProps>;
+): (props: ResultingProps) => JSX.Element;
 export function makeComponent<
   Factory1 extends GenericComponentFactory,
   Factory2 extends ComponentFactory<any, PropsAfter<Factory1>, any>,
@@ -86,7 +85,7 @@ export function makeComponent<
     props: OriginalProps,
     ...args: ResultingArgs
   ) => JSX.Element
-): Component<ResultingProps>;
+): (props: ResultingProps) => JSX.Element;
 export function makeComponent<
   Factory1 extends GenericComponentFactory,
   Factory2 extends ComponentFactory<any, PropsAfter<Factory1>, any>,
@@ -107,7 +106,7 @@ export function makeComponent<
     props: OriginalProps,
     ...args: ResultingArgs
   ) => JSX.Element
-): ComponentWithTypeParams<ResultingProps, []>;
+): (props: ResultingProps) => JSX.Element;
 
 /**
  * @description A function that is used to manage and generate a proper component following
