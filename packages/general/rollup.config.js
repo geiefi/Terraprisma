@@ -10,6 +10,9 @@ import autoprefixer from 'autoprefixer';
 
 import tailwindConfig from './tailwind.config.js';
 
+import pkg from './package.json' assert { type: 'json' };
+
+/** @type {import('rollup').RollupOptions} */
 export const baseConfig = {
   input: './src/index.ts',
   output: [
@@ -20,6 +23,7 @@ export const baseConfig = {
       format: 'es'
     }
   ],
+  external: Object.keys(pkg.dependencies),
   acornInjectPlugins: [jsx()],
   plugins: [
     styles({
