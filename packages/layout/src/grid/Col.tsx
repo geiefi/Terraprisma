@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { extendPropsFrom, makeComponent } from '@terraprisma/utils';
+import { extendPropsFrom, componentBuilder } from '@terraprisma/utils';
 
 export interface ColProps extends ParentProps {
   size:
@@ -31,9 +31,9 @@ export interface ColProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Col = makeComponent(
-  [extendPropsFrom<ColProps, 'div'>(['size', 'children', 'style'])],
-  (props, elProps) => (
+const Col = componentBuilder<ColProps>()
+  .factory(extendPropsFrom<ColProps, 'div'>(['size', 'children', 'style']))
+  .create((props, elProps) => (
     <div
       {...elProps}
       class="px-[var(--gap)] py-[var(--row-gap)]"
@@ -44,7 +44,6 @@ const Col = makeComponent(
     >
       {props.children}
     </div>
-  )
-);
+  ));
 
 export default Col;

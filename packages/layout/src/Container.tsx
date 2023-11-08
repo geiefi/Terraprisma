@@ -1,6 +1,10 @@
 import { JSX, ParentProps } from 'solid-js';
 
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  componentBuilder,
+  extendPropsFrom
+} from '@terraprisma/utils';
 
 export type LayoutWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -11,8 +15,8 @@ export interface ContainerProps extends ParentProps {
   maxWidth?: LayoutWidth;
 }
 
-const Container = makeComponent(
-  [
+const Container = componentBuilder<ContainerProps>()
+  .factory(
     extendPropsFrom<ContainerProps, 'div'>([
       'horizontalAlign',
       'verticalAlign',
@@ -20,8 +24,8 @@ const Container = makeComponent(
       'maxWidth',
       'children'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     return (
       <div
         {...elProps}
@@ -45,7 +49,6 @@ const Container = makeComponent(
         {props.children}
       </div>
     );
-  }
-);
+  });
 
 export default Container;

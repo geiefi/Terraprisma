@@ -1,12 +1,16 @@
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  componentBuilder,
+  extendPropsFrom
+} from '@terraprisma/utils';
 
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const Divisor = makeComponent(
-  [extendPropsFrom<DivisorProps, 'div'>(['direction'])],
-  (props, elProps) => {
+const Divisor = componentBuilder<DivisorProps>()
+  .factory(extendPropsFrom<DivisorProps, 'div'>(['direction']))
+  .create((props, elProps) => {
     return (
       <div
         {...elProps}
@@ -17,7 +21,6 @@ const Divisor = makeComponent(
         )}
       />
     );
-  }
-);
+  });
 
 export default Divisor;

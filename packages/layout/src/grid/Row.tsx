@@ -1,5 +1,9 @@
 import { JSX, ParentProps } from 'solid-js';
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 export interface RowProps extends ParentProps {
   gap?: string;
@@ -8,9 +12,11 @@ export interface RowProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Row = makeComponent(
-  [extendPropsFrom<RowProps, 'div'>(['gap', 'rowGap', 'children', 'style'])],
-  (props, elProps) => {
+const Row = componentBuilder<RowProps>()
+  .factory(
+    extendPropsFrom<RowProps, 'div'>(['gap', 'rowGap', 'children', 'style'])
+  )
+  .create((props, elProps) => {
     return (
       <div
         {...elProps}
@@ -25,7 +31,6 @@ const Row = makeComponent(
         {props.children}
       </div>
     );
-  }
-);
+  });
 
 export default Row;

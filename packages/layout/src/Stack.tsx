@@ -1,5 +1,9 @@
 import { JSX, ParentProps, createMemo } from 'solid-js';
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 export interface StackProps extends ParentProps {
   spacing?: number;
@@ -16,8 +20,8 @@ export interface StackProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const Stack = makeComponent(
-  [
+const Stack = componentBuilder<StackProps>()
+  .factory(
     extendPropsFrom<StackProps, 'div'>([
       'spacing',
       'align',
@@ -26,8 +30,8 @@ const Stack = makeComponent(
       'children',
       'style'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     const direction = createMemo(() => props.direction ?? 'horizontal');
     return (
       <div
@@ -48,7 +52,6 @@ const Stack = makeComponent(
         {props.children}
       </div>
     );
-  }
-);
+  });
 
 export default Stack;
