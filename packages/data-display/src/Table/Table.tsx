@@ -8,7 +8,11 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 export interface TableProps extends ParentProps {
   identification: string;
@@ -18,15 +22,15 @@ export interface TableProps extends ParentProps {
 
 const TableContext = createContext<TableProps>();
 
-const Table = makeComponent(
-  [
+const Table = componentBuilder<TableProps>()
+  .factory(
     extendPropsFrom<TableProps, 'table'>([
       'identification',
       'compact',
       'children'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     return (
       <TableContext.Provider value={props}>
         <table
@@ -40,12 +44,7 @@ const Table = makeComponent(
         </table>
       </TableContext.Provider>
     );
-  }
-) as {
-  (props: TableProps & ComponentProps<'table'>): JSX.Element;
-  Row(props: TableRowProps & ComponentProps<'tr'>): JSX.Element;
-  Column(props: TableColumnProps & ComponentProps<'td'>): JSX.Element;
-};
+  });
 
 export interface TableRowProps extends ParentProps {
   headRow?: boolean;
@@ -53,24 +52,23 @@ export interface TableRowProps extends ParentProps {
 
 const RowContext = createContext<TableRowProps>();
 
-const Row = makeComponent(
-  [extendPropsFrom<TableRowProps, 'tr'>(['headRow', 'children'])],
-  (props, elProps) => {
+const Row = componentBuilder<TableRowProps>()
+  .factory(extendPropsFrom<TableRowProps, 'tr'>(['headRow', 'children']))
+  .create((props, elProps) => {
     return (
       <RowContext.Provider value={props}>
         <tr {...elProps}>{props.children}</tr>
       </RowContext.Provider>
     );
-  }
-);
+  });
 
 export interface TableColumnProps extends ParentProps {
   align?: 'left' | 'right' | 'center';
 }
 
-const Column = makeComponent(
-  [extendPropsFrom<TableColumnProps, 'th'>(['align', 'children'])],
-  (props, elProps) => {
+const Column = componentBuilder<TableColumnProps>()
+  .factory(extendPropsFrom<TableColumnProps, 'th'>(['align', 'children']))
+  .create((props, elProps) => {
     const tableProps = useContext(TableContext);
     const rowProps = useContext(RowContext);
 
@@ -108,8 +106,7 @@ const Column = makeComponent(
         children={props.children}
       />
     );
-  }
-);
+  });
 
 Table.Row = Row;
 Table.Column = Column;

@@ -11,7 +11,7 @@ import {
 
 import {
   mergeClass,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
 } from '@terraprisma/utils';
@@ -68,8 +68,8 @@ export function createTooltip(identification: string) {
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
-    Tooltip: makeComponent(
-      [
+    Tooltip: componentBuilder<TooltipProps>()
+      .factory(
         extendPropsFrom<TooltipProps, 'div'>([
           'visible',
           'offsetFromAnchor',
@@ -77,8 +77,8 @@ export function createTooltip(identification: string) {
           'children',
           'style'
         ])
-      ],
-      (props, elProps) => {
+      )
+      .create((props, elProps) => {
         const [visible, setVisible] = createSignal(props.visible);
 
         const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
@@ -138,8 +138,7 @@ export function createTooltip(identification: string) {
             </Show>
           </>
         );
-      }
-    )
+      })
   };
 }
 
