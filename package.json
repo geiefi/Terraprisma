@@ -1,7 +1,7 @@
 {
   "name": "grapes-project",
   "scripts": {
-    "publish-packages": "npx changeset version && turbo run build && npx changeset publish"
+    "publish": "npx changeset version && turbo run build --filter='./packages/*' && npx changeset publish"
   },
   "repository": {
     "type": "git",

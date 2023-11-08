@@ -1,5 +1,16 @@
 # @terraprisma/layout
 
+## 0.1.0
+
+### Minor Changes
+
+- added Menu component
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/utils@0.1.0
+
 ## 0.0.0
 
 ### Patch Changes

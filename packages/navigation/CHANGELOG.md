@@ -1,5 +1,25 @@
 # @terraprisma/navigation
 
+## 0.1.1
+
+### Patch Changes
+
+- remove unused import
+
+## 0.1.0
+
+### Minor Changes
+
+- added Menu component
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/general@0.1.0
+  - @terraprisma/utils@0.1.0
+  - @terraprisma/core@0.0.1
+  - @terraprisma/icons@0.0.1
+
 ## 0.0.2
 
 ### Patch Changes

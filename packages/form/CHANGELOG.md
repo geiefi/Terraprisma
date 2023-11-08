@@ -1,5 +1,18 @@
 # @terraprisma/form
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/general@0.1.0
+  - @terraprisma/layout@0.1.0
+  - @terraprisma/utils@0.1.0
+  - @terraprisma/data-display@0.0.3
+  - @terraprisma/core@0.0.1
+  - @terraprisma/icons@0.0.1
+  - @terraprisma/transitions@0.0.1
+
 ## 0.0.2
 
 ### Patch Changes
