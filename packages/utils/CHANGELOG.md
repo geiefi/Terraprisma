@@ -1,5 +1,11 @@
 # @terraprisma/utils
 
+## 0.1.1
+
+### Patch Changes
+
+- use a new builder pattern for component factories
+
 ## 0.1.0
 
 ### Minor Changes

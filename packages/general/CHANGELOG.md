@@ -1,5 +1,17 @@
 # @terraprisma/core
 
+## 0.1.1
+
+### Patch Changes
+
+- use a new builder pattern for component factories
+- Updated dependencies
+  - @terraprisma/core@0.0.2
+  - @terraprisma/icons@0.0.2
+  - @terraprisma/layout@0.1.1
+  - @terraprisma/transitions@0.0.2
+  - @terraprisma/utils@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

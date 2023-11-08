@@ -1,5 +1,16 @@
 # @terraprisma/navigation
 
+## 0.1.2
+
+### Patch Changes
+
+- use a new builder pattern for component factories
+- Updated dependencies
+  - @terraprisma/core@0.0.2
+  - @terraprisma/general@0.1.1
+  - @terraprisma/icons@0.0.2
+  - @terraprisma/utils@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

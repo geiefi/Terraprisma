@@ -1,5 +1,13 @@
 # @terraprisma/transitions
 
+## 0.0.2
+
+### Patch Changes
+
+- use a new builder pattern for component factories
+- Updated dependencies
+  - @terraprisma/utils@0.1.1
+
 ## 0.0.1
 
 ### Patch Changes
