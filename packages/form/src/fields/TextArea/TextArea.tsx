@@ -6,7 +6,7 @@ import { mergeRefs } from '@solid-primitives/refs';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 import {
   extendPropsFrom,
-  makeComponent,
+  componentBuilder,
   mergeCallbacks,
   mergeClass
 } from '@terraprisma/utils';
@@ -51,9 +51,9 @@ export interface TextAreaProps<
 }
 
 const TextArea = setupFieldComponent<string>().with(
-  makeComponent(
-    [
-      addAccentColoring<TextAreaProps>(),
+  componentBuilder<TextAreaProps>()
+    .factory(addAccentColoring<TextAreaProps>())
+    .factory(
       extendPropsFrom<TextAreaProps & { color?: Accents }, 'textarea'>([
         ...MaskedFieldPropsKeys,
         'label',
@@ -62,8 +62,8 @@ const TextArea = setupFieldComponent<string>().with(
         'reisizingDrection',
         'onChange'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
 
@@ -136,8 +136,7 @@ const TextArea = setupFieldComponent<string>().with(
           </InputContainer>
         </FieldInternalWrapper>
       );
-    }
-  )
+    })
 );
 
 export default TextArea;

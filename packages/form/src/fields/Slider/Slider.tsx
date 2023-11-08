@@ -11,7 +11,7 @@ import { Portal } from 'solid-js/web';
 
 import {
   canUseDocument,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom,
   mergeCallbacks,
   mergeClass
@@ -53,9 +53,9 @@ export interface SliderProps<
 }
 
 const Slider = setupFieldComponent<number>().with(
-  makeComponent(
-    [
-      addAccentColoring<SliderProps>(),
+  componentBuilder()
+    .factory(addAccentColoring<SliderProps>())
+    .factory(
       extendPropsFrom<SliderProps & { color?: Accents }, 'input'>([
         ...FieldPropKeys,
         'label',
@@ -65,8 +65,8 @@ const Slider = setupFieldComponent<number>().with(
         'size',
         'onChange'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const step = createMemo(() => parseFloat((elProps.step || 1).toString()));
       const min = createMemo(() => parseFloat((elProps.min || 0).toString()));
       const max = createMemo(() => parseFloat((elProps.max || 100).toString()));
@@ -308,8 +308,7 @@ const Slider = setupFieldComponent<number>().with(
           </Show>
         </FieldInternalWrapper>
       );
-    }
-  ),
+    }),
   // eslint-disable-next-line solid/reactivity
   (props) => parseFloat((props.min ?? 0).toString())
 );

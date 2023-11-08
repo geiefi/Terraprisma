@@ -7,7 +7,7 @@ import { Accents, addAccentColoring } from '@terraprisma/core';
 import {
   mergeClass,
   mergeCallbacks,
-  makeComponent,
+  componentBuilder,
   extendPropsFrom
 } from '@terraprisma/utils';
 
@@ -62,9 +62,9 @@ export interface InputProps<
 }
 
 const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
-  makeComponent(
-    [
-      addAccentColoring<InputProps>(),
+  componentBuilder<InputProps>()
+    .factory(addAccentColoring<InputProps>())
+    .factory(
       extendPropsFrom<InputProps & { color?: Accents }, 'input'>([
         'mask',
         'label',
@@ -74,8 +74,8 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
         'onChange',
         ...MaskedFieldPropsKeys
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
         disabledS: [disabled],
@@ -140,8 +140,7 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
           </InputContainer>
         </FieldInternalWrapper>
       );
-    }
-  )
+    })
 );
 
 export default Input;

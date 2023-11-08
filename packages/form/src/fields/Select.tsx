@@ -18,7 +18,7 @@ import {
   mergeClass,
   mergeCallbacks,
   extendPropsFrom,
-  makeComponent
+  componentBuilder
 } from '@terraprisma/utils';
 import { Dropdown, List, ListItem } from '@terraprisma/general';
 import { GrowFade } from '@terraprisma/transitions';
@@ -96,9 +96,9 @@ const Option: Component<SelectOptionProps> = (props) =>
  * ```
  */
 const Select = setupFieldComponent().with(
-  makeComponent(
-    [
-      addAccentColoring<SelectProps>(),
+  componentBuilder<SelectProps>()
+    .factory(addAccentColoring<SelectProps>())
+    .factory(
       extendPropsFrom<SelectProps & { color?: Accents }, 'div'>([
         ...FieldPropKeys,
         'label',
@@ -109,8 +109,8 @@ const Select = setupFieldComponent().with(
         'style',
         'onFocus'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
         disabledS: [disabled],
@@ -257,8 +257,7 @@ const Select = setupFieldComponent().with(
           </Portal>
         </FieldInternalWrapper>
       );
-    }
-  )
+    })
 ) as {
   <OwnerFormValue extends FormValue>(
     props: SelectProps<OwnerFormValue> &

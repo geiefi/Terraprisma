@@ -11,7 +11,11 @@ import { Portal } from 'solid-js/web';
 
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 import { Dropdown, IconButton, OutlinedButton } from '@terraprisma/general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '@terraprisma/icons';
 import { Row } from '@terraprisma/layout';
@@ -47,9 +51,9 @@ export interface DatepickerProps<
 }
 
 const Datepicker = setupFieldComponent<Date>().with(
-  makeComponent(
-    [
-      addAccentColoring<DatepickerProps>(),
+  componentBuilder<DatepickerProps>()
+    .factory(addAccentColoring<DatepickerProps>())
+    .factory(
       extendPropsFrom<DatepickerProps & { color?: Accents }, 'div'>([
         ...FieldPropKeys,
         'label',
@@ -59,8 +63,8 @@ const Datepicker = setupFieldComponent<Date>().with(
         'onChange',
         'onFocus'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
         disabledS: [disabled],
@@ -313,8 +317,7 @@ const Datepicker = setupFieldComponent<Date>().with(
           </Portal>
         </FieldInternalWrapper>
       );
-    }
-  ),
+    }),
   new Date()
 );
 

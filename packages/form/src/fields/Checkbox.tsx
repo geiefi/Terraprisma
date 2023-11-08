@@ -11,8 +11,8 @@ import {
 } from './utils';
 
 import {
+  componentBuilder,
   extendPropsFrom,
-  makeComponent,
   mergeCallbacks,
   mergeClass
 } from '@terraprisma/utils';
@@ -48,9 +48,9 @@ export interface CheckboxProps<
 }
 
 const Checkbox = setupFieldComponent<boolean>().with(
-  makeComponent(
-    [
-      addAccentColoring<CheckboxProps>(),
+  componentBuilder<CheckboxProps>()
+    .factory(addAccentColoring<CheckboxProps>())
+    .factory(
       extendPropsFrom<CheckboxProps & { color?: Accents }, 'input'>([
         ...FieldPropKeys,
         'label',
@@ -59,8 +59,8 @@ const Checkbox = setupFieldComponent<boolean>().with(
         'size',
         'onChange'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
         disabledS: [disabled],
@@ -171,8 +171,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
           </div>
         </FieldInternalWrapper>
       );
-    }
-  ),
+    }),
   false
 );
 

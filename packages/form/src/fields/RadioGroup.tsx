@@ -22,7 +22,7 @@ import {
 
 import {
   extendPropsFrom,
-  makeComponent,
+  componentBuilder,
   mergeCallbacks,
   mergeClass
 } from '@terraprisma/utils';
@@ -47,9 +47,9 @@ export interface RadioGroupOptionProps<
 const RadioOption = (props: ComponentProps<typeof RadioInternal>) =>
   props as unknown as JSX.Element;
 
-const RadioInternal = makeComponent(
-  [
-    addAccentColoring<RadioGroupOptionProps>(),
+const RadioInternal = componentBuilder<RadioGroupOptionProps>()
+  .factory(addAccentColoring<RadioGroupOptionProps>())
+  .factory(
     extendPropsFrom<RadioGroupOptionProps & { color?: Accents }, 'input'>([
       'value',
       'children',
@@ -58,8 +58,8 @@ const RadioInternal = makeComponent(
       'size',
       'onClick'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const {
       elementId: groupId,
       valueS: [groupValue],
@@ -137,8 +137,7 @@ const RadioInternal = makeComponent(
         </Show>
       </div>
     );
-  }
-);
+  });
 
 export interface RadioGroupProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -166,9 +165,9 @@ export interface RadioGroupProps<
 }
 
 const RadioGroup = setupFieldComponent().with(
-  makeComponent(
-    [
-      addAccentColoring<RadioGroupProps>(),
+  componentBuilder<RadioGroupProps>()
+    .factory(addAccentColoring<RadioGroupProps>())
+    .factory(
       extendPropsFrom<RadioGroupProps & { color?: Accents }, 'div'>([
         ...FieldPropKeys,
         'label',
@@ -179,8 +178,8 @@ const RadioGroup = setupFieldComponent().with(
         'onChange',
         'children'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
 
@@ -253,8 +252,7 @@ const RadioGroup = setupFieldComponent().with(
           </Stack>
         </FieldInternalWrapper>
       );
-    }
-  )
+    })
 );
 
 export default RadioGroup;

@@ -2,7 +2,7 @@ import { Component, ComponentProps, Show } from 'solid-js';
 
 import { mergeClass } from '@terraprisma/utils';
 
-import { useField } from '../../fields/FieldContext';
+import { useField } from '../fields/FieldContext';
 
 import { Collapse } from '@terraprisma/transitions';
 

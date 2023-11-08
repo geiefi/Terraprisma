@@ -1,4 +1,4 @@
-import { Component, Index } from 'solid-js';
+import { Index } from 'solid-js';
 import DatepickerButtonEntry from './DatepickerButtonEntry';
 
 export default function MonthPicker(props: {

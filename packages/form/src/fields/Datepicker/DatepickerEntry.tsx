@@ -1,14 +1,18 @@
 import { ParentProps } from 'solid-js';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 
 interface DatepickerEntryProps extends ParentProps {
   muted?: boolean;
 }
 
-const DatepickerEntry = makeComponent(
-  [extendPropsFrom<DatepickerEntryProps, 'span'>(['children', 'muted'])],
-  (props, elProps) => {
+const DatepickerEntry = componentBuilder<DatepickerEntryProps>()
+  .factory(extendPropsFrom<DatepickerEntryProps, 'span'>(['children', 'muted']))
+  .create((props, elProps) => {
     return (
       <span
         {...elProps}
@@ -21,7 +25,6 @@ const DatepickerEntry = makeComponent(
         {props.children}
       </span>
     );
-  }
-);
+  });
 
 export default DatepickerEntry;

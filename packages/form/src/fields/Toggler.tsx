@@ -1,6 +1,10 @@
 import { JSX, Show, createMemo } from 'solid-js';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 import { Accents, addAccentColoring } from '@terraprisma/core';
 
 import {
@@ -14,8 +18,6 @@ import {
 } from './utils';
 
 import { FormValue } from '../types';
-
-// import './Toggler.scss';
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -32,9 +34,9 @@ export interface TogglerProps<
 }
 
 const Toggler = setupFieldComponent<boolean>().with(
-  makeComponent(
-    [
-      addAccentColoring<TogglerProps>(),
+  componentBuilder<TogglerProps>()
+    .factory(addAccentColoring<TogglerProps>())
+    .factory(
       extendPropsFrom<TogglerProps & { color?: Accents }, 'input'>([
         ...FieldPropKeys,
         'label',
@@ -43,8 +45,8 @@ const Toggler = setupFieldComponent<boolean>().with(
         'size',
         'onChange'
       ])
-    ],
-    (props, color, elProps) => {
+    )
+    .create((props, color, elProps) => {
       const {
         elementId: id,
 
@@ -130,8 +132,7 @@ const Toggler = setupFieldComponent<boolean>().with(
           </div>
         </FieldInternalWrapper>
       );
-    }
-  ),
+    }),
   false
 );
 

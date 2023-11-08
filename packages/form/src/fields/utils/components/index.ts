@@ -1,5 +1,5 @@
-import FieldInternalWrapper from './FieldInternalWrapper/FieldInternalWrapper';
-import InputContainer from './InputContainer/InputContainer';
-import Label from './Label/Label';
+import FieldInternalWrapper from './FieldInternalWrapper';
+import InputContainer from './InputContainer';
+import Label from './Label';
 
 export { FieldInternalWrapper, InputContainer, Label };

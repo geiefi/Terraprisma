@@ -1,15 +1,14 @@
-import { JSX, ParentProps, Show, createEffect } from 'solid-js';
+import { JSX, ParentProps, Show } from 'solid-js';
 
-import { useField } from '../../fields';
+import { useField } from '../fields';
 
 import {
-  makeComponent,
+  componentBuilder,
   extendPropsFrom,
-  mergeClass,
-  mergeCallbacks
+  mergeClass
 } from '@terraprisma/utils';
 
-import Label from '../Label/Label';
+import Label from './Label';
 
 // import './InputContainer.scss';
 import { Accents, addAccentColoring } from '@terraprisma/core';
@@ -31,9 +30,9 @@ export interface InputContainerProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const InputContainer = makeComponent(
-  [
-    addAccentColoring<InputContainerProps>(),
+const InputContainer = componentBuilder<InputContainerProps>()
+  .factory(addAccentColoring<InputContainerProps>())
+  .factory(
     extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
       'children',
       'labelFor',
@@ -42,8 +41,8 @@ const InputContainer = makeComponent(
       'style',
       'icon'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const {
       focusedS: [focused],
       disabledS: [disabled],
@@ -98,7 +97,6 @@ const InputContainer = makeComponent(
         </span>
       </div>
     );
-  }
-);
+  });
 
 export default InputContainer;
