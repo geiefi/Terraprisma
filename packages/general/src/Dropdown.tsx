@@ -72,9 +72,10 @@ const Dropdown = makeComponent(
             elProps.class
           )}
           style={{
-            left: `${boundingRect().left}px`,
+            left: `${boundingRect().left + boundingRect().width}px`,
             top: `${boundingRect().top + boundingRect().height + offset()}px`,
             width: `${boundingRect().width}px`,
+            translate: '-100%',
 
             ...props.style
           }}
