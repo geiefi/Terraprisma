@@ -1,6 +1,10 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import { makeComponent, extendPropsFrom, mergeClass } from '@terraprisma/utils';
+import {
+  componentBuilder,
+  extendPropsFrom,
+  mergeClass
+} from '@terraprisma/utils';
 import { IconButton } from '@terraprisma/general';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
 import { Accents, addAccentColoring } from '@terraprisma/core';
@@ -44,9 +48,9 @@ const PageNumber = (props: {
 
 const Etc = () => <div class="flex self-end pb-2 select-none"> ... </div>;
 
-const Pagination = makeComponent(
-  [
-    addAccentColoring<PaginationProps>(),
+const Pagination = componentBuilder<PaginationProps>()
+  .factory(addAccentColoring<PaginationProps>())
+  .factory(
     extendPropsFrom<PaginationProps & { color?: Accents }, 'div'>([
       'current',
       'color',
@@ -54,8 +58,8 @@ const Pagination = makeComponent(
       'total',
       'onChangePage'
     ])
-  ],
-  (props, color, elProps) => {
+  )
+  .create((props, color, elProps) => {
     const maximumAppearingChoices = createMemo(
       () => props.maximumAppearingChoices || 5 - 2
     );
@@ -154,7 +158,6 @@ const Pagination = makeComponent(
         </IconButton>
       </div>
     );
-  }
-);
+  });
 
 export default Pagination;

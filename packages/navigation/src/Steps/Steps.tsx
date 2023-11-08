@@ -10,7 +10,11 @@ import {
   ParentProps
 } from 'solid-js';
 
-import { mergeClass, makeComponent, extendPropsFrom } from '@terraprisma/utils';
+import {
+  mergeClass,
+  componentBuilder,
+  extendPropsFrom
+} from '@terraprisma/utils';
 
 import { InternalStep, StepProps } from './Step';
 
@@ -37,16 +41,16 @@ export interface StepsProps extends ParentProps {
 
 export class StepsError extends Error {}
 
-const Steps = makeComponent(
-  [
+const Steps = componentBuilder<StepsProps>()
+  .factory(
     extendPropsFrom<StepsProps, 'div'>([
       'identification',
       'current',
       'onFinish',
       'children'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     const childrenAccessor = accessChildren(() => props.children);
     const steps: Accessor<StepProps[]> = createMemo(() => {
       const children = childrenAccessor() as JSX.Element[];
@@ -87,8 +91,7 @@ const Steps = makeComponent(
         </div>
       </StepsContext.Provider>
     );
-  }
-);
+  });
 
 export default Steps;
 

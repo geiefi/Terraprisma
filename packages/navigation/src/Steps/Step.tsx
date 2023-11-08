@@ -6,7 +6,11 @@ import {
   ComponentProps
 } from 'solid-js';
 
-import { extendPropsFrom, makeComponent, mergeClass } from '@terraprisma/utils';
+import {
+  extendPropsFrom,
+  componentBuilder,
+  mergeClass
+} from '@terraprisma/utils';
 import { Check } from '@terraprisma/icons';
 
 import { useSteps } from './Steps';
@@ -25,16 +29,16 @@ export const Step = (
   return props as unknown as JSX.Element;
 };
 
-export const InternalStep = makeComponent(
-  [
+export const InternalStep = componentBuilder<StepProps & { index: number }>()
+  .factory(
     extendPropsFrom<StepProps & { index: number }, 'div'>([
       'description',
       'index',
       'style',
       'children'
     ])
-  ],
-  (props, elProps) => {
+  )
+  .create((props, elProps) => {
     const [current] = useSteps()!;
 
     const [descriptionPRef, setDescriptionPRef] =
@@ -123,5 +127,4 @@ export const InternalStep = makeComponent(
         </span>
       </div>
     );
-  }
-);
+  });
