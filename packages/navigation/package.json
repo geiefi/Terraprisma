@@ -36,7 +36,6 @@
   "homepage": "https://github.com/gabrielmfern/terraprisma#readme",
   "author": "Gabriel Miranda",
   "devDependencies": {
-    "jsx-preserve": "workspace:*",
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
@@ -55,6 +54,7 @@
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jsdom": "^22.1.0",
+    "jsx-preserve": "workspace:*",
     "node-sass": "^9.0.0",
     "regenerator-runtime": "0.13.11",
     "rollup": "^3.28.1",
@@ -70,8 +70,8 @@
   },
   "dependencies": {
     "@terraprisma/core": "workspace:*",
-    "@terraprisma/icons": "workspace:*",
     "@terraprisma/general": "workspace:*",
+    "@terraprisma/icons": "workspace:*",
     "@terraprisma/utils": "workspace:*",
     "solid-js": "^1.8.3"
   }
