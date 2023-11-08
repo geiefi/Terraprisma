@@ -1,0 +1,17 @@
+{
+  "mode": "pre",
+  "tag": "testing",
+  "initialVersions": {
+    "jsx-preserve": "1.0.0",
+    "@terraprisma/core": "0.0.1",
+    "@terraprisma/data-display": "0.0.3",
+    "@terraprisma/form": "0.0.3",
+    "@terraprisma/general": "0.1.0",
+    "@terraprisma/icons": "0.0.1",
+    "@terraprisma/layout": "0.1.0",
+    "@terraprisma/navigation": "0.1.1",
+    "@terraprisma/transitions": "0.0.1",
+    "@terraprisma/utils": "0.1.0"
+  },
+  "changesets": []
+}
