@@ -71,19 +71,7 @@ const ListItemWithDetails = componentBuilder<ListItemWithDetailsProps>()
         </ListItem>
 
         <Collapse>
-          <Show when={isDetailsOpen()}>
-            <div
-              style={{
-                '--color-10': `var(--${color()}-bg-10)`
-              }}
-              class={mergeClass(
-                'w-full h-fit pl-0 m-0',
-                !props.disabled && props.active && 'bg-[var(--color-10)]'
-              )}
-            >
-              {props.details}
-            </div>
-          </Show>
+          <Show when={isDetailsOpen()}>{props.details}</Show>
         </Collapse>
       </>
     );

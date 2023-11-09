@@ -1,5 +1,11 @@
 # @terraprisma/core
 
+## 0.1.3
+
+### Patch Changes
+
+- fixed a bug with the height of list item elements
+
 ## 0.1.2
 
 ### Patch Changes

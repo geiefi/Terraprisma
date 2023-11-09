@@ -57,7 +57,7 @@ const ListItem = componentBuilder<ListItemProps>()
               aria-disabled={disabled()}
               {...elProps}
               class={mergeClass(
-                'w-full h-full px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
+                'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
                 disabled()
                   ? 'bg-[var(--muted-bg)] text-[var(--muted-fg)] opacity-30'
                   : [
@@ -82,7 +82,7 @@ const ListItem = componentBuilder<ListItemProps>()
         <Match when={!clickable()}>
           <li
             {...elProps}
-            class={mergeClass('w-full h-full px-2.5 py-1', elProps.class)}
+            class={mergeClass('w-full h-fit px-2.5 py-1', elProps.class)}
           >
             {props.children}
           </li>
