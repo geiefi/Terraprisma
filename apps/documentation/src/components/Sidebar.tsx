@@ -67,7 +67,7 @@ export function Sidebar() {
       </List>
 
       <List>
-        <h1 class="text-lg text-[var(--muted-fg)] uppercase">components</h1>
+        <div class="text-lg text-[var(--muted-fg)] uppercase">components</div>
 
         <CollapsedLinks
           basePath="/components/general"
@@ -129,6 +129,12 @@ export function Sidebar() {
         >
           @terraprisma/forms
         </CollapsedLinks>
+      </List>
+
+      <List>
+        <div class="text-lg text-[var(--muted-fg)] uppercase">concepts</div>
+
+        <Link to="/concepts/theming">theming</Link>
       </List>
     </Box>
   );
