@@ -1,5 +1,6 @@
 {
   "name": "documentation",
+  "private": true,
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
@@ -20,7 +21,6 @@
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.10",
     "solid-start-vercel": "^0.3.10",
-
     "@terraprisma/core": "workspace:*",
     "@terraprisma/data-display": "workspace:*",
     "@terraprisma/form": "workspace:*",
@@ -33,5 +33,6 @@
   },
   "engines": {
     "node": ">=20"
-  }
+  },
+  "version": null
 }

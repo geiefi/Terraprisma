@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from "solid-js";
+import { Suspense } from 'solid-js';
 import {
   useLocation,
   A,
@@ -11,16 +11,25 @@ import {
   Meta,
   Routes,
   Scripts,
-  Title,
-} from "solid-start";
-import "./root.css";
+  Title
+} from 'solid-start';
+
+import { VoidTheme } from '@terraprisma/core';
+import { Box, setupTerraprisma } from '@terraprisma/general';
+
+import './root.css';
+import { Container } from '@terraprisma/layout';
+import { Sidebar } from './components/Sidebar';
+const themes = [VoidTheme];
+declare module '@terraprisma/core' {
+  interface Register {
+    themes: typeof themes;
+  }
+}
+
+const [ThemeProvider, initialStyles] = setupTerraprisma(themes);
 
 export default function Root() {
-  const location = useLocation();
-  const active = (path: string) =>
-    path == location.pathname
-      ? "border-sky-600"
-      : "border-transparent hover:border-sky-600";
   return (
     <Html lang="en">
       <Head>
@@ -28,22 +37,24 @@ export default function Root() {
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Body>
+      <Body style={initialStyles}>
         <Suspense>
           <ErrorBoundary>
-            <nav class="bg-sky-800">
-              <ul class="container flex items-center p-3 text-gray-200">
-                <li class={`border-b-2 ${active("/")} mx-1.5 sm:mx-6`}>
-                  <A href="/">Home</A>
-                </li>
-                <li class={`border-b-2 ${active("/about")} mx-1.5 sm:mx-6`}>
-                  <A href="/about">About</A>
-                </li>
-              </ul>
-            </nav>
-            <Routes>
-              <FileRoutes />
-            </Routes>
+            <ThemeProvider>
+              <Container class="grid grid-cols-12 gap-10">
+                <div class="col-span-3">
+                  <Sidebar />
+                </div>
+
+                <main class="col-span-9">
+                  <Box>
+                    <Routes>
+                      <FileRoutes />
+                    </Routes>
+                  </Box>
+                </main>
+              </Container>
+            </ThemeProvider>
           </ErrorBoundary>
         </Suspense>
         <Scripts />
