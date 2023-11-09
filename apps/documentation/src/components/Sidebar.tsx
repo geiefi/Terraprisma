@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'solid-start';
 
 import { Box, List, ListItem, ListItemWithDetails } from '@terraprisma/general';
-import { JSX } from 'solid-js';
+import { createEffect, createSignal, JSX } from 'solid-js';
 
 function Link(props: { to: string; children: JSX.Element }) {
   const location = useLocation();
@@ -20,6 +20,40 @@ function Link(props: { to: string; children: JSX.Element }) {
   );
 }
 
+function CollapsedLinks(props: {
+  basePath: string;
+  links: JSX.Element;
+  children: JSX.Element;
+}) {
+  const location = useLocation();
+
+  const [showingLinks, setShowingLinks] = createSignal(
+    // eslint-disable-next-line
+    location.pathname.startsWith(props.basePath)
+  );
+
+  createEffect(() => {
+    if (location.pathname.startsWith(props.basePath)) {
+      setShowingLinks(true);
+    }
+  });
+
+  return (
+    <ListItemWithDetails
+      class="!h-fit"
+      showingDetails={showingLinks()}
+      onClick={() => setShowingLinks((v) => !v)}
+      details={
+        <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+          {props.links}
+        </List>
+      }
+    >
+      {props.children}
+    </ListItemWithDetails>
+  );
+}
+
 export function Sidebar() {
   return (
     <Box class="w-full h-full flex-grow flex flex-col gap-4">
@@ -35,10 +69,10 @@ export function Sidebar() {
       <List>
         <h1 class="text-lg text-[var(--muted-fg)] uppercase">components</h1>
 
-        <ListItemWithDetails
-          class="!h-fit"
-          details={
-            <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+        <CollapsedLinks
+          basePath="/components/general"
+          links={
+            <>
               <Link to="/components/general/buttons">buttons</Link>
               <Link to="/components/general/ripple">ripple</Link>
               <Link to="/components/general/theme-provider">
@@ -47,54 +81,54 @@ export function Sidebar() {
               <Link to="/components/general/list">list</Link>
               <Link to="/components/general/dropdown">dropdown</Link>
               <Link to="/components/general/dialog">dialog</Link>
-            </List>
+            </>
           }
         >
           @terraprisma/general
-        </ListItemWithDetails>
+        </CollapsedLinks>
 
-        <ListItemWithDetails
-          class="!h-fit"
-          details={
-            <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+        <CollapsedLinks
+          basePath="/components/data-display"
+          links={
+            <>
               <Link to="/components/data-display/table">table</Link>
               <Link to="/components/data-display/tooltip">tooltip</Link>
-            </List>
+            </>
           }
         >
           @terraprisma/data-display
-        </ListItemWithDetails>
+        </CollapsedLinks>
 
         <Link to="/components/icons">@terraprisma/icons</Link>
         <Link to="/components/transitions">@terraprisma/transitions</Link>
 
-        <ListItemWithDetails
-          class="!h-fit"
-          details={
-            <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+        <CollapsedLinks
+          basePath="/components/navigation"
+          links={
+            <>
               <Link to="/components/navigation/pagination">pagination</Link>
               <Link to="/components/navigation/steps">steps</Link>
               <Link to="/components/navigation/menu">menu</Link>
-            </List>
+            </>
           }
         >
           @terraprisma/navigation
-        </ListItemWithDetails>
-        <ListItemWithDetails
-          class="!h-fit"
-          details={
-            <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+        </CollapsedLinks>
+        <CollapsedLinks
+          basePath="/components/forms"
+          links={
+            <>
               <Link to="/components/forms/createForm">createForm()</Link>
               <Link to="/components/forms/toggler">toggler</Link>
               <Link to="/components/forms/checkbox">checkbox</Link>
               <Link to="/components/forms/radio-group">radio group</Link>
               <Link to="/components/forms/input">input</Link>
               <Link to="/components/forms/textarea">textarea</Link>
-            </List>
+            </>
           }
         >
           @terraprisma/forms
-        </ListItemWithDetails>
+        </CollapsedLinks>
       </List>
     </Box>
   );
