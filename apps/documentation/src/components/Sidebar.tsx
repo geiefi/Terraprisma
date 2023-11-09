@@ -39,14 +39,14 @@ export function Sidebar() {
           class="!h-fit"
           details={
             <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
-              <Link to="/components/general/dialog">dialog</Link>
-              <Link to="/components/general/dropdown">dropdown</Link>
+              <Link to="/components/general/buttons">buttons</Link>
               <Link to="/components/general/ripple">ripple</Link>
               <Link to="/components/general/theme-provider">
                 theme provider
               </Link>
               <Link to="/components/general/list">list</Link>
-              <Link to="/components/general/buttons">buttons</Link>
+              <Link to="/components/general/dropdown">dropdown</Link>
+              <Link to="/components/general/dialog">dialog</Link>
             </List>
           }
         >
