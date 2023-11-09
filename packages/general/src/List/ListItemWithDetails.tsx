@@ -1,4 +1,4 @@
-import { JSX, ParentProps, Show, createSignal } from 'solid-js';
+import { JSX, ParentProps, Show, createEffect, createSignal } from 'solid-js';
 
 import {
   extendPropsFrom,
@@ -25,7 +25,8 @@ export interface ListItemWithDetailsProps extends ParentProps {
 
   style?: JSX.CSSProperties;
 
-  onShowDetails?: () => any;
+  showingDetails?: boolean;
+
   details: JSX.Element;
 }
 
@@ -37,12 +38,17 @@ const ListItemWithDetails = componentBuilder<ListItemWithDetailsProps>()
       'color',
       'details',
       'active',
-      'onShowDetails',
+      'showingDetails',
       'disabled'
     ])
   )
   .create((props, color, elProps) => {
     const [isDetailsOpen, setDetailsOpen] = createSignal(false);
+    createEffect(() => {
+      if (typeof props.showingDetails !== 'undefined') {
+        setDetailsOpen(props.showingDetails);
+      }
+    });
 
     return (
       <>
@@ -53,8 +59,11 @@ const ListItemWithDetails = componentBuilder<ListItemWithDetailsProps>()
           active={props.active}
           style={props.style}
           clickable
-          onClick={mergeCallbacks(elProps.onClick, () =>
-            setDetailsOpen((isOpen) => !isOpen)
+          onClick={mergeCallbacks(
+            elProps.onClick,
+            () =>
+              typeof props.showingDetails === 'undefined' &&
+              setDetailsOpen((isOpen) => !isOpen)
           )}
           disabled={props.disabled}
         >

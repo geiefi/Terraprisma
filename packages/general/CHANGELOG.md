@@ -1,5 +1,11 @@
 # @terraprisma/core
 
+## 0.1.5
+
+### Patch Changes
+
+- remove <a> stylings and make ListItemWithDetails controllable
+
 ## 0.1.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @terraprisma/form
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/general@0.1.5
+  - @terraprisma/data-display@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes

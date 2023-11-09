@@ -18,17 +18,6 @@
   }
 }
 
-a {
-  text-decoration: none;
-  transition: color .3s;
-}
-a:link {
-  color: var(--accent-bg);
-}
-a:visited, a:link:hover:not(:visited) {
-  color: var(--muted-bg);
-  text-decoration: underline;
-}
 * {
   color: inherit;
   box-sizing: border-box;
