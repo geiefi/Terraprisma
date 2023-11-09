@@ -3,3 +3,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+article {
+  @apply text-base;
+}
+
+article h1 {
+  @apply text-2xl font-black py-3;
+}
+
+article h2 {
+  @apply text-xl font-black py-2;
+}
+
+article h3 {
+  @apply text-lg font-extrabold py-2;
+}
+
+article code {
+  @apply bg-[var(--deeper-bg)] rounded-sm px-1;
+}
+
+article ul {
+  @apply list-disc pl-4;
+}
+
+article p {
+  @apply py-1;
+}
