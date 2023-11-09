@@ -9,15 +9,15 @@ article {
 }
 
 article h1 {
-  @apply text-2xl font-black py-3;
+  @apply text-3xl font-black py-3;
 }
 
 article h2 {
-  @apply text-xl font-black py-2;
+  @apply text-2xl font-black py-2;
 }
 
 article h3 {
-  @apply text-lg font-extrabold py-2;
+  @apply text-xl font-extrabold py-2;
 }
 
 article code {

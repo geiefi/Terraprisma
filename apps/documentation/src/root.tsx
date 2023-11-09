@@ -40,16 +40,16 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <ThemeProvider>
-              <Container class="min-h-screen h-fit py-5 flex flex-col gap-6">
+              <Container class="h-screen min-h-fit py-5 flex flex-col gap-6">
                 <Logo />
 
-                <div class="flex flex-row justify-around flex-[2] w-full h-full gap-x-10">
-                  <div class="w-full h-full flex-grow max-w-[368px]">
+                <div class="flex justify-around items-stretch w-full h-full gap-x-10">
+                  <div class="w-full max-h-full max-w-[368px]">
                     <Sidebar />
                   </div>
 
-                  <main class="w-full h-full flex-grow max-w-[1024px]">
-                    <Box class="h-full">
+                  <main class="w-full h-full min-h-fit max-w-[1024px]">
+                    <Box class="h-fit">
                       <Routes>
                         <FileRoutes />
                       </Routes>
