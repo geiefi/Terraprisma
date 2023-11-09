@@ -1,5 +1,11 @@
 # @terraprisma/icons
 
+## 0.0.3
+
+### Patch Changes
+
+- use new componentBuilder pattern
+
 ## 0.0.2
 
 ### Patch Changes
