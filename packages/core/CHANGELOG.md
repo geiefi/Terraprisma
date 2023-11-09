@@ -1,5 +1,12 @@
 # @terraprisma/core
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/utils@0.1.2
+
 ## 0.0.2
 
 ### Patch Changes

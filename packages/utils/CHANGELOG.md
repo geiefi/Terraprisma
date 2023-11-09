@@ -1,5 +1,11 @@
 # @terraprisma/utils
 
+## 0.1.2
+
+### Patch Changes
+
+- fixes type issues on components that used composability
+
 ## 0.1.1
 
 ### Patch Changes

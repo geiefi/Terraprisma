@@ -13,6 +13,7 @@ import {
   componentBuilder,
   mergeClass
 } from '@terraprisma/utils';
+import { Col } from '@terraprisma/layout';
 
 export interface TableProps extends ParentProps {
   identification: string;
@@ -44,7 +45,13 @@ const Table = componentBuilder<TableProps>()
         </table>
       </TableContext.Provider>
     );
-  });
+  }) as {
+  (
+    props: TableProps & Omit<ComponentProps<'table'>, keyof TableProps>
+  ): JSX.Element;
+  Row: typeof Row;
+  Column: typeof Column;
+};
 
 export interface TableRowProps extends ParentProps {
   headRow?: boolean;

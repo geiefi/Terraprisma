@@ -263,7 +263,7 @@ const Select = setupFieldComponent().with(
     props: SelectProps<OwnerFormValue> &
       Omit<ComponentProps<'div'>, keyof SelectProps>
   ): JSX.Element;
-  Option(props: SelectOptionProps): JSX.Element;
+  Option: typeof Option;
 };
 
 Select.Option = Option;

@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "@terraprisma/icons",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "main": "index.jsx",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",

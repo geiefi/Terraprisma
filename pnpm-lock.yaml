@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  rollup-plugin-styles@4.0.0:
-    hash: grtfhexeqzppcuzw2pvecbq3tu
-    path: patches/rollup-plugin-styles@4.0.0.patch
-
 importers:
 
   .:
@@ -125,6 +120,9 @@ importers:
       '@terraprisma/utils':
         specifier: workspace:*
         version: link:../../packages/utils/lib
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       solid-js:
         specifier: ^1.8.5
         version: 1.8.5
@@ -135,6 +133,9 @@ importers:
         specifier: ^0.3.10
         version: 0.3.10(solid-start@0.3.10)(vite@4.5.0)
     devDependencies:
+      '@types/prismjs':
+        specifier: ^1.26.3
+        version: 1.26.3
       autoprefixer:
         specifier: ^10.4.15
         version: 10.4.16(postcss@8.4.31)
@@ -170,7 +171,7 @@ importers:
         version: 1.0.3
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
 
   packages/core:
     dependencies:
@@ -258,7 +259,7 @@ importers:
         version: 1.0.3
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -365,7 +366,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -487,7 +488,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -606,7 +607,7 @@ importers:
         version: 1.0.3
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -710,7 +711,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -805,7 +806,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -915,7 +916,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -1016,7 +1017,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -1111,7 +1112,7 @@ importers:
         version: 3.29.4
       rollup-plugin-styles:
         specifier: ^4.0.0
-        version: 4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4)
+        version: 4.0.0(rollup@3.29.4)
       sass:
         specifier: ^1.66.1
         version: 1.69.5
@@ -3837,6 +3838,10 @@ packages:
 
   /@types/parse-json@4.0.2:
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
+
+  /@types/prismjs@1.26.3:
+    resolution: {integrity: sha512-A0D0aTXvjlqJ5ZILMz3rNfDBOx9hHxLZYv2by47Sm/pqW35zzjusrZTryatjN/Rf8Us2gZrJD+KeHbUSTux1Cw==}
+    dev: true
 
   /@types/resolve@1.20.2:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -9034,6 +9039,11 @@ packages:
       react-is: 18.2.0
     dev: true
 
+  /prismjs@1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
+    dev: false
+
   /private@0.1.8:
     resolution: {integrity: sha512-VvivMrbvd2nKkiG38qjULzlc+4Vx4wm/whI9pQD35YrARNnhxeiRktSOhSukRLFNlzg6Br/cJPet5J/u19r/mg==}
     engines: {node: '>= 0.6'}
@@ -9310,7 +9320,7 @@ packages:
       magic-string: 0.14.0
       rollup-pluginutils: 1.5.2
 
-  /rollup-plugin-styles@4.0.0(patch_hash=grtfhexeqzppcuzw2pvecbq3tu)(rollup@3.29.4):
+  /rollup-plugin-styles@4.0.0(rollup@3.29.4):
     resolution: {integrity: sha512-A2K2sao84OsTmDxXG83JTCdXWrmgvQkkI38XDat46rdtpGMRm9tSYqeCdlwwGDJF4kKIafhV1mUidqu8MxUGig==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     peerDependencies:
@@ -9335,7 +9345,6 @@ packages:
       rollup: 3.29.4
       source-map-js: 1.0.2
       tslib: 2.6.2
-    patched: true
 
   /rollup-plugin-visualizer@5.9.2(rollup@3.29.4):
     resolution: {integrity: sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==}

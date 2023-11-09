@@ -74,10 +74,7 @@ export class ComponentBuilder<
       props: BaseProps,
       ...args: ArgsForAbstractedComponent
     ) => JSX.Element
-  ): {
-    (props: PropsForNextFactory): JSX.Element;
-    [compoundedComponentName: string]: any;
-  } {
+  ): (props: PropsForNextFactory) => JSX.Element {
     return (propsIntoFirstFactory: PropsForNextFactory) => {
       let [propsIntoNextFactory, accumulatedArgs] = [
         propsIntoFirstFactory as AnyProps,

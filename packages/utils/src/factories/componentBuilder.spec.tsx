@@ -25,18 +25,18 @@ type TestProps = {
   name: string;
 };
 
-test('compatibility with compound components', () => {
-  const Component = componentBuilder<TestProps>()
-    .factory(keyInProps<TestProps, 'factory_1'>('factory_1'))
-    .create((props, key) => {
-      return {
-        props,
-        key
-      } as unknown as JSX.Element;
-    });
-
-  Component.Item = () => <>My compounded component works!</>;
-});
+// test('compatibility with compound components', () => {
+//   const Component = componentBuilder<TestProps>()
+//     .factory(keyInProps<TestProps, 'factory_1'>('factory_1'))
+//     .create((props, key) => {
+//       return {
+//         props,
+//         key
+//       } as unknown as JSX.Element;
+//     });
+//
+//   Component.Item = () => <>My compounded component works!</>;
+// });
 
 test('with one factory', () => {
   const Component = componentBuilder<TestProps>()

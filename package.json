@@ -23,10 +23,5 @@
     "prettier": "^3.0.2",
     "turbo": "^1.10.16",
     "typescript": "^5.1.6"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "rollup-plugin-styles@4.0.0": "patches/rollup-plugin-styles@4.0.0.patch"
-    }
   }
 }

@@ -1,5 +1,19 @@
 # @terraprisma/form
 
+## 0.0.7
+
+### Patch Changes
+
+- fixes type issues on components that used composability
+- Updated dependencies
+  - @terraprisma/data-display@0.0.7
+  - @terraprisma/general@0.1.4
+  - @terraprisma/utils@0.1.2
+  - @terraprisma/core@0.0.3
+  - @terraprisma/icons@0.0.4
+  - @terraprisma/layout@0.1.2
+  - @terraprisma/transitions@0.0.3
+
 ## 0.0.6
 
 ### Patch Changes

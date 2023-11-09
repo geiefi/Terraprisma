@@ -1,5 +1,15 @@
 # @terraprisma/navigation
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @terraprisma/general@0.1.4
+  - @terraprisma/utils@0.1.2
+  - @terraprisma/core@0.0.3
+  - @terraprisma/icons@0.0.4
+
 ## 0.1.4
 
 ### Patch Changes

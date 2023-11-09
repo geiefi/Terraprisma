@@ -1,5 +1,17 @@
 # @terraprisma/core
 
+## 0.1.4
+
+### Patch Changes
+
+- fixes type issues on components that used composability
+- Updated dependencies
+  - @terraprisma/utils@0.1.2
+  - @terraprisma/core@0.0.3
+  - @terraprisma/icons@0.0.4
+  - @terraprisma/layout@0.1.2
+  - @terraprisma/transitions@0.0.3
+
 ## 0.1.3
 
 ### Patch Changes
