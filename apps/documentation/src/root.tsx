@@ -43,13 +43,13 @@ export default function Root() {
               <Container class="min-h-screen h-fit py-5 flex flex-col gap-6">
                 <Logo />
 
-                <div class="flex justify-around w-full h-full gap-x-10">
-                  <div class="w-full max-w-[368px]">
+                <div class="flex flex-row justify-around flex-[2] w-full h-full gap-x-10">
+                  <div class="w-full h-full flex-grow max-w-[368px]">
                     <Sidebar />
                   </div>
 
-                  <main class="max-w-[1024px]">
-                    <Box>
+                  <main class="w-full h-full flex-grow max-w-[1024px]">
+                    <Box class="h-full">
                       <Routes>
                         <FileRoutes />
                       </Routes>

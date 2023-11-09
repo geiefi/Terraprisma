@@ -8,6 +8,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@types/prismjs": "^1.26.3",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
     "solid-start-node": "^0.3.10",
@@ -18,9 +19,6 @@
   "dependencies": {
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
-    "solid-js": "^1.8.5",
-    "solid-start": "^0.3.10",
-    "solid-start-vercel": "^0.3.10",
     "@terraprisma/core": "workspace:*",
     "@terraprisma/data-display": "workspace:*",
     "@terraprisma/form": "workspace:*",
@@ -29,7 +27,11 @@
     "@terraprisma/layout": "workspace:*",
     "@terraprisma/navigation": "workspace:*",
     "@terraprisma/transitions": "workspace:*",
-    "@terraprisma/utils": "workspace:*"
+    "@terraprisma/utils": "workspace:*",
+    "prismjs": "^1.29.0",
+    "solid-js": "^1.8.5",
+    "solid-start": "^0.3.10",
+    "solid-start-vercel": "^0.3.10"
   },
   "engines": {
     "node": ">=20"
