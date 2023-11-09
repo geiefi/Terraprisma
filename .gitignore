@@ -1,5 +1,6 @@
 node_modules
 */.turbo
+**/*/.turbo/
 .turbo
 dist
 lib
