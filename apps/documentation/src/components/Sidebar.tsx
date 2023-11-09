@@ -1,17 +1,22 @@
-import { A, useLocation } from 'solid-start';
+import { useLocation, useNavigate } from 'solid-start';
 
-import { Box, List, ListItem } from '@terraprisma/general';
+import { Box, List, ListItem, ListItemWithDetails } from '@terraprisma/general';
 import { JSX } from 'solid-js';
 
-function ArticleLink(props: { link: string; children: JSX.Element }) {
+function Link(props: { to: string; children: JSX.Element }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
-    <A class="w-full h-max decoration-none" href={props.link}>
-      <ListItem clickable active={location.pathname === props.link}>
-        {props.children}
-      </ListItem>
-    </A>
+    <ListItem
+      role="link"
+      class="!h-fit"
+      onClick={() => navigate(props.to)}
+      clickable
+      active={location.pathname === props.to}
+    >
+      {props.children}
+    </ListItem>
   );
 }
 
@@ -23,25 +28,32 @@ export function Sidebar() {
           getting started
         </h1>
 
-        <ArticleLink link="/">overview</ArticleLink>
-        <ArticleLink link="/installation">installation</ArticleLink>
+        <Link to="/">overview</Link>
+        <Link to="/installation">installation</Link>
       </List>
 
       <List>
         <h1 class="text-lg text-[var(--muted-fg)] uppercase">components</h1>
 
-        <ArticleLink link="/components/button">button</ArticleLink>
-        <ArticleLink link="/components/table">button</ArticleLink>
-        <ArticleLink link="/components/button">button</ArticleLink>
+        <Link to="/components/button">button</Link>
+        <Link to="/components/table">button</Link>
+        <Link to="/components/button">button</Link>
 
-        <h2 class="text-base text-[var(--muted-fg)] uppercase">forms</h2>
-
-        <ArticleLink link="/components/form">form</ArticleLink>
-        <ArticleLink link="/components/toggler">toggler</ArticleLink>
-        <ArticleLink link="/components/checkbox">checkbox</ArticleLink>
-        <ArticleLink link="/components/radiogroup">radio group</ArticleLink>
-        <ArticleLink link="/components/input">input</ArticleLink>
-        <ArticleLink link="/components/textarea">textarea</ArticleLink>
+        <ListItemWithDetails
+          class="!h-fit"
+          details={
+            <List class="pl-3 bg-[var(--deeper-bg)] -mt-2">
+              <Link to="/components/createForm">createForm()</Link>
+              <Link to="/components/toggler">toggler</Link>
+              <Link to="/components/checkbox">checkbox</Link>
+              <Link to="/components/radiogroup">radio group</Link>
+              <Link to="/components/input">input</Link>
+              <Link to="/components/textarea">textarea</Link>
+            </List>
+          }
+        >
+          @terraprisma/forms
+        </ListItemWithDetails>
       </List>
     </Box>
   );

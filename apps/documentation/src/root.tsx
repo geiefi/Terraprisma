@@ -1,8 +1,6 @@
 // @refresh reload
 import { Suspense } from 'solid-js';
 import {
-  useLocation,
-  A,
   Body,
   ErrorBoundary,
   FileRoutes,
@@ -20,6 +18,7 @@ import { Box, setupTerraprisma } from '@terraprisma/general';
 import './root.css';
 import { Container } from '@terraprisma/layout';
 import { Sidebar } from './components/Sidebar';
+import { Logo } from './components/Logo';
 const themes = [VoidTheme];
 declare module '@terraprisma/core' {
   interface Register {
@@ -41,18 +40,22 @@ export default function Root() {
         <Suspense>
           <ErrorBoundary>
             <ThemeProvider>
-              <Container class="grid grid-cols-12 gap-10">
-                <div class="col-span-3">
-                  <Sidebar />
-                </div>
+              <Container class="h-screen py-5 flex flex-col gap-6">
+                <Logo />
 
-                <main class="col-span-9">
-                  <Box>
-                    <Routes>
-                      <FileRoutes />
-                    </Routes>
-                  </Box>
-                </main>
+                <div class="grid grid-cols-12 h-full gap-x-10">
+                  <div class="col-span-3">
+                    <Sidebar />
+                  </div>
+
+                  <main class="col-span-9">
+                    <Box>
+                      <Routes>
+                        <FileRoutes />
+                      </Routes>
+                    </Box>
+                  </main>
+                </div>
               </Container>
             </ThemeProvider>
           </ErrorBoundary>
