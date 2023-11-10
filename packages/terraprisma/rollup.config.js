@@ -42,7 +42,7 @@ export default defineConfig({
     }),
     typescript({
       declaration: true,
-      declarationDir: './lib/'
+      declarationDir: './dist/'
       // transformers: [
       //   (service) => ({
       //     before: [keysTransformer(service.getProgram())],
