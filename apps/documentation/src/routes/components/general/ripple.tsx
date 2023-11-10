@@ -1,6 +1,6 @@
 import { A } from 'solid-start';
 
-import { Box, Ripple } from '@terraprisma/general';
+import { Box, Ripple } from 'terraprisma';
 
 import { CodeExample } from '~/components/CodeExample';
 import { PropsTable } from '~/components/PropsTable';

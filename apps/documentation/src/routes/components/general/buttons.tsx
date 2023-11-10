@@ -5,13 +5,13 @@ import {
   Button,
   IconButton,
   OutlinedButton,
-  TextButton
-} from '@terraprisma/general';
+  TextButton,
+  Divisor,
+  Icons
+} from 'terraprisma';
 
 import { PropsTable } from '~/components/PropsTable';
 import { CodeExample } from '~/components/CodeExample';
-import { ContentCopy } from '@terraprisma/icons';
-import { Divisor } from '@terraprisma/layout';
 
 export default function Buttons() {
   return (
@@ -104,7 +104,7 @@ export default function Buttons() {
         source={`<IconButton><ContentCopy/></IconButton>`}
         preview={
           <IconButton>
-            <ContentCopy />
+            <Icons.ContentCopy />
           </IconButton>
         }
       />

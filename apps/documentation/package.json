@@ -19,19 +19,12 @@
   "dependencies": {
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
-    "@terraprisma/core": "^0.0.5",
-    "@terraprisma/data-display": "^0.0.10",
-    "@terraprisma/form": "^0.0.10",
-    "@terraprisma/general": "^0.1.7",
-    "@terraprisma/icons": "^0.0.6",
-    "@terraprisma/layout": "^0.1.4",
-    "@terraprisma/navigation": "^0.1.8",
-    "@terraprisma/transitions": "^0.0.5",
-    "@terraprisma/utils": "^0.1.4",
+    "material-symbols": "^0.14.0",
     "prismjs": "^1.29.0",
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.10",
-    "solid-start-vercel": "^0.3.10"
+    "solid-start-vercel": "^0.3.10",
+    "terraprisma": "^0.0.0-testing-20231110174448"
   },
   "engines": {
     "node": "18.x"

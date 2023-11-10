@@ -1,7 +1,7 @@
 import { For, JSX } from 'solid-js';
 import { useLocation } from 'solid-start';
 
-import { Table } from '@terraprisma/data-display';
+import { Table } from 'terraprisma';
 
 export function PropsTable(props: {
   schemaPerProperty: Record<

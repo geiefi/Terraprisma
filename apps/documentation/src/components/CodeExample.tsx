@@ -1,7 +1,8 @@
-import { Box } from '@terraprisma/general';
 import { createSignal, JSX, Match, Switch } from 'solid-js';
-import { CodeBlock } from './CodeBlock';
 
+import { Box } from 'terraprisma';
+
+import { CodeBlock } from './CodeBlock';
 import { Tab, Tabs } from './Tabs';
 
 export function CodeExample(props: { source: string; preview: JSX.Element }) {

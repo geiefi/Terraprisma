@@ -1,7 +1,6 @@
 import { ParentProps, createContext, useContext, Accessor } from 'solid-js';
 
-import { TextButton } from '@terraprisma/general';
-import { mergeClass } from '@terraprisma/utils';
+import { TextButton, mergeClass } from 'terraprisma';
 
 const TabsContext = createContext<{
   activateTab: (value: string) => void;

@@ -1,7 +1,5 @@
 import { A } from 'solid-start';
 
-import {} from '@terraprisma/icons';
-
 export default function NotFound() {
   return (
     <div class="py-10 grid place-items-center">

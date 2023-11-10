@@ -1,13 +1,10 @@
-import { IconButton } from '@terraprisma/general';
-import loadLanguages from 'prismjs/components/';
 import { createResource, createSignal, Suspense } from 'solid-js';
 import server$ from 'solid-start/server';
 
-import { Tooltip } from '@terraprisma/data-display';
-import { ContentCopy } from '@terraprisma/icons';
+import loadLanguages from 'prismjs/components/';
+import { IconButton, Tooltip, GrowFade, Icons } from 'terraprisma';
 
 import './CodeBlock.theme.css';
-import { GrowFade } from '@terraprisma/transitions';
 import { Portal } from 'solid-js/web';
 
 const getHighlightedHTML = server$(async (code: string, language: string) => {
@@ -43,7 +40,7 @@ export function CodeBlock(props: { code: string; language: string }) {
           size="small"
           squarish
         >
-          <ContentCopy />
+          <Icons.ContentCopy />
         </IconButton>
         <Portal>
           <GrowFade>
