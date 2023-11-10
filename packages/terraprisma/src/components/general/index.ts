@@ -1,5 +1,3 @@
-import './index.css';
-
 import { useTheme, setupTerraprisma } from './ThemeProvider';
 
 import Ripple from './Ripple';

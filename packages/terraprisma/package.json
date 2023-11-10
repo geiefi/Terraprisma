@@ -18,6 +18,12 @@
       "browser": "./dist/esm/index.js",
       "require": "./dist/cjs/index.js",
       "node": "./dist/cjs/index.js"
+    },
+    "./styles": {
+      "import": "./dist/esm/assets/styles-d6a21cfd.css",
+      "browser": "./dist/esm/assets/styles-d6a21cfd.css",
+      "require": "./dist/cjs/assets/styles-d6a21cfd.css",
+      "node": "./dist/cjs/assets/styles-d6a21cfd.css"
     }
   },
   "private": false,
@@ -33,7 +39,7 @@
     "flexible components"
   ],
   "scripts": {
-    "build": "rollup -c ./rollup.config.js && cp ../../README.md ./lib/README.md",
+    "build": "rollup -c ./rollup.config.js && cp package.json ./dist/package.json && cp ../../README.md ./dist/README.md",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest"
   },

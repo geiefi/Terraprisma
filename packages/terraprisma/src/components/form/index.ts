@@ -1,5 +1,3 @@
-import './index.css';
-
 import { createForm, useForm } from './Form';
 import Validators from './Validators';
 

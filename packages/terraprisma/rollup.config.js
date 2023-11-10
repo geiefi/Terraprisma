@@ -1,4 +1,3 @@
-import { defineConfig } from 'rollup';
 import styles from 'rollup-plugin-styles';
 import withSolid from 'rollup-preset-solid';
 import tailwindcss from 'tailwindcss';
@@ -7,22 +6,19 @@ import autoprefixer from 'autoprefixer';
 
 import tailwindConfig from './tailwind.config.js';
 
-import pkg from './package.json' assert { type: 'json' };
-
-const solidPresetConfig = withSolid({
-  input: './src/index.ts',
-  targets: ['esm', 'cjs'],
-  writePackageJson: true,
-  printInstructions: true
-});
-
-export default defineConfig({
-  ...solidPresetConfig,
+/** @type {import('rollup').RollupOptions} */
+const rollupOptions = {
   plugins: [
     styles({
       plugins: [tailwindcss(tailwindConfig), autoprefixer()],
       mode: ['extract', 'styles.css']
-    }),
-    ...solidPresetConfig.plugins
+    })
   ]
+};
+
+export default withSolid({
+  input: './src/index.tsx',
+  targets: ['esm', 'cjs'],
+  printInstructions: true,
+  ...rollupOptions
 });

@@ -17,4 +17,6 @@ export type Bgs<T extends Themes = Themes> = BgColors<T[number]>;
 export * from './themes';
 
 export * from './Theme';
-export * from './generateStyleVariablesFrom';
+export * from './utils/generateStyleVariablesFrom';
+
+export * from './components';
