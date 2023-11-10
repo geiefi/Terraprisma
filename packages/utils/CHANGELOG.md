@@ -1,5 +1,11 @@
 # @terraprisma/utils
 
+## 0.1.3
+
+### Patch Changes
+
+- add solid to peer deps and update it
+
 ## 0.1.2
 
 ### Patch Changes

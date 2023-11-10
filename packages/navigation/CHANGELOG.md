@@ -1,5 +1,16 @@
 # @terraprisma/navigation
 
+## 0.1.7
+
+### Patch Changes
+
+- add solid to peer deps and update it
+- Updated dependencies
+  - @terraprisma/core@0.0.4
+  - @terraprisma/general@0.1.6
+  - @terraprisma/icons@0.0.5
+  - @terraprisma/utils@0.1.3
+
 ## 0.1.6
 
 ### Patch Changes

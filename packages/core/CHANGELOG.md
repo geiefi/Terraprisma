@@ -1,5 +1,13 @@
 # @terraprisma/core
 
+## 0.0.4
+
+### Patch Changes
+
+- add solid to peer deps and update it
+- Updated dependencies
+  - @terraprisma/utils@0.1.3
+
 ## 0.0.3
 
 ### Patch Changes
