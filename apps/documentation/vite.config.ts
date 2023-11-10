@@ -11,15 +11,15 @@ export default defineConfig({
   ],
   ssr: {
     external: [
-      // '@terraprisma/core',
-      // '@terraprisma/data-display',
-      // '@terraprisma/form',
-      // '@terraprisma/general',
-      // '@terraprisma/icons',
-      // '@terraprisma/layout',
-      // '@terraprisma/navigation',
-      // '@terraprisma/transitions',
-      // '@terraprisma/utils'
+      '@terraprisma/core',
+      '@terraprisma/data-display',
+      '@terraprisma/form',
+      '@terraprisma/general',
+      '@terraprisma/icons',
+      '@terraprisma/layout',
+      '@terraprisma/navigation',
+      '@terraprisma/transitions',
+      '@terraprisma/utils'
     ]
   }
 });
