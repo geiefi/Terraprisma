@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0",
+  "version": "0.0.0-testing-20231110170127",
   "type": "module",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "flexible components"
   ],
   "scripts": {
-    "build": "rollup -c ./rollup.config.js && cp package.json ./dist/package.json && cp ../../README.md ./dist/README.md",
+    "build": "rollup -c ./rollup.config.js",
     "lint:types": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest"
@@ -47,9 +47,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gabrielmfern/terraprisma.git"
-  },
-  "publishConfig": {
-    "directory": "lib"
   },
   "bugs": {
     "url": "https://github.com/gabrielmfern/terraprisma/issues"
