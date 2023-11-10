@@ -96,11 +96,8 @@ importers:
       '@solid-primitives/refs':
         specifier: ^1.0.5
         version: 1.0.5(solid-js@1.8.5)
-      material-symbols:
-        specifier: ^0.14.0
-        version: 0.14.0
       solid-js:
-        specifier: ^1.8.3
+        specifier: ^1.8.5
         version: 1.8.5
       solid-transition-group:
         specifier: ^0.2.3
@@ -112,6 +109,9 @@ importers:
       '@rollup/plugin-alias':
         specifier: ^5.0.1
         version: 5.0.1(rollup@3.29.4)
+      '@rollup/plugin-typescript':
+        specifier: ^11.1.5
+        version: 11.1.5(rollup@3.29.4)(typescript@5.2.2)
       '@solidjs/testing-library':
         specifier: ^0.7.1
         version: 0.7.1(solid-js@1.8.5)
@@ -121,12 +121,21 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.3
         version: 1.4.6
+      acorn-jsx:
+        specifier: ^5.3.2
+        version: 5.3.2(acorn@8.11.2)
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.31)
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
+      magic-string:
+        specifier: ^0.30.5
+        version: 0.30.5
       node-sass:
         specifier: ^9.0.0
         version: 9.0.0
@@ -163,7 +172,6 @@ importers:
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)(sass@1.69.5)
-    publishDirectory: lib
 
 packages:
 
@@ -2141,6 +2149,25 @@ packages:
     dependencies:
       rollup: 3.29.4
       terser: 5.24.0
+    dev: true
+
+  /@rollup/plugin-typescript@11.1.5(rollup@3.29.4)(typescript@5.2.2):
+    resolution: {integrity: sha512-rnMHrGBB0IUEv69Q8/JGRD/n4/n6b3nfpufUu26axhUcboUzv/twfZU8fIBbTOphRAe0v8EyxzeDpKXqGHfyDA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.14.0||^3.0.0||^4.0.0
+      tslib: '*'
+      typescript: '>=3.7.0'
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+      tslib:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.5(rollup@3.29.4)
+      resolve: 1.22.8
+      rollup: 3.29.4
+      typescript: 5.2.2
     dev: true
 
   /@rollup/pluginutils@4.2.1:
@@ -4658,6 +4685,12 @@ packages:
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
+  /estree-walker@3.0.3:
+    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
+    dependencies:
+      '@types/estree': 1.0.5
+    dev: true
+
   /esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
@@ -5871,10 +5904,6 @@ packages:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
     dev: true
-
-  /material-symbols@0.14.0:
-    resolution: {integrity: sha512-b7jNKNvsUn5fjJFVPb0iKuORkmIzRZfAOA2p6p1+YufKYy3NE0u3aZ2w5rQ7/2IFnm66o8W51vfuEK2wVmMJ/A==}
-    dev: false
 
   /mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}

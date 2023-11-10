@@ -29,7 +29,7 @@ import {
 
 import { Accents, addAccentColoring } from '~';
 import { Stack } from '@terraprisma/layout';
-import type { StackProps } from '@terraprisma/layout/Stack/Stack';
+import type { StackProps } from '@terraprisma/layout/Stack';
 
 import { FormValue, FormFieldValue } from '../types';
 

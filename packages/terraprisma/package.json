@@ -8,24 +8,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "solid": "./dist/source/index.jsx",
-      "import": "./dist/esm/index.js",
-      "browser": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "node": "./dist/cjs/index.js"
-    },
-    "./styles": {
-      "import": "./dist/esm/assets/styles-d6a21cfd.css",
-      "browser": "./dist/esm/assets/styles-d6a21cfd.css",
-      "require": "./dist/cjs/assets/styles-d6a21cfd.css",
-      "node": "./dist/cjs/assets/styles-d6a21cfd.css"
-    }
-  },
+  "main": "dist/index.jsx",
   "private": false,
   "keywords": [
     "ui",
@@ -55,11 +38,15 @@
   "author": "Gabriel Miranda",
   "devDependencies": {
     "@rollup/plugin-alias": "^5.0.1",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@solidjs/testing-library": "^0.7.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@types/tinycolor2": "^1.4.3",
+    "acorn-jsx": "^5.3.2",
     "autoprefixer": "^10.4.16",
+    "estree-walker": "^3.0.3",
     "jsdom": "^22.1.0",
+    "magic-string": "^0.30.5",
     "node-sass": "^9.0.0",
     "regenerator-runtime": "0.13.11",
     "rollup": "^3.28.1",
@@ -73,11 +60,13 @@
     "vite-plugin-solid": "^2.7.2",
     "vitest": "^0.34.6"
   },
+  "peerDependencies": {
+    "solid-js": "^1.8.5"
+  },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",
     "@solid-primitives/refs": "^1.0.5",
-    "material-symbols": "^0.14.0",
-    "solid-js": "^1.8.3",
+    "solid-js": "^1.8.5",
     "solid-transition-group": "^0.2.3",
     "tinycolor2": "^1.6.0"
   }

@@ -3,7 +3,7 @@
 
 import { JSX, splitProps } from 'solid-js';
 
-import type { AnyProps } from '../types';
+import type { AnyProps } from '~';
 import { componentBuilder, type ComponentFactory } from './componentBuilder';
 
 function keyInProps<BaseProps extends AnyProps, Key extends string>(key: Key) {
