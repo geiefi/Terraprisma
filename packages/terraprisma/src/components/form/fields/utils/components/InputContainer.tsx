@@ -6,12 +6,12 @@ import {
   componentBuilder,
   extendPropsFrom,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 import Label from './Label';
 
 // import './InputContainer.scss';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 import { mergeRefs } from '@solid-primitives/refs';
 
 export interface InputContainerProps extends ParentProps {

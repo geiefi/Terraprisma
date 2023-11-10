@@ -10,17 +10,17 @@ import {
   onCleanup,
   Show
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
+import { isServer, Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
 import {
   mergeClass,
-  canUseDocument,
   componentBuilder,
   extendPropsFrom,
-  getAbsoluteBoundingRect
-} from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+  getAbsoluteBoundingRect,
+  Accents,
+  addAccentColoring
+} from '~';
 
 import './Ripple.css';
 
@@ -143,22 +143,20 @@ const Ripple = componentBuilder<RippleProps>()
     );
 
     const rippledElement = createMemo<HTMLElement | undefined>(() => {
-      if (canUseDocument()) {
-        const firstElementChild = childrenList().find(
-          (c) => c instanceof HTMLElement
+      const firstElementChild = childrenList().find(
+        (c) => c instanceof HTMLElement
+      );
+
+      if (typeof firstElementChild !== 'undefined') {
+        const rippledElement = firstElementChild as HTMLElement;
+
+        rippledElement.addEventListener('click', addNewRipple);
+
+        return rippledElement;
+      } else {
+        console.warn(
+          'At least one of the children of Ripple should be an actual HTML element so that the ripple can be positioned based on it!'
         );
-
-        if (typeof firstElementChild !== 'undefined') {
-          const rippledElement = firstElementChild as HTMLElement;
-
-          rippledElement.addEventListener('click', addNewRipple);
-
-          return rippledElement;
-        } else {
-          console.warn(
-            'At least one of the children of Ripple should be an actual HTML element so that the ripple can be positioned based on it!'
-          );
-        }
       }
     });
 

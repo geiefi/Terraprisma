@@ -3,7 +3,7 @@ import { Accessor, Signal, createContext, useContext } from 'solid-js';
 import { FieldInternalValidate } from './setupValidateFunction';
 
 import type { FormFieldValue, FormValue } from '../../../types';
-import type { EmptyObj, Store } from '@terraprisma/utils';
+import type { EmptyObj, Store } from '~';
 import type { FieldName, FieldProps } from '../types';
 
 export interface FieldProviderValue<

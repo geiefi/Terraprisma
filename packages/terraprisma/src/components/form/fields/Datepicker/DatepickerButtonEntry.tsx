@@ -2,7 +2,7 @@ import { Switch, Match, ParentProps, ComponentProps } from 'solid-js';
 
 import DatepickerEntry from './DatepickerEntry';
 import { IconButton, TextButton } from '@terraprisma/general';
-import { mergeClass } from '@terraprisma/utils';
+import { mergeClass } from '~';
 
 interface DatepickerButtonEntryProps extends ParentProps {
   variant: 'squarish' | 'text';

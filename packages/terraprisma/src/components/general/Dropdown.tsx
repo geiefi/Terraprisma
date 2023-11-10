@@ -5,7 +5,7 @@ import {
   componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
-} from '@terraprisma/utils';
+} from '~';
 
 export interface DropdownProps extends ParentProps {
   /**

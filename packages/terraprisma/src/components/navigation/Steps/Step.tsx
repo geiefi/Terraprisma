@@ -10,7 +10,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { Check } from '@terraprisma/icons';
 
 import { useSteps } from './Steps';

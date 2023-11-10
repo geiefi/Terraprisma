@@ -1,6 +1,13 @@
 {
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": "./src",
+    "noEmit": true,
+    "paths": {
+      "~": ["."],
+      "@terraprisma/*": ["components/*"]
+    }
   },
   "extends": "../../tsconfig.json",
   "include": ["src"]

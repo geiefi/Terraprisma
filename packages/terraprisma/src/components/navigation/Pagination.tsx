@@ -4,10 +4,10 @@ import {
   componentBuilder,
   extendPropsFrom,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { IconButton } from '@terraprisma/general';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 
 export interface PaginationProps {
   current: number;

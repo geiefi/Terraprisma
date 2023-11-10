@@ -1,4 +1,4 @@
-import { Color } from './Theme';
+import { Color } from '../Theme';
 import { generateStyleVariablesFrom } from './generateStyleVariablesFrom';
 
 describe('generateStyleVariablesFrom()', () => {
@@ -8,7 +8,10 @@ describe('generateStyleVariablesFrom()', () => {
     };
 
     expect(generateStyleVariablesFrom(obj)).toEqual({
-      '--my-color': 'rgba(0, 0, 0, 1)'
+      '--my-color': 'rgba(0, 0, 0, 1)',
+      '--my-color-10': 'rgba(0, 0, 0, 0.1)',
+      '--my-color-20': 'rgba(0, 0, 0, 0.2)',
+      '--my-color-30': 'rgba(0, 0, 0, 0.3)'
     });
   });
 
@@ -20,7 +23,10 @@ describe('generateStyleVariablesFrom()', () => {
     };
 
     expect(generateStyleVariablesFrom(obj)).toEqual({
-      '--my-obj-super-color': 'rgba(0, 0, 0, 1)'
+      '--my-obj-super-color': 'rgba(0, 0, 0, 1)',
+      '--my-obj-super-color-10': 'rgba(0, 0, 0, 0.1)',
+      '--my-obj-super-color-20': 'rgba(0, 0, 0, 0.2)',
+      '--my-obj-super-color-30': 'rgba(0, 0, 0, 0.3)'
     });
   });
 
@@ -34,7 +40,10 @@ describe('generateStyleVariablesFrom()', () => {
     };
 
     expect(generateStyleVariablesFrom(obj)).toEqual({
-      '--my-second-obj-color': 'rgba(0, 0, 0, 1)'
+      '--my-second-obj-color': 'rgba(0, 0, 0, 1)',
+      '--my-second-obj-color-10': 'rgba(0, 0, 0, 0.1)',
+      '--my-second-obj-color-20': 'rgba(0, 0, 0, 0.2)',
+      '--my-second-obj-color-30': 'rgba(0, 0, 0, 0.3)'
     });
   });
 });

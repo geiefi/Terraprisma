@@ -7,17 +7,16 @@ import {
   onCleanup,
   Show
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
+import { Portal, isServer } from 'solid-js/web';
 
 import {
-  canUseDocument,
   componentBuilder,
   extendPropsFrom,
   mergeCallbacks,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { createTooltip } from '@terraprisma/data-display';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 import { GrowFade } from '@terraprisma/transitions';
 
 import {
@@ -132,7 +131,7 @@ const Slider = setupFieldComponent<number>().with(
         tempSlider.addEventListener('mousedown', handleMouseDown, {
           passive: true
         });
-        if (canUseDocument()) {
+        if (!isServer) {
           document.addEventListener('mousemove', handleMouseMove, {
             passive: true
           });
@@ -141,7 +140,7 @@ const Slider = setupFieldComponent<number>().with(
 
         onCleanup(() => {
           tempSlider.removeEventListener('mousedown', handleMouseDown);
-          if (canUseDocument()) {
+          if (!isServer) {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
           }

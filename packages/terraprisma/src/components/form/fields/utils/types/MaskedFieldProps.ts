@@ -1,6 +1,6 @@
 import { InputMask } from '@solid-primitives/input-mask';
 
-import { EmptyObj } from '@terraprisma/utils';
+import { EmptyObj } from '~';
 
 import { FieldName, FieldPropKeys, FieldProps } from './FieldProps';
 import { FormValue, FormFieldValue } from '../../../types';

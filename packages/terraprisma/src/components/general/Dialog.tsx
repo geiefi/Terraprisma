@@ -13,7 +13,7 @@ import {
   mergeCallbacks,
   componentBuilder,
   extendPropsFrom
-} from '@terraprisma/utils';
+} from '~';
 import { Fade } from '@terraprisma/transitions';
 import { Divisor } from '@terraprisma/layout';
 

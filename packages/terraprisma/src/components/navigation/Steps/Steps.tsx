@@ -14,7 +14,7 @@ import {
   mergeClass,
   componentBuilder,
   extendPropsFrom
-} from '@terraprisma/utils';
+} from '~';
 
 import { InternalStep, StepProps } from './Step';
 

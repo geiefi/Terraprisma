@@ -1,9 +1,6 @@
 import { ParentProps } from 'solid-js';
-import {
-  mergeClass,
-  extendPropsFrom,
-  componentBuilder
-} from '@terraprisma/utils';
+
+import { mergeClass, extendPropsFrom, componentBuilder } from '~';
 
 export interface BoxProps extends ParentProps {}
 

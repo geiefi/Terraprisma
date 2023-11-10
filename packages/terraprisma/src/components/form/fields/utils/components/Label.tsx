@@ -4,7 +4,7 @@ import {
   mergeClass,
   componentBuilder,
   extendPropsFrom
-} from '@terraprisma/utils';
+} from '~';
 
 export interface LabelProps extends ParentProps {
   for: string;

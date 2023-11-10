@@ -2,7 +2,7 @@ import {
   mergeClass,
   componentBuilder,
   extendPropsFrom
-} from '@terraprisma/utils';
+} from '~';
 
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';

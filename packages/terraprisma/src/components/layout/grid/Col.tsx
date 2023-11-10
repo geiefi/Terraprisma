@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { extendPropsFrom, componentBuilder } from '@terraprisma/utils';
+import { extendPropsFrom, componentBuilder } from '~';
 
 export interface ColProps extends ParentProps {
   size:

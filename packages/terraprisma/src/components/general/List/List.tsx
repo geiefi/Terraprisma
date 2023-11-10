@@ -1,10 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '@terraprisma/utils';
+import { extendPropsFrom, componentBuilder, mergeClass } from '~';
 
 export interface ListProps extends ParentProps {}
 

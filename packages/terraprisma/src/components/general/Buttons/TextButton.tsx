@@ -2,7 +2,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 import Button from './Button';
 import { createEffect } from 'solid-js';

@@ -1,22 +1,15 @@
 import { deeplyTrack } from './deeplyTrack';
-import { splitTupleAccessor } from './splitTupleAccessor';
 import { mergeCallbacks } from './mergeCallbacks';
+import { generateStyleVariablesFrom } from './generateStyleVariablesFrom';
 import { mergeClass } from './mergeClass';
-import { canUseDocument } from './canUseDocument';
 import { getAbsoluteBoundingRect } from './getAbsoluteBoundingRect';
 
 export * from './factories';
-export * from './types';
-
-import type { Store } from './types';
 
 export {
   deeplyTrack,
-  splitTupleAccessor,
-  mergeClass,
+  generateStyleVariablesFrom,
+  getAbsoluteBoundingRect,
   mergeCallbacks,
-  canUseDocument,
-  getAbsoluteBoundingRect
+  mergeClass
 };
-
-export type { Store };

@@ -3,7 +3,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 export interface RowProps extends ParentProps {
   gap?: string;

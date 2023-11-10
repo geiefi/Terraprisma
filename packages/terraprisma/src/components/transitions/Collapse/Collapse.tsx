@@ -1,7 +1,6 @@
 import { type Component, type ParentProps } from 'solid-js';
-import { Transition, TransitionProps } from 'solid-transition-group';
 
-import { canUseDocument } from '@terraprisma/utils';
+import { Transition, TransitionProps } from 'solid-transition-group';
 
 import './Collapse.scss';
 
@@ -19,7 +18,7 @@ const Collapse: Component<CollapseProps> = (props) => (
     name="collapse"
     {...props}
     onEnter={(el: Element, done) => {
-      if (canUseDocument() && el instanceof HTMLElement) {
+      if (el instanceof HTMLElement) {
         el.style.setProperty('--expected-height', el.scrollHeight + 'px');
       } else {
         console.warn(

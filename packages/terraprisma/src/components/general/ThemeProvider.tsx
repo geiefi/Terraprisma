@@ -8,14 +8,9 @@ import {
   Setter,
   useContext
 } from 'solid-js';
+import { isServer } from 'solid-js/web';
 
-import { canUseDocument } from '@terraprisma/utils';
-import {
-  Accent,
-  generateStyleVariablesFrom,
-  Theme,
-  Themes
-} from '@terraprisma/core';
+import { Themes, Theme, Accent, generateStyleVariablesFrom } from '~';
 
 export type ThemesProviderValue = {
   themes: Themes;
@@ -75,7 +70,7 @@ export function setupTerraprisma(
       );
 
       createEffect(() => {
-        if (canUseDocument()) {
+        if (!isServer) {
           const styles = currentGlobalStyles();
           Object.keys(styles).forEach((key) =>
             document.body.style.setProperty(key, styles[key])

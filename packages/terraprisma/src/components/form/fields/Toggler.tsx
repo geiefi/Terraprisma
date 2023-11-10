@@ -4,8 +4,8 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+} from '~';
+import { Accents, addAccentColoring } from '~';
 
 import {
   FieldInternalWrapper,

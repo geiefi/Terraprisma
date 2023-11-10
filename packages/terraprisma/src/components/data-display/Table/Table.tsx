@@ -12,7 +12,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { Col } from '@terraprisma/layout';
 
 export interface TableProps extends ParentProps {

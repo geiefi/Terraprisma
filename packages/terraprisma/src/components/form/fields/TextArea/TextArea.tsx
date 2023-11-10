@@ -3,13 +3,13 @@ import { JSX, createEffect, createMemo } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 import {
   extendPropsFrom,
   componentBuilder,
   mergeCallbacks,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 import {
   InputContainer,

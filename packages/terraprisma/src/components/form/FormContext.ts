@@ -1,13 +1,7 @@
 import { createContext, Setter } from 'solid-js';
 import { produce } from 'solid-js/store';
 
-import {
-  DeepGet,
-  deeplyTrack,
-  EmptyObj,
-  LeavesOfObject,
-  Store
-} from '@terraprisma/utils';
+import { DeepGet, deeplyTrack, EmptyObj, LeavesOfObject, Store } from '~';
 
 import { AgnosticValidator, FieldValidator, FormValue } from './types';
 

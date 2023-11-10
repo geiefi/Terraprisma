@@ -15,10 +15,10 @@ import {
   extendPropsFrom,
   mergeCallbacks,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 import { Check } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 
 import { FormValue } from '../types';
 

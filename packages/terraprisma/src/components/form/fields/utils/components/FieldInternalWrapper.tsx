@@ -1,6 +1,6 @@
 import { Component, ComponentProps, Show } from 'solid-js';
 
-import { mergeClass } from '@terraprisma/utils';
+import { mergeClass } from '~';
 
 import { useField } from '../fields/FieldContext';
 

@@ -14,7 +14,7 @@ import {
   componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
-} from '@terraprisma/utils';
+} from '~';
 
 import './Tooltip.scss';
 

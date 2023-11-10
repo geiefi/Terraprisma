@@ -1,6 +1,6 @@
 import { JSX } from 'solid-js/jsx-runtime';
 
-import { DeepGet, EmptyObj, LeavesOfObject, Store } from '@terraprisma/utils';
+import { DeepGet, EmptyObj, LeavesOfObject, Store } from '~';
 
 import { FormFieldValue, FieldValidator, FormValue } from '../../../types';
 

@@ -1,9 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import {
-  componentBuilder,
-  extendPropsFrom,
-  mergeClass
-} from '@terraprisma/utils';
+import { componentBuilder, extendPropsFrom, mergeClass } from '~';
 
 export interface IconProps extends ParentProps {
   /**

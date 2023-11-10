@@ -4,7 +4,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
 interface DatepickerEntryProps extends ParentProps {
   muted?: boolean;

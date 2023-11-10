@@ -15,12 +15,12 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { Dropdown, IconButton, OutlinedButton } from '@terraprisma/general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '@terraprisma/icons';
 import { Row } from '@terraprisma/layout';
 import { GrowFade } from '@terraprisma/transitions';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 
 import {
   setupFieldComponent,

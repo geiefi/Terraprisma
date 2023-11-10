@@ -25,9 +25,9 @@ import {
   componentBuilder,
   mergeCallbacks,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 import { Stack } from '@terraprisma/layout';
 import type { StackProps } from '@terraprisma/layout/Stack/Stack';
 

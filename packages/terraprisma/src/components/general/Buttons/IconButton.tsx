@@ -2,7 +2,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '@terraprisma/utils';
+} from '~';
 import { ParentProps } from 'solid-js';
 
 import TextButton from './TextButton';

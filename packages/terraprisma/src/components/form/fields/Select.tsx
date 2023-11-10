@@ -19,11 +19,11 @@ import {
   mergeCallbacks,
   extendPropsFrom,
   componentBuilder
-} from '@terraprisma/utils';
+} from '~';
 import { Dropdown, List, ListItem } from '@terraprisma/general';
 import { GrowFade } from '@terraprisma/transitions';
 import { Check, KeyboardArrowDown } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '@terraprisma/core';
+import { Accents, addAccentColoring } from '~';
 
 import {
   InputContainer,

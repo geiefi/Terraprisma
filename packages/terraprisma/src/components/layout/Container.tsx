@@ -4,7 +4,7 @@ import {
   mergeClass,
   componentBuilder,
   extendPropsFrom
-} from '@terraprisma/utils';
+} from '~';
 
 export type LayoutWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
