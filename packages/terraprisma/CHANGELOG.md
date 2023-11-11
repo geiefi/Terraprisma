@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231111140606
+
+### Patch Changes
+
+- remove baseDir and the aliases it provided from all imports
+
 ## 0.0.0-testing-20231111131128
 
 ### Patch Changes
