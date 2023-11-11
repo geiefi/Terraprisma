@@ -3,7 +3,7 @@ import { createEffect, Setter } from 'solid-js';
 import { FormValue, FormFieldValue } from '../../../types';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldName, FieldProps } from '../types/FieldProps';
+import type { FieldName, FieldProps } from 'components/form/types';
 
 export type FieldInternalValidate<
   ValueType extends FormFieldValue = FormFieldValue

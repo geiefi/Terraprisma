@@ -1,8 +1,7 @@
+import type { FieldValidator, FormFieldValue, FormValue } from '.';
 import { JSX } from 'solid-js/jsx-runtime';
 
-import { DeepGet, EmptyObj, LeavesOfObject, Store } from '~';
-
-import { FormFieldValue, FieldValidator, FormValue } from '../../../types';
+import type { DeepGet, EmptyObj, LeavesOfObject, Store } from 'types';
 
 export const FieldPropKeys = [
   'name',

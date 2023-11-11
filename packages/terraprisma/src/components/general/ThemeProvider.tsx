@@ -10,7 +10,7 @@ import {
 } from 'solid-js';
 import { isServer } from 'solid-js/web';
 
-import { Themes, Theme, Accent, generateStyleVariablesFrom } from '~';
+import { Themes, Theme, Accent, generateStyleVariablesFrom } from 'index';
 
 export type ThemesProviderValue = {
   themes: Themes;

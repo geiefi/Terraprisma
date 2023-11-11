@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { extendPropsFrom, componentBuilder, mergeClass } from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
 
 export interface ListProps extends ParentProps {}
 

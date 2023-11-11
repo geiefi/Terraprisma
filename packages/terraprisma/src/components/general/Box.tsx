@@ -1,6 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import { mergeClass, extendPropsFrom, componentBuilder } from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
 
 export interface BoxProps extends ParentProps {}
 

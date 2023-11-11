@@ -14,7 +14,7 @@ import {
   componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect
-} from '~';
+} from '../../../utils';
 
 import './Tooltip.scss';
 

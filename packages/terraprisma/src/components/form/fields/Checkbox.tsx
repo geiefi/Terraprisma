@@ -4,23 +4,20 @@ import {
   Label,
   FieldInternalWrapper,
   useField,
-  setupFieldComponent,
-  FieldName,
-  FieldPropKeys,
-  FieldProps
+  setupFieldComponent
 } from './utils';
 
 import {
   componentBuilder,
   extendPropsFrom,
   mergeCallbacks,
-  mergeClass
-} from '~';
+  mergeClass,
+  Icons,
+  Accents,
+  addAccentColoring
+} from '../../..';
 
-import { Check } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '~';
-
-import { FormValue } from '../types';
+import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../types';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -153,7 +150,7 @@ const Checkbox = setupFieldComponent<boolean>().with(
               />
 
               <Show when={value() === true}>
-                <Check
+                <Icons.Check
                   style={{ scale: '1 !important' }}
                   class={mergeClass(
                     'absolute left-1/2 top-1/2 bg-transparent font-bold m-0 pointer-events-none select-none -translate-x-1/2 -translate-y-1/2',

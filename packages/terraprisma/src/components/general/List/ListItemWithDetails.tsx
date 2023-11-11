@@ -1,16 +1,15 @@
 import { JSX, ParentProps, Show, createEffect, createSignal } from 'solid-js';
 
+import ListItem from './ListItem';
 import {
-  extendPropsFrom,
+  addAccentColoring,
   componentBuilder,
+  extendPropsFrom,
   mergeCallbacks,
   mergeClass
-} from '~';
-import { Accents, addAccentColoring } from '~';
-import { Collapse } from '@terraprisma/transitions';
-import { KeyboardArrowDown } from '@terraprisma/icons';
-
-import ListItem from './ListItem';
+} from 'utils';
+import { Accents, Collapse } from 'index';
+import { KeyboardArrowDown } from 'components/icons';
 
 export interface ListItemWithDetailsProps extends ParentProps {
   /**

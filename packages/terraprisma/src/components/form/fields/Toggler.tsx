@@ -3,21 +3,19 @@ import { JSX, Show, createMemo } from 'solid-js';
 import {
   extendPropsFrom,
   componentBuilder,
-  mergeClass
-} from '~';
-import { Accents, addAccentColoring } from '~';
+  mergeClass,
+  addAccentColoring
+} from 'utils';
 
 import {
   FieldInternalWrapper,
   Label,
-  FieldName,
-  FieldPropKeys,
-  FieldProps,
   useField,
   setupFieldComponent
 } from './utils';
 
-import { FormValue } from '../types';
+import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../types';
+import { Accents } from 'index';
 
 export interface TogglerProps<
   OwnerFormValue extends FormValue = FormValue,

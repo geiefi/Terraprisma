@@ -11,7 +11,7 @@ import {
 import { FormProviderValue } from '../../../FormContext';
 import { FormValue, FormFieldValue } from '../../../types';
 
-import { FieldName, FieldProps } from '../types';
+import { FieldName, FieldProps } from 'components/form/types';
 
 export function setupFieldsValueSignal<
   Name extends FieldName<OwnerFormValue, BaseValueType>,

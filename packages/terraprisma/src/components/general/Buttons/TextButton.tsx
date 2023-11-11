@@ -1,11 +1,6 @@
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
 
 import Button from './Button';
-import { createEffect } from 'solid-js';
 
 export interface TextButtonProps {
   /**

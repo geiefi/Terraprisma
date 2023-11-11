@@ -4,10 +4,6 @@
     "rootDir": "src",
     "baseUrl": "./src",
     "noEmit": true,
-    "paths": {
-      "~": ["."],
-      "@terraprisma/*": ["components/*"]
-    },
     "types": ["vitest/globals"]
   },
   "extends": "../../tsconfig.json",

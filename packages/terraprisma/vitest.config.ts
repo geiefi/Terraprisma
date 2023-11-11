@@ -16,12 +16,6 @@ export default defineConfig({
   build: {
     target: 'esnext'
   },
-  resolve: {
-    alias: {
-      '~': path.join(dirname, 'src'),
-      '@terraprisma': path.join(dirname, 'src/components')
-    }
-  },
   test: {
     environment: 'jsdom',
     globals: true,

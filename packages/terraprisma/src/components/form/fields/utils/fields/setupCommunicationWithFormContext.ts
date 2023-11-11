@@ -6,7 +6,7 @@ import { useForm } from '../../../Form';
 import { FormFieldValue, FormValue } from '../../../types';
 import { FormProviderValue } from '../../../FormContext';
 
-import { FieldName, FieldProps } from '../types';
+import type { FieldName, FieldProps } from 'components/form/types';
 
 export function setupCommunicationWithFormContext<
   Name extends FieldName<OwnerFormValue, BaseValueType>,

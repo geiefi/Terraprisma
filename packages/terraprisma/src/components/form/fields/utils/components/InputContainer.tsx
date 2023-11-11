@@ -5,13 +5,14 @@ import { useField } from '../fields';
 import {
   componentBuilder,
   extendPropsFrom,
-  mergeClass
-} from '~';
+  mergeClass,
+  Accents,
+  addAccentColoring
+} from '../../../../..';
 
 import Label from './Label';
 
 // import './InputContainer.scss';
-import { Accents, addAccentColoring } from '~';
 import { mergeRefs } from '@solid-primitives/refs';
 
 export interface InputContainerProps extends ParentProps {

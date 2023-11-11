@@ -3,8 +3,8 @@ import { Accessor, Signal, createContext, useContext } from 'solid-js';
 import { FieldInternalValidate } from './setupValidateFunction';
 
 import type { FormFieldValue, FormValue } from '../../../types';
-import type { EmptyObj, Store } from '~';
-import type { FieldName, FieldProps } from '../types';
+import type { FieldName, FieldProps } from 'components/form/types';
+import type { EmptyObj, Store } from 'types';
 
 export interface FieldProviderValue<
   Value extends FormFieldValue,

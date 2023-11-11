@@ -3,7 +3,7 @@
 
 import { JSX, splitProps } from 'solid-js';
 
-import type { AnyProps } from '~';
+import type { AnyProps } from 'types';
 import { componentBuilder, type ComponentFactory } from './componentBuilder';
 
 function keyInProps<BaseProps extends AnyProps, Key extends string>(key: Key) {
@@ -11,6 +11,7 @@ function keyInProps<BaseProps extends AnyProps, Key extends string>(key: Key) {
     const [_others, props] = splitProps(propsIntoFactory, [key]);
     return {
       baseProps: props as BaseProps,
+      /* eslint-disable-next-line solid/reactivity */
       args: [_others[key]]
     };
   }) satisfies ComponentFactory<

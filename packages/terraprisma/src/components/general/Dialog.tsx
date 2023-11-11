@@ -8,18 +8,17 @@ import {
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
-import {
-  mergeClass,
-  mergeCallbacks,
-  componentBuilder,
-  extendPropsFrom
-} from '~';
-import { Fade } from '@terraprisma/transitions';
-import { Divisor } from '@terraprisma/layout';
-
 import Box from './Box';
 import Button from './Buttons/Button';
 import OutlinedButton from './Buttons/OutlinedButton';
+import {
+  componentBuilder,
+  extendPropsFrom,
+  mergeCallbacks,
+  mergeClass
+} from 'utils';
+import { Fade } from 'components/transitions';
+import { Divisor } from 'components/layout';
 
 export interface DialogProps {
   visible?: boolean;

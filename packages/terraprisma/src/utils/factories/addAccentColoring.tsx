@@ -1,6 +1,6 @@
 import { Accessor, createMemo, splitProps } from 'solid-js';
 
-import type { Accents, ComponentFactory, AnyProps } from '~';
+import type { Accents, ComponentFactory, AnyProps } from '../..';
 
 export const addAccentColoring = <BaseProps extends AnyProps>(
   defaultColor: Accents = 'accent'

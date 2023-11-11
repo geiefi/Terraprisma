@@ -8,12 +8,7 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
-import { Col } from '@terraprisma/layout';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
 
 export interface TableProps extends ParentProps {
   identification: string;

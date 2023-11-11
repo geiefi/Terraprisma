@@ -1,6 +1,6 @@
 import { ComponentProps, ValidComponent, splitProps } from 'solid-js';
 
-import type { AnyProps } from '~';
+import type { AnyProps } from '../../types';
 import type { ComponentFactory } from './componentBuilder';
 
 export function extendPropsFrom<

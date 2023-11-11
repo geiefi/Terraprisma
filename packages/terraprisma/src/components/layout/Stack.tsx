@@ -1,9 +1,5 @@
 import { JSX, ParentProps, createMemo } from 'solid-js';
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
+import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
 
 export interface StackProps extends ParentProps {
   spacing?: number;

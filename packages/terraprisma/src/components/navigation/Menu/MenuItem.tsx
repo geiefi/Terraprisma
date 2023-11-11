@@ -1,7 +1,7 @@
 import { ParentProps } from 'solid-js';
 
-import { extendPropsFrom, componentBuilder } from '~';
-import { ListItem } from '@terraprisma/general';
+import { extendPropsFrom, componentBuilder } from 'utils';
+import { ListItem } from 'components/general';
 
 export interface MenuProps extends ParentProps {}
 

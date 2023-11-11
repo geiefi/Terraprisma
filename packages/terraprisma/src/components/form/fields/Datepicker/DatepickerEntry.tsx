@@ -1,10 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
+import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
 
 interface DatepickerEntryProps extends ParentProps {
   muted?: boolean;

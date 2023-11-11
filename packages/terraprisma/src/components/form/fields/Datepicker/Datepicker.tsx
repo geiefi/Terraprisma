@@ -11,28 +11,27 @@ import { Portal } from 'solid-js/web';
 
 import { mergeRefs } from '@solid-primitives/refs';
 
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
-import { Dropdown, IconButton, OutlinedButton } from '@terraprisma/general';
-import { CalendarMonth, ChevronLeft, ChevronRight } from '@terraprisma/icons';
-import { Row } from '@terraprisma/layout';
-import { GrowFade } from '@terraprisma/transitions';
-import { Accents, addAccentColoring } from '~';
+import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
+import { Dropdown, IconButton, OutlinedButton } from 'components/general';
+import { CalendarMonth, ChevronLeft, ChevronRight } from 'components/icons';
+import { Row } from 'components/layout';
+import { GrowFade } from 'components/transitions';
+import { Accents, addAccentColoring } from 'index';
 
 import {
   setupFieldComponent,
   FieldInternalWrapper,
-  FieldName,
-  FieldProps,
-  FieldPropKeys,
   useField,
   InputContainer
 } from '../utils';
 
-import { FormFieldValue, FormValue } from '../../types';
+import {
+  FieldName,
+  FieldPropKeys,
+  FieldProps,
+  FormFieldValue,
+  FormValue
+} from '../../types';
 
 import DayPicker, { amountOfDaysInMonth } from './DayPicker';
 import MonthPicker from './MonthPicker';

@@ -2,7 +2,7 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeClass
-} from '~';
+} from 'utils';
 
 import Button from './Button';
 

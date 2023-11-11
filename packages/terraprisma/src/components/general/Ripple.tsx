@@ -10,19 +10,18 @@ import {
   onCleanup,
   Show
 } from 'solid-js';
-import { isServer, Portal } from 'solid-js/web';
+import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
+import './Ripple.css';
 import {
-  mergeClass,
+  addAccentColoring,
   componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect,
-  Accents,
-  addAccentColoring
-} from '~';
-
-import './Ripple.css';
+  mergeClass
+} from 'utils';
+import { Accents } from 'index';
 
 export interface RippleProps {
   /**

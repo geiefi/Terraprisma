@@ -3,24 +3,26 @@ import { JSX, createEffect } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { Accents, addAccentColoring } from '~';
+import { Accents, addAccentColoring } from 'index';
 import {
   mergeClass,
   mergeCallbacks,
   componentBuilder,
   extendPropsFrom
-} from '~';
+} from 'utils';
 
 import {
   InputContainer,
   FieldInternalWrapper,
-  MaskedFieldPropsKeys,
-  MaskedFieldProps,
-  FieldName,
   useField,
   setupFieldComponent
 } from '../utils';
-import { FormValue } from '../../types';
+import {
+  FieldName,
+  FormValue,
+  MaskedFieldProps,
+  MaskedFieldPropsKeys
+} from '../../types';
 
 import './Input.css';
 

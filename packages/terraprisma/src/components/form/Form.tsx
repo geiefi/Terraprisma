@@ -11,7 +11,7 @@ import { SetStoreFunction, createStore, produce } from 'solid-js/store';
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
-import { AgnosticValidator, FormValue } from './types';
+import { AgnosticValidator, FieldName, FormValue } from './types';
 import {
   Datepicker,
   Checkbox,
@@ -30,7 +30,6 @@ import { TextAreaProps } from './fields/TextArea/TextArea';
 import { DatepickerProps } from './fields/Datepicker/Datepicker';
 import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
-import { FieldName } from './fields/utils/types/FieldProps';
 import { FormFieldValue } from './types/FormFieldValue';
 
 export interface FormProps<Value extends FormValue = FormValue>

@@ -1,9 +1,9 @@
 import { InputMask } from '@solid-primitives/input-mask';
 
-import { EmptyObj } from '~';
+import { EmptyObj } from 'types';
 
 import { FieldName, FieldPropKeys, FieldProps } from './FieldProps';
-import { FormValue, FormFieldValue } from '../../../types';
+import type { FormValue, FormFieldValue } from '.';
 
 export const MaskedFieldPropsKeys: (keyof MaskedFieldProps)[] = [
   ...FieldPropKeys,

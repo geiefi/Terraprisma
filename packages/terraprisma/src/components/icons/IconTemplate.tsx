@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom, mergeClass } from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
 
 export interface IconProps extends ParentProps {
   /**

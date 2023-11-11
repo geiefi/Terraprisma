@@ -14,22 +14,19 @@ import {
   extendPropsFrom,
   mergeCallbacks,
   mergeClass
-} from '~';
-import { createTooltip } from '@terraprisma/data-display';
-import { Accents, addAccentColoring } from '~';
-import { GrowFade } from '@terraprisma/transitions';
+} from 'utils';
+import { createTooltip } from 'components/data-display';
+import { Accents, addAccentColoring } from 'index';
+import { GrowFade } from 'components/transitions';
 
 import {
   FieldInternalWrapper,
   Label,
-  FieldProps,
-  FieldPropKeys,
-  FieldName,
   useField,
   setupFieldComponent
 } from '../utils';
 
-import { FormValue } from '../../types';
+import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../../types';
 
 import './Slider.css';
 import { mergeRefs } from '@solid-primitives/refs';

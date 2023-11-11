@@ -1,11 +1,10 @@
 import { JSX, ParentProps, Show, createMemo, on } from 'solid-js';
-
 import {
-  mergeClass,
   componentBuilder,
   extendPropsFrom,
-  getAbsoluteBoundingRect
-} from '~';
+  getAbsoluteBoundingRect,
+  mergeClass
+} from 'utils';
 
 export interface DropdownProps extends ParentProps {
   /**

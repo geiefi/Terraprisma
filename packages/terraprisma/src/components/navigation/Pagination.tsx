@@ -1,13 +1,10 @@
 import { For, Show, createMemo } from 'solid-js';
 
-import {
-  componentBuilder,
-  extendPropsFrom,
-  mergeClass
-} from '~';
-import { IconButton } from '@terraprisma/general';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
+import { IconButton } from 'components/general';
+import { KeyboardArrowLeft, KeyboardArrowRight } from 'components/icons';
+import { addAccentColoring } from 'utils';
+import { Accents } from 'index';
 
 export interface PaginationProps {
   current: number;

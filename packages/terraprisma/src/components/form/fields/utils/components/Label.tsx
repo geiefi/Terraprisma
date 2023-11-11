@@ -1,10 +1,6 @@
 import { ParentProps } from 'solid-js';
 
-import {
-  mergeClass,
-  componentBuilder,
-  extendPropsFrom
-} from '~';
+import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
 
 export interface LabelProps extends ParentProps {
   for: string;

@@ -14,9 +14,6 @@ import {
   setupFieldComponent,
   FieldInternalWrapper,
   Label,
-  FieldName,
-  FieldProps,
-  FieldPropKeys,
   useField
 } from './utils';
 
@@ -24,14 +21,21 @@ import {
   extendPropsFrom,
   componentBuilder,
   mergeCallbacks,
-  mergeClass
-} from '~';
+  mergeClass,
+  Accents,
+  addAccentColoring,
+  Stack
+} from '../../..';
 
-import { Accents, addAccentColoring } from '~';
-import { Stack } from '@terraprisma/layout';
-import type { StackProps } from '@terraprisma/layout/Stack';
+import type { StackProps } from '../../layout/Stack';
 
-import { FormValue, FormFieldValue } from '../types';
+import {
+  FormValue,
+  FormFieldValue,
+  FieldName,
+  FieldProps,
+  FieldPropKeys
+} from '../types';
 
 export interface RadioGroupOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue

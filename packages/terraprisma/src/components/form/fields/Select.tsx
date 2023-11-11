@@ -18,24 +18,30 @@ import {
   mergeClass,
   mergeCallbacks,
   extendPropsFrom,
-  componentBuilder
-} from '~';
-import { Dropdown, List, ListItem } from '@terraprisma/general';
-import { GrowFade } from '@terraprisma/transitions';
-import { Check, KeyboardArrowDown } from '@terraprisma/icons';
-import { Accents, addAccentColoring } from '~';
+  componentBuilder,
+  Dropdown,
+  List,
+  ListItem,
+  GrowFade,
+  Icons,
+  Accents,
+  addAccentColoring
+} from '../../..';
 
 import {
   InputContainer,
   FieldInternalWrapper,
-  FieldName,
-  FieldPropKeys,
-  FieldProps,
   useField,
   setupFieldComponent
 } from './utils';
 
-import { FormValue, FormFieldValue } from '../types';
+import {
+  FormValue,
+  FormFieldValue,
+  FieldName,
+  FieldProps,
+  FieldPropKeys
+} from '../types';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -189,7 +195,7 @@ const Select = setupFieldComponent().with(
               }
             }}
             icon={
-              <KeyboardArrowDown
+              <Icons.KeyboardArrowDown
                 variant="rounded"
                 class={mergeClass(
                   'transition-transform origin-center',
@@ -244,7 +250,7 @@ const Select = setupFieldComponent().with(
 
                           <Show when={optionProps.value === value()}>
                             <span class="absolute left-full top-1/2 -translate-x-[calc(100%+0.75rem)] -translate-y-1/2">
-                              <Check variant="rounded" />
+                              <Icons.Check variant="rounded" />
                             </span>
                           </Show>
                         </ListItem>

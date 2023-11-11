@@ -1,6 +1,6 @@
 import { JSX } from 'solid-js';
 
-import type { AnyProps } from '~';
+import type { AnyProps } from '../../types';
 
 export type ComponentFactory<
   BaseProps extends AnyProps,

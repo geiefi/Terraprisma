@@ -6,12 +6,8 @@ import {
   ComponentProps
 } from 'solid-js';
 
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from '~';
-import { Check } from '@terraprisma/icons';
+import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
+import { Check } from 'components/icons';
 
 import { useSteps } from './Steps';
 

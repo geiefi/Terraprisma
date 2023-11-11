@@ -10,11 +10,7 @@ import {
   ParentProps
 } from 'solid-js';
 
-import {
-  mergeClass,
-  componentBuilder,
-  extendPropsFrom
-} from '~';
+import { mergeClass, componentBuilder, extendPropsFrom } from 'utils';
 
 import { InternalStep, StepProps } from './Step';
 

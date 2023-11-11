@@ -1,5 +1,4 @@
 import {
-  ComponentProps,
   JSX,
   Signal,
   createEffect,
@@ -22,7 +21,7 @@ import { setupFieldsValueSignal } from './setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setupFieldsDisabledSignal';
 
 import { FormFieldValue, FormValue } from '../../../types';
-import { FieldName, FieldPropKeys, FieldProps } from '../types';
+import { FieldName, FieldPropKeys, FieldProps } from 'components/form/types';
 
 export function setupFieldComponent<
   BaseValueType extends FormFieldValue = FormFieldValue
