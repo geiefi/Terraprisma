@@ -1,14 +1,32 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231111140606",
+  "version": "0.0.0-testing-20231111152603",
   "type": "module",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
   "files": [
     "dist"
   ],
-  "main": "dist/index.jsx",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "solid": "./dist/source/index.jsx",
+      "import": "./dist/esm/index.js",
+      "browser": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "node": "./dist/cjs/index.js"
+    },
+    "./dist/styles.css": {
+      "solid": "./dist/styles.css",
+      "import": "./dist/styles.css",
+      "browser": "./dist/styles.css",
+      "require": "./dist/styles.css",
+      "node": "./dist/styles.css"
+    }
+  },
   "private": false,
   "keywords": [
     "ui",

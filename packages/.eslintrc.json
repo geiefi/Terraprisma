@@ -1,3 +1,4 @@
 {
-  "extends": "../.eslintrc.json"
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/eslintrc.json",
+  "extends": "../.eslintrc.json",
 }

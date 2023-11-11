@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231111152603
+
+### Patch Changes
+
+- use rollup-preset-solid to have hydratable markers
+
 ## 0.0.0-testing-20231111140606
 
 ### Patch Changes
