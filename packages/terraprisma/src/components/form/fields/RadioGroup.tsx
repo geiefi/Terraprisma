@@ -10,12 +10,6 @@ import {
   Component
 } from 'solid-js';
 
-import {
-  setupFieldComponent,
-  FieldInternalWrapper,
-  Label,
-  useField
-} from './utils';
 
 import {
   extendPropsFrom,
@@ -24,7 +18,8 @@ import {
   mergeClass,
   Accents,
   addAccentColoring,
-  Stack
+  Stack,
+  setupFieldComponent
 } from '../../..';
 
 import type { StackProps } from '../../layout/Stack';
@@ -36,6 +31,8 @@ import {
   FieldProps,
   FieldPropKeys
 } from '../types';
+import { Label, FieldInternalWrapper } from '../components';
+import { useField } from './FieldContext';
 
 export interface RadioGroupOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue

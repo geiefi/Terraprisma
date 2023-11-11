@@ -1,4 +1,4 @@
-import { Color } from '../Theme';
+import { Color } from '../theming/Theme';
 import { generateStyleVariablesFrom } from './generateStyleVariablesFrom';
 
 describe('generateStyleVariablesFrom()', () => {

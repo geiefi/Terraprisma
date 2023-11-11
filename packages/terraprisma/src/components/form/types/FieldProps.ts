@@ -1,7 +1,6 @@
 import type { FieldValidator, FormFieldValue, FormValue } from '.';
 import { JSX } from 'solid-js/jsx-runtime';
-
-import type { DeepGet, EmptyObj, LeavesOfObject, Store } from 'types';
+import { DeepGet, EmptyObj, LeavesOfObject, StoreTuple } from '../../../types';
 
 export const FieldPropKeys = [
   'name',
@@ -73,7 +72,7 @@ export interface FieldProps<
    * This store is to be used when manually trying to control a Field
    * without any parent `<Form>`.
    */
-  errorsStore?: Store<string[]>;
+  errorsStore?: StoreTuple<string[]>;
 
   /**
    * @description Defines if this field is disabled or not.

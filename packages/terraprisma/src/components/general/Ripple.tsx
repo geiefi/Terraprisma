@@ -14,14 +14,8 @@ import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
 import './Ripple.css';
-import {
-  addAccentColoring,
-  componentBuilder,
-  extendPropsFrom,
-  getAbsoluteBoundingRect,
-  mergeClass
-} from 'utils';
-import { Accents } from 'index';
+import { Accents } from '../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, getAbsoluteBoundingRect, mergeClass } from '../../utils';
 
 export interface RippleProps {
   /**

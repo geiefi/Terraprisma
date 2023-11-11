@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
 
 export interface RowProps extends ParentProps {
   gap?: string;

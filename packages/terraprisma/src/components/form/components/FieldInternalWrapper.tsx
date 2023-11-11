@@ -1,8 +1,8 @@
 import { Component, ComponentProps, Show } from 'solid-js';
 
-import { mergeClass, Collapse } from '../../../../..';
-
 import { useField } from '../fields/FieldContext';
+import { mergeClass } from '../../../utils';
+import { Collapse } from '../../transitions';
 
 /**
  * @description A integral GrapeS wrapper component that helps with handling

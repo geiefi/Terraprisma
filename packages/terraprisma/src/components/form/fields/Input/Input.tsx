@@ -3,20 +3,6 @@ import { JSX, createEffect } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { Accents, addAccentColoring } from 'index';
-import {
-  mergeClass,
-  mergeCallbacks,
-  componentBuilder,
-  extendPropsFrom
-} from 'utils';
-
-import {
-  InputContainer,
-  FieldInternalWrapper,
-  useField,
-  setupFieldComponent
-} from '../utils';
 import {
   FieldName,
   FormValue,
@@ -25,6 +11,11 @@ import {
 } from '../../types';
 
 import './Input.css';
+import { Accents } from '../../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../../utils';
+import { FieldInternalWrapper, InputContainer } from '../../components';
+import { useField } from '../FieldContext';
+import { setupFieldComponent } from '../setupFieldComponent';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;

@@ -5,11 +5,9 @@ import {
   Show,
   ComponentProps
 } from 'solid-js';
-
-import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
-import { Check } from 'components/icons';
-
 import { useSteps } from './Steps';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { Check } from '../../icons';
 
 export interface StepProps {
   description?: string | JSX.Element;

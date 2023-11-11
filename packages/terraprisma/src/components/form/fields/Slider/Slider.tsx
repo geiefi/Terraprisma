@@ -9,27 +9,17 @@ import {
 } from 'solid-js';
 import { Portal, isServer } from 'solid-js/web';
 
-import {
-  componentBuilder,
-  extendPropsFrom,
-  mergeCallbacks,
-  mergeClass
-} from 'utils';
-import { createTooltip } from 'components/data-display';
-import { Accents, addAccentColoring } from 'index';
-import { GrowFade } from 'components/transitions';
-
-import {
-  FieldInternalWrapper,
-  Label,
-  useField,
-  setupFieldComponent
-} from '../utils';
-
 import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../../types';
 
 import './Slider.css';
 import { mergeRefs } from '@solid-primitives/refs';
+import { Accents } from '../../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../../utils';
+import { createTooltip } from '../../../data-display';
+import { GrowFade } from '../../../transitions';
+import { FieldInternalWrapper, Label } from '../../components';
+import { useField } from '../FieldContext';
+import { setupFieldComponent } from '../setupFieldComponent';
 
 export interface SliderProps<
   OwnerFormValue extends FormValue = FormValue,

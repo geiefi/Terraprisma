@@ -7,11 +7,8 @@ import {
   Setter,
   Signal
 } from 'solid-js';
-
-import { FormProviderValue } from '../../../FormContext';
-import { FormValue, FormFieldValue } from '../../../types';
-
-import { FieldName, FieldProps } from 'components/form/types';
+import { FormProviderValue } from '../../FormContext';
+import { FieldName, FormFieldValue, FieldProps, FormValue } from '../../types';
 
 export function setupFieldsDisabledSignal<
   Name extends FieldName<OwnerFormValue, BaseValueType>,

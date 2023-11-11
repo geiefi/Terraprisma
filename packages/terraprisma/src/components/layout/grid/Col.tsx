@@ -1,5 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-import { extendPropsFrom, componentBuilder } from 'utils';
+import { componentBuilder, extendPropsFrom } from '../../../utils';
 
 export interface ColProps extends ParentProps {
   size:

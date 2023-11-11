@@ -1,7 +1,13 @@
 import { createContext, Setter } from 'solid-js';
 import { produce } from 'solid-js/store';
 
-import { DeepGet, deeplyTrack, EmptyObj, LeavesOfObject, Store } from '../..';
+import {
+  DeepGet,
+  deeplyTrack,
+  EmptyObj,
+  LeavesOfObject,
+  StoreTuple
+} from '../..';
 
 import { AgnosticValidator, FieldValidator, FormValue } from './types';
 
@@ -107,7 +113,7 @@ export class FormProviderValue<
   private __isCleaningUp: boolean;
 
   constructor(
-    public store: Store<FormStore<Partial<Values>>>,
+    public store: StoreTuple<FormStore<Partial<Values>>>,
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
   ) {

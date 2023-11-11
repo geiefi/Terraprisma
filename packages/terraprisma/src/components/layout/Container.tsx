@@ -1,6 +1,5 @@
 import { JSX, ParentProps } from 'solid-js';
-
-import { mergeClass, componentBuilder, extendPropsFrom } from 'utils';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../utils';
 
 export type LayoutWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

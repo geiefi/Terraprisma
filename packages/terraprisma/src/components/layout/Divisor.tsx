@@ -1,4 +1,4 @@
-import { mergeClass, componentBuilder, extendPropsFrom } from 'utils';
+import { componentBuilder, extendPropsFrom, mergeClass } from "../../utils";
 
 export interface DivisorProps {
   direction?: 'vertical' | 'horizontal';

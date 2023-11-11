@@ -1,10 +1,8 @@
 import { For, Show, createMemo } from 'solid-js';
-
-import { componentBuilder, extendPropsFrom, mergeClass } from 'utils';
-import { IconButton } from 'components/general';
-import { KeyboardArrowLeft, KeyboardArrowRight } from 'components/icons';
-import { addAccentColoring } from 'utils';
-import { Accents } from 'index';
+import { Accents } from '../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../utils';
+import { IconButton } from '../general';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '../icons';
 
 export interface PaginationProps {
   current: number;

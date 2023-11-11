@@ -1,15 +1,10 @@
 import { JSX, ParentProps, Show, createEffect, createSignal } from 'solid-js';
 
 import ListItem from './ListItem';
-import {
-  addAccentColoring,
-  componentBuilder,
-  extendPropsFrom,
-  mergeCallbacks,
-  mergeClass
-} from 'utils';
-import { Accents, Collapse } from 'index';
-import { KeyboardArrowDown } from 'components/icons';
+import { Accents } from '../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../utils';
+import { KeyboardArrowDown } from '../../icons';
+import { Collapse } from '../../transitions';
 
 export interface ListItemWithDetailsProps extends ParentProps {
   /**

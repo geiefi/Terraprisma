@@ -3,8 +3,8 @@
 
 import { JSX, splitProps } from 'solid-js';
 
-import type { AnyProps } from 'types';
 import { componentBuilder, type ComponentFactory } from './componentBuilder';
+import { AnyProps } from '../../types';
 
 function keyInProps<BaseProps extends AnyProps, Key extends string>(key: Key) {
   return ((propsIntoFactory: BaseProps & { [key in Key]: 'hi' }) => {

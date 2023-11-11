@@ -1,12 +1,4 @@
 import { JSX, Show, createMemo } from 'solid-js';
-
-import {
-  Label,
-  FieldInternalWrapper,
-  useField,
-  setupFieldComponent
-} from './utils';
-
 import {
   componentBuilder,
   extendPropsFrom,
@@ -14,10 +6,13 @@ import {
   mergeClass,
   Icons,
   Accents,
-  addAccentColoring
+  addAccentColoring,
+  setupFieldComponent
 } from '../../..';
 
 import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../types';
+import { FieldInternalWrapper, Label } from '../components';
+import { useField } from './FieldContext';
 
 export interface CheckboxProps<
   OwnerFormValue extends FormValue = FormValue,

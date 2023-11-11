@@ -1,14 +1,8 @@
 import { ComponentProps, createMemo, JSX, ParentProps } from 'solid-js';
 
-import {
-  componentBuilder,
-  extendPropsFrom,
-  mergeClass,
-  addAccentColoring
-} from 'utils';
-import { Accents } from 'index';
-
 import Ripple from '../Ripple';
+import { Accents } from '../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../utils';
 
 export interface ButtonProps extends ParentProps {
   size?: 'small' | 'medium' | 'large';

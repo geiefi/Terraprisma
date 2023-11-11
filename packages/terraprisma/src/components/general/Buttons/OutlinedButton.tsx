@@ -1,9 +1,5 @@
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from 'utils';
 
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
 import Button from './Button';
 
 export interface OutlinedButtonProps {

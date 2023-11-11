@@ -3,29 +3,14 @@ import { JSX, createEffect, createMemo } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { addAccentColoring } from 'utils';
-import {
-  setupFieldComponent,
-  type Accents,
-  useField,
-  FieldInternalWrapper,
-  InputContainer
-} from 'index';
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeCallbacks,
-  mergeClass
-} from 'utils';
-
-import {
-  MaskedFieldPropsKeys,
-  MaskedFieldProps,
-  FieldName
-} from 'components/form/types';
-import { FormValue } from '../../types';
+import { FieldName, FormValue, MaskedFieldProps, MaskedFieldPropsKeys } from '../../types';
 
 import './TextArea.css';
+import { Accents } from '../../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../../utils';
+import { FieldInternalWrapper, InputContainer } from '../../components';
+import { useField } from '../FieldContext';
+import { setupFieldComponent } from '../setupFieldComponent';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;

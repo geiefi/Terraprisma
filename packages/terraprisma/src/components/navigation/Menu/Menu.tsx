@@ -1,7 +1,6 @@
 import { ParentProps } from 'solid-js';
-
-import { extendPropsFrom, componentBuilder } from 'utils';
-import { Dropdown, List } from 'components/general';
+import { componentBuilder, extendPropsFrom } from '../../../utils';
+import { Dropdown, List } from '../../general';
 
 export interface MenuProps extends ParentProps {}
 

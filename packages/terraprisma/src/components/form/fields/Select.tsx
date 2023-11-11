@@ -25,15 +25,9 @@ import {
   GrowFade,
   Icons,
   Accents,
-  addAccentColoring
-} from '../../..';
-
-import {
-  InputContainer,
-  FieldInternalWrapper,
-  useField,
+  addAccentColoring,
   setupFieldComponent
-} from './utils';
+} from '../../..';
 
 import {
   FormValue,
@@ -42,6 +36,8 @@ import {
   FieldProps,
   FieldPropKeys
 } from '../types';
+import { FieldInternalWrapper, InputContainer } from '../components';
+import { useField } from './FieldContext';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,

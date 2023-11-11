@@ -1,4 +1,4 @@
-import { Color } from '../Theme';
+import { Color } from '../theming/Theme';
 
 function toKebabCase(text: string) {
   return text.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();

@@ -1,11 +1,7 @@
-import {
-  extendPropsFrom,
-  componentBuilder,
-  mergeClass
-} from 'utils';
 import { ParentProps } from 'solid-js';
 
 import TextButton from './TextButton';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
 
 export interface IconButtonProps extends ParentProps {
   /**

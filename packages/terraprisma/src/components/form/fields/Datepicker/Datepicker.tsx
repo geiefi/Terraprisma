@@ -11,20 +11,6 @@ import { Portal } from 'solid-js/web';
 
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { extendPropsFrom, componentBuilder, mergeClass } from 'utils';
-import { Dropdown, IconButton, OutlinedButton } from 'components/general';
-import { CalendarMonth, ChevronLeft, ChevronRight } from 'components/icons';
-import { Row } from 'components/layout';
-import { GrowFade } from 'components/transitions';
-import { Accents, addAccentColoring } from 'index';
-
-import {
-  setupFieldComponent,
-  FieldInternalWrapper,
-  useField,
-  InputContainer
-} from '../utils';
-
 import {
   FieldName,
   FieldPropKeys,
@@ -36,6 +22,15 @@ import {
 import DayPicker, { amountOfDaysInMonth } from './DayPicker';
 import MonthPicker from './MonthPicker';
 import YearPicker from './YearPicker';
+import { Accents } from '../../../..';
+import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../../utils';
+import { Dropdown, IconButton, OutlinedButton } from '../../../general';
+import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
+import { Row } from '../../../layout';
+import { GrowFade } from '../../../transitions';
+import { FieldInternalWrapper, InputContainer } from '../../components';
+import { useField } from '../FieldContext';
+import { setupFieldComponent } from '../setupFieldComponent';
 
 export interface DatepickerProps<
   OwnerFormValue extends FormValue = FormValue,

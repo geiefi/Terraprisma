@@ -8,7 +8,7 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { componentBuilder, extendPropsFrom, mergeClass } from '../../utils';
 
 export interface TableProps extends ParentProps {
   identification: string;

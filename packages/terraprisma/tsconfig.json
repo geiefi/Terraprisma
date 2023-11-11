@@ -2,10 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "baseUrl": "./src",
     "noEmit": true,
+    "paths": {},
     "types": ["vitest/globals"]
   },
   "extends": "../../tsconfig.json",
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

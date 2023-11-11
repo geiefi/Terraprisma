@@ -1,8 +1,8 @@
 import { Switch, Match, ParentProps, ComponentProps } from 'solid-js';
 
 import DatepickerEntry from './DatepickerEntry';
-import { IconButton, TextButton } from 'components/general';
-import { mergeClass } from 'utils';
+import { mergeClass } from '../../../../utils';
+import { IconButton, TextButton } from '../../../general';
 
 interface DatepickerButtonEntryProps extends ParentProps {
   variant: 'squarish' | 'text';

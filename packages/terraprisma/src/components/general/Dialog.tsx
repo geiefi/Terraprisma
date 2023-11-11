@@ -11,14 +11,9 @@ import { Portal, insert } from 'solid-js/web';
 import Box from './Box';
 import Button from './Buttons/Button';
 import OutlinedButton from './Buttons/OutlinedButton';
-import {
-  componentBuilder,
-  extendPropsFrom,
-  mergeCallbacks,
-  mergeClass
-} from 'utils';
-import { Fade } from 'components/transitions';
-import { Divisor } from 'components/layout';
+import { componentBuilder, extendPropsFrom, mergeClass, mergeCallbacks } from '../../utils';
+import { Divisor } from '../layout';
+import { Fade } from '../transitions';
 
 export interface DialogProps {
   visible?: boolean;

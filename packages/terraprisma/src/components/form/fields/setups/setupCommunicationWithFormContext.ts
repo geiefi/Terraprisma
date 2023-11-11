@@ -1,12 +1,8 @@
 import { createEffect, onCleanup, onMount } from 'solid-js';
 import { produce } from 'solid-js/store';
-
-import { useForm } from '../../../Form';
-
-import { FormFieldValue, FormValue } from '../../../types';
-import { FormProviderValue } from '../../../FormContext';
-
-import type { FieldName, FieldProps } from 'components/form/types';
+import { useForm } from '../../Form';
+import { FormProviderValue } from '../../FormContext';
+import { FieldName, FieldProps, FormFieldValue, FormValue } from '../../types';
 
 export function setupCommunicationWithFormContext<
   Name extends FieldName<OwnerFormValue, BaseValueType>,

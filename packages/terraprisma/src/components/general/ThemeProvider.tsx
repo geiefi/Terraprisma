@@ -9,8 +9,9 @@ import {
   useContext
 } from 'solid-js';
 import { isServer } from 'solid-js/web';
-
-import { Themes, Theme, Accent, generateStyleVariablesFrom } from 'index';
+import { Themes } from '../..';
+import { Theme, Accent } from '../../theming/Theme';
+import { generateStyleVariablesFrom } from '../../utils';
 
 export type ThemesProviderValue = {
   themes: Themes;

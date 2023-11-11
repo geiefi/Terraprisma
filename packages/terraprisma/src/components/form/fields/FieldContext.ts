@@ -1,10 +1,7 @@
 import { Accessor, Signal, createContext, useContext } from 'solid-js';
-
-import { FieldInternalValidate } from './setupValidateFunction';
-
-import type { FormFieldValue, FormValue } from '../../../types';
-import type { FieldName, FieldProps } from 'components/form/types';
-import type { EmptyObj, Store } from 'types';
+import { EmptyObj, StoreTuple } from '../../../types';
+import { FormFieldValue, FormValue, FieldProps, FieldName } from '../types';
+import { FieldInternalValidate } from './setups/setupValidateFunction';
 
 export interface FieldProviderValue<
   Value extends FormFieldValue,
@@ -14,7 +11,7 @@ export interface FieldProviderValue<
 
   elementId: Accessor<string>;
 
-  errorsT: Store<string[]>;
+  errorsT: StoreTuple<string[]>;
   valueS: Signal<Value | undefined>;
   disabledS: Signal<boolean>;
   focusedS: Signal<boolean>;
