@@ -1,6 +1,6 @@
 .collapse-enter-active,
 .collapse-exit-active {
-  transition: max-height .3s !important;
+  transition: max-height 0.3s !important;
   height: auto !important;
   overflow-y: hidden !important;
 }

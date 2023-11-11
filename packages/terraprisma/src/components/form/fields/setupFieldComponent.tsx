@@ -11,11 +11,20 @@ import { Dynamic } from 'solid-js/web';
 import { createStore } from 'solid-js/store';
 
 import { FieldContext } from './FieldContext';
-import { FormFieldValue, FieldProps, FormValue, FieldName, FieldPropKeys } from '../types';
+import {
+  FormFieldValue,
+  FieldProps,
+  FormValue,
+  FieldName,
+  FieldPropKeys
+} from '../types';
 import { setupCommunicationWithFormContext } from './setups/setupCommunicationWithFormContext';
 import { setupFieldsValueSignal } from './setups/setupFieldValueSignal';
 import { setupFieldsDisabledSignal } from './setups/setupFieldsDisabledSignal';
-import { setupValidateFunction, FieldInternalValidate } from './setups/setupValidateFunction';
+import {
+  setupValidateFunction,
+  FieldInternalValidate
+} from './setups/setupValidateFunction';
 
 export function setupFieldComponent<
   BaseValueType extends FormFieldValue = FormFieldValue

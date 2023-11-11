@@ -23,7 +23,12 @@ import DayPicker, { amountOfDaysInMonth } from './DayPicker';
 import MonthPicker from './MonthPicker';
 import YearPicker from './YearPicker';
 import { Accents } from '../../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass
+} from '../../../../utils';
 import { Dropdown, IconButton, OutlinedButton } from '../../../general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
 import { Row } from '../../../layout';

@@ -4,7 +4,9 @@ $growth-origins: top left right center bottom;
   .grow-fade-#{$origin}-enter-active,
   .grow-fade-#{$origin}-exit-active {
     transform-origin: #{$origin} !important;
-    transition: opacity .2s, scale .2s !important;
+    transition:
+      opacity 0.2s,
+      scale 0.2s !important;
   }
 
   .grow-fade-#{$origin}-exit-to {

@@ -4,6 +4,7 @@ textarea:-webkit-autofill:focus,
 textarea:-webkit-autofill:active {
   /* need this stupid workaround because Chrome just forces
    the background-color into the input */
-  transition: background-color 9999s ease-in-out 0s,
+  transition:
+    background-color 9999s ease-in-out 0s,
     color 9999s ease-in-out 0s;
 }

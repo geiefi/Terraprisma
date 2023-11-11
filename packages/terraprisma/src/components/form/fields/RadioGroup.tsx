@@ -10,7 +10,6 @@ import {
   Component
 } from 'solid-js';
 
-
 import {
   extendPropsFrom,
   componentBuilder,

@@ -25,6 +25,7 @@
     "build": "rollup -c ./rollup.config.js",
     "lint:types": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier . --write",
     "test": "vitest"
   },
   "repository": {
@@ -48,6 +49,7 @@
     "jsdom": "^22.1.0",
     "magic-string": "^0.30.5",
     "node-sass": "^9.0.0",
+    "prettier": "^3.0.3",
     "regenerator-runtime": "0.13.11",
     "rollup": "^3.28.1",
     "rollup-plugin-styles": "^4.0.0",

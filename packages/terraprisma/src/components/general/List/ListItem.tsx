@@ -2,7 +2,12 @@ import { JSX, Match, ParentProps, Switch, createMemo } from 'solid-js';
 
 import Ripple from '../Ripple';
 import { Accents } from '../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass
+} from '../../../utils';
 
 export interface ListItemProps extends ParentProps {
   /**

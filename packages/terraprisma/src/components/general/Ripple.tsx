@@ -15,7 +15,13 @@ import { createStore, produce } from 'solid-js/store';
 
 import './Ripple.css';
 import { Accents } from '../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, getAbsoluteBoundingRect, mergeClass } from '../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  getAbsoluteBoundingRect,
+  mergeClass
+} from '../../utils';
 
 export interface RippleProps {
   /**

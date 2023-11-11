@@ -4,13 +4,14 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   /* need this stupid workaround because Chrome just forces
    the background-color into the input */
-  transition: background-color 9999s ease-in-out 0s,
+  transition:
+    background-color 9999s ease-in-out 0s,
     color 9999s ease-in-out 0s;
 }
 
 /* Remove annoying up and down arrows from all number type of input */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }

@@ -3,11 +3,22 @@ import { JSX, createEffect, createMemo } from 'solid-js';
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
 
-import { FieldName, FormValue, MaskedFieldProps, MaskedFieldPropsKeys } from '../../types';
+import {
+  FieldName,
+  FormValue,
+  MaskedFieldProps,
+  MaskedFieldPropsKeys
+} from '../../types';
 
 import './TextArea.css';
 import { Accents } from '../../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass,
+  mergeCallbacks
+} from '../../../../utils';
 import { FieldInternalWrapper, InputContainer } from '../../components';
 import { useField } from '../FieldContext';
 import { setupFieldComponent } from '../setupFieldComponent';

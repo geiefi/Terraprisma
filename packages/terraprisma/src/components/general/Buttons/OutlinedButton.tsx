@@ -1,4 +1,3 @@
-
 import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
 import Button from './Button';
 

@@ -5,7 +5,12 @@ import Label from './Label';
 // import './InputContainer.scss';
 import { mergeRefs } from '@solid-primitives/refs';
 import { Accents } from '../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass
+} from '../../../utils';
 import { useField } from '../fields/FieldContext';
 
 export interface InputContainerProps extends ParentProps {

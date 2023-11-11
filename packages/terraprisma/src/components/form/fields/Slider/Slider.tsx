@@ -14,7 +14,13 @@ import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../../types';
 import './Slider.css';
 import { mergeRefs } from '@solid-primitives/refs';
 import { Accents } from '../../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass,
+  mergeCallbacks
+} from '../../../../utils';
 import { createTooltip } from '../../../data-display';
 import { GrowFade } from '../../../transitions';
 import { FieldInternalWrapper, Label } from '../../components';

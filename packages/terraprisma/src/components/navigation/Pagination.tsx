@@ -1,6 +1,11 @@
 import { For, Show, createMemo } from 'solid-js';
 import { Accents } from '../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass
+} from '../../utils';
 import { IconButton } from '../general';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '../icons';
 

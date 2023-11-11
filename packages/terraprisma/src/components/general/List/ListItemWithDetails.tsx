@@ -2,7 +2,13 @@ import { JSX, ParentProps, Show, createEffect, createSignal } from 'solid-js';
 
 import ListItem from './ListItem';
 import { Accents } from '../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass, mergeCallbacks } from '../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass,
+  mergeCallbacks
+} from '../../../utils';
 import { KeyboardArrowDown } from '../../icons';
 import { Collapse } from '../../transitions';
 

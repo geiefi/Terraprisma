@@ -139,6 +139,9 @@ importers:
       node-sass:
         specifier: ^9.0.0
         version: 9.0.0
+      prettier:
+        specifier: ^3.0.3
+        version: 3.0.3
       regenerator-runtime:
         specifier: 0.13.11
         version: 0.13.11

@@ -1,4 +1,4 @@
-import { Theme, AccentColors, BgColors } from "./Theme";
+import { Theme, AccentColors, BgColors } from './Theme';
 
 export interface Register {
   // themes: typeof myThemes;

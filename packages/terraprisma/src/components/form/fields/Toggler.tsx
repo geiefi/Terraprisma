@@ -1,6 +1,11 @@
 import { JSX, Show, createMemo } from 'solid-js';
 import { Accents } from '../../..';
-import { componentBuilder, addAccentColoring, extendPropsFrom, mergeClass } from '../../../utils';
+import {
+  componentBuilder,
+  addAccentColoring,
+  extendPropsFrom,
+  mergeClass
+} from '../../../utils';
 import { FieldInternalWrapper, Label } from '../components';
 import { FormValue, FieldName, FieldProps, FieldPropKeys } from '../types';
 import { useField } from './FieldContext';
