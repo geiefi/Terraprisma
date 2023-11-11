@@ -1,5 +1,5 @@
 {
-  "name": "documentation",
+  "name": "terraprisma-website",
   "private": true,
   "scripts": {
     "dev": "solid-start dev",

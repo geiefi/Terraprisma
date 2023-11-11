@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [
     solid({
       adapter: vercel(),
-      ssr: true
+      ssr: false
     })
-  ],
-  ssr: {
-    noExternal: 'terraprisma'
-  }
+  ]
+  // ssr: {
+  //   noExternal: 'terraprisma'
+  // }
 });

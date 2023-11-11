@@ -84,7 +84,7 @@ export function Sidebar() {
             </>
           }
         >
-          @terraprisma/general
+          general
         </CollapsedLinks>
 
         <CollapsedLinks
@@ -96,11 +96,11 @@ export function Sidebar() {
             </>
           }
         >
-          @terraprisma/data-display
+          data-display
         </CollapsedLinks>
 
-        <Link to="/components/icons">@terraprisma/icons</Link>
-        <Link to="/components/transitions">@terraprisma/transitions</Link>
+        <Link to="/components/icons">icons</Link>
+        <Link to="/components/transitions">transitions</Link>
 
         <CollapsedLinks
           basePath="/components/navigation"
@@ -112,7 +112,7 @@ export function Sidebar() {
             </>
           }
         >
-          @terraprisma/navigation
+          navigation
         </CollapsedLinks>
         <CollapsedLinks
           basePath="/components/forms"
@@ -127,7 +127,7 @@ export function Sidebar() {
             </>
           }
         >
-          @terraprisma/forms
+          forms
         </CollapsedLinks>
       </List>
 
