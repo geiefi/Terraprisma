@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231111131128
+
+### Patch Changes
+
+- remove all aliases from source code and fix all imports
+
 ## 0.0.0-testing-20231110174448
 
 ### Patch Changes
