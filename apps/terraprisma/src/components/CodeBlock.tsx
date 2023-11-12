@@ -1,17 +1,28 @@
-import { createResource, createSignal, Suspense } from 'solid-js';
+import { createMemo, createSignal, Suspense } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 import { IconButton, Tooltip, GrowFade, Icons } from 'terraprisma';
 
 import './CodeBlock.theme.css';
 
-export function CodeBlock(props: { code: string; language: string }) {
-  const [prismGeneratedHTML] = createResource(props, ({ code, language }) =>
-    fetch(`/api/${language}/highlight`, {
-      method: 'POST',
-      body: code
-    }).then((res) => res.text())
-  );
+import Prismjs from 'prismjs';
+
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx'; // import here the langauges needed
+
+export function CodeBlock(props: {
+  code: string;
+  language: 'tsx' | 'typescript';
+}) {
+  const prismGeneratedHTML = createMemo(() => {
+    return Prismjs.highlight(
+      props.code,
+      Prismjs.languages[props.language],
+      props.language
+    );
+  });
 
   let copyButtonRef: HTMLButtonElement;
   const [isShowingCopyTooltip, setShowingCopyTooltip] = createSignal(false);
