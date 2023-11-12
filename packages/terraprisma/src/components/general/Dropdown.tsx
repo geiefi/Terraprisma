@@ -1,10 +1,21 @@
-import { JSX, ParentProps, Show, createMemo, on } from 'solid-js';
+import {
+  JSX,
+  ParentProps,
+  Show,
+  createEffect,
+  createMemo,
+  createSignal,
+  on,
+  onMount
+} from 'solid-js';
 import {
   componentBuilder,
   extendPropsFrom,
   getAbsoluteBoundingRect,
   mergeClass
 } from '../../utils';
+import { mergeRefs } from '@solid-primitives/refs';
+import { isServer } from 'solid-js/web';
 
 export interface DropdownProps extends ParentProps {
   /**
@@ -42,6 +53,30 @@ export interface DropdownProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
+/**
+ * A component that is very primitive in what it does. Provides you with just an element
+ * that will do its best to position itself inside the screen while anchoring into the `for` prop.
+ *
+ * The Dropdown also has a `visible` prop that handles weather it will show its element or not.
+ *
+ * @param for The element the Dropdown will be anchored to.
+ *
+ * @param visible Weather or not the dropdown will be showing or not
+ *
+ * @param offsetFromAnchor The offset that will be kept between the anchor and the Dropdown
+ *
+ * @example
+ *
+ * ```jsx
+ * const [anchorRef, setAnchorRef] = createSignal(null);
+ *
+ * <MyElement ref={setAnchorRef} />
+ *
+ * <Dropdown for={anchorRef()} visible>
+ *   Super gamer dropdown
+ * </Dropdown>
+ * ```
+ */
 const Dropdown = componentBuilder<DropdownProps>()
   .factory(
     extendPropsFrom<DropdownProps, 'div'>([
@@ -61,23 +96,49 @@ const Dropdown = componentBuilder<DropdownProps>()
       )
     );
 
+    const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
+
+    createEffect(
+      on(
+        () => [props.visible, boundingRect(), dropdownRef()],
+        () => {
+          const dropdownRefAccessed = dropdownRef();
+          if (dropdownRefAccessed) {
+            dropdownRefAccessed.style.left = `${
+              boundingRect().left + boundingRect().width
+            }px`;
+            dropdownRefAccessed.style.top = `${
+              boundingRect().top + boundingRect().height + offset()
+            }px`;
+            dropdownRefAccessed.style.width = `${boundingRect().width}px`;
+            dropdownRefAccessed.style.translate = '-100%';
+
+            requestAnimationFrame(() => {
+              if (
+                dropdownRefAccessed.getBoundingClientRect().bottom >
+                window.innerHeight
+              ) {
+                dropdownRefAccessed.style.top = `${
+                  boundingRect().top - offset()
+                }px`;
+                dropdownRefAccessed.style.translate = '-100% -100%';
+              }
+            });
+          }
+        }
+      )
+    );
+
     return (
       <Show when={props.visible}>
         <div
           {...elProps}
+          ref={mergeRefs(elProps.ref, setDropdownRef)}
           class={mergeClass(
             'absolute z-10 h-fit overflow-y-auto overflow-x-hidden rounded-xl box-border p-2',
             'bg-[var(--floating-bg)] text-[var(--floating-fg)] border border-solid border-[var(--floating-border)]',
             elProps.class
           )}
-          style={{
-            left: `${boundingRect().left + boundingRect().width}px`,
-            top: `${boundingRect().top + boundingRect().height + offset()}px`,
-            width: `${boundingRect().width}px`,
-            translate: '-100%',
-
-            ...props.style
-          }}
         >
           {props.children}
         </div>

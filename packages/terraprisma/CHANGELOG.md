@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231112142213
+
+### Patch Changes
+
+- make the positioning of the Dropdown automatic depending on weather it will be outside the screen or not
+
 ## 0.0.0-testing-20231112132044
 
 ### Patch Changes
