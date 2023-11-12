@@ -1,7 +1,8 @@
 {
   "name": "grapes-project",
   "scripts": {
-    "changeset:publish": "changeset version --snapshot testing && turbo run build --filter='./packages/*' && changeset publish"
+    "changeset:version": "changeset version --snapshot testing",
+    "publish": "turbo run build --filter='./packages/*' && changeset publish"
   },
   "repository": {
     "type": "git",

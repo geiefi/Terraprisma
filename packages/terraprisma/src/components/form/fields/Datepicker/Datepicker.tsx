@@ -212,6 +212,7 @@ const Datepicker = setupFieldComponent<Date>().with(
           <Portal>
             <GrowFade growingOrigin="top">
               <Dropdown
+                align="right"
                 for={inputContainerRef}
                 ref={(ref) => (dropdownRef = ref)}
                 tabindex="0"

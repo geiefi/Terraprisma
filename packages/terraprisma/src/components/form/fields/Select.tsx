@@ -207,6 +207,7 @@ const Select = setupFieldComponent().with(
           <Portal>
             <GrowFade growingOrigin="top">
               <Dropdown
+                align="right"
                 for={inputContainerRef}
                 ref={(ref) => (dropdownRef = ref)}
                 class="flex flex-col gap-2 max-h-[10rem]"

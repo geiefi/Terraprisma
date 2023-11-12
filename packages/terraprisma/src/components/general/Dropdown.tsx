@@ -44,6 +44,11 @@ export interface DropdownProps extends ParentProps {
   visible?: boolean;
 
   /**
+   * @default 'center'
+   */
+  align?: 'left' | 'center' | 'right';
+
+  /**
    * @description The distance between the Dropdown's anchor and itself in pixels.
    *
    * @default 5
@@ -98,20 +103,32 @@ const Dropdown = componentBuilder<DropdownProps>()
 
     const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
 
+    const align = createMemo(() => props.align ?? 'center');
+
     createEffect(
       on(
         () => [props.visible, boundingRect(), dropdownRef()],
         () => {
           const dropdownRefAccessed = dropdownRef();
           if (dropdownRefAccessed) {
-            dropdownRefAccessed.style.left = `${
-              boundingRect().left + boundingRect().width
-            }px`;
+            if (align() === 'left') {
+              dropdownRefAccessed.style.left = `${boundingRect().left}px`;
+              dropdownRefAccessed.style.translate = '0% 0%';
+            } else if (align() === 'center') {
+              dropdownRefAccessed.style.left = `${
+                boundingRect().left + boundingRect().width / 2
+              }px`;
+              dropdownRefAccessed.style.translate = '-50% 0%';
+            } else if (align() === 'right') {
+              dropdownRefAccessed.style.left = `${
+                boundingRect().left + boundingRect().width
+              }px`;
+              dropdownRefAccessed.style.translate = '-100% 0%';
+            }
             dropdownRefAccessed.style.top = `${
               boundingRect().top + boundingRect().height + offset()
             }px`;
             dropdownRefAccessed.style.width = `${boundingRect().width}px`;
-            dropdownRefAccessed.style.translate = '-100%';
 
             requestAnimationFrame(() => {
               if (
@@ -121,7 +138,15 @@ const Dropdown = componentBuilder<DropdownProps>()
                 dropdownRefAccessed.style.top = `${
                   boundingRect().top - offset()
                 }px`;
-                dropdownRefAccessed.style.translate = '-100% -100%';
+
+                // add an extra -100% on the `y` axis
+                if (align() === 'left') {
+                  dropdownRefAccessed.style.translate = '0 -100%';
+                } else if (align() === 'center') {
+                  dropdownRefAccessed.style.translate = '-50% -100%';
+                } else if (align() === 'right') {
+                  dropdownRefAccessed.style.translate = '-100% -100%';
+                }
               }
             });
           }

@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231112210109
+
+### Patch Changes
+
+- add align prop to the Dropdown and use align="right" on all fields that use it
+
 ## 0.0.0-testing-20231112204523
 
 ### Patch Changes
