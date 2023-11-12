@@ -4,7 +4,8 @@ node_modules
 .turbo
 dist
 lib
-.vercel
+apps/*/.vercel
+apps/*/.solid
 package-lock.json
 tsconfig.build.tsbuildinfo
 */tsconfig.build.tsbuildinfo

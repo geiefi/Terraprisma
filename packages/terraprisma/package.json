@@ -1,27 +1,27 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231111152603",
+  "version": "0.0.0-testing-20231111165507",
   "type": "module",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
   "files": [
     "dist"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "./dist/client/index.d.ts",
   "exports": {
     ".": {
-      "solid": "./dist/source/index.jsx",
-      "import": "./dist/esm/index.js",
-      "browser": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "node": "./dist/cjs/index.js"
+      "types": "./dist/client/index.d.ts",
+      "browser": "./dist/index.js",
+      "node": "./dist/index.cjs",
+      "default": "./dist/client/index.jsx",
+      "solid": "./dist/client/index.jsx",
+      "astro": "./dist/client/index.jsx"
     },
     "./dist/styles.css": {
+      "default": "./dist/styles.css",
       "solid": "./dist/styles.css",
-      "import": "./dist/styles.css",
+      "astro": "./dist/styles.css",
       "browser": "./dist/styles.css",
       "require": "./dist/styles.css",
       "node": "./dist/styles.css"

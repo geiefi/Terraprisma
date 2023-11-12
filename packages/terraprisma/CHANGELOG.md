@@ -1,5 +1,23 @@
 # terraprisma
 
+## 0.0.0-testing-20231111165856
+
+### Patch Changes
+
+- remove extra styles css addition
+
+## 0.0.0-testing-20231111165507
+
+### Patch Changes
+
+- make the recursive css copying have limitless depth
+
+## 0.0.0-testing-20231111162248
+
+### Patch Changes
+
+- include the css files in the source folder
+
 ## 0.0.0-testing-20231111152603
 
 ### Patch Changes

@@ -10,7 +10,7 @@ import {
   onCleanup,
   Show
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
+import { isServer, Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
 import './Ripple.css';
@@ -142,6 +142,8 @@ const Ripple = componentBuilder<RippleProps>()
     );
 
     const rippledElement = createMemo<HTMLElement | undefined>(() => {
+      if (isServer) return undefined;
+
       const firstElementChild = childrenList().find(
         (c) => c instanceof HTMLElement
       );
