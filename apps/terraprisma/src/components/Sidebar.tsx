@@ -62,7 +62,7 @@ export function Sidebar() {
         {/*   getting started */}
         {/* </h1> */}
 
-        <Link to="/">overview</Link>
+        <Link to="/overview">overview</Link>
         {/* <Link to="/installation">installation</Link> */}
       </List>
 

@@ -1,3 +1,4 @@
+import { renderToString } from 'solid-js/web';
 import {
   StartServer,
   createHandler,

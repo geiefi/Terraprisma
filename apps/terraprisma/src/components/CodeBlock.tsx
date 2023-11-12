@@ -1,25 +1,16 @@
 import { createResource, createSignal, Suspense } from 'solid-js';
-import server$ from 'solid-start/server';
+import { Portal } from 'solid-js/web';
 
-import loadLanguages from 'prismjs/components/';
 import { IconButton, Tooltip, GrowFade, Icons } from 'terraprisma';
 
 import './CodeBlock.theme.css';
-import { Portal } from 'solid-js/web';
-
-const getHighlightedHTML = server$(async (code: string, language: string) => {
-  const Prismjs = await import('prismjs');
-
-  if (typeof Prismjs.languages[language] === 'undefined') {
-    loadLanguages(language);
-  }
-
-  return Prismjs.highlight(code, Prismjs.languages[language], language);
-});
 
 export function CodeBlock(props: { code: string; language: string }) {
-  const [data] = createResource(() =>
-    getHighlightedHTML(props.code, props.language)
+  const [prismGeneratedHTML] = createResource(props, ({ code, language }) =>
+    fetch(`/api/${language}/highlight`, {
+      method: 'POST',
+      body: code
+    }).then((res) => res.text())
   );
 
   let copyButtonRef: HTMLButtonElement;
@@ -29,7 +20,7 @@ export function CodeBlock(props: { code: string; language: string }) {
     <pre class={`relative w-full h-fit language-${props.language}`}>
       <Suspense fallback={<>Loading highlighted code...</>}>
         {/* eslint-disable-next-line */}
-        <code class="!bg-transparent !p-0" innerHTML={data()}></code>
+        <code class="!bg-transparent !p-0" innerHTML={prismGeneratedHTML()}></code>
 
         <IconButton
           ref={(ref) => (copyButtonRef = ref)}

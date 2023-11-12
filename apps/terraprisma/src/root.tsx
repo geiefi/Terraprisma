@@ -12,7 +12,7 @@ import {
   Title
 } from 'solid-start';
 
-import { VoidTheme, Box, setupTerraprisma, Container } from 'terraprisma';
+import { VoidTheme, setupTerraprisma, Container, Box } from 'terraprisma';
 import 'terraprisma/dist/styles.css';
 import 'material-symbols';
 
@@ -38,29 +38,31 @@ export default function Root() {
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Body style={initialStyles}>
-        <Suspense>
-          <ErrorBoundary>
+        <ErrorBoundary>
+          <Suspense>
             <ThemeProvider>
-              <Container class="h-screen min-h-fit py-5 flex flex-col gap-6">
-                <Logo />
+              <main>
+                <Container class="h-screen min-h-fit py-5 flex flex-col gap-6">
+                  <Logo />
 
-                <div class="flex justify-around items-stretch w-full h-full gap-x-10">
-                  <div class="w-full max-h-full max-w-[368px]">
-                    <Sidebar />
+                  <div class="flex justify-around items-stretch w-full h-full gap-x-10">
+                    <div class="w-full max-h-full max-w-[368px]">
+                      <Sidebar />
+                    </div>
+
+                    <div class="w-full h-full min-h-fit max-w-[1024px]">
+                      <Box class="h-fit">
+                        <Routes>
+                          <FileRoutes />
+                        </Routes>
+                      </Box>
+                    </div>
                   </div>
-
-                  <main class="w-full h-full min-h-fit max-w-[1024px]">
-                    <Box class="h-fit">
-                      <Routes>
-                        <FileRoutes />
-                      </Routes>
-                    </Box>
-                  </main>
-                </div>
-              </Container>
+                </Container>
+              </main>
             </ThemeProvider>
-          </ErrorBoundary>
-        </Suspense>
+          </Suspense>
+        </ErrorBoundary>
         <Scripts />
       </Body>
     </Html>

@@ -8,8 +8,8 @@ export default defineConfig({
       adapter: vercel(),
       ssr: false
     })
-  ]
-  // ssr: {
-  //   noExternal: 'terraprisma'
-  // }
+  ],
+  ssr: {
+    external: ['terraprisma']
+  }
 });
