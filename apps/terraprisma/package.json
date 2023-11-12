@@ -1,6 +1,8 @@
 {
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma-website",
   "private": true,
+  "packageManager": ">=npm@9.0.0",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
@@ -24,10 +26,9 @@
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.10",
     "solid-start-vercel": "^0.3.10",
-    "terraprisma": "^0.0.0-testing-20231112132044"
+    "terraprisma": "^0.0.0-testing-20231112210109"
   },
   "engines": {
     "node": "18.x"
-  },
-  "version": null
+  }
 }

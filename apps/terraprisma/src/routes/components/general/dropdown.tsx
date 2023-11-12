@@ -145,6 +145,20 @@ return (
                 </p>
               )
             },
+            align: {
+              type: '"left" | "center" | "right"',
+              default: '"center"',
+              description: (
+                <p>
+                  The alignment of the dropdown relative to the anchor, this
+                  only changes if the dropdown <b>aligns</b> with either the{' '}
+                  <code>left</code>, <code>center</code> or <code>right</code>{' '}
+                  of the anchor not weather it is on the top or the bottom of
+                  it, this is computed automatically to position it inside the
+                  user's view.
+                </p>
+              )
+            },
             visible: {
               type: 'boolean',
               default: 'false',
