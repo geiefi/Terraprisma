@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231112204523
+
+### Patch Changes
+
+- Fixed exports from `themes`
+
 ## 0.0.0-testing-20231112142213
 
 ### Patch Changes
