@@ -17,7 +17,9 @@ export function CodeBlock(props: { code: string; language: string }) {
   const [isShowingCopyTooltip, setShowingCopyTooltip] = createSignal(false);
 
   return (
-    <pre class={`relative w-full h-fit language-${props.language}`}>
+    <pre
+      class={`relative w-full h-fit max-h-[600px] overflow-auto language-${props.language}`}
+    >
       <Suspense fallback={<>Loading highlighted code...</>}>
         {/* eslint-disable-next-line */}
         <code class="!bg-transparent !p-0" innerHTML={prismGeneratedHTML()}></code>
@@ -27,7 +29,7 @@ export function CodeBlock(props: { code: string; language: string }) {
           onClick={() => navigator.clipboard.writeText(props.code)}
           onMouseOver={() => setShowingCopyTooltip(true)}
           onMouseLeave={() => setShowingCopyTooltip(false)}
-          class="absolute left-full top-0 -translate-x-full translate-y-2 -ml-2"
+          class="sticky left-full bottom-full -translate-x-full translate-y-2 -ml-2"
           size="small"
           squarish
         >
