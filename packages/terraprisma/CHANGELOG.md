@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231112132044
+
+### Patch Changes
+
+- fixed most ssr problems with solid by generating code for the server and client and making them both hydrated
+
 ## 0.0.0-testing-20231111165856
 
 ### Patch Changes
