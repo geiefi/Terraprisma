@@ -53,7 +53,7 @@ export default function RipplePage() {
     This is an {'<a>'} element, but with a ripple
   </a>
 </Ripple>`}
-        preview={() => (
+        preview={
           <Ripple>
             <a
               style={{
@@ -68,7 +68,7 @@ export default function RipplePage() {
               This is an {'<a>'} element, but with a ripple
             </a>
           </Ripple>
-        )}
+        }
       />
 
       <h2>API Reference</h2>

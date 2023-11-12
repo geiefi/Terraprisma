@@ -44,7 +44,7 @@ export default function Buttons() {
 
       <CodeExample
         source={`<Button>Click me</Button>`}
-        preview={<Button>Click me</Button>}
+        preview={() => <Button>Click me</Button>}
       />
 
       <h3>API Reference</h3>

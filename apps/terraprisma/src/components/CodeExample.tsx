@@ -1,11 +1,15 @@
 import { createSignal, JSX, Match, Switch } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
 import { Box } from 'terraprisma';
 
 import { CodeBlock } from './CodeBlock';
 import { Tab, Tabs } from './Tabs';
 
-export function CodeExample(props: { source: string; preview: JSX.Element }) {
+export function CodeExample(props: {
+  source: string;
+  preview: () => JSX.Element;
+}) {
   const [activeTab, setActiveTab] = createSignal<'source' | 'preview'>(
     'preview'
   );
@@ -26,7 +30,9 @@ export function CodeExample(props: { source: string; preview: JSX.Element }) {
 
         <div class="grid place-items-center">
           <Switch>
-            <Match when={activeTab() === 'preview'}>{props.preview}</Match>
+            <Match when={activeTab() === 'preview'}>
+              <Dynamic component={props.preview} />
+            </Match>
 
             <Match when={activeTab() === 'source'}>
               <CodeBlock code={props.source} language="tsx" />
