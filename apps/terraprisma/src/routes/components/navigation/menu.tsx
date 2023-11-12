@@ -1,145 +1,106 @@
+import { createSignal } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import { A } from 'solid-start';
 
-import { Box, Ripple } from 'terraprisma';
+import { Box, Button, Divisor, Menu, MenuItem, Icons } from 'terraprisma';
 
 import { CodeExample } from '~/components/CodeExample';
-import { PropsTable } from '~/components/PropsTable';
 
 export default function RipplePage() {
   return (
     <article>
-      <h1>Ripple</h1>
+      <h1>Menu</h1>
 
       <p>
-        This is a utility component that is useful when you want to make
-        something clickable. All it does is add an additional click event
-        listener on its child and then render on the <code>body</code> of the{' '}
-        <b>website</b> a list of ripples that are created each time the element
-        is clicked.
+        The is the classical Dropdown Menu that is on almost every website. It
+        is basically a composition of a List component and a Dropdown one.
       </p>
 
       <p>
-        This component also does a few other things, like adjusting the radius
-        of the wrapper of a ripple, or updating its positioning that I won't go
-        into detail.
+        Since it is based on the{' '}
+        <A href="/components/general/dropdown">Dropdown</A> its positioning will
+        be the same as the Dropdown would be in the situtation.
       </p>
 
       <h2>Usage</h2>
 
       <p>
-        This is not a hard component to use, it is one of which I am the
-        proudest with on DX.
-      </p>
-
-      <p>
-        All you need to do is wrap your element with the{' '}
-        <code>{'<Ripple>'}</code> and it will magically work. It will not even
-        mess around with the positioning of the child element, it makes no
-        difference in the layout at the end.
+        This component is not hard to use, but like most components like this
+        one, it is kind of annoying with its refs. So the API for this will
+        change but, for now, it looks something like this:
       </p>
 
       <CodeExample
-        source={`<Ripple>
-  <a
-    style={{
-      width: 'fit-content',
-      height: 'fit-content',
-      'border-radius': '5px',
-      'padding-inline': '10px',
-      'padding-block': '5px'
-    }}
-    href="#"
-  >
-    This is an {'<a>'} element, but with a ripple
-  </a>
-</Ripple>`}
-        preview={
-          <Ripple>
-            <a
-              style={{
-                width: 'fit-content',
-                height: 'fit-content',
-                'border-radius': '5px',
-                'padding-inline': '10px',
-                'padding-block': '5px'
-              }}
-              href="#"
-            >
-              This is an {'<a>'} element, but with a ripple
-            </a>
-          </Ripple>
-        }
+        source={`const [isVisible, setVisible] = createSignal(false);
+
+const [buttonRef, setButtonRef] = createSignal<HTMLButtonElement>();
+
+return (
+  <>
+    <Button ref={setButtonRef} onClick={() => setVisible((v) => !v)}>
+      Menu button <ArrowDropDown />
+    </Button>
+
+    <Portal>
+      {/* Always recommended to wrap it in a Portal for positioning to work well */}
+      <Menu
+        class="!w-[256px]"
+        visible={isVisible()}
+        for={buttonRef()!}
+      >
+        <MenuItem>new tab</MenuItem>
+        <MenuItem>new window</MenuItem>
+        <MenuItem>new private window</MenuItem>
+        <Divisor /> {/* from components -> layout */}
+        <MenuItem>Show bookmarks</MenuItem>
+        <MenuItem>Show full URLs</MenuItem>
+      </Menu>
+    </Portal>
+  </>
+);`}
+        preview={() => {
+          const [isVisible, setVisible] = createSignal(false);
+
+          const [buttonRef, setButtonRef] = createSignal<HTMLButtonElement>();
+
+          return (
+            <>
+              <Button ref={setButtonRef} onClick={() => setVisible((v) => !v)}>
+                Menu button <Icons.ArrowDropDown />
+              </Button>
+
+              <Portal>
+                {/* Always recommended to wrap it in a Portal for positioning to work well */}
+                <Menu
+                  class="!w-[256px]"
+                  visible={isVisible()}
+                  for={buttonRef()!}
+                >
+                  <MenuItem>new tab</MenuItem>
+                  <MenuItem>new window</MenuItem>
+                  <MenuItem>new private window</MenuItem>
+                  <Divisor /> {/* from components -> layout */}
+                  <MenuItem>Show bookmarks</MenuItem>
+                  <MenuItem>Show full URLs</MenuItem>
+                </Menu>
+              </Portal>
+            </>
+          );
+        }}
       />
 
       <h2>API Reference</h2>
 
       <Box>
         <p>
-          It is also good to note that besides the bellow props, all of the html
-          attributes available for a <code>{'<div></div>'}</code> element are
-          also availalbe for this component.
+          This compone thas no props of its own except for <code>children</code>
+          .
         </p>
-
-        <PropsTable
-          schemaPerProperty={{
-            noRipple: {
-              type: 'boolean',
-              description:
-                'This will basically disable the ripple animation and the effect overall',
-              default: 'false'
-            },
-            color: {
-              type: 'Accents',
-              default: 'accent',
-              description: (
-                <>
-                  <p>
-                    One of the available accenting colors from your themes's
-                    definitions.
-                  </p>
-                  <p>
-                    See <A href="/concepts/theming">theming</A> for more
-                    information
-                  </p>
-                </>
-              )
-            },
-            center: {
-              type: 'boolean',
-              default: 'false',
-              description:
-                "Weather or not the Ripple should come from the center instead of the mouse's position"
-            },
-            wrapperProps: {
-              type: (
-                <>
-                  all the attributes for the <code>{'<div></div>'}</code>{' '}
-                  element, but without the style or children
-                </>
-              ),
-              description: (
-                <>
-                  Each Ripple that is created on click of an element has a
-                  wrapper so that we can do proper positioning of the ripple,
-                  this forces us to have a prop llike this to still allow for
-                  flexibility where the Ripple may be used.
-                </>
-              )
-            },
-            contrastWithBg: {
-              type: 'boolean',
-              default: 'false',
-              description: (
-                <>
-                  By default, the Ripple will be colored as a opaque version of
-                  the <code>[color]-bg</code> variant of the choosen{' '}
-                  <code>color</code>. But with this prop set to true the one
-                  that will be used will be <code>[color]-fg</code> instead.
-                </>
-              )
-            }
-          }}
-        />
+        <p>
+          It is also good to note, all of the props attributes available for the
+          component <A href="/components/general/dropdown">Dropdown</A> are also
+          availalbe for this component.
+        </p>
       </Box>
     </article>
   );
