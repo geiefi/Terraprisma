@@ -4,7 +4,6 @@ import Prismjs from 'prismjs';
 import loadLanguages from 'prismjs/components/';
 
 export async function POST(event: APIEvent) {
-  console.log(event);
   const language = event.params.language;
   const code = await event.request.text();
 
