@@ -102,11 +102,11 @@ export default function Buttons() {
 
       <CodeExample
         source={`<IconButton><ContentCopy/></IconButton>`}
-        preview={
+        preview={() => (
           <IconButton>
             <Icons.ContentCopy />
           </IconButton>
-        }
+        )}
       />
 
       <h3>API Reference</h3>
@@ -136,9 +136,9 @@ export default function Buttons() {
 
       <CodeExample
         source={`<TextButton>I look like a text, but actually am a button!</TextButton>`}
-        preview={
+        preview={() => (
           <TextButton>I look like a text, but actually am a button!</TextButton>
-        }
+        )}
       />
 
       <h3>API Reference</h3>
@@ -174,11 +174,11 @@ export default function Buttons() {
 
       <CodeExample
         source={`<OutlinedButton>I have an outline, but when hovered I get fully accenty!</OutlinedButton>`}
-        preview={
+        preview={() => (
           <OutlinedButton>
             I have an outline, but when hovered I get fully accenty!
           </OutlinedButton>
-        }
+        )}
       />
 
       <h3>API Reference</h3>
