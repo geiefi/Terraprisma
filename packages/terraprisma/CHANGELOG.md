@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231113011417
+
+### Patch Changes
+
+- add missing extendPropsFrom key on dropdown
+
 ## 0.0.0-testing-20231112210109
 
 ### Patch Changes

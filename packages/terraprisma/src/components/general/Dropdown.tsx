@@ -89,6 +89,7 @@ const Dropdown = componentBuilder<DropdownProps>()
       'visible',
       'offsetFromAnchor',
       'style',
+      'align',
       'children'
     ])
   )
