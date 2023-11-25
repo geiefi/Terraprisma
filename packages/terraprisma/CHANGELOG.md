@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231125233950
+
+### Patch Changes
+
+- 450f324: fix content's opacity disappearing on the Input
+
 ## 0.0.0-testing-20231125233640
 
 ### Patch Changes
