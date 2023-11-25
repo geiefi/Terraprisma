@@ -112,10 +112,12 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
               ref={mergeRefs(elProps.ref, (r) => (input = r))}
               disabled={disabled()}
               type={props.type}
+              data-focused={focused()}
+              data-has-content={hasContent()}
               class={mergeClass(
-                'border-none outline-none bg-transparent w-full h-min box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
+                'border-none !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
+                'data-[focused=false]:opacity-0 data-[has-content=false]:opacity-0',
                 typeof props.label === 'undefined' && 'py-2',
-                !focused() && !hasContent() && '!opacity-0',
                 elProps.class
               )}
               color={color()}

@@ -1,3 +1,5 @@
+import { twMerge } from 'tailwind-merge';
+
 type AllowedValue =
   | string
   | false
@@ -17,21 +19,23 @@ type AllowedValue =
  * ```
  */
 export function mergeClass(...classes: AllowedValue[]) {
-  return classes
-    .flat(10)
-    .filter(Boolean)
-    .map((c) => {
-      if (typeof c === 'object' && c !== null && !Array.isArray(c)) {
-        const resultingClass = [];
-        for (const [classes, shouldShow] of Object.entries(c)) {
-          if (!!shouldShow) {
-            resultingClass.push(classes);
+  return twMerge(
+    classes
+      .flat(10)
+      .filter(Boolean)
+      .map((c) => {
+        if (typeof c === 'object' && c !== null && !Array.isArray(c)) {
+          const resultingClass = [];
+          for (const [classes, shouldShow] of Object.entries(c)) {
+            if (!!shouldShow) {
+              resultingClass.push(classes);
+            }
           }
+          return resultingClass.join(' ');
         }
-        return resultingClass.join(' ');
-      }
 
-      return c;
-    })
-    .join(' ');
+        return c;
+      })
+      .join(' ')
+  );
 }
