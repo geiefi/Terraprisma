@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
+    "isolatedModules": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "src",
+    "noEmit": true
+  },
+  "exclude": ["**/temp/", "**/.*/", "**/lib", "**/node_modules"],
+  "include": ["src/**/*"]
+}

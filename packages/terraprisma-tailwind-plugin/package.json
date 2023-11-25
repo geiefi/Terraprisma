@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
+  "name": "terraprisma-tailwind-plugin",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "A tailwind plugin that adds useful variants to access the current Terraprisma theme's variables",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "private": false,
+  "keywords": [
+    "ui",
+    "components",
+    "solid",
+    "solidjs",
+    "solid-js",
+    "typesafe",
+    "material",
+    "material design",
+    "flexible components"
+  ],
+  "scripts": {
+    "build": "tsup ./src/index.ts --dts",
+    "dev": "pnpm build --watch",
+    "lint:types": "tsc",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier . --write",
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielmfern/terraprisma.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gabrielmfern/terraprisma/issues"
+  },
+  "homepage": "https://github.com/gabrielmfern/terraprisma#readme",
+  "author": "Gabriel Miranda",
+  "devDependencies": {
+    "@types/tinycolor2": "^1.4.3",
+    "prettier": "^3.0.3",
+    "tsup": "^8.0.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.3.5",
+    "tinycolor2": "^1.6.0"
+  }
+}
