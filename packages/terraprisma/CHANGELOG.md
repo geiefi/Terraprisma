@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231125233640
+
+### Patch Changes
+
+- fix problems with class merging and the input's layout
+
 ## 0.0.0-testing-20231113011417
 
 ### Patch Changes
