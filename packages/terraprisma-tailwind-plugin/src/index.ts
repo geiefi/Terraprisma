@@ -28,7 +28,7 @@ export default function (initalStyles: Record<`--${string}`, string>) {
       let propertyName = rawPropertyName.match(
         /(?<=--).*(?=-(fg|bg|border)(\b|$))/g
       )?.[0];
-      console.log(propertyName);
+
       if (typeof propertyName === 'undefined') {
         propertyName = rawPropertyName.match(
           /(?<=(fg|bg|border)(\b|$)-).*/g

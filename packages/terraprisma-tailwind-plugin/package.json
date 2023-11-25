@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma-tailwind-plugin",
-  "version": "0.0.0",
+  "version": "0.0.0-testing-20231125171216",
   "type": "module",
   "description": "A tailwind plugin that adds useful variants to access the current Terraprisma theme's variables",
   "license": "MIT",
