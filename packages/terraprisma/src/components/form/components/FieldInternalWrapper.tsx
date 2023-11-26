@@ -23,7 +23,7 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
   return (
     <div
       {...divProps}
-      class={mergeClass('w-full h-full inline-block px-2', divProps.class)}
+      class={mergeClass('w-full h-full inline-block', divProps.class)}
     >
       {divProps.children}
 
