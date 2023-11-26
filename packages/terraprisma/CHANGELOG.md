@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231126010501
+
+### Patch Changes
+
+- remove field internal wrapper's padding
+
 ## 0.0.0-testing-20231125233950
 
 ### Patch Changes
