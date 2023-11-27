@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231127063413
+
+### Patch Changes
+
+- improved composability for the Select component
+
 ## 0.0.0-testing-20231126010501
 
 ### Patch Changes

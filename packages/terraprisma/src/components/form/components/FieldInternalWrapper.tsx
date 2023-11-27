@@ -1,4 +1,4 @@
-import { Component, ComponentProps, Show } from 'solid-js';
+import { ParentProps, Show } from 'solid-js';
 
 import { useField } from '../fields/FieldContext';
 import { mergeClass } from '../../../utils';
@@ -11,7 +11,7 @@ import { Collapse } from '../../transitions';
  * If there are no errors it just wraps the field's internals and
  * adds its helper text bellow.
  */
-const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
+const FieldInternalWrapper = (props: ParentProps) => {
   const {
     hasErrors,
     errorsT: [errors],
@@ -21,11 +21,8 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
   } = useField()!;
 
   return (
-    <div
-      {...divProps}
-      class={mergeClass('w-full h-full inline-block', divProps.class)}
-    >
-      {divProps.children}
+    <>
+      {props.children}
 
       <Collapse>
         <Show when={fieldProps.helperText || hasErrors()}>
@@ -44,7 +41,7 @@ const FieldInternalWrapper: Component<ComponentProps<'div'>> = (divProps) => {
           </div>
         </Show>
       </Collapse>
-    </div>
+    </>
   );
 };
 
