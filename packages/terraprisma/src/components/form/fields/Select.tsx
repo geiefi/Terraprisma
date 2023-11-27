@@ -1,6 +1,5 @@
 import {
   Component,
-  createMemo,
   children as accessChildren,
   JSX,
   For,
@@ -238,7 +237,6 @@ const Select = setupFieldComponent().with(
   Option: typeof Option;
   Dropdown(
     props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
-      chilren: JSX.Element;
       style?: JSX.CSSProperties;
     }
   ): JSX.Element;

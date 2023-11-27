@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231127064046
+
+### Patch Changes
+
+- fix type issues with Select.Dropdown
+
 ## 0.0.0-testing-20231127063636
 
 ### Patch Changes

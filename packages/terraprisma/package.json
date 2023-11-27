@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231127063636",
+  "version": "0.0.0-testing-20231127064046",
   "type": "module",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
@@ -78,16 +78,13 @@
     "ts-transformer-keys": "^0.4.4",
     "typescript": "^5.2.2",
     "vite-plugin-solid": "^2.7.2",
-    "vitest": "^0.34.6"
-  },
-  "peerDependencies": {
+    "vitest": "^0.34.6",
     "solid-js": "^1.8.5"
   },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",
     "@solid-primitives/props": "^3.1.8",
     "@solid-primitives/refs": "^1.0.5",
-    "solid-js": "^1.8.5",
     "solid-transition-group": "^0.2.3",
     "tailwind-merge": "^2.0.0",
     "tinycolor2": "^1.6.0"
