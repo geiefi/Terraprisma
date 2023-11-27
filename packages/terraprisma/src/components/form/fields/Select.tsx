@@ -237,7 +237,7 @@ const Select = setupFieldComponent().with(
   ): JSX.Element;
   Option: typeof Option;
   Dropdown(
-    props: ComponentProps<typeof Dropdown> & {
+    props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
       chilren: JSX.Element;
       style?: JSX.CSSProperties;
     }
