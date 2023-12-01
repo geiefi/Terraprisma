@@ -115,7 +115,11 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
               class={mergeClass(
                 'border-none !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
                 typeof props.label === 'undefined' && 'py-2',
-                !focused() && !hasContent() && '!opacity-0',
+                !focused() &&
+                  !hasContent() &&
+                  (typeof props.label !== 'undefined' ||
+                    !elProps.placeholder) &&
+                  '!opacity-0',
                 elProps.class
               )}
               color={color()}

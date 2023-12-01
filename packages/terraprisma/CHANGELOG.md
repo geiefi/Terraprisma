@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231201035624
+
+### Patch Changes
+
+- fix placeholder not appearing on inputs without labels, content and with placeholder
+
 ## 0.0.0-testing-20231127064046
 
 ### Patch Changes
