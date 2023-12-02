@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231202170739
+
+### Patch Changes
+
+- fix problems with types on the Input and with the RadioGroup
+
 ## 0.0.0-testing-20231201035624
 
 ### Patch Changes

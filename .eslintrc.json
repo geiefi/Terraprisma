@@ -4,15 +4,12 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "@typescript-eslint",
-    "solid",
-    "prettier"
+    "solid"
   ],
   "extends": [
-    "plugin:solid/recommended",
-    "prettier"
+    "plugin:solid/recommended"
   ],
   "rules": {
-    "prettier/prettier": "warn",
     "eol-last": "error",
     "comma-dangle": ["error", "never"],
     "@typescript-eslint/no-non-null-assertion": "off",

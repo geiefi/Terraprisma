@@ -22,7 +22,7 @@ import {
   TextArea,
   Toggler
 } from './fields';
-import { InputBaseValue, InputProps, InputType } from './fields/Input/Input';
+import { InputBaseValue, InputProps, InputType, RawInput } from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './fields/Select';
 import { RadioGroupOptionProps, RadioGroupProps } from './fields/RadioGroup';
@@ -51,7 +51,7 @@ export type Form<Value extends FormValue> = {
     Name extends FieldName<Value, InputBaseValue<Type>>,
     Type extends InputType = undefined
   >(
-    props: InputProps<Value, Type, Name> &
+    props: InputProps<Type, Value, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
   ): JSX.Element;
   Slider<Name extends FieldName<Value, number>>(
@@ -145,7 +145,7 @@ export function createForm<Value extends FormValue>(
     />
   );
 
-  form.Input = Input<Value>;
+  form.Input = RawInput<Value>;
   form.Slider = Slider<Value>;
   form.Select = Select<Value>;
   form.RadioGroup = RadioGroup<Value>;

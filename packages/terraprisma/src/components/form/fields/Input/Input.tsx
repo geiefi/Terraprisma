@@ -1,4 +1,4 @@
-import { JSX, createEffect } from 'solid-js';
+import { ComponentProps, JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
@@ -35,19 +35,13 @@ export type InputType =
   | 'email'
   | 'password'
   | undefined;
-export type InputBaseValue<Type> = Type extends 'text'
-  ? string
-  : Type extends 'email'
-  ? string
-  : Type extends 'number'
+export type InputBaseValue<Type extends InputType> = Type extends 'number'
   ? number
-  : Type extends 'password'
-  ? string
   : string;
 
 export interface InputProps<
+  Type extends InputType = InputType,
   OwnerFormValue extends FormValue = FormValue,
-  Type extends InputType = undefined,
   Name extends FieldName<OwnerFormValue, InputBaseValue<Type>> = FieldName<
     OwnerFormValue,
     InputBaseValue<Type>
@@ -60,7 +54,7 @@ export interface InputProps<
   onChange?: (value: string, event?: InputOnChangeEvent) => void;
 }
 
-const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
+export const RawInput = setupFieldComponent().with(
   componentBuilder<InputProps>()
     .factory(addAccentColoring<InputProps>())
     .factory(
@@ -116,10 +110,10 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
                 'border-none !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
                 typeof props.label === 'undefined' && 'py-2',
                 !focused() &&
-                  !hasContent() &&
-                  (typeof props.label !== 'undefined' ||
-                    !elProps.placeholder) &&
-                  '!opacity-0',
+                !hasContent() &&
+                (typeof props.label !== 'undefined' ||
+                  !elProps.placeholder) &&
+                '!opacity-0',
                 elProps.class
               )}
               color={color()}
@@ -145,5 +139,9 @@ const Input = setupFieldComponent<InputBaseValue<undefined>>().with(
       );
     })
 );
+
+const Input = <Type extends InputType = undefined>(
+  props: ComponentProps<typeof RawInput> & InputProps<Type>
+) => <RawInput {...props} />;
 
 export default Input;

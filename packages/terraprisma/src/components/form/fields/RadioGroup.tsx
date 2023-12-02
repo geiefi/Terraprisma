@@ -95,11 +95,11 @@ const RadioInternal = componentBuilder<RadioGroupOptionProps>()
             isDisabled()
               ? 'border-[var(--muted-bg)] after:bg-[var(--muted-bg)]'
               : [
-                  'cursor-pointer after:bg-[var(--color)]',
-                  isChecked()
-                    ? 'border-[var(--color)]'
-                    : 'border-[var(--deeper-fg)]'
-                ],
+                'cursor-pointer after:bg-[var(--color)]',
+                isChecked()
+                  ? 'border-[var(--color)]'
+                  : 'border-[var(--deeper-fg)]'
+              ],
             size() === 'small' && '!w-4 !h-4',
             size() === 'medium' && '!w-6 !h-6',
             size() === 'large' && '!w-8 !h-8'
@@ -160,15 +160,15 @@ export interface RadioGroupProps<
   onChange?: (value: AllowedValue, event: MouseEvent) => any;
 
   children?:
-    | JSX.Element
-    | ((Option: Component<ComponentProps<typeof RadioOption>>) => JSX.Element);
+  | JSX.Element
+  | ((Option: Component<ComponentProps<typeof RadioOption>>) => JSX.Element);
 }
 
-const RadioGroup = setupFieldComponent().with(
+const RawRadioGroup = setupFieldComponent().with(
   componentBuilder<RadioGroupProps>()
     .factory(addAccentColoring<RadioGroupProps>())
     .factory(
-      extendPropsFrom<RadioGroupProps & { color?: Accents }, 'div'>([
+      extendPropsFrom<RadioGroupProps & { color?: Accents }, typeof Stack>([
         ...FieldPropKeys,
         'label',
         'radiosDirection',
@@ -217,17 +217,14 @@ const RadioGroup = setupFieldComponent().with(
       });
 
       return (
-        <FieldInternalWrapper
-          {...elProps}
-          class={mergeClass('radio-group', elProps.class)}
-        >
+        <FieldInternalWrapper>
           <Show when={props.label}>
             <Label for={id()} hasErrors={hasErrors()}>
               {props.label}
             </Label>
           </Show>
 
-          <Stack spacing={10} direction={props.radiosDirection}>
+          <Stack spacing={10} direction={props.radiosDirection} {...elProps}>
             <For each={options()}>
               {(optionProps, i) => (
                 <RadioInternal
@@ -254,5 +251,11 @@ const RadioGroup = setupFieldComponent().with(
       );
     })
 );
+
+const RadioGroup = RawRadioGroup as typeof RawRadioGroup & {
+  Option: typeof RadioOption;
+};
+
+RadioGroup.Option = RadioOption;
 
 export default RadioGroup;
