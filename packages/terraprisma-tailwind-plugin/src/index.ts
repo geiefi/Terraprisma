@@ -44,7 +44,6 @@ export default function (initalStyles: Record<`--${string}`, string>) {
       const propertyOpacity = Array.from(
         rawPropertyName.matchAll(/-([0-9]+)(\b|$)/g)
       )[0]?.[1];
-      console.log(rawPropertyName, propertyOpacity);
       if (typeof propertyOpacity !== 'undefined') {
         utilityNameToAdd += `\\/${propertyOpacity}`;
       }
@@ -63,8 +62,6 @@ export default function (initalStyles: Record<`--${string}`, string>) {
         };
       }
     }
-
-    console.log(utilities);
 
     addUtilities(utilities);
   });

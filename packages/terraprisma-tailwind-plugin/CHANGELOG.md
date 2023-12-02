@@ -1,5 +1,11 @@
 # terraprisma-tailwind-plugin
 
+## 0.0.0-testing-20231202052349
+
+### Patch Changes
+
+- remove all console.logs
+
 ## 0.0.0-testing-20231125171216
 
 ### Patch Changes
