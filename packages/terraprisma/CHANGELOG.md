@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231202190035
+
+### Patch Changes
+
+- fix input type number not parsing value into a float before updating form
+
 ## 0.0.0-testing-20231202170739
 
 ### Patch Changes

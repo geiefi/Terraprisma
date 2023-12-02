@@ -1,4 +1,4 @@
-import { ComponentProps, JSX, createEffect } from 'solid-js';
+import { ComponentProps, JSX, Owner, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
@@ -51,7 +51,14 @@ export interface InputProps<
 
   type?: Type;
 
-  onChange?: (value: string, event?: InputOnChangeEvent) => void;
+  onChange?: (
+    value: MaskedFieldProps<
+      OwnerFormValue,
+      InputBaseValue<Type>,
+      Name
+    >['value'],
+    event?: InputOnChangeEvent
+  ) => void;
 }
 
 export const RawInput = setupFieldComponent().with(
@@ -122,11 +129,13 @@ export const RawInput = setupFieldComponent().with(
                 props.mask ? createInputMask(props.mask) : undefined,
                 (event) => {
                   const ref = event.currentTarget || event.target;
+                  const fieldValue =
+                    props.type === 'number' ? parseFloat(ref.value) : ref.value;
                   if (props.onChange) {
-                    props.onChange(ref.value, event);
+                    props.onChange(fieldValue, event);
                   }
 
-                  setValue(ref.value);
+                  setValue(fieldValue);
                   // eslint-disable-next-line no-self-assign
                   ref.value = ref.value;
                 }
