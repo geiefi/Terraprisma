@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231204024421
+
+### Patch Changes
+
+- make the provider value for the form inside of the createForm and return it instead of defining it in the Form component
+
 ## 0.0.0-testing-20231204022019
 
 ### Patch Changes

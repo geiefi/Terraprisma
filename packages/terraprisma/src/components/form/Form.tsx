@@ -1,7 +1,6 @@
 import {
   JSX,
   ParentProps,
-  createEffect,
   createRoot,
   onCleanup,
   onMount,
@@ -15,7 +14,6 @@ import { AgnosticValidator, FieldName, FormValue } from './types';
 import {
   Datepicker,
   Checkbox,
-  Input,
   RadioGroup,
   Select,
   Slider,
@@ -32,21 +30,8 @@ import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
 
-export interface FormProps<Value extends FormValue = FormValue> {
-  identification: string;
-  formStore: [
-    get: FormStore<Partial<Value>>,
-    set: SetStoreFunction<FormStore<Partial<Value>>>
-  ];
-  agnosticValidators?: AgnosticValidator[];
-
-  ref?: (val: FormProviderValue<Value>) => void;
-
-  children?: JSX.Element | ((form: FormProviderValue<Value>) => JSX.Element);
-}
-
 export type Form<Value extends FormValue> = {
-  (props: Omit<FormProps<Value>, 'identification' | 'formStore'>): JSX.Element;
+  (props: ParentProps): JSX.Element;
 
   Input<
     Name extends FieldName<Value, InputBaseValue<Type>>,
@@ -96,6 +81,8 @@ export type Form<Value extends FormValue> = {
     get: FormStore<Partial<Value>>,
     set: SetStoreFunction<FormStore<Partial<Value>>>
   ];
+
+  providerValue: FormProviderValue<Value>
 };
 
 /**
@@ -131,19 +118,26 @@ export type Form<Value extends FormValue> = {
  */
 export function createForm<Value extends FormValue>(
   identification: string,
-  initialValue: Partial<Value> = {}
+  initialValue: Partial<Value> = {},
+  agnosticValidators: AgnosticValidator[] = []
 ): Form<Value> {
   // eslint-disable-next-line solid/reactivity
   const formStore = createStore(new FormStore<Partial<Value>>(initialValue));
 
+  const formProviderValue = new FormProviderValue<Value>(
+    formStore,
+    agnosticValidators,
+    identification
+  );
+
   const form = (
-    props: Omit<FormProps<Value>, 'identification' | 'formStore'>
+    props: ParentProps
   ) => (
     <Form<Value>
-      {...props}
-      formStore={formStore}
-      identification={identification}
-    />
+      providerValue={formProviderValue}
+    >
+      {props.children}
+    </Form>
   );
 
   form.Input = RawInput<Value>;
@@ -156,17 +150,18 @@ export function createForm<Value extends FormValue>(
   form.Checkbox = Checkbox<Value>;
 
   form.store = formStore;
+  form.providerValue = formProviderValue;
 
   return form as Form<Value>;
 }
 
 const Form = <Value extends FormValue>(
-  props: FormProps<Value>
+  props: ParentProps<{ providerValue: FormProviderValue<Value> }>
 ): JSX.Element => {
   let disposeChildren: () => void;
 
   // eslint-disable-next-line solid/reactivity
-  const [form, setForm] = props.formStore;
+  const [,setForm] = props.providerValue.store;
 
   onMount(() => {
     setForm(
@@ -176,40 +171,26 @@ const Form = <Value extends FormValue>(
     );
   });
 
-  const providerValue = new FormProviderValue<Value>(
-    [form, setForm],
-    // eslint-disable-next-line solid/reactivity
-    props.agnosticValidators || [],
-    // eslint-disable-next-line solid/reactivity
-    props.identification
-  );
-
   onCleanup(() => {
-    providerValue.isCleaningUp = true;
+    props.providerValue.isCleaningUp = true;
 
     disposeChildren && disposeChildren(); // we need to manually dispose here so that the clean up of the fields
     // persists their values
   });
 
   onMount(() => {
-    providerValue.isCleaningUp = false;
+    props.providerValue.isCleaningUp = false;
 
-    if (typeof props.ref !== 'undefined') {
-      createEffect(() => {
-        providerValue.track();
-        props.ref!(providerValue);
-      });
-    }
   });
 
   return (
     <FormContext.Provider
-      value={providerValue as unknown as FormProviderValue<FormValue>}
+      value={props.providerValue as unknown as FormProviderValue<FormValue>}
     >
       {createRoot((rootDispose) => {
         disposeChildren = rootDispose;
 
-        return typeof props.children === 'function' ? <>{props.children(providerValue)}</> : <>{props.children}</>;
+        return <>{props.children}</>;
       })}
     </FormContext.Provider>
   );
