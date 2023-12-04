@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231204022019
+
+### Patch Changes
+
+- add a way to get the form provider value directly by defining a function in the children of the form
+
 ## 0.0.0-testing-20231202190035
 
 ### Patch Changes

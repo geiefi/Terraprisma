@@ -32,8 +32,7 @@ import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
 
-export interface FormProps<Value extends FormValue = FormValue>
-  extends ParentProps {
+export interface FormProps<Value extends FormValue = FormValue> {
   identification: string;
   formStore: [
     get: FormStore<Partial<Value>>,
@@ -42,6 +41,8 @@ export interface FormProps<Value extends FormValue = FormValue>
   agnosticValidators?: AgnosticValidator[];
 
   ref?: (val: FormProviderValue<Value>) => void;
+
+  children?: JSX.Element | (form: FormProviderValue<Value>) => JSX.Element;
 }
 
 export type Form<Value extends FormValue> = {
@@ -208,7 +209,7 @@ const Form = <Value extends FormValue>(
       {createRoot((rootDispose) => {
         disposeChildren = rootDispose;
 
-        return props.children;
+        return typeof props.children === 'function' ? <>{props.children(providerValue)}</> : <>{props.children}</>;
       })}
     </FormContext.Provider>
   );
