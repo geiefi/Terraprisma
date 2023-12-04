@@ -158,8 +158,6 @@ export function createForm<Value extends FormValue>(
 const Form = <Value extends FormValue>(
   props: ParentProps<{ providerValue: FormProviderValue<Value> }>
 ): JSX.Element => {
-  let disposeChildren: () => void;
-
   // eslint-disable-next-line solid/reactivity
   const [,setForm] = props.providerValue.store;
 
@@ -171,27 +169,11 @@ const Form = <Value extends FormValue>(
     );
   });
 
-  onCleanup(() => {
-    props.providerValue.isCleaningUp = true;
-
-    disposeChildren && disposeChildren(); // we need to manually dispose here so that the clean up of the fields
-    // persists their values
-  });
-
-  onMount(() => {
-    props.providerValue.isCleaningUp = false;
-
-  });
-
   return (
     <FormContext.Provider
       value={props.providerValue as unknown as FormProviderValue<FormValue>}
     >
-      {createRoot((rootDispose) => {
-        disposeChildren = rootDispose;
-
-        return <>{props.children}</>;
-      })}
+      {props.children}
     </FormContext.Provider>
   );
 };

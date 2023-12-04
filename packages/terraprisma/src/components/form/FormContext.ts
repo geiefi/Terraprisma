@@ -186,13 +186,9 @@ export class FormProviderValue<
    * @description Removes all of the references inside of the formStore that
    * are associated with the field identified by `name` except for its value.
    */
-  cleanUp(name: Leaves): void {
+  delete(name: Leaves): void {
     this.setForm(
       produce((form) => {
-        if (!this.isCleaningUp) {
-          deepDelete(form.values, name);
-        }
-
         delete form.errors[name];
         delete form.validators[name];
       })

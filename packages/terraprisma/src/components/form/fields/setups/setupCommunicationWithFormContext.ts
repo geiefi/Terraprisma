@@ -44,10 +44,6 @@ export function setupCommunicationWithFormContext<
       );
     });
 
-    onCleanup(() => {
-      form!.cleanUp(props.name);
-    });
-
     return form;
   } else {
     return undefined;
