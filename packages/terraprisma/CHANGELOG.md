@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231204035353
+
+### Patch Changes
+
+- do not remove fields after the component for them cleans up
+
 ## 0.0.0-testing-20231204032944
 
 ### Patch Changes
