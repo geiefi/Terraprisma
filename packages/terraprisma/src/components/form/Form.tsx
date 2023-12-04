@@ -42,7 +42,7 @@ export interface FormProps<Value extends FormValue = FormValue> {
 
   ref?: (val: FormProviderValue<Value>) => void;
 
-  children?: JSX.Element | (form: FormProviderValue<Value>) => JSX.Element;
+  children?: JSX.Element | ((form: FormProviderValue<Value>) => JSX.Element);
 }
 
 export type Form<Value extends FormValue> = {
