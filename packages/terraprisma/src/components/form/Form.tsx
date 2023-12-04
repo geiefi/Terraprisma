@@ -6,7 +6,7 @@ import {
   onMount,
   useContext
 } from 'solid-js';
-import { SetStoreFunction, createStore, produce } from 'solid-js/store';
+import { SetStoreFunction, createStore, produce, unwrap } from 'solid-js/store';
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
@@ -122,7 +122,7 @@ export function createForm<Value extends FormValue>(
   agnosticValidators: AgnosticValidator[] = []
 ): Form<Value> {
   // eslint-disable-next-line solid/reactivity
-  const formStore = createStore(new FormStore<Partial<Value>>(initialValue));
+  const formStore = createStore(new FormStore<Partial<Value>>(unwrap(initialValue)));
 
   const formProviderValue = new FormProviderValue<Value>(
     formStore,

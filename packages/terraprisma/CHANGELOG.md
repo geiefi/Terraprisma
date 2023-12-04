@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231204032944
+
+### Patch Changes
+
+- unwrap initial value passed onto the createForm
+
 ## 0.0.0-testing-20231204024421
 
 ### Patch Changes
