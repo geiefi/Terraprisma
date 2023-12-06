@@ -3,6 +3,7 @@ import { produce } from 'solid-js/store';
 import { useForm } from '../../Form';
 import { FormProviderValue } from '../../FormContext';
 import { FieldName, FieldProps, FormFieldValue, FormValue } from '../../types';
+import { isForcingManualControl } from '../../ForceManualControl';
 
 export function setupCommunicationWithFormContext<
   Name extends FieldName<OwnerFormValue, BaseValueType>,
@@ -15,7 +16,7 @@ export function setupCommunicationWithFormContext<
 ): FormProviderValue<OwnerFormValue> | undefined {
   let form: FormProviderValue<OwnerFormValue> | undefined =
     useForm<OwnerFormValue>();
-  if (props.manuallyControlled) {
+  if (props.manuallyControlled ?? isForcingManualControl()) {
     form = undefined;
   }
 

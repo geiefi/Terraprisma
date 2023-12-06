@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231206062215
+
+### Patch Changes
+
+- add ForceManualControl component
+
 ## 0.0.0-testing-20231204035353
 
 ### Patch Changes
