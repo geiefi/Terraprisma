@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231206071717
+
+### Patch Changes
+
+- fix deep get type
+
 ## 0.0.0-testing-20231206062215
 
 ### Patch Changes
