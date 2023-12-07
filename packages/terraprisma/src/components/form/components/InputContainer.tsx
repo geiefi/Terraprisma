@@ -18,6 +18,11 @@ export interface InputContainerProps extends ParentProps {
   label?: JSX.Element;
 
   /**
+   * @default 'medium'
+   */
+  size?: 'small' | 'medium' | 'large';
+
+  /**
    * @description As the input container has a label inside and the position of the label is changed
    * based on weather the field has content or not, this is the way you can force the label to act like
    * the field has content.
@@ -38,6 +43,7 @@ const InputContainer = componentBuilder<InputContainerProps>()
       'actLikeHasContent',
       'label',
       'style',
+      'size',
       'icon'
     ])
   )
@@ -55,16 +61,21 @@ const InputContainer = componentBuilder<InputContainerProps>()
       <div
         {...elProps}
         ref={mergeRefs(elProps.ref, (r) => (r = inputContainer))}
+        data-size={props.size ?? 'medium'}
         class={mergeClass(
-          'w-full min-h-[54px] h-fit text-sm',
-          'relative m-0 px-5',
+          'group w-full min-h-[54px] h-fit text-sm',
+          'relative m-0 data-[size=small]:px-2 data-[size=medium]:px-4 data-[size=large]:px-8',
           'bg-[var(--bg)] text-[var(--fg)] transition-colors',
-          '!outline-none rounded-[0.7rem] border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
+          'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
+          'data-[size-small]:rounded-[0.625rem] data-[size=medium]:rounded-2xl data-[size=large]:rounded-lg',
+          '!outline-none border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
           focused()
             ? 'border-[var(--color)]'
             : 'border-[var(--floating-border)]',
           disabled() && '!cursor-none',
-          props.label ? 'pt-5 pb-2' : 'py-3.5',
+          props.label
+            ? 'data-[size=large]:pt-8 data-[size=large]:pb-3 data-[size=medium]:pt-5 data-[size=medium]:pb-2'
+            : 'data-[size=small]:py-2.5 data-[size=medium]:py-3.5 data-[size=large]:py-6',
           elProps.class
         )}
         style={{
@@ -79,8 +90,8 @@ const InputContainer = componentBuilder<InputContainerProps>()
             class={mergeClass(
               'font-extrabold text-xs absolute origin-top-left left-5 -translate-y-1/2 transition-all',
               focused() || props.actLikeHasContent || hasContent()
-                ? 'top-[1.125rem] scale-[0.666] opacity-70'
-                : 'top-7'
+                ? 'top-5 scale-[0.666] opacity-70'
+                : 'data-[size=small]:top-2.5 data-[size=medium]:top-3.5 data-[size=large]:top-6'
             )}
             for={props.labelFor}
             hasErrors={hasErrors()}
