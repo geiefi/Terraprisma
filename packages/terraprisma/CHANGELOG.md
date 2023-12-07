@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231207190338
+
+### Patch Changes
+
+- add size variants to all fields using the InputContainer
+
 ## 0.0.0-testing-20231207185854
 
 ### Patch Changes

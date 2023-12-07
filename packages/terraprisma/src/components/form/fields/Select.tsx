@@ -56,6 +56,7 @@ export interface SelectProps<
   onFocus?: () => any;
 
   style?: JSX.CSSProperties;
+  size?: 'small' | 'medium' | 'large';
 
   children:
     | JSX.Element
@@ -188,6 +189,7 @@ const Select = setupFieldComponent().with(
             <InputContainer
               {...elProps}
               id={id()}
+              size={props.size}
               style={props.style}
               labelFor={id()}
               class="flex items-center align-middle gap-3 cursor-pointer"

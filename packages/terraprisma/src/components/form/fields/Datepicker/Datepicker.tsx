@@ -43,6 +43,7 @@ export interface DatepickerProps<
 > extends FieldProps<OwnerFormValue, Date, Name> {
   label?: string;
 
+  size?: 'small' | 'medium' | 'large';
   style?: JSX.CSSProperties;
 
   onChange?: (newValue: FormFieldValue) => any;
@@ -58,6 +59,7 @@ const Datepicker = setupFieldComponent<Date>().with(
         'label',
         'helperText',
         'style',
+        'size',
         'color',
         'onChange',
         'onFocus'
@@ -186,6 +188,7 @@ const Datepicker = setupFieldComponent<Date>().with(
             labelFor={id()}
             color={color()}
             label={props.label}
+            size={props.size}
             style={{
               cursor: disabled() === false ? 'pointer' : 'default',
               ...props.style

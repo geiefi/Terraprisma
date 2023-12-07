@@ -37,6 +37,8 @@ export interface TextAreaProps<
 > extends MaskedFieldProps<OwnerFormValue, string, Name> {
   label?: JSX.Element;
 
+  size?: 'small' | 'medium' | 'large';
+
   /**
    * @default true
    */
@@ -58,6 +60,7 @@ const TextArea = setupFieldComponent<string>().with(
         'label',
         'color',
         'resizable',
+        'size',
         'reisizingDrection',
         'onChange'
       ])
@@ -92,6 +95,7 @@ const TextArea = setupFieldComponent<string>().with(
             style={{
               resize: resizingDirection()
             }}
+            size={props.size}
             labelFor={id()}
             color={color()}
             label={props.label}

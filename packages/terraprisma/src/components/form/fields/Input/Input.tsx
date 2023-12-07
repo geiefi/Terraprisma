@@ -51,6 +51,8 @@ export interface InputProps<
 
   type?: Type;
 
+  size?: 'small' | 'medium' | 'large';
+
   onChange?: (
     value: MaskedFieldProps<
       OwnerFormValue,
@@ -70,6 +72,7 @@ export const RawInput = setupFieldComponent().with(
         'label',
         'helperText',
         'type',
+        'size',
         'color',
         'onChange',
         ...MaskedFieldPropsKeys
@@ -106,7 +109,7 @@ export const RawInput = setupFieldComponent().with(
 
       return (
         <FieldInternalWrapper>
-          <InputContainer color={color()} labelFor={id()} label={props.label}>
+          <InputContainer size={props.size} color={color()} labelFor={id()} label={props.label}>
             <input
               {...elProps}
               id={id()}
