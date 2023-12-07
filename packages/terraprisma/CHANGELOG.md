@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231207185854
+
+### Patch Changes
+
+- add size variants to the input container
+
 ## 0.0.0-testing-20231206071717
 
 ### Patch Changes
