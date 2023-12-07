@@ -67,7 +67,7 @@ const InputContainer = componentBuilder<InputContainerProps>()
           'relative m-0 data-[size=small]:px-2 data-[size=medium]:px-4 data-[size=large]:px-8',
           'bg-[var(--bg)] text-[var(--fg)] transition-colors',
           'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
-          'data-[size-small]:rounded-[0.625rem] data-[size=medium]:rounded-2xl data-[size=large]:rounded-lg',
+          'data-[size=small]:rounded-[0.625rem] data-[size=medium]:rounded-2xl data-[size=large]:rounded-lg',
           '!outline-none border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
           focused()
             ? 'border-[var(--color)]'
@@ -90,7 +90,7 @@ const InputContainer = componentBuilder<InputContainerProps>()
             class={mergeClass(
               'font-extrabold text-xs absolute origin-top-left left-5 -translate-y-1/2 transition-all',
               focused() || props.actLikeHasContent || hasContent()
-                ? 'top-5 scale-[0.666] opacity-70'
+                ? 'data-[size=small]:top-0.5 data-[size=medium]:top-2.5 data-[size=large]:top-5 scale-[0.666] opacity-70'
                 : 'data-[size=small]:top-2.5 data-[size=medium]:top-3.5 data-[size=large]:top-6'
             )}
             for={props.labelFor}

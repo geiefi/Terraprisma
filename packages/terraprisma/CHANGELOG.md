@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231207190800
+
+### Patch Changes
+
+- fix InputContainer's label being misplaced and wrong border radius for small size
+
 ## 0.0.0-testing-20231207190338
 
 ### Patch Changes
