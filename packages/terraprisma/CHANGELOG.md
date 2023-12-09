@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231209230450
+
+### Patch Changes
+
+- fix label being 5px instead of 9 when focused
+
 ## 0.0.0-testing-20231209225739
 
 ### Patch Changes

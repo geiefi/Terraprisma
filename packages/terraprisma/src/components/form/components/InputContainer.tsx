@@ -88,9 +88,9 @@ const InputContainer = componentBuilder<InputContainerProps>()
         <Show when={props.label}>
           <Label
             class={mergeClass(
-              'font-extrabold absolute origin-top-left left-5 -translate-y-1/2 transition-all text-inherit',
+              'font-extrabold absolute origin-bottom-left left-5 -translate-y-1/2 transition-all text-inherit',
               focused() || props.actLikeHasContent || hasContent()
-                ? 'group-data-[size=small]:top-0.5 group-data-[size=medium]:top-2.5 group-data-[size=large]:top-5 group-data-[size=small]:scale-[0.555] group-data-[size=medium]:scale-[0.35] group-data-[size=large]:scale-[0.23] opacity-70'
+                ? 'group-data-[size=small]:top-0.5 group-data-[size=medium]:top-2.5 group-data-[size=large]:top-5 group-data-[size=medium]:scale-[0.642] group-data-[size=large]:scale-[0.428] opacity-70'
                 : 'group-data-[size=small]:top-2.5 group-data-[size=medium]:top-3.5 group-data-[size=large]:top-6'
             )}
             for={props.labelFor}
