@@ -90,8 +90,8 @@ const InputContainer = componentBuilder<InputContainerProps>()
             class={mergeClass(
               'font-extrabold absolute origin-top-left left-5 -translate-y-1/2 transition-all text-inherit',
               focused() || props.actLikeHasContent || hasContent()
-                ? 'data-[size=small]:top-0.5 data-[size=medium]:top-2.5 data-[size=large]:top-5 data-[size=small]:scale-[0.555] data-[size=medium]:scale-[0.35] data-[size=large]:scale-[0.23] opacity-70'
-                : 'data-[size=small]:top-2.5 data-[size=medium]:top-3.5 data-[size=large]:top-6'
+                ? 'group-data-[size=small]:top-0.5 group-data-[size=medium]:top-2.5 group-data-[size=large]:top-5 group-data-[size=small]:scale-[0.555] group-data-[size=medium]:scale-[0.35] group-data-[size=large]:scale-[0.23] opacity-70'
+                : 'group-data-[size=small]:top-2.5 group-data-[size=medium]:top-3.5 group-data-[size=large]:top-6'
             )}
             for={props.labelFor}
             hasErrors={hasErrors()}

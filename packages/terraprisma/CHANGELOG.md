@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231209225739
+
+### Patch Changes
+
+- fix not using group-data attribute for the label on the input container
+
 ## 0.0.0-testing-20231209225310
 
 ### Patch Changes
