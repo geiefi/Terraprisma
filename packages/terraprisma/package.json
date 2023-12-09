@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231207190800",
+  "version": "0.0.0-testing-20231209225310",
   "type": "module",
   "description": "A flexible and fun to use Material Design-based SolidJS component library",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "flexible components"
   ],
   "scripts": {
-    "build": "rollup -c ./rollup.config.js",
+    "build": "rollup -c ./rollup.config.mjs",
     "lint:types": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier . --write",
@@ -69,17 +69,17 @@
     "node-sass": "^9.0.0",
     "prettier": "^3.0.3",
     "regenerator-runtime": "0.13.11",
-    "rollup": "^3.28.1",
+    "rollup": "^2.63.0",
     "rollup-plugin-styles": "^4.0.0",
     "rollup-preset-solid": "^2.0.1",
     "sass": "^1.66.1",
     "solid-devtools": "^0.27.3",
+    "solid-js": "^1.8.5",
     "tailwindcss": "^3.3.3",
     "ts-transformer-keys": "^0.4.4",
     "typescript": "^5.2.2",
     "vite-plugin-solid": "^2.7.2",
-    "vitest": "^0.34.6",
-    "solid-js": "^1.8.5"
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "@solid-primitives/input-mask": "^0.2.0",

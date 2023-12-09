@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231209225310
+
+### Patch Changes
+
+- fix label for input container getting too small
+
 ## 0.0.0-testing-20231207190800
 
 ### Patch Changes
