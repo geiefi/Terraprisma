@@ -11,7 +11,7 @@ import {
   extendPropsFrom,
   mergeClass
 } from '../../../utils';
-import { useField } from '../fields/FieldContext';
+import { useField } from './FormField';
 
 export interface InputContainerProps extends ParentProps {
   labelFor: string;
@@ -34,7 +34,7 @@ export interface InputContainerProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const InputContainer = componentBuilder<InputContainerProps>()
+const InputLikeBase = componentBuilder<InputContainerProps>()
   .factory(addAccentColoring<InputContainerProps>())
   .factory(
     extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
@@ -110,4 +110,4 @@ const InputContainer = componentBuilder<InputContainerProps>()
     );
   });
 
-export default InputContainer;
+export default InputLikeBase;

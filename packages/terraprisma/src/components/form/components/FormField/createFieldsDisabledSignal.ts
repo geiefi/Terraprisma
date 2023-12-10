@@ -8,16 +8,13 @@ import {
   Signal
 } from 'solid-js';
 import { FormProviderValue } from '../../FormContext';
-import { FieldName, FormFieldValue, FieldProps, FormValue } from '../../types';
+import { FormFieldValue, FieldProps, FormValue } from '../../types';
 
-export function setupFieldsDisabledSignal<
-  Name extends FieldName<OwnerFormValue, BaseValueType>,
+export function createFieldsDisabledSignal<
   BaseValueType extends FormFieldValue,
-  Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
-  OwnerFormValue extends FormValue
 >(
-  props: Props,
-  form: FormProviderValue<OwnerFormValue> | undefined
+  props: FieldProps<FormValue, BaseValueType>,
+  form: FormProviderValue<FormValue> | undefined
 ): Signal<boolean> {
   let signal: Signal<boolean>;
 

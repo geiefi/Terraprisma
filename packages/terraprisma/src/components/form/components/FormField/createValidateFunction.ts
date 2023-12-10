@@ -1,28 +1,25 @@
 import { createEffect, Setter } from 'solid-js';
 import { FormProviderValue } from '../../FormContext';
-import { FormFieldValue, FieldName, FieldProps, FormValue } from '../../types';
+import { FormFieldValue, FieldProps, FormValue } from '../../types';
 
 export type FieldInternalValidate<
   ValueType extends FormFieldValue = FormFieldValue
 > = (value: ValueType | undefined) => string[] | undefined;
 
-export function setupValidateFunction<
-  Name extends FieldName<OwnerFormValue, BaseValueType>,
-  Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
-  BaseValueType extends FormFieldValue,
-  OwnerFormValue extends FormValue
+export function createValidateFunction<
+  BaseValueType extends FormFieldValue
 >(
-  props: Props,
+  props: FieldProps<FormValue, BaseValueType>,
   setErrors: Setter<string[]>,
-  form: FormProviderValue<OwnerFormValue> | undefined
-): FieldInternalValidate<Props['value']> {
+  form: FormProviderValue<FormValue> | undefined
+): FieldInternalValidate<BaseValueType> {
   if (typeof form !== 'undefined') {
     createEffect(() => {
       setErrors(form.getErrors(props.name) || []);
     });
   }
 
-  return (value: Props['value']) => {
+  return (value: BaseValueType | undefined) => {
     if (typeof form !== 'undefined') {
       form.validate(props.name);
 

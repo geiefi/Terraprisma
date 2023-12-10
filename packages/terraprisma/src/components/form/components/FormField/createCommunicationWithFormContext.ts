@@ -1,21 +1,18 @@
-import { createEffect, onCleanup, onMount } from 'solid-js';
+import { createEffect, onMount } from 'solid-js';
 import { produce } from 'solid-js/store';
 import { useForm } from '../../Form';
 import { FormProviderValue } from '../../FormContext';
-import { FieldName, FieldProps, FormFieldValue, FormValue } from '../../types';
+import { FieldProps, FormFieldValue, FormValue } from '../../types';
 import { isForcingManualControl } from '../../ForceManualControl';
 
-export function setupCommunicationWithFormContext<
-  Name extends FieldName<OwnerFormValue, BaseValueType>,
-  Props extends FieldProps<OwnerFormValue, BaseValueType, Name>,
+export function createCommunicationWithFormContext<
   BaseValueType extends FormFieldValue,
-  OwnerFormValue extends FormValue
 >(
-  props: Props,
-  initialValue: Props['value'] & BaseValueType = '' as any
-): FormProviderValue<OwnerFormValue> | undefined {
-  let form: FormProviderValue<OwnerFormValue> | undefined =
-    useForm<OwnerFormValue>();
+  props: FieldProps<FormValue, BaseValueType>,
+  initialValue: BaseValueType = '' as any
+): FormProviderValue<FormValue> | undefined {
+  let form: FormProviderValue<FormValue> | undefined =
+    useForm<FormValue>();
   if (props.manuallyControlled ?? isForcingManualControl()) {
     form = undefined;
   }

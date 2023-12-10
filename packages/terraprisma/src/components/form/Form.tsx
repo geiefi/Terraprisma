@@ -1,8 +1,6 @@
 import {
   JSX,
   ParentProps,
-  createRoot,
-  onCleanup,
   onMount,
   useContext
 } from 'solid-js';
@@ -140,14 +138,14 @@ export function createForm<Value extends FormValue>(
     </Form>
   );
 
-  form.Input = RawInput<Value>;
-  form.Slider = Slider<Value>;
-  form.Select = Select<Value>;
-  form.RadioGroup = RadioGroup<Value>;
-  form.TextArea = TextArea<Value>;
-  form.Datepicker = Datepicker<Value>;
-  form.Toggler = Toggler<Value>;
-  form.Checkbox = Checkbox<Value>;
+  form.Input = RawInput;
+  form.Slider = Slider;
+  form.Select = Select;
+  form.RadioGroup = RadioGroup;
+  form.TextArea = TextArea;
+  form.Datepicker = Datepicker;
+  form.Toggler = Toggler;
+  form.Checkbox = Checkbox;
 
   form.store = formStore;
   form.providerValue = formProviderValue;
@@ -171,6 +169,7 @@ const Form = <Value extends FormValue>(
 
   return (
     <FormContext.Provider
+      // eslint-disable-next-line solid/reactivity
       value={props.providerValue as unknown as FormProviderValue<FormValue>}
     >
       {props.children}

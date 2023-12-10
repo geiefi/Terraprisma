@@ -1,5 +1,6 @@
-import FieldInternalWrapper from './FieldInternalWrapper';
-import InputContainer from './InputContainer';
+import InputLikeBase from './InputContainer';
 import Label from './Label';
 
-export { FieldInternalWrapper, InputContainer, Label };
+export * from './FormField';
+
+export { InputLikeBase as InputContainer, Label };

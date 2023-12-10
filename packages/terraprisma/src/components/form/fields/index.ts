@@ -6,10 +6,8 @@ import Slider from './Slider/Slider';
 import Toggler from './Toggler';
 import Checkbox from './Checkbox';
 import RadioGroup from './RadioGroup';
-import { setupFieldComponent } from './setupFieldComponent';
 
 export {
-  setupFieldComponent,
   Checkbox,
   Datepicker,
   Input,

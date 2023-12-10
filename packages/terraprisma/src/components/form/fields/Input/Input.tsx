@@ -1,4 +1,4 @@
-import { ComponentProps, JSX, Owner, createEffect } from 'solid-js';
+import { ComponentProps, JSX, createEffect } from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
@@ -19,9 +19,7 @@ import {
   mergeClass,
   mergeCallbacks
 } from '../../../../utils';
-import { FieldInternalWrapper, InputContainer } from '../../components';
-import { useField } from '../FieldContext';
-import { setupFieldComponent } from '../setupFieldComponent';
+import { FormField, InputContainer } from '../../components';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -63,7 +61,7 @@ export interface InputProps<
   ) => void;
 }
 
-export const RawInput = setupFieldComponent().with(
+export const RawInput =
   componentBuilder<InputProps>()
     .factory(addAccentColoring<InputProps>())
     .factory(
@@ -79,37 +77,40 @@ export const RawInput = setupFieldComponent().with(
       ])
     )
     .create((props, color, elProps) => {
-      const {
-        elementId: id,
-        disabledS: [disabled],
-        focusedS: [focused, setFocused],
-        valueS: [value, setValue],
-        hasContent
-      } = useField()!;
-
-      createEffect(() => {
-        if (
-          props.mask &&
-          typeof props.type !== 'undefined' &&
-          props.type === 'number'
-        ) {
-          throw new Error(
-            `Error with Input named ${props.name}: Cannot have a mask on a number input!`
-          );
-        }
-      });
-
-      let input: HTMLInputElement;
-
-      createEffect(() => {
-        if (input) {
-          input.value = (value() ?? '').toString();
-        }
-      });
-
       return (
-        <FieldInternalWrapper>
-          <InputContainer size={props.size} color={color()} labelFor={id()} label={props.label}>
+        <FormField fieldProperties={props}>{({
+          elementId: id,
+          disabledS: [disabled],
+          focusedS: [focused, setFocused],
+          valueS: [value, setValue],
+          hasContent
+        }) => {
+          createEffect(() => {
+            if (
+              props.mask &&
+              typeof props.type !== 'undefined' &&
+              props.type === 'number'
+            ) {
+              throw new Error(
+                `Error with Input named ${props.name}: Cannot have a mask on a number input!`
+              );
+            }
+          });
+
+          let input: HTMLInputElement;
+
+          createEffect(() => {
+            if (input) {
+              input.value = (value() ?? '').toString();
+            }
+          });
+
+          return <InputContainer
+            size={props.size}
+            color={color()}
+            labelFor={id()}
+            label={props.label}
+          >
             <input
               {...elProps}
               id={id()}
@@ -146,10 +147,9 @@ export const RawInput = setupFieldComponent().with(
               onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
             />
           </InputContainer>
-        </FieldInternalWrapper>
+        }}</FormField>
       );
     })
-);
 
 const Input = <Type extends InputType = undefined>(
   props: ComponentProps<typeof RawInput> & InputProps<Type>
