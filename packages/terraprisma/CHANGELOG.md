@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210090733
+
+### Patch Changes
+
+- fix positioning of the rightmost icon for the input-like base
+
 ## 0.0.0-testing-20231210085301
 
 ### Patch Changes

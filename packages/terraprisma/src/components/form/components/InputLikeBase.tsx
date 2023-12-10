@@ -103,7 +103,7 @@ export const InputLikeBase = componentBuilder<InputLikeBaseProps>()
 
         {props.children}
 
-        <span class="bg-[var(--floating-bg)] absolute w-min h-min left-[calc(100%-36px)] top-[calc(50%-8px)] text-[var(--label-color)] text-base select-none pointer-events-none">
+        <span class="bg-[var(--floating-bg)] absolute w-min h-min group-data-[size=small]:right-3 group-data-[size=medium]:right-4 group-data-[size=large]:right-8 top-1/2 -translate-y-1/2 text-[var(--label-color)] text-base select-none pointer-events-none">
           {props.icon}
         </span>
       </div>
