@@ -18,6 +18,9 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    typecheck: {
+      include: ['/.*/']
+    },
     globals: true,
     testTransformMode: { web: ['/.[jt]sx?$/'] }
   }

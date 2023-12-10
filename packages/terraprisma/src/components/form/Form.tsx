@@ -1,9 +1,4 @@
-import {
-  JSX,
-  ParentProps,
-  onMount,
-  useContext
-} from 'solid-js';
+import { JSX, ParentProps, onMount, useContext } from 'solid-js';
 import { SetStoreFunction, createStore, produce, unwrap } from 'solid-js/store';
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
@@ -18,7 +13,12 @@ import {
   TextArea,
   Toggler
 } from './fields';
-import { InputBaseValue, InputProps, InputType, RawInput } from './fields/Input/Input';
+import {
+  InputBaseValue,
+  InputProps,
+  InputType,
+  RawInput
+} from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './fields/Select';
 import { RadioGroupOptionProps, RadioGroupProps } from './fields/RadioGroup';
@@ -28,16 +28,16 @@ import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
 
-export type Form<Value extends FormValue> = {
+export interface Form<Value extends FormValue> {
   (props: ParentProps): JSX.Element;
 
-  Input<
+  Input: <
     Name extends FieldName<Value, InputBaseValue<Type>>,
     Type extends InputType = undefined
   >(
     props: InputProps<Type, Value, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
-  ): JSX.Element;
+  ) => JSX.Element;
   Slider<Name extends FieldName<Value, number>>(
     props: SliderProps<Value, Name> &
       Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof SliderProps>
@@ -80,8 +80,8 @@ export type Form<Value extends FormValue> = {
     set: SetStoreFunction<FormStore<Partial<Value>>>
   ];
 
-  providerValue: FormProviderValue<Value>
-};
+  providerValue: FormProviderValue<Value>;
+}
 
 /**
  * @description This is a Form pattern of usage that makes it possible to have typesafe fields
@@ -120,7 +120,9 @@ export function createForm<Value extends FormValue>(
   agnosticValidators: AgnosticValidator[] = []
 ): Form<Value> {
   // eslint-disable-next-line solid/reactivity
-  const formStore = createStore(new FormStore<Partial<Value>>(unwrap(initialValue)));
+  const formStore = createStore(
+    new FormStore<Partial<Value>>(unwrap(initialValue))
+  );
 
   const formProviderValue = new FormProviderValue<Value>(
     formStore,
@@ -128,14 +130,8 @@ export function createForm<Value extends FormValue>(
     identification
   );
 
-  const form = (
-    props: ParentProps
-  ) => (
-    <Form<Value>
-      providerValue={formProviderValue}
-    >
-      {props.children}
-    </Form>
+  const form = (props: ParentProps) => (
+    <Form<Value> providerValue={formProviderValue}>{props.children}</Form>
   );
 
   form.Input = RawInput;
@@ -157,7 +153,7 @@ const Form = <Value extends FormValue>(
   props: ParentProps<{ providerValue: FormProviderValue<Value> }>
 ): JSX.Element => {
   // eslint-disable-next-line solid/reactivity
-  const [,setForm] = props.providerValue.store;
+  const [, setForm] = props.providerValue.store;
 
   onMount(() => {
     setForm(

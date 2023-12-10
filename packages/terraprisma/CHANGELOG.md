@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210110630
+
+### Patch Changes
+
+- fix onChange of Input having wrong types
+
 ## 0.0.0-testing-20231210090733
 
 ### Patch Changes
