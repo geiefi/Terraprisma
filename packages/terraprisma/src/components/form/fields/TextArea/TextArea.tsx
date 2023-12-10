@@ -19,7 +19,7 @@ import {
   mergeClass,
   mergeCallbacks
 } from '../../../../utils';
-import { InputContainer, FormField } from '../../components';
+import { InputLikeBase, FormField } from '../../components';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
@@ -85,7 +85,7 @@ const TextArea = componentBuilder<TextAreaProps>()
           });
 
           return (
-            <InputContainer
+            <InputLikeBase
               class="max-w-full max-h-full w-full h-full overflow-x-hidden overflow-y-auto"
               style={{
                 resize: resizingDirection()
@@ -133,7 +133,7 @@ const TextArea = componentBuilder<TextAreaProps>()
                 )}
                 onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
               />
-            </InputContainer>
+            </InputLikeBase>
           );
         }}
       </FormField>

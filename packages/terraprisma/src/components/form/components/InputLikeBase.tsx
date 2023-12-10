@@ -13,7 +13,7 @@ import {
 } from '../../../utils';
 import { useField } from './FormField';
 
-export interface InputContainerProps extends ParentProps {
+export interface InputLikeBaseProps extends ParentProps {
   labelFor: string;
   label?: JSX.Element;
 
@@ -34,10 +34,10 @@ export interface InputContainerProps extends ParentProps {
   style?: JSX.CSSProperties;
 }
 
-const InputLikeBase = componentBuilder<InputContainerProps>()
-  .factory(addAccentColoring<InputContainerProps>())
+export const InputLikeBase = componentBuilder<InputLikeBaseProps>()
+  .factory(addAccentColoring<InputLikeBaseProps>())
   .factory(
-    extendPropsFrom<InputContainerProps & { color?: Accents }, 'div'>([
+    extendPropsFrom<InputLikeBaseProps & { color?: Accents }, 'div'>([
       'children',
       'labelFor',
       'actLikeHasContent',
@@ -109,5 +109,3 @@ const InputLikeBase = componentBuilder<InputContainerProps>()
       </div>
     );
   });
-
-export default InputLikeBase;

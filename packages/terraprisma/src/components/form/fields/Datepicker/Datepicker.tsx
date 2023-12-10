@@ -33,7 +33,7 @@ import { Dropdown, IconButton, OutlinedButton } from '../../../general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
 import { Row } from '../../../layout';
 import { GrowFade } from '../../../transitions';
-import { FormField, InputContainer } from '../../components';
+import { FormField, InputLikeBase } from '../../components';
 
 export interface DatepickerProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -179,7 +179,7 @@ const Datepicker = componentBuilder<DatepickerProps>()
           });
           return (
             <>
-              <InputContainer
+              <InputLikeBase
                 {...elProps}
                 id={id()}
                 labelFor={id()}
@@ -207,7 +207,7 @@ const Datepicker = componentBuilder<DatepickerProps>()
                 ref={mergeRefs(elProps.ref, (ref) => (inputContainerRef = ref))}
               >
                 {displayDate()}
-              </InputContainer>
+              </InputLikeBase>
 
               <Portal>
                 <GrowFade growingOrigin="top">

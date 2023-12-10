@@ -19,7 +19,7 @@ import {
   mergeClass,
   mergeCallbacks
 } from '../../../../utils';
-import { FormField, InputContainer } from '../../components';
+import { FormField, InputLikeBase } from '../../components';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -105,7 +105,7 @@ export const RawInput =
             }
           });
 
-          return <InputContainer
+          return <InputLikeBase
             size={props.size}
             color={color()}
             labelFor={id()}
@@ -146,7 +146,7 @@ export const RawInput =
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
               onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
             />
-          </InputContainer>
+          </InputLikeBase>
         }}</FormField>
       );
     })

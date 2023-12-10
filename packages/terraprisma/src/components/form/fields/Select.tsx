@@ -39,7 +39,7 @@ import {
   FieldProps,
   FieldPropKeys
 } from '../types';
-import { FormField, InputContainer, useField } from '../components';
+import { FormField, InputLikeBase, useField } from '../components';
 
 export interface SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -183,7 +183,7 @@ const Select = componentBuilder<SelectProps>()
                 inputContainerRef
               }}
             >
-              <InputContainer
+              <InputLikeBase
                 {...elProps}
                 id={id()}
                 size={props.size}
@@ -215,7 +215,7 @@ const Select = componentBuilder<SelectProps>()
                 ref={mergeRefs(elProps.ref, setInputContainerRef)}
               >
                 {optionLabelFromValue(value())}
-              </InputContainer>
+              </InputLikeBase>
 
               <Portal>
                 <GrowFade growingOrigin="top">

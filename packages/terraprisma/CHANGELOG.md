@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210083040
+
+### Patch Changes
+
+- change the name from InputContainer to InputLikeBase
+
 ## 0.0.0-testing-20231210082232
 
 ### Patch Changes

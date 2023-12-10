@@ -1,6 +1,6 @@
-import InputLikeBase from './InputContainer';
+import { InputLikeBase } from './InputLikeBase';
 import Label from './Label';
 
 export * from './FormField';
 
-export { InputLikeBase as InputContainer, Label };
+export { InputLikeBase, Label };
