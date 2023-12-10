@@ -117,8 +117,7 @@ export const RawInput = setupFieldComponent().with(
               disabled={disabled()}
               type={props.type}
               class={mergeClass(
-                'border-none !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
-                typeof props.label === 'undefined' && 'py-2',
+                'font-size-inherit border-none py-inherit px-inherit !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
                 !focused() &&
                 !hasContent() &&
                 (typeof props.label !== 'undefined' ||

@@ -63,19 +63,19 @@ const InputContainer = componentBuilder<InputContainerProps>()
         ref={mergeRefs(elProps.ref, (r) => (r = inputContainer))}
         data-size={props.size ?? 'medium'}
         class={mergeClass(
-          'group w-full min-h-[54px] h-fit text-sm',
-          'relative m-0 data-[size=small]:px-2 data-[size=medium]:px-4 data-[size=large]:px-8',
+          'group box-border w-full data-[size=small]:min-h-[35px] data-[size=medium]:min-h-[44px] data-[size=large]:min-h-[70px] h-fit',
+          'relative m-0 data-[size=small]:px-3 data-[size=medium]:px-4 data-[size=large]:px-8',
           'bg-[var(--bg)] text-[var(--fg)] transition-colors',
           'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
-          'data-[size=small]:rounded-[0.625rem] data-[size=medium]:rounded-2xl data-[size=large]:rounded-lg',
+          'data-[size=small]:rounded-lg data-[size=medium]:rounded-lg data-[size=large]:rounded-2xl',
           '!outline-none border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
           focused()
             ? 'border-[var(--color)]'
             : 'border-[var(--floating-border)]',
           disabled() && '!cursor-none',
           props.label
-            ? 'data-[size=large]:pt-8 data-[size=large]:pb-3 data-[size=medium]:pt-5 data-[size=medium]:pb-2'
-            : 'data-[size=small]:py-2.5 data-[size=medium]:py-3.5 data-[size=large]:py-6',
+            ? 'data-[size=large]:pt-8 data-[size=large]:pb-3 data-[size=medium]:pt-5 data-[size=medium]:pb-2 data-[size=small]:pt-4 data-[size=small]:pb-1.5'
+            : 'data-[size=small]:py-2 data-[size=medium]:py-4 data-[size=large]:py-5',
           elProps.class
         )}
         style={{
@@ -88,10 +88,11 @@ const InputContainer = componentBuilder<InputContainerProps>()
         <Show when={props.label}>
           <Label
             class={mergeClass(
-              'font-extrabold absolute origin-bottom-left left-5 -translate-y-1/2 transition-all text-inherit',
+              'font-extrabold absolute origin-top-left transition-all text-inherit',
+              'text-ellipsis overflow-x-hidden group-data-[size=small]:left-3 group-data-[size=small]:w-[calc(100%-1rem)] group-data-[size=medium]:left-4 group-data-[size=medium]:w-[calc(100%-2rem)] group-data-[size=large]:left-8 group-data-[size=large]:w-[calc(100%-4rem)]',
               focused() || props.actLikeHasContent || hasContent()
-                ? 'group-data-[size=small]:top-0.5 group-data-[size=medium]:top-2.5 group-data-[size=large]:top-5 group-data-[size=medium]:scale-[0.642] group-data-[size=large]:scale-[0.428] opacity-70'
-                : 'group-data-[size=small]:top-2.5 group-data-[size=medium]:top-3.5 group-data-[size=large]:top-6'
+                ? 'group-data-[size=small]:top-1 group-data-[size=medium]:top-1.5 group-data-[size=large]:top-4 group-data-[size=medium]:scale-[0.642] group-data-[size=large]:scale-[0.428] opacity-70'
+                : 'group-data-[size=small]:top-4 group-data-[size=medium]:top-5 group-data-[size=large]:top-9 -translate-y-1/2'
             )}
             for={props.labelFor}
             hasErrors={hasErrors()}

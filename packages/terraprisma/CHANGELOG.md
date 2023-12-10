@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210061853
+
+### Patch Changes
+
+- fix input container's design for all sizes
+
 ## 0.0.0-testing-20231209230450
 
 ### Patch Changes
