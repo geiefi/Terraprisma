@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210082232
+
+### Patch Changes
+
+- new field definition pattern that is more extendable
+
 ## 0.0.0-testing-20231210062312
 
 ### Patch Changes
