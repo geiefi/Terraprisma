@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210212643
+
+### Patch Changes
+
+- add size variant treatment for the Select's dropdown
+
 ## 0.0.0-testing-20231210211026
 
 ### Patch Changes

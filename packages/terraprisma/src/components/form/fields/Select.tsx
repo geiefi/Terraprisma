@@ -57,14 +57,14 @@ export interface SelectProps<
   size?: 'small' | 'medium' | 'large';
 
   children:
-    | JSX.Element
-    | ((
-        Option: Component<
-          SelectOptionProps<
-            FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
-          >
-        >
-      ) => JSX.Element);
+  | JSX.Element
+  | ((
+    Option: Component<
+      SelectOptionProps<
+        FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+      >
+    >
+  ) => JSX.Element);
 }
 
 export interface SelectOptionProps<
@@ -82,6 +82,8 @@ const SelectContext = createContext<{
   setOptions: Setter<SelectOptionProps[]>;
 
   color: Accessor<Accents>;
+
+  size: Accessor<'small' | 'medium' | 'large'>;
 
   dropdownRef: Accessor<HTMLDivElement | undefined>;
   setDropdownRef: Setter<HTMLDivElement | undefined>;
@@ -122,6 +124,7 @@ const Select = componentBuilder<SelectProps>()
       'label',
       'helperText',
       'color',
+      'size',
       'children',
       'onFieldValueChanges',
       'style',
@@ -178,6 +181,7 @@ const Select = componentBuilder<SelectProps>()
                 options,
                 color,
                 setOptions,
+                size: () => props.size ?? 'medium',
                 dropdownRef,
                 setDropdownRef,
                 inputContainerRef
@@ -230,17 +234,17 @@ const Select = componentBuilder<SelectProps>()
       </FormField>
     );
   }) as {
-  <OwnerFormValue extends FormValue>(
-    props: SelectProps<OwnerFormValue> &
-      Omit<ComponentProps<'div'>, keyof SelectProps>
-  ): JSX.Element;
-  Option: typeof Option;
-  Dropdown(
-    props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
-      style?: JSX.CSSProperties;
-    }
-  ): JSX.Element;
-};
+    <OwnerFormValue extends FormValue>(
+      props: SelectProps<OwnerFormValue> &
+        Omit<ComponentProps<'div'>, keyof SelectProps>
+    ): JSX.Element;
+    Option: typeof Option;
+    Dropdown(
+      props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
+        style?: JSX.CSSProperties;
+      }
+    ): JSX.Element;
+  };
 
 Select.Dropdown = (props) => {
   const {
@@ -248,7 +252,7 @@ Select.Dropdown = (props) => {
     valueS: [value, setValue]
   } = useField();
 
-  const { options, color, setDropdownRef, setOptions, inputContainerRef } =
+  const { options, color, size, setDropdownRef, setOptions, inputContainerRef } =
     useContext(SelectContext)!; // TODO: throw clear and concise error here
 
   const getChildren = accessChildren(() => props.children);
@@ -282,7 +286,12 @@ Select.Dropdown = (props) => {
       {...props}
       for={inputContainerRef()!}
       ref={mergeRefs(props.ref, setDropdownRef)}
-      class={mergeClass('flex flex-col gap-2 max-h-[10rem]', props.class)}
+      data-size={size()}
+      class={mergeClass(
+        'flex flex-col gap-2 max-h-[10rem]',
+        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
+        props.class
+      )}
       style={{
         '--color': `var(--${color()}-bg)`,
         '--hover-10': `var(--${color()}-hover-10)`,
