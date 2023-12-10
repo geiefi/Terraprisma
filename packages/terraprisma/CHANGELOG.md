@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210085301
+
+### Patch Changes
+
+- fixed error on the FormField component
+
 ## 0.0.0-testing-20231210083040
 
 ### Patch Changes

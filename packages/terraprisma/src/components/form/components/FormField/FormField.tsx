@@ -1,14 +1,13 @@
 import {
+    Accessor,
   JSX,
   Show,
   Signal,
   createEffect,
-  createMemo,
   createSignal,
   onMount,
   splitProps
 } from 'solid-js';
-import { Dynamic } from 'solid-js/web';
 import { createStore } from 'solid-js/store';
 
 import { FieldContext, FieldProviderValue } from './FieldContext';
@@ -58,7 +57,7 @@ export function FormField<
     props.fieldProperties,
     FieldPropKeys
   ) as unknown as [BaseFieldProps<FormValue, BaseValueType>, unknown];
-  const initialValue = props.initialValue ?? ('' as any);
+  const initialValue = () => props.initialValue ?? ('' as BaseValueType);
 
   const [errors, setErrors] =
     // eslint-disable-next-line solid/reactivity
@@ -71,7 +70,7 @@ export function FormField<
   const [value, setValue] = createFieldsValueSignal<Value>(
     fieldProps as any,
     form,
-    initialValue()
+    initialValue() as unknown as Value
   );
   const validate = createValidateFunction<Value>(
     fieldProps as any,
