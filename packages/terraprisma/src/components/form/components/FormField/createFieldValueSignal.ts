@@ -29,7 +29,7 @@ export function createFieldsValueSignal<BaseValueType extends FormFieldValue>(
 
     createEffect(
       on(
-        () => props.value !== get(),
+        () => props.value,
         () => {
           set(props.value as any);
         }

@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231210211026
+
+### Patch Changes
+
+- fix setter for manually controlled form fields
+
 ## 0.0.0-testing-20231210110630
 
 ### Patch Changes
