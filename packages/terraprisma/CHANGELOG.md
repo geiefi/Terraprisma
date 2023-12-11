@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231211045257
+
+### Patch Changes
+
+- update typescript and solid
+
 ## 0.0.0-testing-20231210212643
 
 ### Patch Changes
