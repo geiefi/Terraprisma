@@ -48,7 +48,7 @@ function isObject(thing: any): thing is object {
 export function getByPath(obj: any, path: string | string[]): any {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
-  if (isObject(obj[cursorKey]) && path.length > 1) {
+  if (isObject(obj[cursorKey]) && pathArr.length > 1) {
     return getByPath(obj[cursorKey], pathArr.slice(1));
   } else {
     return obj[cursorKey];
@@ -77,7 +77,7 @@ export function setByPath(obj: any, path: string | string[], value: any): void {
     obj[cursorKey] = {};
   }
 
-  if (isObject(obj[cursorKey]) && pathArr.length > 0) {
+  if (isObject(obj[cursorKey]) && pathArr.length > 1) {
     setByPath(obj[cursorKey], pathArr.slice(1), value);
   } else {
     obj[cursorKey] = value;
@@ -88,7 +88,7 @@ export function deepDelete(obj: any, path: string | string[]): void {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
 
-  if (isObject(obj[cursorKey]) && path.length > 0) {
+  if (isObject(obj[cursorKey]) && pathArr.length > 1) {
     deepDelete(obj[cursorKey], pathArr.slice(1));
   } else {
     delete obj[cursorKey];

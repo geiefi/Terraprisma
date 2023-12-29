@@ -11,7 +11,7 @@ describe('FormContext', () => {
     }
   };
 
-  beforeAll(() => {
+  beforeEach(() => {
     object = {
       paymentMethod: 'cartao-de-credito',
       creditCardDetails: {
@@ -24,6 +24,12 @@ describe('FormContext', () => {
   });
 
   describe('setByPath()', () => {
+    it('should work with single-depth fields', () => {
+      setByPath(object, 'creditCardDetails', 'banana');
+
+      expect(object.creditCardDetails).toEqual('banana');
+    });
+
     it('should work with date fields', () => {
       setByPath(object, 'creditCardDetails.expiresIn', 'banana');
 
@@ -32,6 +38,12 @@ describe('FormContext', () => {
   });
 
   describe('getByPath()', () => {
+    it('should work with single-depth fields', () => {
+      expect(getByPath(object, 'creditCardDetails')).toEqual(
+        object.creditCardDetails
+      );
+    });
+
     it('should work with date fields', () => {
       expect(getByPath(object, 'creditCardDetails.expiresIn')).toEqual(
         object.creditCardDetails.expiresIn
@@ -39,7 +51,7 @@ describe('FormContext', () => {
     });
   });
 
-  describe('delete()', () => {
+  describe('deepDelete()', () => {
     it('should work with date fields', () => {
       deepDelete(object, 'creditCardDetails.expiresIn');
 

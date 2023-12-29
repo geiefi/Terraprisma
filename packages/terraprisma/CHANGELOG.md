@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231229055905
+
+### Patch Changes
+
+- fix (forms):errors on other deep methods
+
 ## 0.0.0-testing-20231229054352
 
 ### Patch Changes
