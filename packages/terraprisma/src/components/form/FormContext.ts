@@ -48,7 +48,7 @@ function isObject(thing: any): thing is object {
 export function getByPath(obj: any, path: string | string[]): any {
   const pathArr = Array.isArray(path) ? path : path.split('.');
   const cursorKey = pathArr[0];
-  if (isObject(obj[cursorKey]) && path.length > 0) {
+  if (isObject(obj[cursorKey]) && path.length > 1) {
     return getByPath(obj[cursorKey], pathArr.slice(1));
   } else {
     return obj[cursorKey];

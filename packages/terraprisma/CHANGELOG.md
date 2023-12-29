@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20231229054352
+
+### Patch Changes
+
+- fix getByPath problem with single property deep accesses
+
 ## 0.0.0-testing-20231211045257
 
 ### Patch Changes
