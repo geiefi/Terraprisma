@@ -16,7 +16,7 @@ export function extendPropsFrom<
 
     return {
       baseProps: props as BaseProps,
-      args: [elProps] as [elProps: ElementProps]
+      args: [elProps] as unknown as [ElementProps]
     };
   }) satisfies ComponentFactory<
     BaseProps,
