@@ -1,5 +1,3 @@
-import { A } from 'solid-start';
-
 export default function NotFound() {
   return (
     <div class="py-10 grid place-items-center">
@@ -10,7 +8,7 @@ export default function NotFound() {
       <p class="text-2xl flex gap-4">couldn't find what you were looking</p>
       <span class="text-[var(--muted-fg)]">
         You could also try opening an issue{' '}
-        <A href="https://github.com/gabrielmfern/Terraprisma">here</A>?
+        <a href="https://github.com/gabrielmfern/Terraprisma">here</a>?
       </span>
     </div>
   );

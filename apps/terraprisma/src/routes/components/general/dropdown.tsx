@@ -1,6 +1,5 @@
 import { createSignal } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { A } from 'solid-start';
 
 import { Box, Button, Dropdown, Icons, List, ListItem } from 'terraprisma';
 
@@ -14,7 +13,7 @@ export default function DropdownPage() {
 
       <p>
         This is a primitve component that is used by many internal components,
-        like the <A href="/components/navigation/menu">Menu</A>.
+        like the <a href="/components/navigation/menu">Menu</a>.
       </p>
 
       <p>
@@ -29,7 +28,7 @@ export default function DropdownPage() {
 
       <p>
         Bellow is an example of a dropdown that mimics the{' '}
-        <A href="/components/navigation/menu">Menu</A> design that would allow
+        <a href="/components/navigation/menu">Menu</a> design that would allow
         for selecting your favorite game.
       </p>
 
@@ -41,7 +40,7 @@ const [buttonRef, setButtonRef] = createSignal<HTMLButtonElement>();
 return (
   <>
     <Button ref={setButtonRef} onClick={() => setVisible((v) => !v)}>
-      Select which game is the best <ArrowDropDown />
+      Select which game is the best <arrowDropDown />
     </Button>
 
     <Portal>

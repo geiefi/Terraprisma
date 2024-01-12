@@ -1,6 +1,5 @@
 import { createSignal } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { A } from 'solid-start';
 
 import { Box, Button, Divisor, Menu, MenuItem, Icons } from 'terraprisma';
 
@@ -18,7 +17,7 @@ export default function RipplePage() {
 
       <p>
         Since it is based on the{' '}
-        <A href="/components/general/dropdown">Dropdown</A> its positioning will
+        <a href="/components/general/dropdown">Dropdown</a> its positioning will
         be the same as the Dropdown would be in the situtation.
       </p>
 
@@ -38,7 +37,7 @@ const [buttonRef, setButtonRef] = createSignal<HTMLButtonElement>();
 return (
   <>
     <Button ref={setButtonRef} onClick={() => setVisible((v) => !v)}>
-      Menu button <ArrowDropDown />
+      Menu button <arrowDropDown />
     </Button>
 
     <Portal>
@@ -98,7 +97,7 @@ return (
         </p>
         <p>
           It is also good to note, all of the props attributes available for the
-          component <A href="/components/general/dropdown">Dropdown</A> are also
+          component <a href="/components/general/dropdown">Dropdown</a> are also
           availalbe for this component.
         </p>
       </Box>

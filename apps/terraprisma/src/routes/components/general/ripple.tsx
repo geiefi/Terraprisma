@@ -1,5 +1,3 @@
-import { A } from 'solid-start';
-
 import { Box, Ripple } from 'terraprisma';
 
 import { CodeExample } from '~/components/CodeExample';
@@ -98,7 +96,7 @@ export default function RipplePage() {
                     definitions.
                   </p>
                   <p>
-                    See <A href="/concepts/theming">theming</A> for more
+                    See <a href="/concepts/theming">theming</a> for more
                     information
                   </p>
                 </>

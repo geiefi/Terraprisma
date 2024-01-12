@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@solidjs/router": "0.10.7",
-    "@solidjs/start": "0.4.5",
+    "@solidjs/start": "0.4.9",
     "material-symbols": "^0.14.0",
     "solid-js": "^1.8.9",
     "terraprisma": "workspace:*",
-    "vinxi": "0.1.1"
+    "vinxi": "0.1.2"
   },
   "engines": {
     "node": ">=18"

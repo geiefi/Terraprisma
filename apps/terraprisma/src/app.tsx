@@ -2,7 +2,7 @@
 import { Router } from '@solidjs/router';
 import { FileRoutes } from '@solidjs/start';
 import { VoidTheme, setupTerraprisma, Container, Box } from 'terraprisma';
-import 'terraprisma/dist/styles.css';
+// import 'terraprisma/styles.css';
 import 'material-symbols';
 
 import './app.css';

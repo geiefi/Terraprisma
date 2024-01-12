@@ -1,7 +1,7 @@
-import { useLocation, useNavigate } from 'solid-start';
+import { createEffect, createSignal, JSX } from 'solid-js';
+import { useLocation, useNavigate } from '@solidjs/router';
 
 import { Box, List, ListItem, ListItemWithDetails } from 'terraprisma';
-import { createEffect, createSignal, JSX } from 'solid-js';
 
 function Link(props: { to: string; children: JSX.Element }) {
   const location = useLocation();
