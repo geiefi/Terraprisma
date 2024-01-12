@@ -37,6 +37,14 @@ export default defineConfig((config) => {
   if (!watching) {
     const package_fields = preset.generatePackageExports(parsed_data);
 
+    package_fields.exports['.'] = { ...package_fields.exports };
+    // add the export for styles
+    package_fields.exports['./styles.css'] = {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css",
+      "default": "./dist/index.css"
+    };
+
     console.log(
       `package.json: \n\n${JSON.stringify(package_fields, null, 2)}\n\n`
     );

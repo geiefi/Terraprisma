@@ -77,18 +77,64 @@
     "./dist/server.cjs": "./dist/index.cjs"
   },
   "exports": {
-    "worker": {
-      "solid": "./dist/server.jsx",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/server.js"
+    ".": {
+      "worker": {
+        "solid": "./dist/server.jsx",
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/server.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/server.cjs"
+        }
       },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/server.cjs"
-      }
-    },
-    "browser": {
+      "browser": {
+        "solid": {
+          "development": "./dist/dev.jsx",
+          "import": "./dist/index.jsx"
+        },
+        "development": {
+          "import": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/dev.js"
+          },
+          "require": {
+            "types": "./dist/index.d.cts",
+            "default": "./dist/dev.cjs"
+          }
+        },
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/index.cjs"
+        }
+      },
+      "deno": {
+        "solid": "./dist/server.jsx",
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/server.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/server.cjs"
+        }
+      },
+      "node": {
+        "solid": "./dist/server.jsx",
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/server.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/server.cjs"
+        }
+      },
       "solid": {
         "development": "./dist/dev.jsx",
         "import": "./dist/index.jsx"
@@ -112,49 +158,10 @@
         "default": "./dist/index.cjs"
       }
     },
-    "deno": {
-      "solid": "./dist/server.jsx",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/server.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/server.cjs"
-      }
-    },
-    "node": {
-      "solid": "./dist/server.jsx",
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/server.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/server.cjs"
-      }
-    },
-    "solid": {
-      "development": "./dist/dev.jsx",
-      "import": "./dist/index.jsx"
-    },
-    "development": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/dev.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/dev.cjs"
-      }
-    },
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "require": {
-      "types": "./dist/index.d.cts",
-      "default": "./dist/index.cjs"
+    "./styles.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css",
+      "default": "./dist/index.css"
     }
   },
   "typesVersions": {},

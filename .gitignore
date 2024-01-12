@@ -9,5 +9,6 @@ apps/*/.vercel
 apps/*/.solid
 package-lock.json
 tsconfig.build.tsbuildinfo
+tsup.config.bundled_*.mjs
 */tsconfig.build.tsbuildinfo
 **/tsconfig.build.tsbuildinfo
