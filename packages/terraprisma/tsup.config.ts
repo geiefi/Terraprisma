@@ -20,9 +20,11 @@ const preset_options: preset.PresetOptions = {
       server_entry: true
     }
   ],
-  esbuild_plugins: [
-    postcss()
-  ],
+  esbuild_plugins: [postcss()],
+  modify_esbuild_options: (opts) => {
+    opts.sourcemap = 'inline';
+    return opts;
+  },
   // Setting `true` will remove all `console.*` calls and `debugger` statements
   drop_console: true,
   // Setting `true` will generate a CommonJS build alongside ESM (default: `false`)
@@ -37,21 +39,16 @@ export default defineConfig((config) => {
   if (!watching) {
     const package_fields = preset.generatePackageExports(parsed_data);
 
-    package_fields.exports['.'] = { ...package_fields.exports };
-    // add the export for styles
-    package_fields.exports['./styles.css'] = {
-      "import": "./dist/index.css",
-      "require": "./dist/index.css",
-      "default": "./dist/index.css"
+    package_fields.exports = {
+      '.': { ...package_fields.exports },
+      './styles.css': {
+        // add the export for styles
+        import: './dist/index.css',
+        require: './dist/index.css',
+        default: './dist/index.css'
+      }
     };
 
-    console.log(
-      `package.json: \n\n${JSON.stringify(package_fields, null, 2)}\n\n`
-    );
-
-    /*
-            will update ./package.json with the correct export fields
-        */
     preset.writePackageJson(package_fields);
   }
 
