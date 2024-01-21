@@ -1,5 +1,5 @@
 import { createEffect, createSignal, JSX } from 'solid-js';
-import { useLocation, A, useNavigate } from '@solidjs/router';
+import { useLocation, useNavigate } from '@solidjs/router';
 
 import { Box, List, ListItem, ListItemWithDetails } from 'terraprisma';
 

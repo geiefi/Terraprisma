@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240121163753
+
+### Patch Changes
+
+- Fix overall SSR
+
 ## 0.0.0-testing-20231229055905
 
 ### Patch Changes

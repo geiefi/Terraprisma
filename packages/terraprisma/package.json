@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231229055905",
+  "version": "0.0.0-testing-20240121163753",
   "description": "A flexible and fun to use batteries included SolidJS component library",
   "license": "MIT",
   "files": [
@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@csstools/postcss-sass": "5.1.1",
+    "@solid-primitives/event-listener": "^2.3.1",
     "@solid-primitives/input-mask": "^0.2.0",
     "@solid-primitives/props": "^3.1.8",
     "@solid-primitives/refs": "^1.0.5",
