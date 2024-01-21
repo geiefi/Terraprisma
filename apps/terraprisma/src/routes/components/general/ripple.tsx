@@ -1,3 +1,5 @@
+import { A } from '@solidjs/router';
+
 import { Box, Ripple } from 'terraprisma';
 
 import { CodeExample } from '~/components/CodeExample';
@@ -96,7 +98,7 @@ export default function RipplePage() {
                     definitions.
                   </p>
                   <p>
-                    See <a href="/concepts/theming">theming</a> for more
+                    See <A href="/concepts/theming">theming</A> for more
                     information
                   </p>
                 </>

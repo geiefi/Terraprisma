@@ -1,3 +1,5 @@
+import { A } from '@solidjs/router';
+
 import {
   Box,
   Button,
@@ -23,17 +25,17 @@ export default function Buttons() {
 
       <ul>
         <li>
-          <a href="#default-button">Button</a>
+          <A href="#default-button">Button</A>
         </li>
         <li>
-          <a href="#icon-button">IconButton</a> - circular button made for icons
+          <A href="#icon-button">IconButton</A> - circular button made for icons
         </li>
         <li>
-          <a href="#outlined-button">OutlinedButton</a> - a button with an
+          <A href="#outlined-button">OutlinedButton</A> - a button with an
           outline that when hovering becomes the default
         </li>
         <li>
-          <a href="#text-button">TextButton</a> - a button that looks like text
+          <A href="#text-button">TextButton</A> - a button that looks like text
           normally and when hovered becomes a opaque version of its color
         </li>
       </ul>
@@ -70,7 +72,7 @@ export default function Buttons() {
                     definitions.
                   </p>
                   <p>
-                    See <a href="/concepts/theming">theming</a> for more
+                    See <A href="/concepts/theming">theming</A> for more
                     information
                   </p>
                 </>
@@ -85,7 +87,7 @@ export default function Buttons() {
               description: (
                 <>
                   All the Props from{' '}
-                  <a href="/components/general/ripple">Ripple</a> that are
+                  <A href="/components/general/ripple">Ripple</A> that are
                   passed into the Ripple inside of the Button.
                 </>
               )
@@ -112,7 +114,7 @@ export default function Buttons() {
       <Box>
         <p>
           It is also good to note that besides the bellow props, all of the html
-          attributes available for the <a href="#text-button">text button</a>{' '}
+          attributes available for the <A href="#text-button">text button</A>{' '}
           component are also availalbe for this component.
         </p>
 
@@ -145,7 +147,7 @@ export default function Buttons() {
         <p>
           It is also good to note that besides the bellow props, all of the html
           attributes available for the{' '}
-          <a href="#default-button">default button</a> component are also
+          <A href="#default-button">default button</A> component are also
           availalbe for this component.
         </p>
 
@@ -185,7 +187,7 @@ export default function Buttons() {
         <p>
           It is also good to note that besides the bellow props, all of the html
           attributes available for the{' '}
-          <a href="#default-button">default button</a> component are also
+          <A href="#default-button">default button</A> component are also
           availalbe for this component.
         </p>
 

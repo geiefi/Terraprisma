@@ -1,3 +1,5 @@
+import { Shell } from '~/shell';
+
 export default function Overview() {
   return (
     <article>

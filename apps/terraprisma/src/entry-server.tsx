@@ -1,5 +1,8 @@
 import { createHandler, StartServer } from "@solidjs/start/server";
 
+import { initialStyles } from "./theme";
+
+
 export default createHandler(() => (
   <StartServer
     document={({ assets, children, scripts }) => (
