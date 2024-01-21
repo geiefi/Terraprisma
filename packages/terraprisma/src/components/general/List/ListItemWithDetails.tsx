@@ -1,89 +1,107 @@
-import { JSX, ParentProps, Show, createEffect, createSignal } from 'solid-js';
+import {
+  Accessor,
+  ComponentProps,
+  JSX,
+  Setter,
+  Show,
+  createEffect,
+  createSignal,
+  on,
+  splitProps
+} from 'solid-js';
 
 import ListItem from './ListItem';
 import { Accents } from '../../..';
-import {
-  componentBuilder,
-  addAccentColoring,
-  extendPropsFrom,
-  mergeClass,
-  mergeCallbacks
-} from '../../../utils';
+import { mergeClass, mergeCallbacks } from '../../../utils';
 import { KeyboardArrowDown } from '../../icons';
 import { Collapse } from '../../transitions';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface ListItemWithDetailsProps extends ParentProps {
-  /**
-   * @default false
-   */
-  disabled?: boolean;
+export type ListItemWithDetailsProps = LeftIntersection<
+  {
+    /**
+     * @default false
+     */
+    disabled?: boolean;
 
-  /**
-   * @default false
-   */
-  active?: boolean;
+    /**
+     * @default false
+     */
+    active?: boolean;
 
-  style?: JSX.CSSProperties;
+    color?: Accents;
 
-  showingDetails?: boolean;
+    children?: JSX.Element;
 
-  details: JSX.Element;
-}
+    style?: JSX.CSSProperties;
 
-const ListItemWithDetails = componentBuilder<ListItemWithDetailsProps>()
-  .factory(addAccentColoring<ListItemWithDetailsProps>())
-  .factory(
-    extendPropsFrom<ListItemWithDetailsProps & { color?: Accents }, 'li'>([
-      'children',
-      'color',
-      'details',
-      'active',
-      'showingDetails',
-      'disabled'
-    ])
-  )
-  .create((props, color, elProps) => {
-    const [isDetailsOpen, setDetailsOpen] = createSignal(false);
-    createEffect(() => {
-      if (typeof props.showingDetails !== 'undefined') {
-        setDetailsOpen(props.showingDetails);
-      }
-    });
+    showingDetails?: boolean;
 
-    return (
-      <>
-        <ListItem
-          {...elProps}
-          class={mergeClass('relative', elProps.class)}
-          color={color()}
-          active={props.active}
-          style={props.style}
-          clickable
-          onClick={mergeCallbacks(
-            elProps.onClick,
-            () =>
-              typeof props.showingDetails === 'undefined' &&
-              setDetailsOpen((isOpen) => !isOpen)
-          )}
-          disabled={props.disabled}
-        >
-          {props.children}
+    details: JSX.Element;
+  },
+  ComponentProps<'li'>
+>;
 
-          <span
-            class={mergeClass(
-              'absolute right-2.5 top-1/2 translate-y-[-50%] origin-center transition-transform',
-              isDetailsOpen() && 'rotate-180'
-            )}
-          >
-            <KeyboardArrowDown />
-          </span>
-        </ListItem>
+const ListItemWithDetails = (allProps: ListItemWithDetailsProps) => {
+  const [props, elProps] = splitProps(allProps, [
+    'children',
+    'color',
+    'details',
+    'active',
+    'showingDetails',
+    'style',
+    'disabled'
+  ]);
 
-        <Collapse>
-          <Show when={isDetailsOpen()}>{props.details}</Show>
-        </Collapse>
-      </>
-    );
+  const color = () => props.color ?? 'accent';
+
+  let isDetailsOpen: Accessor<boolean> = () => false;
+  let setDetailsOpen: Setter<boolean> | undefined;
+  createEffect(() => {
+    if (typeof props.showingDetails !== 'undefined') {
+      // eslint-disable-next-line solid/reactivity
+      isDetailsOpen = () => props.showingDetails!;
+      setDetailsOpen = undefined;
+    } else {
+      const [_isDetailsOpen, _setDetailsOpen] = createSignal(false);
+      isDetailsOpen = _isDetailsOpen;
+      setDetailsOpen = _setDetailsOpen;
+    }
   });
+
+  return (
+    <>
+      <ListItem
+        {...elProps}
+        class={mergeClass('relative', elProps.class)}
+        color={color()}
+        active={props.active}
+        style={props.style}
+        clickable
+        onClick={mergeCallbacks(elProps.onClick, () => {
+          if (typeof props.showingDetails === 'undefined' && setDetailsOpen) {
+            setDetailsOpen((isOpen) => !isOpen);
+          }
+        })}
+        disabled={props.disabled}
+      >
+        {props.children}
+
+        <span
+          class={mergeClass(
+            'absolute right-2.5 top-1/2 translate-y-[-50%] origin-center transition-transform',
+            isDetailsOpen() && 'rotate-180'
+          )}
+        >
+          <KeyboardArrowDown />
+        </span>
+      </ListItem>
+
+      <Collapse>
+        <Show when={isDetailsOpen()}>{props.details}</Show>
+      </Collapse>
+    </>
+  );
+};
 
 export default ListItemWithDetails;
