@@ -36,7 +36,6 @@ const PageNumber = (props: {
     <IconButton
       active={props.active}
       color={props.color}
-      rippleProps={{ center: false }}
       squarish
       size="small"
       onClick={(e: MouseEvent) => props.onClick(e)}
@@ -102,7 +101,6 @@ const Pagination = componentBuilder<PaginationProps>()
           class="back"
           disabled={props.current === 1}
           squarish
-          rippleProps={{ center: false }}
           size="small"
           onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
         >
@@ -150,7 +148,6 @@ const Pagination = componentBuilder<PaginationProps>()
           class="next"
           squarish
           disabled={props.current === props.total}
-          rippleProps={{ center: false }}
           onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
           size="small"
         >

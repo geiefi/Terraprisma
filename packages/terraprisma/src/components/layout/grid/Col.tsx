@@ -1,39 +1,43 @@
-import { JSX, ParentProps } from 'solid-js';
+import { ComponentProps, JSX, ParentProps, splitProps } from 'solid-js';
 import { componentBuilder, extendPropsFrom } from '../../../utils';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface ColProps extends ParentProps {
-  size:
-    | 1
-    | 2
-    | 3
-    | 4
-    | 5
-    | 6
-    | 7
-    | 8
-    | 9
-    | 10
-    | 11
-    | 12
-    | 13
-    | 14
-    | 15
-    | 16
-    | 17
-    | 18
-    | 19
-    | 20
-    | 21
-    | 22
-    | 23
-    | 24;
+export type ColProps = LeftIntersection<
+  {
+    size:
+      | 1
+      | 2
+      | 3
+      | 4
+      | 5
+      | 6
+      | 7
+      | 8
+      | 9
+      | 10
+      | 11
+      | 12
+      | 13
+      | 14
+      | 15
+      | 16
+      | 17
+      | 18
+      | 19
+      | 20
+      | 21
+      | 22
+      | 23
+      | 24;
 
-  style?: JSX.CSSProperties;
-}
+    style?: JSX.CSSProperties;
+  },
+  ComponentProps<'div'>
+>;
 
-const Col = componentBuilder<ColProps>()
-  .factory(extendPropsFrom<ColProps, 'div'>(['size', 'children', 'style']))
-  .create((props, elProps) => (
+const Col = (allProps: ColProps) => {
+  const [props, elProps] = splitProps(allProps, ['size', 'children', 'style']);
+  return (
     <div
       {...elProps}
       class="px-[var(--gap)] py-[var(--row-gap)]"
@@ -44,6 +48,7 @@ const Col = componentBuilder<ColProps>()
     >
       {props.children}
     </div>
-  ));
+  );
+};
 
 export default Col;

@@ -5,44 +5,46 @@ import {
   createSignal,
   JSX,
   on,
-  ParentProps,
-  Show
+  Show,
+  splitProps
 } from 'solid-js';
 
 import {
   mergeClass,
-  componentBuilder,
-  extendPropsFrom,
   getAbsoluteBoundingRect
 } from '../../../utils';
 
 import './Tooltip.scss';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface TooltipProps extends ParentProps {
-  visible?: boolean;
+export type TooltipProps = LeftIntersection<
+  {
+    visible?: boolean;
 
-  // /**
-  //  * @description Weather or not the tooltip should make itself visible once hovered.
-  //  *
-  //  * Only works if the {@link anchor anchor} is a ref and not a DOMRect.
-  //  * This automatically adds MouseEnter and MouseLeave listeners to the {@link anchor anchor}.
-  //  *
-  //  * @default false
-  //  */
-  // visibleOnHover?: boolean;
+    // /**
+    //  * @description Weather or not the tooltip should make itself visible once hovered.
+    //  *
+    //  * Only works if the {@link anchor anchor} is a ref and not a DOMRect.
+    //  * This automatically adds MouseEnter and MouseLeave listeners to the {@link anchor anchor}.
+    //  *
+    //  * @default false
+    //  */
+    // visibleOnHover?: boolean;
 
-  /**
-   * @description The CSS distance between the anchor and the tooltip.
-   */
-  offsetFromAnchor?: JSX.CSSProperties['top'];
+    /**
+     * @description The CSS distance between the anchor and the tooltip.
+     */
+    offsetFromAnchor?: JSX.CSSProperties['top'];
 
-  /**
-   * @description The position relative to the {@link anchor anchor}.
-   */
-  position?: 'left' | 'top' | 'right' | 'bottom';
+    /**
+     * @description The position relative to the {@link anchor anchor}.
+     */
+    position?: 'left' | 'top' | 'right' | 'bottom';
 
-  style?: JSX.CSSProperties;
-}
+    style?: JSX.CSSProperties;
+  },
+  ComponentProps<'div'>
+>;
 
 /**
  * @description The same as a Tooltip component but rather creates the Tooltip component when this is called
@@ -68,77 +70,75 @@ export function createTooltip(identification: string) {
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
-    Tooltip: componentBuilder<TooltipProps>()
-      .factory(
-        extendPropsFrom<TooltipProps, 'div'>([
-          'visible',
-          'offsetFromAnchor',
-          'position',
-          'children',
-          'style'
-        ])
-      )
-      .create((props, elProps) => {
-        const [visible, setVisible] = createSignal(props.visible);
+    Tooltip: (allProps: TooltipProps) => {
+      const [props, elProps] = splitProps(allProps, [
+        'visible',
+        'offsetFromAnchor',
+        'position',
+        'children',
+        'style'
+      ]);
+      // eslint-disable-next-line solid/reactivity
+      const [visible, setVisible] = createSignal(props.visible);
 
-        const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
+      const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
 
-        // eslint-disable-next-line solid/reactivity
-        updateBoundingBox = () => {
-          const anchor = anchorRef();
-          if (anchor) {
-            setBoundingRect(getAbsoluteBoundingRect(anchor));
-          } else {
-            console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
+      // eslint-disable-next-line solid/reactivity
+      updateBoundingBox = () => {
+        const anchor = anchorRef();
+        if (anchor) {
+          setBoundingRect(getAbsoluteBoundingRect(anchor));
+        } else {
+          console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
             Are your forgetting to call setAnchor for it?`);
-          }
-        };
+        }
+      };
 
-        createEffect(on([visible, anchorRef], () => updateBoundingBox!()));
+      createEffect(on([visible, anchorRef], () => updateBoundingBox!()));
 
-        createEffect(() => {
-          setVisible(props.visible);
-        });
+      createEffect(() => {
+        setVisible(props.visible);
+      });
 
-        const position = createMemo(() => props.position ?? 'top');
+      const position = createMemo(() => props.position ?? 'top');
 
-        let tooltipEl: HTMLDivElement;
+      let tooltipEl: HTMLDivElement;
 
-        return (
-          <>
-            <Show when={visible()}>
-              <div
-                {...elProps}
-                class={mergeClass(
-                  'tooltip absolute w-fit z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
-                  position() === 'top' &&
-                    'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[var(--anchor-top)] top',
-                  position() === 'left' &&
-                    'left-[var(--anchor-left)] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] left',
-                  position() === 'right' &&
-                    'left-[calc(var(--anchor-left)+var(--anchor-width)+var(--offset-from-anchor))] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] right',
-                  position() === 'bottom' &&
-                    'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[calc(var(--anchor-top)+var(--anchor-height)+var(--offset-from-anchor))] bottom',
-                  elProps.class
-                )}
-                ref={tooltipEl!}
-                style={{
-                  '--anchor-left': `${boundingRect()?.x}px`,
-                  '--anchor-top': `${boundingRect()?.y}px`,
-                  '--anchor-width': `${boundingRect()?.width}px`,
-                  '--anchor-height': `${boundingRect()?.height}px`,
+      return (
+        <>
+          <Show when={visible()}>
+            <div
+              {...elProps}
+              class={mergeClass(
+                'tooltip absolute w-fit z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
+                position() === 'top' &&
+                  'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[var(--anchor-top)] top',
+                position() === 'left' &&
+                  'left-[var(--anchor-left)] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] left',
+                position() === 'right' &&
+                  'left-[calc(var(--anchor-left)+var(--anchor-width)+var(--offset-from-anchor))] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] right',
+                position() === 'bottom' &&
+                  'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[calc(var(--anchor-top)+var(--anchor-height)+var(--offset-from-anchor))] bottom',
+                elProps.class
+              )}
+              ref={tooltipEl!}
+              style={{
+                '--anchor-left': `${boundingRect()?.x}px`,
+                '--anchor-top': `${boundingRect()?.y}px`,
+                '--anchor-width': `${boundingRect()?.width}px`,
+                '--anchor-height': `${boundingRect()?.height}px`,
 
-                  '--offset-from-anchor': props.offsetFromAnchor || '12px',
+                '--offset-from-anchor': props.offsetFromAnchor || '12px',
 
-                  ...props.style
-                }}
-              >
-                {props.children}
-              </div>
-            </Show>
-          </>
-        );
-      })
+                ...props.style
+              }}
+            >
+              {props.children}
+            </div>
+          </Show>
+        </>
+      );
+    }
   };
 }
 

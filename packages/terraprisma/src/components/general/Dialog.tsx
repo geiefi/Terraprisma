@@ -4,7 +4,8 @@ import {
   Show,
   createMemo,
   createRoot,
-  createSignal
+  createSignal,
+  splitProps
 } from 'solid-js';
 import { Portal, insert } from 'solid-js/web';
 
@@ -19,34 +20,36 @@ import {
 } from '../../utils';
 import { Divisor } from '../layout';
 import { Fade } from '../transitions';
+import { LeftIntersection } from '../../types/LeftIntersection';
 
-export interface DialogProps {
-  visible?: boolean;
+export type DialogProps = LeftIntersection<
+  {
+    visible?: boolean;
 
-  title: JSX.Element;
-  children: JSX.Element;
+    title: JSX.Element;
+    children: JSX.Element;
 
-  extraElementsInFooter?: JSX.Element;
+    extraElementsInFooter?: JSX.Element;
 
-  onOk?: (event: MouseEvent) => any;
-  onCancel?: (event: MouseEvent) => any;
+    onOk?: (event: MouseEvent) => any;
+    onCancel?: (event: MouseEvent) => any;
 
-  onHidden?: () => any;
-}
+    onHidden?: () => any;
+  },
+  ComponentProps<typeof Box>
+>;
 
-const DialogInternal = componentBuilder<DialogProps>()
-  .factory(
-    extendPropsFrom<DialogProps, typeof Box>([
-      'title',
-      'extraElementsInFooter',
-      'visible',
-      'onOk',
-      'onHidden',
-      'onCancel',
-      'children'
-    ])
-  )
-  .create((props, elProps) => (
+const DialogInternal = (allProps: DialogProps) => {
+  const [props, elProps] = splitProps(allProps, [
+    'title',
+    'extraElementsInFooter',
+    'visible',
+    'onOk',
+    'onHidden',
+    'onCancel',
+    'children'
+  ]);
+  return (
     <Fade onAfterExit={() => props.onHidden && props.onHidden()}>
       <Show when={props.visible}>
         <div
@@ -104,7 +107,8 @@ const DialogInternal = componentBuilder<DialogProps>()
         </div>
       </Show>
     </Fade>
-  ));
+  );
+};
 
 const Dialog = (props: ComponentProps<typeof DialogInternal>) => {
   return (

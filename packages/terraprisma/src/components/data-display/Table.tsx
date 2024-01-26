@@ -1,114 +1,112 @@
 import {
   ComponentProps,
-  JSX,
-  ParentProps,
   createContext,
   createMemo,
+  splitProps,
   useContext
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../utils';
+import { mergeClass } from '../../utils';
+import { LeftIntersection } from '../../types/LeftIntersection';
 
-export interface TableProps extends ParentProps {
-  identification: string;
+export type TableProps = LeftIntersection<
+  {
+    identification: string;
 
-  compact?: boolean;
-}
+    compact?: boolean;
+  },
+  ComponentProps<'table'>
+>;
 
 const TableContext = createContext<TableProps>();
 
-const Table = componentBuilder<TableProps>()
-  .factory(
-    extendPropsFrom<TableProps, 'table'>([
-      'identification',
-      'compact',
-      'children'
-    ])
-  )
-  .create((props, elProps) => {
-    return (
-      <TableContext.Provider value={props}>
-        <table
-          {...elProps}
-          class={mergeClass(
-            'table w-full border-collapse border-spacing-0 m-0 appearance-none box-border',
-            elProps.class
-          )}
-        >
-          {props.children}
-        </table>
-      </TableContext.Provider>
-    );
-  }) as {
-  (
-    props: TableProps & Omit<ComponentProps<'table'>, keyof TableProps>
-  ): JSX.Element;
-  Row: typeof Row;
-  Column: typeof Column;
+const Table = (allProps: TableProps) => {
+  const [props, elProps] = splitProps(allProps, [
+    'identification',
+    'compact',
+    'children'
+  ]);
+  return (
+    <TableContext.Provider value={props}>
+      <table
+        {...elProps}
+        class={mergeClass(
+          'table w-full border-collapse border-spacing-0 m-0 appearance-none box-border',
+          elProps.class
+        )}
+      >
+        {props.children}
+      </table>
+    </TableContext.Provider>
+  );
 };
 
-export interface TableRowProps extends ParentProps {
-  headRow?: boolean;
-}
+export type TableRowProps = LeftIntersection<
+  {
+    headRow?: boolean;
+  },
+  ComponentProps<'tr'>
+>;
 
 const RowContext = createContext<TableRowProps>();
 
-const Row = componentBuilder<TableRowProps>()
-  .factory(extendPropsFrom<TableRowProps, 'tr'>(['headRow', 'children']))
-  .create((props, elProps) => {
-    return (
-      <RowContext.Provider value={props}>
-        <tr {...elProps}>{props.children}</tr>
-      </RowContext.Provider>
+const Row = (allProps: TableRowProps) => {
+  const [props, elProps] = splitProps(allProps, ['headRow', 'children']);
+  return (
+    <RowContext.Provider value={props}>
+      <tr {...elProps}>{props.children}</tr>
+    </RowContext.Provider>
+  );
+};
+
+export type TableColumnProps = LeftIntersection<
+  {
+    align?: 'left' | 'right' | 'center';
+  },
+  ComponentProps<'th'>
+>;
+
+const Column = (allProps: TableColumnProps) => {
+  const [props, elProps] = splitProps(allProps, ['align', 'children']);
+  const tableProps = useContext(TableContext);
+  const rowProps = useContext(RowContext);
+
+  if (typeof tableProps === 'undefined') {
+    throw new Error('A <Table.Column> must be inside a <Table>!');
+  }
+
+  if (typeof rowProps === 'undefined') {
+    throw new Error(
+      `Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`
     );
-  });
+  }
 
-export interface TableColumnProps extends ParentProps {
-  align?: 'left' | 'right' | 'center';
-}
+  const colType = createMemo(() => (rowProps.headRow ? 'th' : 'td'));
+  const alignment = createMemo(() => props.align ?? 'left');
 
-const Column = componentBuilder<TableColumnProps>()
-  .factory(extendPropsFrom<TableColumnProps, 'th'>(['align', 'children']))
-  .create((props, elProps) => {
-    const tableProps = useContext(TableContext);
-    const rowProps = useContext(RowContext);
+  return (
+    <Dynamic
+      component={colType()}
+      {...elProps}
+      class={mergeClass(
+        'text-[inherit]',
+        !tableProps.compact && 'py-1.5 px-3',
+        !!tableProps.compact && 'py-2 px-4',
+        colType() === 'td' &&
+          'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
+        colType() === 'th' && ' border-none font-extrabold',
 
-    if (typeof tableProps === 'undefined') {
-      throw new Error('A <Table.Column> must be inside a <Table>!');
-    }
+        alignment() === 'left' && 'text-left',
+        alignment() === 'right' && 'text-right',
+        alignment() === 'center' && 'text-center',
 
-    if (typeof rowProps === 'undefined') {
-      throw new Error(
-        `Table ${tableProps.identification}: Could not determine what row a certain column inside this table belongs to.`
-      );
-    }
-
-    const colType = createMemo(() => (rowProps.headRow ? 'th' : 'td'));
-    const alignment = createMemo(() => props.align ?? 'left');
-
-    return (
-      <Dynamic
-        component={colType()}
-        {...elProps}
-        class={mergeClass(
-          'text-[inherit]',
-          !tableProps.compact && 'py-1.5 px-3',
-          !!tableProps.compact && 'py-2 px-4',
-          colType() === 'td' &&
-            'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
-          colType() === 'th' && ' border-none font-extrabold',
-
-          alignment() === 'left' && 'text-left',
-          alignment() === 'right' && 'text-right',
-          alignment() === 'center' && 'text-center',
-
-          elProps.class
-        )}
-        children={props.children}
-      />
-    );
-  });
+        elProps.class
+      )}
+      children={props.children}
+    />
+  );
+};
 
 Table.Row = Row;
 Table.Column = Column;

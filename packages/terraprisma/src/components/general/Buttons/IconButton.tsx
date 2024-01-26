@@ -1,53 +1,51 @@
-import { ParentProps } from 'solid-js';
+import { ComponentProps, splitProps } from 'solid-js';
 
 import TextButton from './TextButton';
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { mergeClass } from '../../../utils';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface IconButtonProps extends ParentProps {
-  /**
-   * @default
-   */
-  squarish?: boolean;
-}
+export type IconButtonProps = LeftIntersection<
+  {
+    /**
+     * @default
+     */
+    squarish?: boolean;
+  },
+  ComponentProps<typeof TextButton>
+>;
 
-const IconButton = componentBuilder<IconButtonProps>()
-  .factory(
-    extendPropsFrom<IconButtonProps, typeof TextButton>([
-      'squarish',
-      'children'
-    ])
-  )
-  .create((props, defaultProps) => (
+const IconButton = (allProps: IconButtonProps) => {
+  const [props, defaultButtonProps] = splitProps(allProps, [
+    'squarish',
+    'children'
+  ]);
+  return (
     <TextButton
-      {...defaultProps}
-      rippleProps={{
-        center: true,
-        contrastWithBg: true,
-        ...defaultProps.rippleProps
-      }}
+      {...defaultButtonProps}
       unstyled
       class={mergeClass(
         '!p-0',
-        !defaultProps.unstyled && [
+        !defaultButtonProps.unstyled && [
           'aspect-square outline-none',
-          (!defaultProps.active || defaultProps.disabled) &&
+          (!defaultButtonProps.active || defaultButtonProps.disabled) &&
             'bg-transparent text-[var(--bg)]',
-          !defaultProps.disabled && [
+          !defaultButtonProps.disabled && [
             'hover:bg-[var(--bg)] hover:text-[var(--fg)]',
-            defaultProps.active && 'bg-[var(--bg)] text-[var(--fg)]'
+            defaultButtonProps.active && 'bg-[var(--bg)] text-[var(--fg)]'
           ],
           props.squarish ? 'rounded-lg' : 'rounded-full'
         ],
-        defaultProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
-        (defaultProps.size === 'medium' ||
-          typeof defaultProps.size === 'undefined') &&
+        defaultButtonProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
+        (defaultButtonProps.size === 'medium' ||
+          typeof defaultButtonProps.size === 'undefined') &&
           'min-w-[3rem] min-h-[3rem]',
-        defaultProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
-        defaultProps.class
+        defaultButtonProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
+        defaultButtonProps.class
       )}
     >
       {props.children}
     </TextButton>
-  ));
+  );
+};
 
 export default IconButton;

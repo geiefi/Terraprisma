@@ -1,38 +1,38 @@
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { ComponentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../../utils';
 import Button from './Button';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface TextButtonProps {
-  /**
-   * @description Makes it seem as hovered but permanently.
-   */
-  active?: boolean;
-}
+export type TextButtonProps = LeftIntersection<
+  {
+    /**
+     * @description Makes it seem as hovered but permanently.
+     */
+    active?: boolean;
+  },
+  ComponentProps<typeof Button>
+>;
 
-const TextButton = componentBuilder<TextButtonProps>()
-  .factory(extendPropsFrom<TextButtonProps, typeof Button>(['active']))
-  .create((props, dftProps) => {
-    return (
-      <Button
-        {...dftProps}
-        unstyled
-        rippleProps={{
-          contrastWithBg: props.active ?? false,
-          ...dftProps.rippleProps
-        }}
-        class={mergeClass(
-          !dftProps.disabled &&
-            !dftProps.unstyled && [
-              'rounded-md outline-none',
-              props.active
-                ? 'bg-[var(--bg)] text-[var(--fg)]'
-                : 'bg-transparent text-[var(--bg)] hover:bg-[var(--hover-10)]'
-            ],
-          dftProps.class
-        )}
-      >
-        {dftProps.children}
-      </Button>
-    );
-  });
+const TextButton = (allProps: TextButtonProps) => {
+  const [props, dftProps] = splitProps(allProps, ['active']);
+  return (
+    <Button
+      {...dftProps}
+      unstyled
+      class={mergeClass(
+        !dftProps.disabled &&
+          !dftProps.unstyled && [
+            'rounded-md outline-none',
+            props.active
+              ? 'bg-[var(--bg)] text-[var(--fg)]'
+              : 'bg-transparent text-[var(--bg)] hover:bg-[var(--hover-10)]'
+          ],
+        dftProps.class
+      )}
+    >
+      {dftProps.children}
+    </Button>
+  );
+};
 
 export default TextButton;

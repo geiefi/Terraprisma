@@ -4,11 +4,9 @@ import {
   Match,
   ParentProps,
   Switch,
-  createMemo,
   splitProps
 } from 'solid-js';
 
-import Ripple from '../Ripple';
 import { Accents } from '../../..';
 import { mergeClass } from '../../../utils';
 
@@ -54,31 +52,29 @@ const ListItem = (allProps: ListItemProps) => {
   return (
     <Switch>
       <Match when={clickable()}>
-        <Ripple color={color()} contrastWithBg={active()} noRipple={disabled()}>
-          <li
-            aria-disabled={disabled()}
-            {...elProps}
-            class={mergeClass(
-              'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
-              disabled()
-                ? 'bg-[var(--muted-bg)] text-[var(--muted-fg)] opacity-30'
-                : [
-                    active()
-                      ? 'bg-[var(--bg)] text-[var(--fg)]'
-                      : 'hover:bg-[var(--hover-10)]'
-                  ],
-              elProps.class
-            )}
-            style={{
-              '--bg': `var(--${color()}-bg)`,
-              '--fg': `var(--${color()}-fg)`,
-              '--hover-10': `var(--${color()}-hover-10)`,
-              ...props.style
-            }}
-          >
-            {props.children}
-          </li>
-        </Ripple>
+        <li
+          aria-disabled={disabled()}
+          {...elProps}
+          class={mergeClass(
+            'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
+            disabled()
+              ? 'bg-[var(--muted-bg)] text-[var(--muted-fg)] opacity-30'
+              : [
+                  active()
+                    ? 'bg-[var(--bg)] text-[var(--fg)]'
+                    : 'hover:bg-[var(--hover-10)]'
+                ],
+            elProps.class
+          )}
+          style={{
+            '--bg': `var(--${color()}-bg)`,
+            '--fg': `var(--${color()}-fg)`,
+            '--hover-10': `var(--${color()}-hover-10)`,
+            ...props.style
+          }}
+        >
+          {props.children}
+        </li>
       </Match>
 
       <Match when={!clickable()}>
