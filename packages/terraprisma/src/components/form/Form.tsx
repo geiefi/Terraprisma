@@ -16,8 +16,7 @@ import {
 import {
   InputBaseValue,
   InputProps,
-  InputType,
-  RawInput
+  InputType
 } from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './fields/Select';
@@ -27,6 +26,7 @@ import { DatepickerProps } from './fields/Datepicker/Datepicker';
 import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
+import { Input } from '../icons';
 
 export interface Form<Value extends FormValue> {
   (props: ParentProps): JSX.Element;
@@ -35,8 +35,7 @@ export interface Form<Value extends FormValue> {
     Name extends FieldName<Value, InputBaseValue<Type>>,
     Type extends InputType = undefined
   >(
-    props: InputProps<Type, Value, Name> &
-      Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
+    props: InputProps<Type, Value, Name>
   ) => JSX.Element;
   Slider<Name extends FieldName<Value, number>>(
     props: SliderProps<Value, Name> &
@@ -134,7 +133,7 @@ export function createForm<Value extends FormValue>(
     <Form<Value> providerValue={formProviderValue}>{props.children}</Form>
   );
 
-  form.Input = RawInput;
+  form.Input = Input;
   form.Slider = Slider;
   form.Select = Select;
   form.RadioGroup = RadioGroup;

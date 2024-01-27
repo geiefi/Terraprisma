@@ -1,5 +1,4 @@
-import { ComponentProps, JSX, ParentProps, splitProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom } from '../../../utils';
+import { ComponentProps, JSX, splitProps } from 'solid-js';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 
 export type ColProps = LeftIntersection<

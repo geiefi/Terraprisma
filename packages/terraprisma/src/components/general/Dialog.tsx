@@ -13,8 +13,6 @@ import Box from './Box';
 import Button from './Buttons/Button';
 import OutlinedButton from './Buttons/OutlinedButton';
 import {
-  componentBuilder,
-  extendPropsFrom,
   mergeClass,
   mergeCallbacks
 } from '../../utils';
