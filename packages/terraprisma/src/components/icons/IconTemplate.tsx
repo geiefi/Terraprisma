@@ -20,7 +20,7 @@ export type IconComponent = ReturnType<typeof createIconComponent>;
 const createIconComponent = (iconName: string) => {
   return (allProps: IconProps) => {
     const [props, elProps] = splitProps(allProps, ['variant', 'style']);
-    <span
+    return <span
       {...elProps}
       class={mergeClass(
         `material-symbols-${props.variant || 'outlined'}`,
