@@ -55,7 +55,7 @@ const ListItemWithDetails = (allProps: ListItemWithDetailsProps) => {
 
   const color = () => props.color ?? 'accent';
 
-  let isDetailsOpen: Accessor<boolean> = () => false;
+  let isDetailsOpen: Accessor<boolean> = () => props.showingDetails ?? false;
   let setDetailsOpen: Setter<boolean> | undefined;
   createEffect(() => {
     if (typeof props.showingDetails !== 'undefined') {
