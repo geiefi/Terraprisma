@@ -111,7 +111,7 @@ const Column = (allProps: TableColumnProps) => {
         </th>
       </Match>
       <Match when={colType() === 'td'}>
-        <th
+        <td
           {...elProps}
           class={mergeClass(
             'text-[inherit]',
@@ -129,7 +129,7 @@ const Column = (allProps: TableColumnProps) => {
           )}
         >
           {props.children}
-        </th>
+        </td>
       </Match>
     </Switch>
   );
