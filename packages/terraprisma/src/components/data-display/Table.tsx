@@ -1,5 +1,7 @@
 import {
   ComponentProps,
+  Match,
+  Switch,
   createContext,
   createMemo,
   splitProps,
@@ -52,10 +54,10 @@ export type TableRowProps = LeftIntersection<
 const RowContext = createContext<TableRowProps>();
 
 const Row = (allProps: TableRowProps) => {
-  const [props, elProps] = splitProps(allProps, ['headRow', 'children']);
+  const [_, elProps] = splitProps(allProps, ['headRow']);
   return (
-    <RowContext.Provider value={props}>
-      <tr {...elProps}>{props.children}</tr>
+    <RowContext.Provider value={allProps}>
+      <tr {...elProps}>{elProps.children}</tr>
     </RowContext.Provider>
   );
 };
@@ -86,25 +88,50 @@ const Column = (allProps: TableColumnProps) => {
   const alignment = createMemo(() => props.align ?? 'left');
 
   return (
-    <Dynamic
-      component={colType()}
-      {...elProps}
-      class={mergeClass(
-        'text-[inherit]',
-        !tableProps.compact && 'py-1.5 px-3',
-        !!tableProps.compact && 'py-2 px-4',
-        colType() === 'td' &&
-          'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
-        colType() === 'th' && ' border-none font-extrabold',
+    <Switch>
+      <Match when={colType() === 'th'}>
+        <th
+          {...elProps}
+          class={mergeClass(
+            'text-[inherit]',
+            !tableProps.compact && 'py-1.5 px-3',
+            !!tableProps.compact && 'py-2 px-4',
+            colType() === 'td' &&
+              'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
+            colType() === 'th' && ' border-none font-extrabold',
 
-        alignment() === 'left' && 'text-left',
-        alignment() === 'right' && 'text-right',
-        alignment() === 'center' && 'text-center',
+            alignment() === 'left' && 'text-left',
+            alignment() === 'right' && 'text-right',
+            alignment() === 'center' && 'text-center',
 
-        elProps.class
-      )}
-      children={props.children}
-    />
+            elProps.class
+          )}
+        >
+          {props.children}
+        </th>
+      </Match>
+      <Match when={colType() === 'td'}>
+        <th
+          {...elProps}
+          class={mergeClass(
+            'text-[inherit]',
+            !tableProps.compact && 'py-1.5 px-3',
+            !!tableProps.compact && 'py-2 px-4',
+            colType() === 'td' &&
+              'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
+            colType() === 'th' && ' border-none font-extrabold',
+
+            alignment() === 'left' && 'text-left',
+            alignment() === 'right' && 'text-right',
+            alignment() === 'center' && 'text-center',
+
+            elProps.class
+          )}
+        >
+          {props.children}
+        </th>
+      </Match>
+    </Switch>
   );
 };
 
