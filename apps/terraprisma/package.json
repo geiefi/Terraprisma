@@ -16,15 +16,15 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@solidjs/router": "0.10.9",
-    "@solidjs/start": "0.4.10",
+    "@solidjs/router": "0.10.10",
+    "@solidjs/start": "0.4.11",
     "fdbg": "^1.0.0",
     "material-symbols": "^0.14.0",
     "prismjs": "^1.29.0",
     "solid-devtools": "^0.29.2",
-    "solid-js": "1.8.11",
+    "solid-js": "1.8.12",
     "terraprisma": "workspace:*",
-    "vinxi": "0.1.4"
+    "vinxi": "0.1.10"
   },
   "engines": {
     "node": ">=18"
