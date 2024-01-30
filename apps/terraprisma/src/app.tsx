@@ -13,32 +13,33 @@ import 'material-symbols';
 import 'fdbg';
 
 import './app.css';
+import { ErrorOverlay } from 'solid-error-overlay';
 
 export default function Root() {
   return (
     <Router
       root={(props) => {
-        return (<ThemeProvider>
-          <main>
-            <Container class="h-screen min-h-fit py-5 flex flex-col gap-6">
-              <Logo />
+        return (
+          <ThemeProvider>
+            <main>
+              <Container class="h-screen min-h-fit py-5 flex flex-col gap-6">
+                <Logo />
 
-              <div class="flex justify-around items-stretch w-full h-full gap-x-10">
-                <div class="w-full max-h-full max-w-[368px]">
-                  <Sidebar />
-                </div>
+                <div class="flex justify-around items-stretch w-full h-full gap-x-10">
+                  <div class="w-full max-h-full max-w-[368px]">
+                    <Sidebar />
+                  </div>
 
-                <div class="w-full h-full min-h-fit max-w-[1024px]">
-                  <Box class="h-fit">
-                    <Suspense>
-                      {props.children}
-                    </Suspense>
-                  </Box>
+                  <div class="w-full h-full min-h-fit max-w-[1024px]">
+                    <Box class="h-fit">
+                      <Suspense>{props.children}</Suspense>
+                    </Box>
+                  </div>
                 </div>
-              </div>
-            </Container>
-          </main>
-        </ThemeProvider>);
+              </Container>
+            </main>
+          </ThemeProvider>
+        );
       }}
     >
       <FileRoutes />
