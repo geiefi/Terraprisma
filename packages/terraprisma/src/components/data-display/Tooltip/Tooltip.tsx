@@ -104,7 +104,7 @@ export function createTooltip(identification: string) {
             <div
               {...elProps}
               class={mergeClass(
-                'tooltip absolute w-fit z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
+                'tooltip absolute w-max z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
                 position() === 'top' &&
                   'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[var(--anchor-top)] top',
                 position() === 'left' &&
