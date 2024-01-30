@@ -1,4 +1,4 @@
-import { createMemo, createSignal, Suspense } from 'solid-js';
+import { createEffect, createMemo, createSignal, onCleanup, Show, Suspense } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 import { IconButton, Tooltip, GrowFade, Icons } from 'terraprisma';
@@ -26,6 +26,7 @@ export function CodeBlock(props: {
 
   let copyButtonRef: HTMLButtonElement;
   const [isShowingCopyTooltip, setShowingCopyTooltip] = createSignal(false);
+  const [copied, setCopied] = createSignal(false);
 
   let hoverTimeout: NodeJS.Timeout | undefined;
 
@@ -35,11 +36,18 @@ export function CodeBlock(props: {
     >
       <Suspense fallback={<>Loading highlighted code...</>}>
         {/* eslint-disable-next-line */}
-        <code class="!bg-transparent !p-0" innerHTML={prismGeneratedHTML()}></code>
+        <code
+          class="!bg-transparent !p-0"
+          // eslint-disable-next-line solid/no-innerhtml
+          innerHTML={prismGeneratedHTML()}
+        ></code>
 
         <IconButton
           ref={(ref) => (copyButtonRef = ref)}
-          onClick={() => navigator.clipboard.writeText(props.code)}
+          onClick={() => {
+            navigator.clipboard.writeText(props.code);
+            setCopied(true);
+          }}
           onMouseOver={() => {
             clearTimeout(hoverTimeout);
             hoverTimeout = setTimeout(() => {
@@ -47,12 +55,17 @@ export function CodeBlock(props: {
               clearTimeout(hoverTimeout);
             }, 500);
           }}
-          onMouseLeave={() => setShowingCopyTooltip(false)}
+          onMouseLeave={() => {
+            clearTimeout(hoverTimeout);
+            setShowingCopyTooltip(false)
+          }}
           class="sticky left-full bottom-full -translate-x-full translate-y-2 -ml-2"
           size="small"
           squarish
         >
-          <Icons.ContentCopy />
+          <Show when={!copied()} fallback={<Icons.Check class="!text-xl text-[var(--success-bg)]" />}>
+            <Icons.ContentCopy />
+          </Show>
         </IconButton>
         <Portal>
           <GrowFade>

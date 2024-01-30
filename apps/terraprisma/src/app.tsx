@@ -13,7 +13,6 @@ import 'material-symbols';
 import 'fdbg';
 
 import './app.css';
-import { ErrorOverlay } from 'solid-error-overlay';
 
 export default function Root() {
   return (
