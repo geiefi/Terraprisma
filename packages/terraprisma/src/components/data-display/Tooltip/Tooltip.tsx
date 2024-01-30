@@ -5,14 +5,12 @@ import {
   createSignal,
   JSX,
   on,
+  Setter,
   Show,
   splitProps
 } from 'solid-js';
 
-import {
-  mergeClass,
-  getAbsoluteBoundingRect
-} from '../../../utils';
+import { mergeClass, getAbsoluteBoundingRect } from '../../../utils';
 
 import './Tooltip.scss';
 import { LeftIntersection } from '../../../types/LeftIntersection';
@@ -78,10 +76,10 @@ export function createTooltip(identification: string) {
         'children',
         'style'
       ]);
-      // eslint-disable-next-line solid/reactivity
-      const [visible, setVisible] = createSignal(props.visible);
 
       const [boundingRect, setBoundingRect] = createSignal<DOMRect>();
+
+      const visible = () => props.visible ?? false;
 
       // eslint-disable-next-line solid/reactivity
       updateBoundingBox = () => {
@@ -96,11 +94,7 @@ export function createTooltip(identification: string) {
 
       createEffect(on([visible, anchorRef], () => updateBoundingBox!()));
 
-      createEffect(() => {
-        setVisible(props.visible);
-      });
-
-      const position = createMemo(() => props.position ?? 'top');
+      const position = () => props.position ?? 'top';
 
       let tooltipEl: HTMLDivElement;
 
