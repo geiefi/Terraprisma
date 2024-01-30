@@ -27,6 +27,8 @@ export function CodeBlock(props: {
   let copyButtonRef: HTMLButtonElement;
   const [isShowingCopyTooltip, setShowingCopyTooltip] = createSignal(false);
 
+  let hoverTimeout: NodeJS.Timeout | undefined;
+
   return (
     <pre
       class={`relative w-full h-fit max-h-[600px] overflow-auto language-${props.language}`}
@@ -38,7 +40,13 @@ export function CodeBlock(props: {
         <IconButton
           ref={(ref) => (copyButtonRef = ref)}
           onClick={() => navigator.clipboard.writeText(props.code)}
-          onMouseOver={() => setShowingCopyTooltip(true)}
+          onMouseOver={() => {
+            clearTimeout(hoverTimeout);
+            hoverTimeout = setTimeout(() => {
+              setShowingCopyTooltip(true);
+              clearTimeout(hoverTimeout);
+            }, 500);
+          }}
           onMouseLeave={() => setShowingCopyTooltip(false)}
           class="sticky left-full bottom-full -translate-x-full translate-y-2 -ml-2"
           size="small"
@@ -51,6 +59,7 @@ export function CodeBlock(props: {
             <Tooltip
               visible={isShowingCopyTooltip()}
               identification="Copy to code block clipboard tooltip"
+              class="text-nowrap"
               position="bottom"
               anchor={copyButtonRef!}
             >
