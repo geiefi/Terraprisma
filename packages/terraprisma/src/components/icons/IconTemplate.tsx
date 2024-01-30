@@ -19,7 +19,7 @@ export type IconComponent = ReturnType<typeof createIconComponent>;
 // not a decorator
 const createIconComponent = (iconName: string) => {
   return (allProps: IconProps) => {
-    const [props, elProps] = splitProps(allProps, ['variant', 'style']);
+    const [props, elProps] = splitProps(allProps, ['variant', 'style', 'children']);
     return <span
       {...elProps}
       class={mergeClass(
