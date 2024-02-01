@@ -1,56 +1,56 @@
-import { defineConfig } from 'tsup';
-import path from 'path';
-import stylePlugin from 'esbuild-style-plugin';
-import tailwindcss from 'tailwindcss';
+import { Options, defineConfig } from 'tsup';
+
 import postcss from 'esbuild-postcss';
-import scss from 'postcss-scss';
-import autoprefixer from 'autoprefixer';
-import * as preset from 'tsup-preset-solid'; // 'tsup-preset-solid'
+import { solidPlugin } from 'esbuild-plugin-solid';
 
-const preset_options: preset.PresetOptions = {
-  // array or single object
-  entries: [
-    // default entry (index)
-    {
-      // entries with '.tsx' extension will have `solid` export condition generated
-      entry: 'src/index.tsx',
-      // set `true` or pass a specific path to generate a development-only entry
-      dev_entry: true,
-      // set `true` or pass a specific path to generate a server-only entry
-      server_entry: true
-    }
-  ],
-  esbuild_plugins: [postcss()],
-  modify_esbuild_options: (opts) => {
-    opts.sourcemap = 'inline';
-    return opts;
-  },
-  // Setting `true` will remove all `console.*` calls and `debugger` statements
-  drop_console: true,
-  // Setting `true` will generate a CommonJS build alongside ESM (default: `false`)
-  cjs: true
-};
+function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
+  const plugins = [postcss()];
 
-export default defineConfig((config) => {
-  const watching = !!config.watch;
-
-  const parsed_data = preset.parsePresetOptions(preset_options, watching);
-
-  if (!watching) {
-    const package_fields = preset.generatePackageExports(parsed_data);
-
-    package_fields.exports = {
-      '.': { ...package_fields.exports },
-      './styles.css': {
-        // add the export for styles
-        import: './dist/index.css',
-        require: './dist/index.css',
-        default: './dist/index.css'
-      }
-    };
-
-    preset.writePackageJson(package_fields);
+  if (!jsx) {
+    plugins.push(solidPlugin({ solid: { generate: ssr ? 'ssr' : 'dom' } }));
   }
 
-  return preset.generateTsupOptions(parsed_data);
-});
+  const format = 'esm';
+
+  return {
+    target: ssr ? 'node18' : 'esnext',
+    platform: ssr ? 'node' : 'browser',
+    clean: true,
+    dts: format === 'esm' && !jsx,
+    format: ['esm', 'cjs'],
+    entry: ssr
+      ? {
+          server: 'src/index.tsx'
+        }
+      : {
+          browser: 'src/index.tsx'
+        },
+    esbuildOptions(options) {
+      if (jsx) {
+        options.jsx = 'preserve';
+      }
+    },
+    outExtension: (context) => {
+      const result: ReturnType<Exclude<Options['outExtension'], undefined>> = {};
+      if (jsx) {
+        result['js'] = '.jsx';
+      } else if (context.format === 'cjs') {
+        result['js'] = '.cjs';
+      }
+
+      return result;
+    },
+    external: [/solid-js(\/.*)?/],
+    outDir: 'dist/',
+    treeshake: { preset: 'smallest' },
+    replaceNodeEnv: true,
+    esbuildPlugins: plugins
+  };
+}
+
+export default defineConfig([
+  generateConfig({ ssr: false, jsx: false }),
+  generateConfig({ ssr: false, jsx: true }),
+  generateConfig({ ssr: true, jsx: false }),
+  generateConfig({ ssr: true, jsx: true })
+]);
