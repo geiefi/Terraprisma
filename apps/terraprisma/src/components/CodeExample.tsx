@@ -16,7 +16,7 @@ export function CodeExample(props: {
 
   return (
     <div class="px-2 py-3">
-      <Box class="relative flex flex-col gap-2 pt-14">
+      <Box class="relative flex flex-col gap-2 !pt-14">
         <Tabs
           class="!w-full rounded-b-none absolute left-0 top-0 !bg-[var(--floating-border)]"
           activeTab={activeTab()}

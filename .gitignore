@@ -4,10 +4,11 @@ node_modules
 .turbo
 dist
 lib
-pnpm-lock.yaml
 apps/*/.vercel
 apps/*/.solid
 package-lock.json
 tsconfig.build.tsbuildinfo
+tsup.config.bundled_*.mjs
 */tsconfig.build.tsbuildinfo
 **/tsconfig.build.tsbuildinfo
+.vercel

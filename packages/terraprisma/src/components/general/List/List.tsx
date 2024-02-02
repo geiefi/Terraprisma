@@ -1,11 +1,11 @@
-import { ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { ComponentProps, ParentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../../utils';
 
-export interface ListProps extends ParentProps {}
+export interface ListProps extends ParentProps, ComponentProps<'ul'> { }
 
-const List = componentBuilder<ListProps>()
-  .factory(extendPropsFrom<ListProps, 'ul'>(['children']))
-  .create((props, elProps) => (
+const List = (allProps: ListProps) => {
+  const [props, elProps] = splitProps(allProps, ['children']);
+  return (
     <ul
       {...elProps}
       class={mergeClass(
@@ -15,6 +15,7 @@ const List = componentBuilder<ListProps>()
     >
       {props.children}
     </ul>
-  ));
+  );
+};
 
 export default List;

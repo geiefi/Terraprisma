@@ -1,15 +1,15 @@
-import { ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../utils';
+import { ComponentProps, ParentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../utils';
 
-export interface BoxProps extends ParentProps {}
+export interface BoxProps extends ParentProps, ComponentProps<'div'> { }
 
 /**
  * @description A component used for having a kind of box.
  * It uses the `floating.bg` and `floating.fg` for its *background* and *text* color respectively.
  */
-const Box = componentBuilder<BoxProps>()
-  .factory(extendPropsFrom<BoxProps, 'div'>(['children']))
-  .create((props, elProps) => (
+const Box = (allProps: BoxProps) => {
+  const [props, elProps] = splitProps(allProps, ['children']);
+  return (
     <div
       {...elProps}
       class={mergeClass(
@@ -20,6 +20,7 @@ const Box = componentBuilder<BoxProps>()
     >
       {props.children}
     </div>
-  ));
+  );
+};
 
 export default Box;

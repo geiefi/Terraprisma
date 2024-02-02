@@ -1,17 +1,15 @@
-import { ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom } from '../../../utils';
+import { mergeClass } from '../../../utils';
 import { Dropdown, List } from '../../general';
+import { DropdownProps } from '../../general/Dropdown';
 
-export interface MenuProps extends ParentProps {}
+export type MenuProps = DropdownProps;
 
-const Menu = componentBuilder<MenuProps>()
-  .factory(extendPropsFrom<MenuProps, typeof Dropdown>(['children']))
-  .create((props, elProps) => {
-    return (
-      <Dropdown class="!w-[9rem] h-fit" {...elProps}>
-        <List>{props.children}</List>
-      </Dropdown>
-    );
-  });
+const Menu = (elProps: MenuProps) => {
+  return (
+    <Dropdown {...elProps} class={mergeClass('!w-[9rem] h-fit', elProps.class)}>
+      <List>{elProps.children}</List>
+    </Dropdown>
+  );
+};
 
 export default Menu;

@@ -1,9 +1,9 @@
-import { useLocation, useNavigate } from 'solid-start';
+import { createEffect, createSignal, JSX } from 'solid-js';
+import { useLocation, useNavigate } from '@solidjs/router';
 
 import { Box, List, ListItem, ListItemWithDetails } from 'terraprisma';
-import { createEffect, createSignal, JSX } from 'solid-js';
 
-function Link(props: { to: string; children: JSX.Element }) {
+function ListItemLink(props: { to: string; children: JSX.Element }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ export function Sidebar() {
         {/*   getting started */}
         {/* </h1> */}
 
-        <Link to="/overview">overview</Link>
+        <ListItemLink to="/">overview</ListItemLink>
         {/* <Link to="/installation">installation</Link> */}
       </List>
 
@@ -73,14 +73,22 @@ export function Sidebar() {
           basePath="/components/general"
           links={
             <>
-              <Link to="/components/general/buttons">buttons</Link>
-              <Link to="/components/general/ripple">ripple</Link>
-              <Link to="/components/general/theme-provider">
+              <ListItemLink to="/components/general/buttons">
+                buttons
+              </ListItemLink>
+              <ListItemLink to="/components/general/ripple">
+                ripple
+              </ListItemLink>
+              <ListItemLink to="/components/general/theme-provider">
                 theme provider
-              </Link>
-              <Link to="/components/general/list">list</Link>
-              <Link to="/components/general/dropdown">dropdown</Link>
-              <Link to="/components/general/dialog">dialog</Link>
+              </ListItemLink>
+              <ListItemLink to="/components/general/list">list</ListItemLink>
+              <ListItemLink to="/components/general/dropdown">
+                dropdown
+              </ListItemLink>
+              <ListItemLink to="/components/general/dialog">
+                dialog
+              </ListItemLink>
             </>
           }
         >
@@ -91,24 +99,32 @@ export function Sidebar() {
           basePath="/components/data-display"
           links={
             <>
-              <Link to="/components/data-display/table">table</Link>
-              <Link to="/components/data-display/tooltip">tooltip</Link>
+              <ListItemLink to="/components/data-display/table">
+                table
+              </ListItemLink>
+              <ListItemLink to="/components/data-display/tooltip">
+                tooltip
+              </ListItemLink>
             </>
           }
         >
           data-display
         </CollapsedLinks>
 
-        <Link to="/components/icons">icons</Link>
-        <Link to="/components/transitions">transitions</Link>
+        <ListItemLink to="/components/icons">icons</ListItemLink>
+        <ListItemLink to="/components/transitions">transitions</ListItemLink>
 
         <CollapsedLinks
           basePath="/components/navigation"
           links={
             <>
-              <Link to="/components/navigation/pagination">pagination</Link>
-              <Link to="/components/navigation/steps">steps</Link>
-              <Link to="/components/navigation/menu">menu</Link>
+              <ListItemLink to="/components/navigation/pagination">
+                pagination
+              </ListItemLink>
+              <ListItemLink to="/components/navigation/steps">
+                steps
+              </ListItemLink>
+              <ListItemLink to="/components/navigation/menu">menu</ListItemLink>
             </>
           }
         >
@@ -118,12 +134,22 @@ export function Sidebar() {
           basePath="/components/forms"
           links={
             <>
-              <Link to="/components/forms/createForm">createForm()</Link>
-              <Link to="/components/forms/toggler">toggler</Link>
-              <Link to="/components/forms/checkbox">checkbox</Link>
-              <Link to="/components/forms/radio-group">radio group</Link>
-              <Link to="/components/forms/input">input</Link>
-              <Link to="/components/forms/textarea">textarea</Link>
+              <ListItemLink to="/components/forms/createForm">
+                createForm()
+              </ListItemLink>
+              <ListItemLink to="/components/forms/toggler">
+                toggler
+              </ListItemLink>
+              <ListItemLink to="/components/forms/checkbox">
+                checkbox
+              </ListItemLink>
+              <ListItemLink to="/components/forms/radio-group">
+                radio group
+              </ListItemLink>
+              <ListItemLink to="/components/forms/input">input</ListItemLink>
+              <ListItemLink to="/components/forms/textarea">
+                textarea
+              </ListItemLink>
             </>
           }
         >
@@ -134,7 +160,7 @@ export function Sidebar() {
       <List>
         <div class="text-lg text-[var(--muted-fg)] uppercase">concepts</div>
 
-        <Link to="/concepts/theming">theming</Link>
+        <ListItemLink to="/concepts/theming">theming</ListItemLink>
       </List>
     </Box>
   );
