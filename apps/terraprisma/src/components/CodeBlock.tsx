@@ -60,6 +60,7 @@ export function CodeBlock(props: {
             setShowingCopyTooltip(false)
           }}
           class="sticky left-full bottom-full -translate-x-full translate-y-1/2 -ml-2"
+          active={copied()}
           size="small"
           squarish
         >

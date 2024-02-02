@@ -22,13 +22,18 @@ const IconButton = (allProps: IconButtonProps) => {
   return (
     <TextButton
       {...defaultButtonProps}
+      rippleProps={{
+        center: true,
+        contrastWithBg: true,
+        ...defaultButtonProps.rippleProps
+      }}
       unstyled
       class={mergeClass(
         '!p-0',
         !defaultButtonProps.unstyled && [
           'aspect-square outline-none',
           (!defaultButtonProps.active || defaultButtonProps.disabled) &&
-            'bg-transparent text-[var(--bg)]',
+          'bg-transparent text-[var(--bg)]',
           !defaultButtonProps.disabled && [
             'hover:bg-[var(--bg)] hover:text-[var(--fg)]',
             defaultButtonProps.active && 'bg-[var(--bg)] text-[var(--fg)]'
@@ -38,7 +43,7 @@ const IconButton = (allProps: IconButtonProps) => {
         defaultButtonProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
         (defaultButtonProps.size === 'medium' ||
           typeof defaultButtonProps.size === 'undefined') &&
-          'min-w-[3rem] min-h-[3rem]',
+        'min-w-[3rem] min-h-[3rem]',
         defaultButtonProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
         defaultButtonProps.class
       )}

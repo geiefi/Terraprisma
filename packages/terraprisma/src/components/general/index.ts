@@ -1,6 +1,7 @@
 import { useTheme, setupTerraprisma } from './ThemeProvider';
 
 import Button from './Buttons/Button';
+import Ripple from './Ripple';
 import TextButton from './Buttons/TextButton';
 import OutlinedButton from './Buttons/OutlinedButton';
 import IconButton from './Buttons/IconButton';
@@ -19,6 +20,7 @@ export {
   OutlinedButton,
   IconButton,
   List,
+  Ripple,
   ListItemWithDetails,
   ListItem,
   Box,

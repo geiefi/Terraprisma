@@ -19,6 +19,10 @@ const TextButton = (allProps: TextButtonProps) => {
     <Button
       {...dftProps}
       unstyled
+      rippleProps={{
+        contrastWithBg: props.active ?? false,
+        ...dftProps.rippleProps
+      }}
       class={mergeClass(
         !dftProps.disabled &&
           !dftProps.unstyled && [

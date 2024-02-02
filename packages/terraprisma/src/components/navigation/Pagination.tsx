@@ -36,6 +36,7 @@ const PageNumber = (props: {
     <IconButton
       active={props.active}
       color={props.color}
+      rippleProps={{ center: false }}
       squarish
       size="small"
       onClick={(e: MouseEvent) => props.onClick(e)}

@@ -76,6 +76,9 @@ export function Sidebar() {
               <ListItemLink to="/components/general/buttons">
                 buttons
               </ListItemLink>
+              <ListItemLink to="/components/general/ripple">
+                ripple
+              </ListItemLink>
               <ListItemLink to="/components/general/theme-provider">
                 theme provider
               </ListItemLink>
