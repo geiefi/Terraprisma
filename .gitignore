@@ -4,7 +4,6 @@ node_modules
 .turbo
 dist
 lib
-pnpm-lock.yaml
 apps/*/.vercel
 apps/*/.solid
 package-lock.json
