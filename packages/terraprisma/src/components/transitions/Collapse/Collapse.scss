@@ -1,16 +1,26 @@
 .collapse-enter-active,
 .collapse-exit-active {
-  transition: max-height 0.3s !important;
-  height: auto !important;
-  overflow-y: hidden !important;
+  transition: grid-template-rows 225ms !important;
+
+  overflow: hidden !important;
+  > * {
+    transition: padding 225ms !important;
+    overflow: hidden !important;
+  }
 }
 
 .collapse-enter-to,
 .collapse-exit {
-  max-height: var(--expected-height) !important;
+  grid-template-rows: 1fr !important;
 }
 
 .collapse-exit-to,
 .collapse-enter {
-  max-height: 0 !important;
+  grid-template-rows: 0fr !important;
+
+  > * {
+    padding-block: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
 }

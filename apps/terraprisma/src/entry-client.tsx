@@ -1,3 +1,7 @@
-import { mount, StartClient } from 'solid-start/entry-client';
+import { mount, StartClient } from "@solidjs/start/client";
+import 'solid-devtools';
+import { attachDevtoolsOverlay } from '@solid-devtools/overlay'
 
-mount(() => <StartClient />, document);
+attachDevtoolsOverlay()
+
+mount(() => <StartClient />, document.getElementById("app"));

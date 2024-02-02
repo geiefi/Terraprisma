@@ -23,8 +23,8 @@ const DatepickerButtonEntry = (props: DatepickerButtonEntryProps) => {
           <IconButton
             class={mergeClass(props.muted && !props.active && 'text-inherit')}
             size="small"
-            squarish
             rippleProps={{ center: true }}
+            squarish
             active={props.active}
             onClick={props.onClick}
           >
