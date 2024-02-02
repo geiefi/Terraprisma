@@ -1,5 +1,4 @@
 import {
-  children as accessChildren,
   ComponentProps,
   createEffect,
   createMemo,
@@ -7,37 +6,39 @@ import {
   For,
   JSX,
   on,
-  onCleanup,
-  Show
+  Show,
+  splitProps
 } from 'solid-js';
-import { isServer, Portal } from 'solid-js/web';
+import { Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
+
+import { Ref } from '@solid-primitives/refs';
+import { createEventListener } from '@solid-primitives/event-listener';
 
 import './Ripple.css';
 import { Accents } from '../..';
-import {
-  componentBuilder,
-  addAccentColoring,
-  extendPropsFrom,
-  getAbsoluteBoundingRect,
-  mergeClass
-} from '../../utils';
+import { getAbsoluteBoundingRect, mergeClass } from '../../utils';
+import { LeftIntersection } from '../../types/LeftIntersection';
 
-export interface RippleProps {
-  /**
-   * Disabled the ripple effect but still propagates clicks through
-   */
-  noRipple?: boolean;
-  center?: boolean;
-  /**
-   * @default false
-   */
-  contrastWithBg?: boolean;
-  wrapperProps?: Omit<ComponentProps<'div'>, 'style' | 'children'> & {
-    style?: JSX.CSSProperties;
-  };
-  children: JSX.Element;
-}
+export type RippleProps = LeftIntersection<
+  {
+    /**
+     * Disabled the ripple effect but still propagates clicks through
+     */
+    noRipple?: boolean;
+    center?: boolean;
+    color?: Accents;
+    /**
+     * @default false
+     */
+    contrastWithBg?: boolean;
+    wrapperProps?: Omit<ComponentProps<'div'>, 'style' | 'children'> & {
+      style?: JSX.CSSProperties;
+    };
+    children: JSX.Element;
+  },
+  ComponentProps<'div'>
+>;
 
 interface RippleConfig {
   diameter: number;
@@ -45,194 +46,165 @@ interface RippleConfig {
   top: number;
 }
 
-const Ripple = componentBuilder<RippleProps>()
-  .factory(addAccentColoring<RippleProps>())
-  .factory(
-    extendPropsFrom<RippleProps & { color?: Accents }, 'div'>([
-      'noRipple',
-      'center',
-      'color',
-      'contrastWithBg',
-      'wrapperProps',
-      'children'
-    ])
-  )
-  .create((props, color, elProps) => {
-    const [ripples, setRipples] = createStore<RippleConfig[]>([]);
+const Ripple = (allProps: RippleProps) => {
+  const [props, elProps] = splitProps(allProps, [
+    'noRipple',
+    'center',
+    'color',
+    'contrastWithBg',
+    'wrapperProps',
+    'children'
+  ]);
+  const color = () => props.color ?? 'accent';
+  const [ripples, setRipples] = createStore<RippleConfig[]>([]);
 
-    const createRipple = (
-      element: HTMLElement,
-      globalPositionX: number,
-      globalPositionY: number
-    ) => {
-      if (props.noRipple === true) return;
+  const createRipple = (
+    element: HTMLElement,
+    globalPositionX: number,
+    globalPositionY: number
+  ) => {
+    if (props.noRipple === true) return;
 
-      const diameter = Math.max(element.clientWidth, element.clientHeight);
-      const radius = diameter / 2;
+    const diameter = Math.max(element.clientWidth, element.clientHeight);
+    const radius = diameter / 2;
 
-      const elDOMRect = element.getBoundingClientRect();
-      let positionX = globalPositionX - elDOMRect.x;
-      let positionY = globalPositionY - elDOMRect.y;
-      if (props.center) {
-        positionX = radius;
-        positionY = radius;
-      }
+    const elDOMRect = element.getBoundingClientRect();
+    let positionX = globalPositionX - elDOMRect.x;
+    let positionY = globalPositionY - elDOMRect.y;
+    if (props.center) {
+      positionX = radius;
+      positionY = radius;
+    }
 
-      const rippleConfig: RippleConfig = {
-        diameter,
-        left: positionX - radius,
-        top: positionY - radius
-      };
-
-      setRipples(
-        produce((ripples) => {
-          ripples.unshift(rippleConfig);
-
-          setTimeout(() => {
-            ripples.splice(-1, 1);
-          }, 2000);
-        })
-      );
+    const rippleConfig: RippleConfig = {
+      diameter,
+      left: positionX - radius,
+      top: positionY - radius
     };
 
-    const [rippleContainer, setRippleContainer] =
-      createSignal<HTMLDivElement>();
+    setRipples(
+      produce((ripples) => {
+        ripples.unshift(rippleConfig);
 
-    const children = accessChildren(() => props.children);
-    const childrenList = createMemo(() => {
-      const childrenAccessed = children();
-      return Array.isArray(childrenAccessed)
-        ? childrenAccessed
-        : [childrenAccessed];
-    });
-
-    const [rippledElementBoundingBox, setRippledElementBoundingBox] =
-      createSignal<DOMRect | undefined>();
-    const updateRipplesPosition = () =>
-      setRippledElementBoundingBox(getAbsoluteBoundingRect(rippledElement()!));
-
-    const addNewRipple = (event: MouseEvent) => {
-      updateRipplesPosition();
-      createRipple(rippleContainer()!, event.x, event.y);
-    };
-
-    let isUpdatingRippleWrapper = false;
-    const keepUpdatingRippleWrapper = () => {
-      isUpdatingRippleWrapper = true;
-
-      requestAnimationFrame(() => {
-        if (ripples.length > 0) {
-          updateRipplesPosition();
-          keepUpdatingRippleWrapper();
-        } else {
-          isUpdatingRippleWrapper = false;
-        }
-      });
-    };
-
-    createEffect(
-      on(
-        () => ripples[0],
-        () => {
-          if (isUpdatingRippleWrapper === false) {
-            keepUpdatingRippleWrapper();
-          }
-        }
-      )
-    );
-
-    const rippledElement = createMemo<HTMLElement | undefined>(() => {
-      if (isServer) return undefined;
-
-      const firstElementChild = childrenList().find(
-        (c) => c instanceof HTMLElement
-      );
-
-      if (typeof firstElementChild !== 'undefined') {
-        const rippledElement = firstElementChild as HTMLElement;
-
-        rippledElement.addEventListener('click', addNewRipple);
-
-        return rippledElement;
-      } else {
-        console.warn(
-          'At least one of the children of Ripple should be an actual HTML element so that the ripple can be positioned based on it!'
-        );
-      }
-    });
-
-    const borderRadius = createMemo<string | undefined>(
-      on(rippledElementBoundingBox, () => {
-        const el = rippledElement();
-        if (el) {
-          return getComputedStyle(el).borderRadius;
-        }
+        setTimeout(() => {
+          ripples.splice(-1, 1);
+        }, 2000);
       })
     );
+  };
 
-    onCleanup(() => {
-      const el = rippledElement();
-      if (el) {
-        el.removeEventListener('click', addNewRipple);
+  const [rippleContainer, setRippleContainer] = createSignal<HTMLDivElement>();
+
+  const [rippledElement, setRippledElement] = createSignal<HTMLElement | undefined>(
+    undefined
+  );
+
+  createEventListener(rippledElement, 'click', (event: MouseEvent) => {
+    updateRipplesPosition();
+    createRipple(rippleContainer()!, event.x, event.y);
+  });
+
+  const [rippledElementBoundingBox, setRippledElementBoundingBox] =
+    createSignal<DOMRect | undefined>();
+  const updateRipplesPosition = () => {
+    const elementBeingRippled = rippledElement();
+    if (typeof elementBeingRippled !== 'undefined') {
+      setRippledElementBoundingBox(
+        getAbsoluteBoundingRect(elementBeingRippled)
+      );
+    }
+  };
+
+  let isUpdatingRippleWrapper = false;
+  const keepUpdatingRippleWrapper = () => {
+    isUpdatingRippleWrapper = true;
+
+    requestAnimationFrame(() => {
+      if (ripples.length > 0) {
+        updateRipplesPosition();
+        keepUpdatingRippleWrapper();
+      } else {
+        isUpdatingRippleWrapper = false;
       }
     });
+  };
 
-    return (
-      <>
-        <Show when={rippledElement()}>
-          <Portal>
+  createEffect(
+    on(
+      () => ripples[0],
+      () => {
+        if (isUpdatingRippleWrapper === false) {
+          keepUpdatingRippleWrapper();
+        }
+      }
+    )
+  );
+
+  const borderRadius = createMemo<string | undefined>(
+    on(rippledElementBoundingBox, () => {
+      const el = rippledElement();
+      if (el) {
+        return getComputedStyle(el).borderRadius;
+      }
+    })
+  );
+
+  return (
+    <>
+      <Show when={typeof rippledElement() !== 'undefined' && rippledElement() !== null}>
+        <Portal>
+          <div
+            {...props.wrapperProps}
+            class={mergeClass(
+              'absolute cursor-none pointer-events-none',
+              props.wrapperProps?.class
+            )}
+            style={{
+              top: (rippledElementBoundingBox()?.top ?? 0) + 'px',
+              left: (rippledElementBoundingBox()?.left ?? 0) + 'px',
+              width: (rippledElementBoundingBox()?.width ?? 0) + 'px',
+              height: (rippledElementBoundingBox()?.height ?? 0) + 'px',
+
+              'border-radius': borderRadius(),
+
+              ...props.wrapperProps?.style
+            }}
+          >
             <div
-              {...props.wrapperProps}
+              {...elProps}
               class={mergeClass(
-                'absolute cursor-none pointer-events-none',
-                props.wrapperProps?.class
+                'relative overflow-hidden w-full h-full rounded-[inherit] p-0 m-0',
+                elProps.class
               )}
-              style={{
-                top: (rippledElementBoundingBox()?.top ?? 0) + 'px',
-                left: (rippledElementBoundingBox()?.left ?? 0) + 'px',
-                width: (rippledElementBoundingBox()?.width ?? 0) + 'px',
-                height: (rippledElementBoundingBox()?.height ?? 0) + 'px',
-
-                'border-radius': borderRadius(),
-
-                ...props.wrapperProps?.style
-              }}
+              ref={setRippleContainer}
             >
-              <div
-                {...elProps}
-                class={mergeClass(
-                  'relative overflow-hidden w-full h-full rounded-[inherit] p-0 m-0',
-                  elProps.class
+              <For each={ripples}>
+                {(ripple) => (
+                  <Show when={ripple}>
+                    <span
+                      class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-10 bg-[var(--bg)]"
+                      style={{
+                        width: `${ripple.diameter}px`,
+                        height: `${ripple.diameter}px`,
+                        left: `${ripple.left}px`,
+                        top: `${ripple.top}px`,
+                        '--bg':
+                          props.contrastWithBg ?? false
+                            ? `var(--${color()}-fg)`
+                            : `var(--${color()}-bg)`
+                      }}
+                    />
+                  </Show>
                 )}
-                ref={setRippleContainer}
-              >
-                <For each={ripples}>
-                  {(ripple) => (
-                    <Show when={ripple}>
-                      <span
-                        class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-10 bg-[var(--bg)]"
-                        style={{
-                          width: `${ripple.diameter}px`,
-                          height: `${ripple.diameter}px`,
-                          left: `${ripple.left}px`,
-                          top: `${ripple.top}px`,
-                          '--bg':
-                            props.contrastWithBg ?? false
-                              ? `var(--${color()}-fg)`
-                              : `var(--${color()}-bg)`
-                        }}
-                      />
-                    </Show>
-                  )}
-                </For>
-              </div>
+              </For>
             </div>
-          </Portal>
-        </Show>
+          </div>
+        </Portal>
+      </Show>
 
-        {childrenList()}
-      </>
-    );
-  });
+      <Ref ref={setRippledElement}>{props.children}</Ref>
+    </>
+  );
+};
 
 export default Ripple;

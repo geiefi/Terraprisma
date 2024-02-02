@@ -1,50 +1,23 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20231229055905",
-  "type": "module",
-  "description": "A flexible and fun to use Material Design-based SolidJS component library",
+  "version": "0.0.0-testing-20240121163753",
+  "description": "A flexible and fun to use batteries included SolidJS component library",
   "license": "MIT",
   "files": [
     "dist"
   ],
-  "types": "./dist/client/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/client/index.d.ts",
-      "browser": "./dist/index.js",
-      "node": "./dist/index.cjs",
-      "default": "./dist/client/index.jsx",
-      "solid": "./dist/client/index.jsx",
-      "astro": "./dist/client/index.jsx"
-    },
-    "./dist/styles.css": {
-      "default": "./dist/styles.css",
-      "solid": "./dist/styles.css",
-      "astro": "./dist/styles.css",
-      "browser": "./dist/styles.css",
-      "require": "./dist/styles.css",
-      "node": "./dist/styles.css"
-    }
-  },
   "private": false,
-  "keywords": [
-    "ui",
-    "components",
-    "solid",
-    "solidjs",
-    "solid-js",
-    "typesafe",
-    "material",
-    "material design",
-    "flexible components"
-  ],
   "scripts": {
-    "build": "rollup -c ./rollup.config.mjs",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "lint:types": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier . --write",
     "test": "vitest"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "repository": {
     "type": "git",
@@ -56,37 +29,87 @@
   "homepage": "https://github.com/gabrielmfern/terraprisma#readme",
   "author": "Gabriel Miranda",
   "devDependencies": {
-    "@rollup/plugin-alias": "^5.0.1",
-    "@rollup/plugin-typescript": "^11.1.5",
     "@solidjs/testing-library": "^0.7.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@types/tinycolor2": "^1.4.3",
-    "acorn-jsx": "^5.3.2",
     "autoprefixer": "^10.4.16",
-    "estree-walker": "^3.0.3",
+    "esbuild-plugin-solid": "0.5.0",
+    "esbuild-postcss": "0.0.4",
+    "esbuild-style-plugin": "1.6.3",
+    "fdbg": "^1.0.0",
     "jsdom": "^22.1.0",
-    "magic-string": "^0.30.5",
-    "node-sass": "^9.0.0",
+    "postcss": "8.4.33",
+    "postcss-scss": "4.0.9",
     "prettier": "^3.0.3",
     "regenerator-runtime": "0.13.11",
-    "rollup": "^2.63.0",
-    "rollup-plugin-styles": "^4.0.0",
-    "rollup-preset-solid": "^2.0.1",
     "sass": "^1.66.1",
-    "solid-devtools": "^0.27.3",
-    "solid-js": "^1.8.7",
-    "tailwindcss": "^3.3.3",
-    "ts-transformer-keys": "^0.4.4",
+    "solid-js": "^1.8.12",
+    "tailwindcss": "^3.3.5",
+    "tsup": "^8.0.1",
+    "tsup-preset-solid": "2.2.0",
     "typescript": "^5.3.3",
-    "vite-plugin-solid": "^2.7.2",
     "vitest": "^0.34.6"
   },
+  "peerDependencies": {
+    "solid-js": "^1.8"
+  },
   "dependencies": {
+    "@csstools/postcss-sass": "5.1.1",
+    "@solid-primitives/event-listener": "^2.3.1",
     "@solid-primitives/input-mask": "^0.2.0",
     "@solid-primitives/props": "^3.1.8",
     "@solid-primitives/refs": "^1.0.5",
     "solid-transition-group": "^0.2.3",
     "tailwind-merge": "^2.0.0",
     "tinycolor2": "^1.6.0"
+  },
+  "type": "module",
+  "main": "./dist/server.js",
+  "module": "./dist/server.cjs",
+  "types": "./dist/browser.d.ts",
+  "browser": {
+    "./dist/server.js": "./dist/browser.js",
+    "./dist/server.cjs": "./dist/browser.cjs"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "browser": {
+        "solid": "./dist/browser.jsx",
+        "import": {
+          "types": "./dist/browser.d.ts",
+          "default": "./dist/browser.js"
+        },
+        "require": {
+          "types": "./dist/browser.d.ts",
+          "default": "./dist/browser.cjs"
+        }
+      },
+      "node": {
+        "solid": "./dist/server.jsx",
+        "import": {
+          "types": "./dist/server.d.ts",
+          "default": "./dist/server.js"
+        },
+        "require": {
+          "types": "./dist/server.d.ts",
+          "default": "./dist/server.cjs"
+        }
+      },
+      "solid": "./dist/browser.jsx",
+      "import": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/browser.js"
+      },
+      "require": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/browser.cjs"
+      }
+    },
+    "./styles.css": {
+      "solid": "./dist/browser.css",
+      "import": "./dist/browser.css",
+      "require": "./dist/browser.css"
+    }
   }
 }

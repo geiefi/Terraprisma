@@ -1,32 +1,38 @@
 {
-  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma-website",
   "private": true,
-  "packageManager": ">=npm@9.0.0",
   "scripts": {
-    "dev": "solid-start dev",
-    "build": "solid-start build",
-    "start": "solid-start start"
+    "dev": "vinxi dev",
+    "build": "vinxi build",
+    "start": "vinxi start"
   },
   "type": "module",
   "devDependencies": {
+    "@solid-devtools/overlay": "^0.29.3",
     "@types/prismjs": "^1.26.3",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
-    "solid-start-node": "^0.3.10",
+    "solid-devtools": "^0.29.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^4.9.5",
     "vite": "^4.4.9"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.29.1",
-    "@solidjs/router": "^0.8.3",
-    "material-symbols": "^0.14.0",
+    "@solidjs/router": "0.10.10",
+    "@solidjs/start": "0.4.11",
+
+    "solid-js": "1.8.12",
+
+    "fdbg": "^1.0.0",
     "prismjs": "^1.29.0",
-    "solid-js": "^1.8.5",
-    "solid-start": "^0.3.10",
-    "solid-start-vercel": "^0.3.10",
-    "terraprisma": "^0.0.0-testing-20231113011417"
+    "material-symbols": "^0.14.0",
+    "terraprisma": "workspace:*",
+    "terraprisma-tailwind-plugin": "workspace:*",
+
+    "vinxi": "0.1.10",
+    "defu": "6.1.4",
+    "unstorage": "1.10.1",
+    "h3": "1.10.1"
   },
   "engines": {
     "node": "18.x"

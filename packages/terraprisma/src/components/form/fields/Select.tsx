@@ -21,15 +21,12 @@ import { mergeRefs } from '@solid-primitives/refs';
 import {
   mergeClass,
   mergeCallbacks,
-  extendPropsFrom,
-  componentBuilder,
   Dropdown,
   List,
   ListItem,
   GrowFade,
   Icons,
-  Accents,
-  addAccentColoring
+  Accents
 } from '../../..';
 
 import {
@@ -40,39 +37,47 @@ import {
   FieldPropKeys
 } from '../types';
 import { FormField, InputLikeBase, useField } from '../components';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface SelectProps<
+export type SelectProps<
   OwnerFormValue extends FormValue = FormValue,
   Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<
     OwnerFormValue,
     FormFieldValue
   >
-> extends FieldProps<OwnerFormValue, FormFieldValue, Name> {
-  label?: JSX.Element;
+> = LeftIntersection<
+  FieldProps<OwnerFormValue, FormFieldValue, Name> & {
+    label?: JSX.Element;
 
-  onFieldValueChanges?: (newValue: FormFieldValue) => any;
-  onFocus?: () => any;
+    onFieldValueChanges?: (newValue: FormFieldValue) => any;
+    onFocus?: () => any;
 
-  style?: JSX.CSSProperties;
-  size?: 'small' | 'medium' | 'large';
+    style?: JSX.CSSProperties;
+    color?: Accents;
+    size?: 'small' | 'medium' | 'large';
 
-  children:
-  | JSX.Element
-  | ((
-    Option: Component<
-      SelectOptionProps<
-        FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
-      >
-    >
-  ) => JSX.Element);
-}
+    children:
+      | JSX.Element
+      | ((
+          Option: Component<
+            SelectOptionProps<
+              FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
+            >
+          >
+        ) => JSX.Element);
+  },
+  ComponentProps<'div'>
+>;
 
-export interface SelectOptionProps<
+export type SelectOptionProps<
   AllowedValue extends FormFieldValue = FormFieldValue
-> extends Omit<ComponentProps<typeof ListItem>, 'value' | 'children'> {
-  value: AllowedValue;
-  children: JSX.Element;
-}
+> = LeftIntersection<
+  {
+    value: AllowedValue;
+    children: JSX.Element;
+  },
+  Omit<ComponentProps<typeof ListItem>, 'value' | 'children'>
+>;
 
 const Option: Component<SelectOptionProps> = (props) =>
   props as unknown as JSX.Element;
@@ -116,144 +121,142 @@ const SelectContext = createContext<{
  * </Select>
  * ```
  */
-const Select = componentBuilder<SelectProps>()
-  .factory(addAccentColoring<SelectProps>())
-  .factory(
-    extendPropsFrom<SelectProps & { color?: Accents }, 'div'>([
-      ...FieldPropKeys,
-      'label',
-      'helperText',
-      'color',
-      'size',
-      'children',
-      'onFieldValueChanges',
-      'style',
-      'onFocus'
-    ])
-  )
-  .create((props, color, elProps) => {
-    const [inputContainerRef, setInputContainerRef] =
-      createSignal<HTMLDivElement>();
-    const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
+const Select = (allProps: SelectProps) => {
+  const [props, elProps] = splitProps(allProps, [
+    ...FieldPropKeys,
+    'label',
+    'helperText',
+    'size',
+    'color',
+    'children',
+    'onFieldValueChanges',
+    'style',
+    'onFocus'
+  ]);
 
-    const [options, setOptions] = createSignal<SelectOptionProps[]>([]);
+  const color = () => props.color ?? 'accent';
 
-    const optionLabelFromValue = (value: FormFieldValue | undefined) => {
-      return options().find((opt) => opt.value === value)?.children || '';
-    };
+  const [inputContainerRef, setInputContainerRef] =
+    createSignal<HTMLDivElement>();
+  const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
 
-    return (
-      <FormField fieldProperties={props}>
-        {({
-          elementId: id,
-          disabledS: [disabled],
-          focusedS: [focused, setFocused],
-          valueS: [value],
-          validate
-        }) => {
-          createEffect(
-            on(
-              focused,
-              () => {
-                if (props.onFocus && focused() === true) {
-                  props.onFocus();
-                }
+  const [options, setOptions] = createSignal<SelectOptionProps[]>([]);
 
-                if (focused() === false) {
-                  validate(value());
-                }
-              },
-              { defer: true }
-            )
-          );
-
-          createEffect(
-            on(value, (newValue) => {
-              if (props.onFieldValueChanges) {
-                props.onFieldValueChanges(newValue);
-              }
-            })
-          );
-
-          return (
-            <SelectContext.Provider
-              value={{
-                options,
-                color,
-                setOptions,
-                size: () => props.size ?? 'medium',
-                dropdownRef,
-                setDropdownRef,
-                inputContainerRef
-              }}
-            >
-              <InputLikeBase
-                {...elProps}
-                id={id()}
-                size={props.size}
-                style={props.style}
-                labelFor={id()}
-                class="flex items-center align-middle gap-3 cursor-pointer"
-                label={props.label}
-                tabindex="0"
-                onFocus={() => !disabled() && setFocused(true)}
-                onBlur={(event) => {
-                  if (
-                    !(event.relatedTarget instanceof HTMLElement) ||
-                    (event.relatedTarget !== dropdownRef() &&
-                      !dropdownRef()!.contains(event.relatedTarget))
-                  ) {
-                    // if the new focused element is not the dropdown, or not inside the dropdown
-                    !disabled() && setFocused(false);
-                  }
-                }}
-                icon={
-                  <Icons.KeyboardArrowDown
-                    variant="rounded"
-                    class={mergeClass(
-                      'transition-transform origin-center',
-                      focused() ? 'rotate-180' : 'rotate-0'
-                    )}
-                  />
-                }
-                ref={mergeRefs(elProps.ref, setInputContainerRef)}
-              >
-                {optionLabelFromValue(value())}
-              </InputLikeBase>
-
-              <Portal>
-                <GrowFade growingOrigin="top">
-                  {typeof props.children === 'function'
-                    ? props.children(Option)
-                    : props.children}
-                </GrowFade>
-              </Portal>
-            </SelectContext.Provider>
-          );
-        }}
-      </FormField>
-    );
-  }) as {
-    <OwnerFormValue extends FormValue>(
-      props: SelectProps<OwnerFormValue> &
-        Omit<ComponentProps<'div'>, keyof SelectProps>
-    ): JSX.Element;
-    Option: typeof Option;
-    Dropdown(
-      props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
-        style?: JSX.CSSProperties;
-      }
-    ): JSX.Element;
+  const optionLabelFromValue = (value: FormFieldValue | undefined) => {
+    return options().find((opt) => opt.value === value)?.children || '';
   };
 
-Select.Dropdown = (props) => {
+  return (
+    <FormField fieldProperties={props}>
+      {({
+        elementId: id,
+        disabledS: [disabled],
+        focusedS: [focused, setFocused],
+        valueS: [value],
+        validate
+      }) => {
+        createEffect(
+          on(
+            focused,
+            () => {
+              if (props.onFocus && focused() === true) {
+                props.onFocus();
+              }
+
+              if (focused() === false) {
+                validate(value());
+              }
+            },
+            { defer: true }
+          )
+        );
+
+        createEffect(
+          on(value, (newValue) => {
+            if (props.onFieldValueChanges) {
+              props.onFieldValueChanges(newValue);
+            }
+          })
+        );
+
+        return (
+          <SelectContext.Provider
+            value={{
+              options,
+              color,
+              setOptions,
+              size: () => props.size ?? 'medium',
+              dropdownRef,
+              setDropdownRef,
+              inputContainerRef
+            }}
+          >
+            <InputLikeBase
+              {...elProps}
+              id={id()}
+              size={props.size}
+              style={props.style}
+              labelFor={id()}
+              class="flex items-center align-middle gap-3 cursor-pointer"
+              label={props.label}
+              tabindex="0"
+              onFocus={() => !disabled() && setFocused(true)}
+              onBlur={(event) => {
+                if (
+                  !(event.relatedTarget instanceof HTMLElement) ||
+                  (event.relatedTarget !== dropdownRef() &&
+                    !dropdownRef()!.contains(event.relatedTarget))
+                ) {
+                  // if the new focused element is not the dropdown, or not inside the dropdown
+                  !disabled() && setFocused(false);
+                }
+              }}
+              icon={
+                <Icons.KeyboardArrowDown
+                  variant="rounded"
+                  class={mergeClass(
+                    'transition-transform origin-center',
+                    focused() ? 'rotate-180' : 'rotate-0'
+                  )}
+                />
+              }
+              ref={mergeRefs(elProps.ref, setInputContainerRef)}
+            >
+              {optionLabelFromValue(value())}
+            </InputLikeBase>
+
+            <Portal>
+              <GrowFade growingOrigin="top">
+                {typeof props.children === 'function'
+                  ? props.children(Option)
+                  : props.children}
+              </GrowFade>
+            </Portal>
+          </SelectContext.Provider>
+        );
+      }}
+    </FormField>
+  );
+};
+
+Select.Dropdown = (
+  props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
+    style?: JSX.CSSProperties;
+  }
+) => {
   const {
     focusedS: [focused, setFocused],
     valueS: [value, setValue]
   } = useField();
 
-  const { options, color, size, setDropdownRef, setOptions, inputContainerRef } =
-    useContext(SelectContext)!; // TODO: throw clear and concise error here
+  const {
+    options,
+    color,
+    size,
+    setDropdownRef,
+    setOptions,
+    inputContainerRef
+  } = useContext(SelectContext)!; // TODO: throw clear and concise error here
 
   const getChildren = accessChildren(() => props.children);
   createEffect(() => {

@@ -1,16 +1,18 @@
-import { ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom, mergeClass } from '../../../utils';
+import { ComponentProps, splitProps } from 'solid-js';
+import { mergeClass } from '../../../utils';
+import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export interface LabelProps extends ParentProps {
-  for: string;
-  hasErrors: boolean;
-}
+export type LabelProps = LeftIntersection<
+  {
+    for: string;
+    hasErrors: boolean;
+  },
+  ComponentProps<'label'>
+>;
 
-const Label = componentBuilder<LabelProps>()
-  .factory(
-    extendPropsFrom<LabelProps, 'label'>(['for', 'hasErrors', 'children'])
-  )
-  .create((props, elProps) => (
+const Label = (allProps: LabelProps) => {
+  const [props, elProps] = splitProps(allProps, ['for', 'hasErrors']);
+  return (
     <label
       for={props.for}
       {...elProps}
@@ -20,8 +22,9 @@ const Label = componentBuilder<LabelProps>()
         elProps.class
       )}
     >
-      {props.children}
+      {elProps.children}
     </label>
-  ));
+  );
+};
 
 export default Label;

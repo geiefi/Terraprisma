@@ -1,17 +1,14 @@
-import { ParentProps } from 'solid-js';
-import { componentBuilder, extendPropsFrom } from '../../../utils';
 import { ListItem } from '../../general';
+import { ListItemProps } from '../../general/List/ListItem';
 
-export interface MenuProps extends ParentProps {}
+export type MenuItemProps = ListItemProps;
 
-const MenuItem = componentBuilder<MenuProps>()
-  .factory(extendPropsFrom<MenuProps, typeof ListItem>(['children']))
-  .create((props, elProps) => {
-    return (
-      <ListItem {...elProps} clickable>
-        {props.children}
-      </ListItem>
-    );
-  });
+const MenuItem = (elProps: Omit<MenuItemProps, 'clickable'>) => {
+  return (
+    <ListItem {...elProps} clickable>
+      {elProps.children}
+    </ListItem>
+  );
+};
 
 export default MenuItem;

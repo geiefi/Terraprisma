@@ -57,7 +57,7 @@ what is the problem, or where it is coming from once you have them.
 
 ## Okay, cool, when can I use it?
 
-Currently we don't really have any npm package published, but we plan on publishing at least a `0.1.0`
-by the end of **2023** so that we have a more *solid* API nailed down for everything that is already developed.
-
-So yeah, that's basically it, thanks for reading.
+Currently we do have an npm package published, but only for testing. It isn't stable and I it will
+have major breaking changes still until it actually has an stable version. The previous idea
+was to have one until December 2023, but that was much harder than I though so
+now I wish to have it until August 2024 at least.

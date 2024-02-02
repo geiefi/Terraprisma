@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 
 import { Box, Button, Divisor, Menu, MenuItem, Icons } from 'terraprisma';
 

@@ -1,3 +1,7 @@
+import { initialStyles } from './src/theme';
+
+import terraprisma from 'terraprisma-tailwind-plugin';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
@@ -17,5 +21,5 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins: [terraprisma(initialStyles)]
 };

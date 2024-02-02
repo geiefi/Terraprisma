@@ -1,4 +1,4 @@
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 
 import { Box, Ripple } from 'terraprisma';
 
