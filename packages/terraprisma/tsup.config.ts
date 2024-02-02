@@ -3,6 +3,8 @@ import { Options, defineConfig } from 'tsup';
 import postcss from 'esbuild-postcss';
 import { solidPlugin } from 'esbuild-plugin-solid';
 
+let watching = false;
+
 function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
   const plugins = [postcss()];
 
@@ -15,7 +17,7 @@ function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
   return {
     target: ssr ? 'node18' : 'esnext',
     platform: ssr ? 'node' : 'browser',
-    clean: true,
+    clean: !watching,
     dts: format === 'esm' && !jsx,
     format: ['esm', 'cjs'],
     entry: ssr
@@ -31,7 +33,8 @@ function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
       }
     },
     outExtension: (context) => {
-      const result: ReturnType<Exclude<Options['outExtension'], undefined>> = {};
+      const result: ReturnType<Exclude<Options['outExtension'], undefined>> =
+        {};
       if (jsx) {
         result['js'] = '.jsx';
       } else if (context.format === 'cjs') {
@@ -48,9 +51,12 @@ function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
   };
 }
 
-export default defineConfig([
-  generateConfig({ ssr: false, jsx: false }),
-  generateConfig({ ssr: false, jsx: true }),
-  generateConfig({ ssr: true, jsx: false }),
-  generateConfig({ ssr: true, jsx: true })
-]);
+export default defineConfig((opts) => {
+  watching = typeof opts.watch !== 'undefined';
+  return [
+    generateConfig({ ssr: false, jsx: false }),
+    generateConfig({ ssr: false, jsx: true }),
+    generateConfig({ ssr: true, jsx: false }),
+    generateConfig({ ssr: true, jsx: true })
+  ];
+});
