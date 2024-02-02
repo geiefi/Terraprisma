@@ -1,5 +1,5 @@
 import { For, JSX } from 'solid-js';
-import { useLocation } from 'solid-start';
+import { useLocation } from '@solidjs/router';
 
 import { Table } from 'terraprisma';
 

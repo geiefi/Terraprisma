@@ -9,11 +9,11 @@ export const MaskedFieldPropsKeys: (keyof MaskedFieldProps)[] = [
   'mask'
 ];
 
-export interface MaskedFieldProps<
+export type MaskedFieldProps<
   OwnerFormValue extends FormValue = EmptyObj,
   BaseValueType extends FormFieldValue = FormFieldValue,
   Name extends FieldName<OwnerFormValue> = FieldName<OwnerFormValue>
-> extends FieldProps<OwnerFormValue, BaseValueType, Name> {
+> = FieldProps<OwnerFormValue, BaseValueType, Name> & {
   /**
    * @description The mask that should be applied to the field.
    *

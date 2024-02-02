@@ -1,15 +1,23 @@
-import solid from 'solid-start/vite';
-import vercel from 'solid-start-vercel';
-import { defineConfig } from 'vite';
+import { searchForWorkspaceRoot } from 'vite';
+import devtools from 'solid-devtools/vite';
+import { defineConfig } from "@solidjs/start/config";
 
 export default defineConfig({
   plugins: [
-    solid({
-      adapter: vercel(),
-      ssr: false
+    devtools({
+      autoname: true
     })
   ],
-  ssr: {
-    external: ['terraprisma']
+  start: {
+    server: {
+      preset: 'vercel'
+    }
+  },
+  server: {
+    fs: {
+      allow: [
+        searchForWorkspaceRoot(process.cwd())
+      ]
+    }
   }
 });
