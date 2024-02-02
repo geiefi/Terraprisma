@@ -44,7 +44,7 @@ function CollapsedLinks(props: {
       showingDetails={showingLinks()}
       onClick={() => setShowingLinks((v) => !v)}
       details={
-        <List class="p-2 bg-[var(--deeper-bg-30)] rounded-md">
+        <List class="p-2 bg-deeper-bg/30 rounded-md">
           {props.links}
         </List>
       }
@@ -67,7 +67,7 @@ export function Sidebar() {
       </List>
 
       <List>
-        <div class="text-lg text-[var(--muted-fg)] uppercase">components</div>
+        <div class="text-lg text-muted-fg uppercase">components</div>
 
         <CollapsedLinks
           basePath="/components/general"
@@ -158,7 +158,7 @@ export function Sidebar() {
       </List>
 
       <List>
-        <div class="text-lg text-[var(--muted-fg)] uppercase">concepts</div>
+        <div class="text-lg text-muted-fg uppercase">concepts</div>
 
         <ListItemLink to="/concepts/theming">theming</ListItemLink>
       </List>

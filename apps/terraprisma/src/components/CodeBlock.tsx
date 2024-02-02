@@ -64,7 +64,7 @@ export function CodeBlock(props: {
           size="small"
           squarish
         >
-          <Show when={!copied()} fallback={<Icons.Check class="!text-xl text-[var(--success-bg)]" />}>
+          <Show when={!copied()} fallback={<Icons.Check class="!text-xl text-success-bg" />}>
             <Icons.ContentCopy />
           </Show>
         </IconButton>

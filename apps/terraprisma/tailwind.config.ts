@@ -1,15 +1,17 @@
+import { Config } from 'tailwindcss';
+import { generateTailwindColors } from 'terraprisma';
+
 import { initialStyles } from './src/theme';
 
-import terraprisma from 'terraprisma-tailwind-plugin';
-
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{html,js,jsx,ts,tsx}'],
   corePlugins: {
     preflight: false
   },
   theme: {
     extend: {
+      colors: generateTailwindColors(initialStyles),
       fontSize: {
         base: ['14px', { lineHeight: '20px' }]
       },
@@ -20,6 +22,5 @@ module.exports = {
         'roboto-mono': '"Roboto Mono", monospace'
       }
     }
-  },
-  plugins: [terraprisma(initialStyles)]
-};
+  }
+} satisfies Config;

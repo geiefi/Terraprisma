@@ -21,7 +21,7 @@ article h3 {
 }
 
 article code {
-  @apply bg-[var(--deeper-bg)] rounded-sm px-1;
+  @apply bg-deeper-bg rounded-sm px-1;
 }
 
 article ul {

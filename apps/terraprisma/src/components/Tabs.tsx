@@ -37,7 +37,7 @@ export function Tabs(
     >
       <div
         class={mergeClass(
-          'flex flex-row gap-2 px-1 py-1 bg-[var(--deeper-bg)] w-fit h-fit rounded-md',
+          'flex flex-row gap-2 px-1 py-1 bg-deeper-bg w-fit h-fit rounded-md',
           props.class
         )}
       >

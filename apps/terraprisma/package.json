@@ -27,7 +27,6 @@
     "prismjs": "^1.29.0",
     "material-symbols": "^0.14.0",
     "terraprisma": "workspace:*",
-    "terraprisma-tailwind-plugin": "workspace:*",
 
     "vinxi": "0.1.10",
     "defu": "6.1.4",
