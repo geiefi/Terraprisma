@@ -48,13 +48,13 @@ importers:
         specifier: 0.4.11
         version: 0.4.11(rollup@4.9.6)(solid-js@1.8.12)(vinxi@0.1.10)(vite@4.5.2)
       defu:
-        specifier: ^6.1.4
+        specifier: 6.1.4
         version: 6.1.4
       fdbg:
         specifier: ^1.0.0
         version: 1.0.0
       h3:
-        specifier: ^1.10.1
+        specifier: 1.10.1
         version: 1.10.1
       material-symbols:
         specifier: ^0.14.0
@@ -72,7 +72,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/terraprisma-tailwind-plugin
       unstorage:
-        specifier: ^1.10.1
+        specifier: 1.10.1
         version: 1.10.1
       vinxi:
         specifier: 0.1.10
