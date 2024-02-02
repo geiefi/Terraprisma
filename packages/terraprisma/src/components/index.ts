@@ -6,3 +6,4 @@ export * from './navigation';
 export * from './transitions';
 
 export * as Icons from './icons';
+import 'fdbg';
