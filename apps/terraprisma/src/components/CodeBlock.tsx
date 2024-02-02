@@ -59,7 +59,7 @@ export function CodeBlock(props: {
             clearTimeout(hoverTimeout);
             setShowingCopyTooltip(false)
           }}
-          class="sticky left-full bottom-full -translate-x-full translate-y-2 -ml-2"
+          class="sticky left-full bottom-full -translate-x-full translate-y-1/2 -ml-2"
           size="small"
           squarish
         >
