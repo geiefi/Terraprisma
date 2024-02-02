@@ -36,6 +36,7 @@
     "esbuild-plugin-solid": "0.5.0",
     "esbuild-postcss": "0.0.4",
     "esbuild-style-plugin": "1.6.3",
+    "fdbg": "^1.0.0",
     "jsdom": "^22.1.0",
     "postcss": "8.4.33",
     "postcss-scss": "4.0.9",
@@ -84,7 +85,6 @@
           "default": "./dist/browser.cjs"
         }
       },
-
       "node": {
         "solid": "./dist/server.jsx",
         "import": {
@@ -96,7 +96,6 @@
           "default": "./dist/server.cjs"
         }
       },
-
       "solid": "./dist/browser.jsx",
       "import": {
         "types": "./dist/browser.d.ts",
