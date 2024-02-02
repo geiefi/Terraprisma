@@ -8,9 +8,11 @@
   },
   "type": "module",
   "devDependencies": {
+    "@solid-devtools/overlay": "^0.29.3",
     "@types/prismjs": "^1.26.3",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
+    "solid-devtools": "^0.29.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^4.9.5",
     "vite": "^4.4.9"
@@ -21,7 +23,6 @@
     "fdbg": "^1.0.0",
     "material-symbols": "^0.14.0",
     "prismjs": "^1.29.0",
-    "solid-devtools": "^0.29.2",
     "solid-js": "1.8.12",
     "terraprisma": "workspace:*",
     "terraprisma-tailwind-plugin": "workspace:*",
