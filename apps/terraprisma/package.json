@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "vinxi dev",
-    "build": "vinxi build --preset vercel",
+    "build": "vinxi build",
     "start": "vinxi start"
   },
   "type": "module",
@@ -20,15 +20,21 @@
   "dependencies": {
     "@solidjs/router": "0.10.10",
     "@solidjs/start": "0.4.11",
-    "fdbg": "^1.0.0",
-    "material-symbols": "^0.14.0",
-    "prismjs": "^1.29.0",
+
     "solid-js": "1.8.12",
+
+    "fdbg": "^1.0.0",
+    "prismjs": "^1.29.0",
+    "material-symbols": "^0.14.0",
     "terraprisma": "workspace:*",
     "terraprisma-tailwind-plugin": "workspace:*",
-    "vinxi": "0.1.10"
+
+    "vinxi": "0.1.10",
+    "defu": "6.1.4",
+    "unstorage": "1.10.1",
+    "h3": "1.10.1"
   },
   "engines": {
-    "node": ">=18"
+    "node": "18.x"
   }
 }

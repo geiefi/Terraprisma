@@ -8,6 +8,11 @@ export default defineConfig({
       autoname: true
     })
   ],
+  start: {
+    server: {
+      preset: 'vercel'
+    }
+  },
   server: {
     fs: {
       allow: [
