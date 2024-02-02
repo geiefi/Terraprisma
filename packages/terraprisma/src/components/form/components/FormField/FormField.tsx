@@ -1,5 +1,5 @@
 import {
-    Accessor,
+  Accessor,
   JSX,
   Show,
   Signal,
@@ -83,7 +83,9 @@ export function FormField<
       ? `field-${form.identification()}-${props.fieldProperties.name}`
       : `field-${props.fieldProperties.name}`;
 
-  const hasContent = () => (value() || '').toString().length > 0;
+  const hasContent = () =>
+    (Number.isNaN(value()) || value() === undefined ? '' : value()!.toString())
+      .length > 0;
   const hasErrors = () =>
     errors && Array.isArray(errors) && typeof errors[0] !== 'undefined';
 
