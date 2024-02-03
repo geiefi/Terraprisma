@@ -57,13 +57,13 @@ const ListItem = (allProps: ListItemProps) => {
             aria-disabled={disabled()}
             {...elProps}
             class={mergeClass(
-              'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
+              'tp-w-full tp-h-fit tp-px-2.5 tp-py-1 tp-rounded-md tp-transition-colors tp-select-none tp-cursor-pointer',
               disabled()
-                ? 'bg-[var(--muted-bg)] text-[var(--muted-fg)] opacity-30'
+                ? 'tp-bg-[var(--muted-bg)] tp-text-[var(--muted-fg)] tp-opacity-30'
                 : [
                     active()
-                      ? 'bg-[var(--bg)] text-[var(--fg)]'
-                      : 'hover:bg-[var(--hover-10)]'
+                      ? 'tp-bg-[var(--bg)] tp-text-[var(--fg)]'
+                      : 'hover:tp-bg-[var(--hover-10)]'
                   ],
               elProps.class
             )}
@@ -82,7 +82,7 @@ const ListItem = (allProps: ListItemProps) => {
       <Match when={!clickable()}>
         <li
           {...elProps}
-          class={mergeClass('w-full h-fit px-2.5 py-1', elProps.class)}
+          class={mergeClass('tp-w-full tp-h-fit tp-px-2.5 tp-py-1', elProps.class)}
         >
           {props.children}
         </li>

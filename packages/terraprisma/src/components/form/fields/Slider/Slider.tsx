@@ -201,15 +201,15 @@ const Slider = (allProps: SliderProps) => {
 
             <div
               class={mergeClass(
-                'w-full h-min py-1 relative',
-                'after:absolute after:left-[var(--value-percentage)] after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:scale-150 after:rounded-full after:pointer-events-none after:transition-opacity',
-                focused() && 'after:opacity-30',
+                'tp-w-full tp-h-min tp-py-1 tp-relative',
+                'after:tp-absolute after:tp-left-[var(--value-percentage)] after:tp-top-1/2 after:-tp-translate-x-1/2 after:-tp-translate-y-1/2 after:tp-scale-150 after:tp-rounded-full after:tp-pointer-events-none after:tp-transition-opacity',
+                focused() && 'after:tp-opacity-30',
                 disabled()
-                  ? 'opacity-40 bg-[var(--muted-fg)]'
-                  : 'cursor-pointer',
-                size() === 'small' && 'after:h-2 after:w-2',
-                size() === 'medium' && 'after:h-4 after:w-4',
-                size() === 'large' && 'after:h-5 after:w-5'
+                  ? 'tp-opacity-40 tp-bg-[var(--muted-fg)]'
+                  : 'tp-cursor-pointer',
+                size() === 'small' && 'after:tp-h-2 after:tp-w-2',
+                size() === 'medium' && 'after:tp-h-4 after:tp-w-4',
+                size() === 'large' && 'after:tp-h-5 after:tp-w-5'
               )}
               ref={slider}
               draggable={false}
@@ -221,32 +221,32 @@ const Slider = (allProps: SliderProps) => {
             >
               <span
                 class={mergeClass(
-                  'block absolute left-0 top-1/2 -translate-y-1/2 w-[var(--value-percentage)] bg-[var(--color)]',
-                  size() === 'small' && 'h-1 rounded-[0.166rem]',
-                  size() === 'medium' && 'h-2 rounded-[0.333rem]',
-                  size() === 'large' && 'h-2.5 rounded-[0.416rem]'
+                  'tp-block tp-absolute tp-left-0 tp-top-1/2 -tp-translate-y-1/2 tp-w-[var(--value-percentage)] tp-bg-[var(--color)]',
+                  size() === 'small' && 'tp-h-1 tp-rounded-[0.166rem]',
+                  size() === 'medium' && 'tp-h-2 tp-rounded-[0.333rem]',
+                  size() === 'large' && 'tp-h-2.5 tp-rounded-[0.416rem]'
                 )}
                 draggable={false}
               />
               <span
                 // rail
                 class={mergeClass(
-                  'block w-full',
-                  size() === 'small' && 'h-1 rounded-[0.083rem]',
-                  size() === 'medium' && 'h-2 rounded-[0.166rem]',
-                  size() === 'large' && 'h-2.5 rounded-[0.208rem]',
-                  disabled() ? 'bg-[var(--muted-fg)]' : 'bg-[var(--deeper-bg)]'
+                  'tp-block tp-w-full',
+                  size() === 'small' && 'tp-h-1 tp-rounded-[0.083rem]',
+                  size() === 'medium' && 'tp-h-2 tp-rounded-[0.166rem]',
+                  size() === 'large' && 'tp-h-2.5 tp-rounded-[0.208rem]',
+                  disabled() ? 'tp-bg-[var(--muted-fg)]' : 'tp-bg-[var(--deeper-bg)]'
                 )}
                 draggable={false}
               />
               <span
                 // thumb
                 class={mergeClass(
-                  'absolute bg-[var(--color)] left-[var(--value-percentage)] top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2',
-                  'pointer-events-none transition-opacity',
-                  size() === 'small' && 'h-2 w-2',
-                  size() === 'medium' && 'h-4 w-4',
-                  size() === 'large' && 'h-5 w-5'
+                  'tp-absolute tp-bg-[var(--color)] tp-left-[var(--value-percentage)] tp-top-1/2 tp-rounded-full -tp-translate-x-1/2 -tp-translate-y-1/2',
+                  'tp-pointer-events-none tp-transition-opacity',
+                  size() === 'small' && 'tp-h-2 tp-w-2',
+                  size() === 'medium' && 'tp-h-4 tp-w-4',
+                  size() === 'large' && 'tp-h-5 tp-w-5'
                 )}
                 ref={setAnchor}
                 draggable={false}
@@ -255,7 +255,7 @@ const Slider = (allProps: SliderProps) => {
                   {...elProps}
                   ref={mergeRefs(elProps.ref, (ref) => (input = ref))}
                   class={mergeClass(
-                    'slider-input w-full h-full overflow-hidden whitespace-nowrap border-none absolute cursor-pointer',
+                    'slider-input tp-w-full tp-h-full tp-overflow-hidden tp-whitespace-nowrap tp-border-none tp-absolute tp-cursor-pointer',
                     elProps.class
                   )}
                   min={min()}
@@ -287,7 +287,7 @@ const Slider = (allProps: SliderProps) => {
                 <GrowFade growingOrigin="bottom">
                   <Tooltip
                     visible={focused()}
-                    class="!bg-[var(--color)] !text-[var(--text-color)]"
+                    class="!tp-bg-[var(--color)] !tp-text-[var(--text-color)]"
                     style={{
                       '--color': `var(--${color()}-bg)`,
                       '--text-color': `var(--${color()}-fg)`

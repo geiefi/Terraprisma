@@ -13,7 +13,7 @@ const Box = (allProps: BoxProps) => {
     <div
       {...elProps}
       class={mergeClass(
-        'px-4 py-5 rounded-lg box-border w-full border border-solid bg-[var(--floating-bg)] border-[var(--floating-border)] text-[var(--floating-fg)]',
+        'tp-px-4 tp-py-5 tp-rounded-lg tp-box-border tp-w-full tp-border tp-border-solid tp-bg-[var(--floating-bg)] tp-border-[var(--floating-border)] tp-text-[var(--floating-fg)]',
         elProps.class
       )}
       style={elProps.style}

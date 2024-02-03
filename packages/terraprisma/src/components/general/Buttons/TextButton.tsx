@@ -26,10 +26,10 @@ const TextButton = (allProps: TextButtonProps) => {
       class={mergeClass(
         !dftProps.disabled &&
           !dftProps.unstyled && [
-            'rounded-md outline-none',
+            'tp-rounded-md tp-outline-none',
             props.active
-              ? 'bg-[var(--bg)] text-[var(--fg)]'
-              : 'bg-transparent text-[var(--bg)] hover:bg-[var(--hover-10)]'
+              ? 'tp-bg-[var(--bg)] tp-text-[var(--fg)]'
+              : 'tp-bg-transparent tp-text-[var(--bg)] hover:tp-bg-[var(--hover-10)]'
           ],
         dftProps.class
       )}

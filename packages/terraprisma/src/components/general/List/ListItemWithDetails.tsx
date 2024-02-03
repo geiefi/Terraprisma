@@ -73,7 +73,7 @@ const ListItemWithDetails = (allProps: ListItemWithDetailsProps) => {
     <>
       <ListItem
         {...elProps}
-        class={mergeClass('relative', elProps.class)}
+        class={mergeClass('tp-relative', elProps.class)}
         color={color()}
         active={props.active}
         style={props.style}
@@ -89,8 +89,8 @@ const ListItemWithDetails = (allProps: ListItemWithDetailsProps) => {
 
         <span
           class={mergeClass(
-            'absolute right-2.5 top-1/2 translate-y-[-50%] origin-center transition-transform',
-            isDetailsOpen() && 'rotate-180'
+            'tp-absolute tp-right-2.5 tp-top-1/2 tp-translate-y-[-50%] tp-origin-center tp-transition-transform',
+            isDetailsOpen() && 'tp-rotate-180'
           )}
         >
           <KeyboardArrowDown />

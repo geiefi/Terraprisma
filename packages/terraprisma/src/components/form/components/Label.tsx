@@ -17,8 +17,8 @@ const Label = (allProps: LabelProps) => {
       for={props.for}
       {...elProps}
       class={mergeClass(
-        'select-none pointer-events-none',
-        props.hasErrors && 'text-[var(--danger-bg)]',
+        'tp-select-none tp-pointer-events-none',
+        props.hasErrors && 'tp-text-[var(--danger-bg)]',
         elProps.class
       )}
     >

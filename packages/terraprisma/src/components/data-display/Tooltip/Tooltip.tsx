@@ -104,15 +104,15 @@ export function createTooltip(identification: string) {
             <div
               {...elProps}
               class={mergeClass(
-                'tooltip absolute w-max z-10 pointer-events-none select-none rounded-md bg-[var(--deeper-bg)] text-[var(--deeper-fg)] px-2 py-0.5',
+                'tooltip tp-absolute tp-w-max tp-z-10 tp-pointer-events-none tp-select-none tp-rounded-md tp-bg-[var(--deeper-bg)] tp-text-[var(--deeper-fg)] tp-px-2 tp-py-0.5',
                 position() === 'top' &&
-                  'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[var(--anchor-top)] top',
+                  'tp-left-[calc(var(--anchor-left)+var(--anchor-width)/2)] tp-top-[var(--anchor-top)] top',
                 position() === 'left' &&
-                  'left-[var(--anchor-left)] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] left',
+                  'tp-left-[var(--anchor-left)] tp-top-[calc(var(--anchor-top)+var(--anchor-height)/2)] left',
                 position() === 'right' &&
-                  'left-[calc(var(--anchor-left)+var(--anchor-width)+var(--offset-from-anchor))] top-[calc(var(--anchor-top)+var(--anchor-height)/2)] right',
+                  'tp-left-[calc(var(--anchor-left)+var(--anchor-width)+var(--offset-from-anchor))] tp-top-[calc(var(--anchor-top)+var(--anchor-height)/2)] right',
                 position() === 'bottom' &&
-                  'left-[calc(var(--anchor-left)+var(--anchor-width)/2)] top-[calc(var(--anchor-top)+var(--anchor-height)+var(--offset-from-anchor))] bottom',
+                  'tp-left-[calc(var(--anchor-left)+var(--anchor-width)/2)] tp-top-[calc(var(--anchor-top)+var(--anchor-height)+var(--offset-from-anchor))] bottom',
                 elProps.class
               )}
               ref={tooltipEl!}

@@ -52,8 +52,8 @@ const DialogInternal = (allProps: DialogProps) => {
       <Show when={props.visible}>
         <div
           class={mergeClass(
-            'absolute left-0 top-0 w-screen h-screen z-20 bg-black/40 backdrop-blur',
-            !props.visible && 'pointer-events-none'
+            'tp-absolute tp-left-0 tp-top-0 tp-w-screen tp-h-screen tp-z-20 tp-bg-black/40 tp-backdrop-blur',
+            !props.visible && 'tp-pointer-events-none'
           )}
           classList={{
             visible: props.visible
@@ -73,7 +73,7 @@ const DialogInternal = (allProps: DialogProps) => {
               }
             )}
             class={mergeClass(
-              'absolute left-1/2 top-1/2 w-full h-fit max-w-[568px] translate-x-[-50%] translate-y-[-50%]',
+              'tp-absolute tp-left-1/2 tp-top-1/2 tp-w-full tp-h-fit tp-max-w-[568px] tp-translate-x-[-50%] tp-translate-y-[-50%]',
               elProps.class
             )}
           >
@@ -85,18 +85,18 @@ const DialogInternal = (allProps: DialogProps) => {
 
             <Divisor />
 
-            <div class="flex flex-row w-full">
+            <div class="tp-flex tp-flex-row tp-w-full">
               {props.extraElementsInFooter}
 
-              <div class="ml-auto flex gap-4 &>*">
+              <div class="tp-ml-auto tp-flex tp-gap-4 &>*">
                 <OutlinedButton
-                  class="h-full"
+                  class="tp-h-full"
                   color="danger"
                   onClick={props.onCancel}
                 >
                   Cancel
                 </OutlinedButton>
-                <Button class="h-full" onClick={props.onOk} color="accent">
+                <Button class="tp-h-full" onClick={props.onOk} color="accent">
                   Ok
                 </Button>
               </div>

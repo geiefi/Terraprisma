@@ -22,14 +22,14 @@ const Container = (allProps: ContainerProps) => {
     <div
       {...elProps}
       class={mergeClass(
-        'container mx-auto',
-        (props.horizontalAlign || props.verticalAlign) && 'flex flex-col',
-        props.maxWidth === 'xs' && '!max-w-full',
-        props.maxWidth === 'sm' && '!max-w-[640px]',
-        props.maxWidth === 'md' && '!max-w-[768px]',
-        props.maxWidth === 'md' && '!max-w-[1024px]',
-        props.maxWidth === 'lg' && '!max-w-[1280px]',
-        props.maxWidth === 'xl' && '!max-w-[1536px]',
+        'tp-container tp-mx-auto',
+        (props.horizontalAlign || props.verticalAlign) && 'tp-flex tp-flex-col',
+        props.maxWidth === 'xs' && '!tp-max-w-full',
+        props.maxWidth === 'sm' && '!tp-max-w-[640px]',
+        props.maxWidth === 'md' && '!tp-max-w-[768px]',
+        props.maxWidth === 'md' && '!tp-max-w-[1024px]',
+        props.maxWidth === 'lg' && '!tp-max-w-[1280px]',
+        props.maxWidth === 'xl' && '!tp-max-w-[1536px]',
         elProps.class
       )}
       style={{

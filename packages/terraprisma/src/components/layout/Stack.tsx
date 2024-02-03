@@ -39,10 +39,10 @@ const Stack = (allProps: StackProps) => {
     <div
       {...elProps}
       class={mergeClass(
-        'flex flex-wrap',
+        'tp-flex tp-flex-wrap',
         props.fullWidth && 'full-width',
-        direction() === 'horizontal' && 'flex-row',
-        direction() === 'vertical' && 'flex-col',
+        direction() === 'horizontal' && 'tp-flex-row',
+        direction() === 'vertical' && 'tp-flex-col',
         elProps.class
       )}
       style={{

@@ -15,8 +15,8 @@ const Divisor = (allProps: DivisorProps) => {
     <div
       {...elProps}
       class={mergeClass(
-        'h-[1px] my-2 opacity-40 bg-[var(--floating-border)]',
-        props.direction === 'vertical' && 'w-[1px] h-full my-0 mx-2',
+        'tp-h-[1px] tp-my-2 tp-opacity-40 tp-bg-[var(--floating-border)]',
+        props.direction === 'vertical' && 'tp-w-[1px] tp-h-full tp-my-0 tp-mx-2',
         elProps.class
       )}
     />

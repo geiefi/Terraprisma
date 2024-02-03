@@ -4,6 +4,7 @@ const config = {
   corePlugins: {
     preflight: false
   },
+  prefix: 'tp-',
   theme: {
     extend: {
       fontSize: {

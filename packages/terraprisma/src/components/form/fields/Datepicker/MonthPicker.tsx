@@ -11,7 +11,7 @@ export default function MonthPicker(props: {
   onMonthClicked: (month: number) => any;
 }) {
   return (
-    <div class="grid grid-cols-3">
+    <div class="tp-grid tp-grid-cols-3">
       <Index each={props.monthNames}>
         {(month, monthNumber) => (
           <DatepickerButtonEntry

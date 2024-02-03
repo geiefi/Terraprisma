@@ -46,7 +46,7 @@ const PageNumber = (props: {
   </>
 );
 
-const Etc = () => <div class="flex self-end pb-2 select-none"> ... </div>;
+const Etc = () => <div class="tp-flex tp-self-end tp-pb-2 tp-select-none"> ... </div>;
 
 const Pagination = (allProps: PaginationProps) => {
   const [props, elProps] = splitProps(allProps, [
@@ -93,7 +93,7 @@ const Pagination = (allProps: PaginationProps) => {
   return (
     <div
       {...elProps}
-      class={mergeClass('w-fit flex gap-3 flex-row my-1', elProps.class)}
+      class={mergeClass('tp-w-fit tp-flex tp-gap-3 tp-flex-row tp-my-1', elProps.class)}
     >
       <IconButton
         class="back"

@@ -39,7 +39,7 @@ const Col = (allProps: ColProps) => {
   return (
     <div
       {...elProps}
-      class="px-[var(--gap)] py-[var(--row-gap)]"
+      class="tp-px-[var(--gap)] tp-py-[var(--row-gap)]"
       style={{
         width: `${(props.size / 24) * 100}%`,
         ...props.style

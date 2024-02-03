@@ -21,7 +21,7 @@ const DatepickerButtonEntry = (props: DatepickerButtonEntryProps) => {
           }
         >
           <IconButton
-            class={mergeClass(props.muted && !props.active && 'text-inherit')}
+            class={mergeClass(props.muted && !props.active && 'tp-text-inherit')}
             size="small"
             rippleProps={{ center: true }}
             squarish
@@ -33,7 +33,7 @@ const DatepickerButtonEntry = (props: DatepickerButtonEntryProps) => {
         </Match>
         <Match when={props.variant === 'text'}>
           <TextButton
-            class={mergeClass(props.muted && !props.active && 'text-inherit')}
+            class={mergeClass(props.muted && !props.active && 'tp-text-inherit')}
             size="small"
             active={props.active}
             onClick={props.onClick}

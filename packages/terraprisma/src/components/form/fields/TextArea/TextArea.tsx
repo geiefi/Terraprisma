@@ -85,7 +85,7 @@ const TextArea = (allProps: TextAreaProps) => {
 
         return (
           <InputLikeBase
-            class="max-w-full max-h-full w-full h-full overflow-x-hidden overflow-y-auto"
+            class="tp-max-w-full tp-max-h-full tp-w-full tp-h-full tp-overflow-x-hidden tp-overflow-y-auto"
             style={{
               resize: resizingDirection()
             }}
@@ -100,10 +100,10 @@ const TextArea = (allProps: TextAreaProps) => {
               ref={mergeRefs(elProps.ref, (r) => (textarea = r))}
               disabled={disabled()}
               class={mergeClass(
-                'border-none outline-none appearance-none bg-transparent w-full h-full min-h-full m-0 p-[inherit] absolute left-0 top-0',
-                'overflow-hidden resize-none transition-opacity opacity-100',
-                typeof props.label === 'undefined' && 'py-2',
-                !focused() && !hasContent() && '!opacity-0',
+                'tp-border-none tp-outline-none tp-appearance-none tp-bg-transparent tp-w-full tp-h-full tp-min-h-full tp-m-0 tp-p-[inherit] tp-absolute tp-left-0 tp-top-0',
+                'tp-overflow-hidden tp-resize-none tp-transition-opacity tp-opacity-100',
+                typeof props.label === 'undefined' && 'tp-py-2',
+                !focused() && !hasContent() && '!tp-opacity-0',
                 elProps.class
               )}
               onInput={mergeCallbacks(

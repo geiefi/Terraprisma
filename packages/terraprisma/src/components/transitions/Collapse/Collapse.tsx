@@ -23,7 +23,7 @@ const Collapse: Component<CollapseProps> = (props) => {
       {...props}
     >
       <Show when={firstChild() !== null}>
-        <div class="grid">{firstChild()}</div>
+        <div class="tp-grid">{firstChild()}</div>
       </Show>
     </Transition>
   );

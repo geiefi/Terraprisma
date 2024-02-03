@@ -57,10 +57,10 @@ export const InternalStep = (allProps: StepProps & { index: number }) => {
     <div
       {...elProps}
       class={mergeClass(
-        'relative flex',
-        'w-full last-of-type:box-content last-of-type:pr-[var(--description-offset)] last-of-type:w-[var(--step-content-width)] last-of-type:after:!hidden',
-        'after:content-[""] after:rounded after:w-[calc(100%-var(--step-content-width)-1.5rem)] after:display after:absolute after:top-1/2 after:left-[calc(var(--step-content-width)+0.7rem)] after:h-1 after:translate-y-[-50%] after:bg-[var(--muted-bg)] after:transition-colors',
-        current() - 1 >= props.index && 'after:!bg-[var(--accent-bg)]',
+        'tp-relative tp-flex',
+        'tp-w-full last-of-type:tp-box-content last-of-type:tp-pr-[var(--description-offset)] last-of-type:tp-w-[var(--step-content-width)] last-of-type:after:!tp-hidden',
+        'after:tp-content-[""] after:tp-rounded after:tp-w-[calc(100%-var(--step-content-width)-1.5rem)] after:tp-display after:tp-absolute after:tp-top-1/2 after:tp-left-[calc(var(--step-content-width)+0.7rem)] after:tp-h-1 after:tp-translate-y-[-50%] after:tp-bg-[var(--muted-bg)] after:tp-transition-colors',
+        current() - 1 >= props.index && 'after:!tp-bg-[var(--accent-bg)]',
         elProps.class
       )}
       style={{
@@ -73,16 +73,16 @@ export const InternalStep = (allProps: StepProps & { index: number }) => {
       }}
     >
       <span
-        class="flex items-center gap-2 relative h-fit w-max"
+        class="tp-flex tp-items-center tp-gap-2 tp-relative tp-h-fit tp-w-max"
         ref={setContentRef}
       >
         <span
           class={mergeClass(
-            'rounded-full transition-colors duration-500 select-none w-8 h-8 min-w-[2em] min-h-[2em] flex justify-center items-center',
+            'tp-rounded-full tp-transition-colors tp-duration-500 tp-select-none tp-w-8 tp-h-8 tp-min-w-[2em] tp-min-h-[2em] tp-flex tp-justify-center tp-items-center',
             current() < props.index &&
-              'bg-[var(--deeper-bg)] text-[var(--deeper-fg)]',
+              'tp-bg-[var(--deeper-bg)] tp-text-[var(--deeper-fg)]',
             current() >= props.index &&
-              'bg-[var(--accent-bg)] text-[var(--accent-fg)]'
+              'tp-bg-[var(--accent-bg)] tp-text-[var(--accent-fg)]'
           )}
         >
           <Show when={current() <= props.index} fallback={<Check />}>
@@ -90,14 +90,14 @@ export const InternalStep = (allProps: StepProps & { index: number }) => {
           </Show>
         </span>
 
-        <span class="relative w-fit" ref={setStepInfoRef}>
+        <span class="tp-relative tp-w-fit" ref={setStepInfoRef}>
           <p
             class={mergeClass(
-              'font-extrabold max-w-full text-sm m-0 whitespace-nowrap duration-500',
-              current() < props.index && 'text-[var(--muted-fg)]',
+              'tp-font-extrabold tp-max-w-full tp-text-sm tp-m-0 tp-whitespace-nowrap tp-duration-500',
+              current() < props.index && 'tp-text-[var(--muted-fg)]',
               current() === props.index &&
                 current() > props.index &&
-                'text-[var(--normal-fg)] leading-6'
+                'tp-text-[var(--normal-fg)] tp-leading-6'
             )}
           >
             {elProps.children}
@@ -105,7 +105,7 @@ export const InternalStep = (allProps: StepProps & { index: number }) => {
 
           <Show when={props.description}>
             <p
-              class="absolute w-max font-bold max-w-[200px] text-sm text-[var(--muted-fg)] left-0 top-[3px]"
+              class="tp-absolute tp-w-max tp-font-bold tp-max-w-[200px] tp-text-sm tp-text-[var(--muted-fg)] tp-left-0 tp-top-[3px]"
               ref={setDescriptionPRef}
             >
               {props.description}

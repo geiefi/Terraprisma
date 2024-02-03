@@ -20,7 +20,7 @@ export default function YearPicker(props: {
   });
 
   return (
-    <div class="grid grid-cols-5">
+    <div class="tp-grid tp-grid-cols-5">
       <Index each={years()}>
         {(year) => (
           <DatepickerButtonEntry

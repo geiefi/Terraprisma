@@ -133,8 +133,8 @@ export function FormField<
         <Show when={fieldProps.helperText || hasErrors()}>
           <div
             class={mergeClass(
-              'pt-1.5 opacity-80 text-xs font-bold',
-              hasErrors() && 'font-extrabold text-[var(--danger-bg)]'
+              'tp-pt-1.5 tp-opacity-80 tp-text-xs tp-font-bold',
+              hasErrors() && 'tp-font-extrabold tp-text-[var(--danger-bg)]'
             )}
           >
             <Show

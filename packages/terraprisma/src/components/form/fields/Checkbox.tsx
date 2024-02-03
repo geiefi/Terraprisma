@@ -87,7 +87,7 @@ const Checkbox = (allProps: CheckboxProps) => {
 
         return (
           <div
-            class="flex flex-row-reverse justify-start gap-2"
+            class="tp-flex tp-flex-row-reverse tp-justify-start tp-gap-2"
             onClick={toggleValue}
           >
             <Show when={props.label}>
@@ -98,22 +98,22 @@ const Checkbox = (allProps: CheckboxProps) => {
 
             <div
               class={mergeClass(
-                'relative cursor-pointer block rounded-md m-1 p-0 select-none border-2 border-solid transition-colors',
-                size() === 'small' && 'w-4 h-4',
-                size() === 'medium' && 'w-6 h-6',
-                size() === 'large' && 'w-8 h-8',
-                value() === false && 'bg-transparent',
+                'tp-relative tp-cursor-pointer tp-block tp-rounded-md tp-m-1 tp-p-0 tp-select-none tp-border-2 tp-border-solid tp-transition-colors',
+                size() === 'small' && 'tp-w-4 tp-h-4',
+                size() === 'medium' && 'tp-w-6 tp-h-6',
+                size() === 'large' && 'tp-w-8 tp-h-8',
+                value() === false && 'tp-bg-transparent',
                 disabled()
                   ? [
-                      'opacity-30 cursor-default',
-                      value() === true && 'bg-[var(--muted-bg)]'
+                      'tp-opacity-30 tp-cursor-default',
+                      value() === true && 'tp-bg-[var(--muted-bg)]'
                     ]
                   : [
-                      'hover:border-[var(--color)]',
-                      value() === true && 'bg-[var(--color)]',
+                      'hover:tp-border-[var(--color)]',
+                      value() === true && 'tp-bg-[var(--color)]',
                       focused()
-                        ? 'border-[var(--color)] shadow-[0_0_4px_3px_var(--color-20)]'
-                        : 'shadow-[0_0_4px_3px_transparent]'
+                        ? 'tp-border-[var(--color)] tp-shadow-[0_0_4px_3px_var(--color-20)]'
+                        : 'tp-shadow-[0_0_4px_3px_transparent]'
                     ]
               )}
               style={{
@@ -132,7 +132,7 @@ const Checkbox = (allProps: CheckboxProps) => {
                 id={id()}
                 type="checkbox"
                 class={mergeClass(
-                  'left-0 top-0 w-full h-full opacity-0 pointer-events-none',
+                  'tp-left-0 tp-top-0 tp-w-full tp-h-full tp-opacity-0 tp-pointer-events-none',
                   elProps.class
                 )}
                 value={value() ? 'true' : 'false'}
@@ -146,13 +146,13 @@ const Checkbox = (allProps: CheckboxProps) => {
                 <Icons.Check
                   style={{ scale: '1 !important' }}
                   class={mergeClass(
-                    'absolute left-1/2 top-1/2 bg-transparent font-bold m-0 pointer-events-none select-none -translate-x-1/2 -translate-y-1/2',
+                    'tp-absolute tp-left-1/2 tp-top-1/2 tp-bg-transparent tp-font-bold tp-m-0 tp-pointer-events-none tp-select-none -tp-translate-x-1/2 -tp-translate-y-1/2',
                     disabled()
-                      ? 'text-[var(--muted-fg)]'
-                      : 'text-[var(--check-color)]',
-                    size() === 'small' && 'w-4 h-4 text-2xl',
-                    size() === 'medium' && 'w-6 h-6 text-4xl',
-                    size() === 'large' && 'w-8 h-8 text-6xl'
+                      ? 'tp-text-[var(--muted-fg)]'
+                      : 'tp-text-[var(--check-color)]',
+                    size() === 'small' && 'tp-w-4 tp-h-4 tp-text-2xl',
+                    size() === 'medium' && 'tp-w-6 tp-h-6 tp-text-4xl',
+                    size() === 'large' && 'tp-w-8 tp-h-8 tp-text-6xl'
                   )}
                   variant="rounded"
                 />

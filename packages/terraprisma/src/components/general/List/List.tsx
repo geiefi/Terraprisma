@@ -9,7 +9,7 @@ const List = (allProps: ListProps) => {
     <ul
       {...elProps}
       class={mergeClass(
-        'list-none flex flex-col h-fit w-full gap-2 p-0 m-0',
+        'tp-list-none tp-flex tp-flex-col tp-h-fit tp-w-full tp-gap-2 tp-p-0 tp-m-0',
         elProps.class
       )}
     >

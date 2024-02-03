@@ -19,10 +19,10 @@ const OutlinedButton = (allProps: OutlinedButtonProps) => {
       class={mergeClass(
         !dftProps.disabled &&
           !dftProps.unstyled && [
-            'rounded-md outline outline-2 outline-offset-[-2px] outline-[var(--bg)] hover:bg-[var(--bg)] hover:text-[var(--fg)]',
+            'tp-rounded-md tp-outline tp-outline-2 tp-outline-offset-[-2px] tp-outline-[var(--bg)] hover:tp-bg-[var(--bg)] hover:tp-text-[var(--fg)]',
             props.active
-              ? 'bg-[var(--bg)] text-[var(--fg)]'
-              : 'bg-transparent text-[var(--bg)]'
+              ? 'tp-bg-[var(--bg)] tp-text-[var(--fg)]'
+              : 'tp-bg-transparent tp-text-[var(--bg)]'
           ],
         dftProps.class
       )}

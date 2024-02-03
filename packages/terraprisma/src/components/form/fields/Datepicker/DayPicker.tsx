@@ -82,7 +82,7 @@ export default function DayPicker(props: {
   const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   return (
-    <div class="grid grid-cols-7">
+    <div class="tp-grid tp-grid-cols-7">
       <For each={weekDays}>
         {(day) => <DatepickerEntry muted>{day}</DatepickerEntry>}
       </For>

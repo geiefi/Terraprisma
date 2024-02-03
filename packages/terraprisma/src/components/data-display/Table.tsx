@@ -34,7 +34,7 @@ const Table = (allProps: TableProps) => {
       <table
         {...elProps}
         class={mergeClass(
-          'table w-full border-collapse border-spacing-0 m-0 appearance-none box-border',
+          'tp-table tp-w-full tp-border-collapse tp-border-spacing-0 tp-m-0 tp-appearance-none tp-box-border',
           elProps.class
         )}
       >
@@ -93,16 +93,16 @@ const Column = (allProps: TableColumnProps) => {
         <th
           {...elProps}
           class={mergeClass(
-            'text-[inherit]',
-            !tableProps.compact && 'py-1.5 px-3',
-            !!tableProps.compact && 'py-2 px-4',
+            'tp-text-[inherit]',
+            !tableProps.compact && 'tp-py-1.5 tp-px-3',
+            !!tableProps.compact && 'tp-py-2 tp-px-4',
             colType() === 'td' &&
-              'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
-            colType() === 'th' && ' border-none font-extrabold',
+              'tp-text-base tp-border-solid tp-border-0 tp-border-t tp-border-t-[var(--floating-border)] tp-font-semibold',
+            colType() === 'th' && ' tp-border-none tp-font-extrabold',
 
-            alignment() === 'left' && 'text-left',
-            alignment() === 'right' && 'text-right',
-            alignment() === 'center' && 'text-center',
+            alignment() === 'left' && 'tp-text-left',
+            alignment() === 'right' && 'tp-text-right',
+            alignment() === 'center' && 'tp-text-center',
 
             elProps.class
           )}
@@ -114,16 +114,16 @@ const Column = (allProps: TableColumnProps) => {
         <td
           {...elProps}
           class={mergeClass(
-            'text-[inherit]',
-            !tableProps.compact && 'py-1.5 px-3',
-            !!tableProps.compact && 'py-2 px-4',
+            'tp-text-[inherit]',
+            !tableProps.compact && 'tp-py-1.5 tp-px-3',
+            !!tableProps.compact && 'tp-py-2 tp-px-4',
             colType() === 'td' &&
-              'text-base border-solid border-0 border-t border-t-[var(--floating-border)] font-semibold',
-            colType() === 'th' && ' border-none font-extrabold',
+              'tp-text-base tp-border-solid tp-border-0 tp-border-t tp-border-t-[var(--floating-border)] tp-font-semibold',
+            colType() === 'th' && ' tp-border-none tp-font-extrabold',
 
-            alignment() === 'left' && 'text-left',
-            alignment() === 'right' && 'text-right',
-            alignment() === 'center' && 'text-center',
+            alignment() === 'left' && 'tp-text-left',
+            alignment() === 'right' && 'tp-text-right',
+            alignment() === 'center' && 'tp-text-center',
 
             elProps.class
           )}

@@ -81,7 +81,7 @@ const Steps = (allProps: StepsProps) => {
       <div
         {...elProps}
         class={mergeClass(
-          'relative flex justify-between my-8 w-full px-2',
+          'tp-relative tp-flex tp-justify-between tp-my-8 tp-w-full tp-px-2',
           elProps.class
         )}
       >

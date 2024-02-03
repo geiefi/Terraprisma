@@ -219,15 +219,15 @@ const Datepicker = (allProps: DatepickerProps) => {
                   tabindex="0"
                   visible={focused()}
                   class={mergeClass(
-                    'h-[330px] !w-[330px] overflow-hidden cursor-default grid grid-cols-1 grid-rows-[2fr_8fr]'
+                    'tp-h-[330px] !tp-w-[330px] tp-overflow-hidden tp-cursor-default tp-grid tp-grid-cols-1 tp-grid-rows-[2fr_8fr]'
                   )}
                 >
-                  <div class="px-4 relative flex flex-row items-center justify-between">
+                  <div class="tp-px-4 tp-relative tp-flex tp-flex-row tp-items-center tp-justify-between">
                     <IconButton size="small" onClick={handlePrevious}>
                       <ChevronLeft />
                     </IconButton>
 
-                    <div class="w-fit flex gap-1.5">
+                    <div class="tp-w-fit tp-flex tp-gap-1.5">
                       <OutlinedButton
                         size="small"
                         active={datepickerSelectionType() === 'month'}
@@ -262,7 +262,7 @@ const Datepicker = (allProps: DatepickerProps) => {
                     </IconButton>
                   </div>
 
-                  <Row class="px-4 py-2.5 grid h-full overflow-x-hidden overflow-y-auto">
+                  <Row class="tp-px-4 tp-py-2.5 tp-grid tp-h-full tp-overflow-x-hidden tp-overflow-y-auto">
                     <Switch>
                       <Match when={datepickerSelectionType() === 'day'}>
                         <DayPicker

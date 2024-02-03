@@ -159,8 +159,8 @@ const Dropdown = (allProps: DropdownProps) => {
         {...elProps}
         ref={mergeRefs(elProps.ref, setDropdownRef)}
         class={mergeClass(
-          'absolute z-10 h-fit overflow-y-auto overflow-x-hidden rounded-xl box-border p-2',
-          'bg-[var(--floating-bg)] text-[var(--floating-fg)] border border-solid border-[var(--floating-border)]',
+          'tp-absolute z-10 tp-h-fit tp-overflow-y-auto tp-overflow-x-hidden tp-rounded-xl tp-box-border tp-p-2',
+          'tp-bg-[var(--floating-bg)] tp-text-[var(--floating-fg)] tp-border tp-border-solid tp-border-[var(--floating-border)]',
           elProps.class
         )}
       >

@@ -156,7 +156,7 @@ const Ripple = (allProps: RippleProps) => {
           <div
             {...props.wrapperProps}
             class={mergeClass(
-              'absolute cursor-none pointer-events-none',
+              'tp-absolute tp-cursor-none tp-pointer-events-none',
               props.wrapperProps?.class
             )}
             style={{
@@ -173,7 +173,7 @@ const Ripple = (allProps: RippleProps) => {
             <div
               {...elProps}
               class={mergeClass(
-                'relative overflow-hidden w-full h-full rounded-[inherit] p-0 m-0',
+                'tp-relative tp-overflow-hidden tp-w-full tp-h-full tp-rounded-[inherit] tp-p-0 tp-m-0',
                 elProps.class
               )}
               ref={setRippleContainer}
@@ -182,7 +182,7 @@ const Ripple = (allProps: RippleProps) => {
                 {(ripple) => (
                   <Show when={ripple}>
                     <span
-                      class="absolute animate-[ripple_0.6s_linear] rounded-full z-[999] scale-0 opacity-10 bg-[var(--bg)]"
+                      class="tp-absolute tp-animate-[ripple_0.6s_linear] tp-rounded-full tp-z-[999] tp-scale-0 tp-opacity-10 tp-bg-[var(--bg)]"
                       style={{
                         width: `${ripple.diameter}px`,
                         height: `${ripple.diameter}px`,

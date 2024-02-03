@@ -6,7 +6,7 @@ export type MenuProps = DropdownProps;
 
 const Menu = (elProps: MenuProps) => {
   return (
-    <Dropdown {...elProps} class={mergeClass('!w-[9rem] h-fit', elProps.class)}>
+    <Dropdown {...elProps} class={mergeClass('!tp-w-[9rem] tp-h-fit', elProps.class)}>
       <List>{elProps.children}</List>
     </Dropdown>
   );

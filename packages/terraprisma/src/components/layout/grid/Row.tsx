@@ -22,7 +22,7 @@ const Row = (allProps: RowProps) => {
   return (
     <div
       {...elProps}
-      class={mergeClass('flex w-100 flex-wrap', elProps.class)}
+      class={mergeClass('tp-flex w-100 tp-flex-wrap', elProps.class)}
       classList={elProps.classList}
       style={{
         '--gap': props.gap,

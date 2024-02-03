@@ -52,14 +52,14 @@ const Button = (allProps: ButtonProps) => {
         type="button"
         {...elProps}
         class={mergeClass(
-          'inline-flex gap-1 text-center items-center justify-center border-none h-min w-fit box-border shadow-none select-none align-middle ease-in transition-colors !duration-150',
+          'tp-inline-flex tp-gap-1 tp-text-center tp-items-center tp-justify-center tp-border-none tp-h-min tp-w-fit tp-box-border tp-shadow-none tp-select-none tp-align-middle tp-ease-in tp-transition-colors !tp-duration-150',
           !props.disabled &&
           !props.unstyled &&
-          'rounded-md outline-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
-          props.disabled && '!bg-[var(--muted-bg)] opacity-30',
-          size() === 'small' && 'px-2 py-1 text-sm',
-          size() === 'medium' && 'px-3 py-2 text-base',
-          size() === 'large' && 'px-4 py-3 text-lg',
+          'tp-rounded-md tp-outline-none tp-bg-[var(--bg)] tp-text-[var(--fg)] hover:tp-bg-[var(--hover)]',
+          props.disabled && '!tp-bg-[var(--muted-bg)] tp-opacity-30',
+          size() === 'small' && 'tp-px-2 tp-py-1 tp-text-sm',
+          size() === 'medium' && 'tp-px-3 tp-py-2 tp-text-base',
+          size() === 'large' && 'tp-px-4 tp-py-3 tp-text-lg',
           elProps.class
         )}
         style={{

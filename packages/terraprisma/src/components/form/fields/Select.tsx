@@ -197,7 +197,7 @@ const Select = (allProps: SelectProps) => {
               size={props.size}
               style={props.style}
               labelFor={id()}
-              class="flex items-center align-middle gap-3 cursor-pointer"
+              class="tp-flex tp-items-center tp-align-middle tp-gap-3 tp-cursor-pointer"
               label={props.label}
               tabindex="0"
               onFocus={() => !disabled() && setFocused(true)}
@@ -215,8 +215,8 @@ const Select = (allProps: SelectProps) => {
                 <Icons.KeyboardArrowDown
                   variant="rounded"
                   class={mergeClass(
-                    'transition-transform origin-center',
-                    focused() ? 'rotate-180' : 'rotate-0'
+                    'tp-transition-transform tp-origin-center',
+                    focused() ? 'tp-rotate-180' : 'tp-rotate-0'
                   )}
                 />
               }
@@ -291,8 +291,8 @@ Select.Dropdown = (
       ref={mergeRefs(props.ref, setDropdownRef)}
       data-size={size()}
       class={mergeClass(
-        'flex flex-col gap-2 max-h-[10rem]',
-        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
+        'tp-flex tp-flex-col tp-gap-2 tp-max-h-[10rem]',
+        'data-[size=small]:tp-text-sm data-[size=medium]:tp-text-base data-[size=large]:tp-text-lg',
         props.class
       )}
       style={{
@@ -312,7 +312,7 @@ Select.Dropdown = (
                 {...optionElProps}
                 clickable
                 class={mergeClass(
-                  'relative flex items-center align-middle gap-3 cursor-pointer',
+                  'tp-relative tp-flex tp-items-center tp-align-middle tp-gap-3 tp-cursor-pointer',
                   optionElProps.class
                 )}
                 active={optionProps.value === value()}
@@ -324,7 +324,7 @@ Select.Dropdown = (
                 {optionElProps.children}
 
                 <Show when={optionProps.value === value()}>
-                  <span class="absolute left-full top-1/2 -translate-x-[calc(100%+0.75rem)] -translate-y-1/2">
+                  <span class="tp-absolute tp-left-full tp-top-1/2 -tp-translate-x-[calc(100%+0.75rem)] -tp-translate-y-1/2">
                     <Icons.Check variant="rounded" />
                   </span>
                 </Show>

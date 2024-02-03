@@ -54,32 +54,32 @@ const Toggler = (allProps: TogglerProps) => {
             </Label>
           </Show>
 
-          <div class="w-fit box-content">
+          <div class="tp-w-fit tp-box-content">
             <input
               {...elProps}
               id={id()}
               type="checkbox"
               class={mergeClass(
-                'appearance-none transition-colors relative',
-                'after after:absolute after:top-1/2 after:rounded-full after:-translate-y-1/2 after:transition-all',
+                'tp-appearance-none tp-transition-colors tp-relative',
+                'tp-after after:tp-absolute after:tp-top-1/2 after:tp-rounded-full after:-tp-translate-y-1/2 after:tp-transition-all',
                 size() === 'small' &&
-                  'w-6 h-3 after:w-2.5 after:h-2.5 rounded-[0.75rem]',
+                  'tp-w-6 tp-h-3 after:tp-w-2.5 after:tp-h-2.5 tp-rounded-[0.75rem]',
                 size() === 'medium' &&
-                  'w-10 h-5 after:w-4 after:h-4 rounded-[1.3rem]',
+                  'tp-w-10 tp-h-5 after:tp-w-4 after:tp-h-4 tp-rounded-[1.3rem]',
                 size() === 'large' &&
-                  'w-16 h-8 after:w-6.5 after:h-6.5 rounded-[4.1rem]',
+                  'tp-w-16 tp-h-8 after:tp-w-6.5 after:tp-h-6.5 tp-rounded-[4.1rem]',
 
                 value() === true
-                  ? 'after:left-[calc(100%-0.25rem)] after:-translate-x-full'
-                  : 'after:left-1',
+                  ? 'after:tp-left-[calc(100%-0.25rem)] after:-tp-translate-x-full'
+                  : 'after:tp-left-1',
 
                 disabled()
-                  ? 'cursor-default bg-[var(--muted-bg)] after:bg-[var(--muted-fg)] opacity-30'
+                  ? 'tp-cursor-default tp-bg-[var(--muted-bg)] after:tp-bg-[var(--muted-fg)] tp-opacity-30'
                   : [
-                      'cursor-pointer',
+                      'tp-cursor-pointer',
                       value() === true
-                        ? 'bg-[var(--on-color)] after:bg-[var(--on-circle-color)]'
-                        : 'bg-[var(--deeper-bg)] after:bg-[var(--normal-bg)]'
+                        ? 'tp-bg-[var(--on-color)] after:tp-bg-[var(--on-circle-color)]'
+                        : 'tp-bg-[var(--deeper-bg)] after:tp-bg-[var(--normal-bg)]'
                     ],
 
                 elProps.class

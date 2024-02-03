@@ -17,8 +17,8 @@ const DatepickerEntry = (allProps: DatepickerEntryProps) => {
     <span
       {...elProps}
       class={mergeClass(
-        'w-full h-full border-box flex justify-center items-center text-center',
-        props.muted && 'text-[var(--muted-fg)]',
+        'tp-w-full tp-h-full tp-border-box tp-flex tp-justify-center tp-items-center tp-text-center',
+        props.muted && 'tp-text-[var(--muted-fg)]',
         elProps.class
       )}
     >

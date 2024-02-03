@@ -132,12 +132,12 @@ export const Input = <
               disabled={disabled()}
               type={props.type}
               class={mergeClass(
-                'font-size-inherit border-none py-inherit px-inherit !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
+                'font-size-inherit tp-border-none tp-py-inherit tp-px-inherit !tp-outline-transparent tp-bg-transparent tp-w-full tp-h-full tp-box-border tp-absolute tp-p-[inherit] tp-text-[var(--floating-fg)] tp-appearance-none tp-left-0 tp-top-0 tp-transition-opacity',
                 !focused() &&
                   !hasContent() &&
                   (typeof props.label !== 'undefined' ||
                     !elProps.placeholder) &&
-                  '!opacity-0',
+                  '!tp-opacity-0',
                 elProps.class
               )}
               color={color()}

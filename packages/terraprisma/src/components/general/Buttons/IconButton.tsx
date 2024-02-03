@@ -29,22 +29,22 @@ const IconButton = (allProps: IconButtonProps) => {
       }}
       unstyled
       class={mergeClass(
-        '!p-0',
+        '!tp-p-0',
         !defaultButtonProps.unstyled && [
-          'aspect-square outline-none',
+          'tp-aspect-square tp-outline-none',
           (!defaultButtonProps.active || defaultButtonProps.disabled) &&
-          'bg-transparent text-[var(--bg)]',
+          'tp-bg-transparent tp-text-[var(--bg)]',
           !defaultButtonProps.disabled && [
-            'hover:bg-[var(--bg)] hover:text-[var(--fg)]',
-            defaultButtonProps.active && 'bg-[var(--bg)] text-[var(--fg)]'
+            'hover:tp-bg-[var(--bg)] hover:tp-text-[var(--fg)]',
+            defaultButtonProps.active && 'tp-bg-[var(--bg)] tp-text-[var(--fg)]'
           ],
-          props.squarish ? 'rounded-lg' : 'rounded-full'
+          props.squarish ? 'tp-rounded-lg' : 'tp-rounded-full'
         ],
-        defaultButtonProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
+        defaultButtonProps.size === 'small' && 'tp-min-w-[2rem] tp-min-h-[2rem]',
         (defaultButtonProps.size === 'medium' ||
           typeof defaultButtonProps.size === 'undefined') &&
-        'min-w-[3rem] min-h-[3rem]',
-        defaultButtonProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
+        'tp-min-w-[3rem] tp-min-h-[3rem]',
+        defaultButtonProps.size === 'large' && 'tp-min-w-[3.5rem] tp-min-h-[3.5rem]',
         defaultButtonProps.class
       )}
     >

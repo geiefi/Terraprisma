@@ -76,7 +76,7 @@ const RadioInternal = (allProps: RadioGroupOptionProps) => {
 
   return (
     <div
-      class="flex flex-row items-center gap-2"
+      class="tp-flex tp-flex-row tp-items-center tp-gap-2"
       onClick={(e) => {
         if (props.onClick && !isDisabled()) {
           props.onClick(e);
@@ -85,21 +85,21 @@ const RadioInternal = (allProps: RadioGroupOptionProps) => {
     >
       <div
         class={mergeClass(
-          'relative block appearance-none m-0 p-0 rounded-full bg-transparent transition-colors z-[2]',
-          'border-2 border-solid',
-          'after:absolute after:left-1/2 after:top-1/2 after:w-2/3 after:-translate-x-1/2 after:-translate-y-1/2 after:h-2/3 after:rounded-full transition-opacity',
-          isChecked() ? 'after:opacity-100' : 'after:opacity-0',
+          'tp-relative tp-block tp-appearance-none tp-m-0 tp-p-0 tp-rounded-full tp-bg-transparent tp-transition-colors tp-z-[2]',
+          'tp-border-2 tp-border-solid',
+          'after:tp-absolute after:tp-left-1/2 after:tp-top-1/2 after:tp-w-2/3 after:-tp-translate-x-1/2 after:-tp-translate-y-1/2 after:tp-h-2/3 after:tp-rounded-full tp-transition-opacity',
+          isChecked() ? 'after:tp-opacity-100' : 'after:tp-opacity-0',
           isDisabled()
-            ? 'border-[var(--muted-bg)] after:bg-[var(--muted-bg)]'
+            ? 'tp-border-[var(--muted-bg)] after:tp-bg-[var(--muted-bg)]'
             : [
-                'cursor-pointer after:bg-[var(--color)]',
+                'tp-cursor-pointer after:tp-bg-[var(--color)]',
                 isChecked()
-                  ? 'border-[var(--color)]'
-                  : 'border-[var(--deeper-fg)]'
+                  ? 'tp-border-[var(--color)]'
+                  : 'tp-border-[var(--deeper-fg)]'
               ],
-          size() === 'small' && '!w-4 !h-4',
-          size() === 'medium' && '!w-6 !h-6',
-          size() === 'large' && '!w-8 !h-8'
+          size() === 'small' && '!tp-w-4 !tp-h-4',
+          size() === 'medium' && '!tp-w-6 !tp-h-6',
+          size() === 'large' && '!tp-w-8 !tp-h-8'
         )}
         style={{
           '--color': `var(--${color()}-bg)`
@@ -107,7 +107,7 @@ const RadioInternal = (allProps: RadioGroupOptionProps) => {
       >
         <input
           {...elProps}
-          class={mergeClass('appearance-none opacity-0', elProps.class)}
+          class={mergeClass('tp-appearance-none tp-opacity-0', elProps.class)}
           id={id()}
           type="radio"
           value={groupValue()}
@@ -124,8 +124,8 @@ const RadioInternal = (allProps: RadioGroupOptionProps) => {
         <Label
           for={id()}
           class={mergeClass(
-            'pointer-events-none',
-            isDisabled() && 'opacity-30'
+            'tp-pointer-events-none',
+            isDisabled() && 'tp-opacity-30'
           )}
           hasErrors={hasErrors()}
         >
