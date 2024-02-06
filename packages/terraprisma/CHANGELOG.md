@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240206183827
+
+### Patch Changes
+
+- testing release
+
 ## 0.0.0-testing-20240121163753
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
   "name": "terraprisma",
-  "version": "0.0.0-testing-20240121163753",
+  "version": "0.0.0-testing-20240206183827",
   "description": "A flexible and fun to use batteries included SolidJS component library",
   "license": "MIT",
   "files": [
