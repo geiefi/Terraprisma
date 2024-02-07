@@ -38,7 +38,7 @@ export type SliderProps<
     size?: 'small' | 'medium' | 'large';
     color?: Accents;
 
-    rail?: (props: ComponentProps<'span'>) => JSX.Element;
+    track?: (props: ComponentProps<'span'>) => JSX.Element;
     range?: (props: ComponentProps<'span'>) => JSX.Element;
     thumb?: (props: ComponentProps<'span'>) => JSX.Element;
 
@@ -62,7 +62,7 @@ const Slider = (allProps: SliderProps) => {
     'onChange',
 
     'range',
-    'rail',
+    'track',
     'thumb'
   ]);
   const color = () => props.color ?? 'accent';
@@ -234,11 +234,11 @@ const Slider = (allProps: SliderProps) => {
                   size() === 'medium' && 'h-2 rounded-[0.333rem]',
                   size() === 'large' && 'h-2.5 rounded-[0.416rem]'
                 )}
-                component={props.rail ?? 'span'}
+                component={props.range ?? 'span'}
                 draggable={false}
               />
               <Dynamic
-                // rail
+                // track
                 class={mergeClass(
                   'block w-full',
                   size() === 'small' && 'h-1 rounded-[0.083rem]',
@@ -246,7 +246,7 @@ const Slider = (allProps: SliderProps) => {
                   size() === 'large' && 'h-2.5 rounded-[0.208rem]',
                   disabled() ? 'bg-[var(--muted-fg)]' : 'bg-[var(--deeper-bg)]'
                 )}
-                component={props.rail ?? 'span'}
+                component={props.track ?? 'span'}
                 draggable={false}
               />
               <Dynamic
