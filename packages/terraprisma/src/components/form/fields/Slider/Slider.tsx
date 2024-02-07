@@ -159,7 +159,9 @@ const Slider = (allProps: SliderProps) => {
 
         createEffect(
           on(value, () => {
-            updateBoundingBox();
+            if (props.showTooltip === true || typeof props.showTooltip === 'undefined') {
+              updateBoundingBox();
+            }
           })
         );
 
