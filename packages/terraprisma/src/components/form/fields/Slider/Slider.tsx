@@ -9,7 +9,7 @@ import {
   Show,
   splitProps
 } from 'solid-js';
-import { Portal, isServer } from 'solid-js/web';
+import { Dynamic, Portal, isServer } from 'solid-js/web';
 
 import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../../types';
 
@@ -38,6 +38,10 @@ export type SliderProps<
     size?: 'small' | 'medium' | 'large';
     color?: Accents;
 
+    rail?: (props: ComponentProps<'span'>) => JSX.Element;
+    range?: (props: ComponentProps<'span'>) => JSX.Element;
+    thumb?: (props: ComponentProps<'span'>) => JSX.Element;
+
     showTooltip?: boolean;
     renderTooltipContent?: (value: number) => JSX.Element;
 
@@ -55,7 +59,11 @@ const Slider = (allProps: SliderProps) => {
     'renderTooltipContent',
     'color',
     'size',
-    'onChange'
+    'onChange',
+
+    'range',
+    'rail',
+    'thumb'
   ]);
   const color = () => props.color ?? 'accent';
   const step = () => parseFloat((elProps.step || 1).toString());
@@ -219,16 +227,17 @@ const Slider = (allProps: SliderProps) => {
                 '--color': `var(--${color()}-bg)`
               }}
             >
-              <span
+              <Dynamic
                 class={mergeClass(
                   'block absolute left-0 top-1/2 -translate-y-1/2 w-[var(--value-percentage)] bg-[var(--color)]',
                   size() === 'small' && 'h-1 rounded-[0.166rem]',
                   size() === 'medium' && 'h-2 rounded-[0.333rem]',
                   size() === 'large' && 'h-2.5 rounded-[0.416rem]'
                 )}
+                component={props.rail ?? 'span'}
                 draggable={false}
               />
-              <span
+              <Dynamic
                 // rail
                 class={mergeClass(
                   'block w-full',
@@ -237,9 +246,10 @@ const Slider = (allProps: SliderProps) => {
                   size() === 'large' && 'h-2.5 rounded-[0.208rem]',
                   disabled() ? 'bg-[var(--muted-fg)]' : 'bg-[var(--deeper-bg)]'
                 )}
+                component={props.rail ?? 'span'}
                 draggable={false}
               />
-              <span
+              <Dynamic
                 // thumb
                 class={mergeClass(
                   'absolute bg-[var(--color)] left-[var(--value-percentage)] top-1/2 rounded-full -translate-x-1/2 -translate-y-1/2',
@@ -250,6 +260,7 @@ const Slider = (allProps: SliderProps) => {
                 )}
                 ref={setAnchor}
                 draggable={false}
+                component={props.thumb ?? 'span'}
               >
                 <input
                   {...elProps}
@@ -273,7 +284,7 @@ const Slider = (allProps: SliderProps) => {
                   type="range"
                   disabled={disabled()}
                 />
-              </span>
+              </Dynamic>
             </div>
 
             <Show
