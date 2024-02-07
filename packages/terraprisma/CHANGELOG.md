@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240207205010
+
+### Patch Changes
+
+- Add rail, track and thumb options to the Slider to make it more flexible
+
 ## 0.0.0-testing-20240207010617
 
 ### Patch Changes
