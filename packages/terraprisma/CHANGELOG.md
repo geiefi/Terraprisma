@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240207010617
+
+### Patch Changes
+
+- fix wrong export for the Input component through the Form
+
 ## 0.0.0-testing-20240206183827
 
 ### Patch Changes

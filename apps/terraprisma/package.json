@@ -20,14 +20,11 @@
   "dependencies": {
     "@solidjs/router": "0.10.10",
     "@solidjs/start": "0.4.11",
-
     "solid-js": "1.8.12",
-
     "fdbg": "^1.0.0",
     "prismjs": "^1.29.0",
     "material-symbols": "^0.14.0",
     "terraprisma": "workspace:*",
-
     "vinxi": "0.1.10",
     "defu": "6.1.4",
     "unstorage": "1.10.1",
