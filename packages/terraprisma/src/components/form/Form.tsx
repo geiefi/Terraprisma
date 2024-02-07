@@ -11,7 +11,8 @@ import {
   Select,
   Slider,
   TextArea,
-  Toggler
+  Toggler,
+  Input
 } from './fields';
 import {
   InputBaseValue,
@@ -26,7 +27,6 @@ import { DatepickerProps } from './fields/Datepicker/Datepicker';
 import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
-import { Input } from '../icons';
 
 export interface Form<Value extends FormValue> {
   (props: ParentProps): JSX.Element;
