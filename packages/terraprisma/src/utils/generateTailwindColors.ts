@@ -7,10 +7,8 @@ export function generateTailwindColors(
       if (match) {
         const [, colorName, opacity] = match;
         if (!acc[colorName]) acc[colorName] = {};
-        if (opacity) {
-          acc[colorName][opacity] = value;
-        } else {
-          acc[colorName]['DEFAULT'] = value;
+        if (!opacity) {
+          acc[colorName]['DEFAULT'] = `var(${key})`;
         }
       }
       return acc;
