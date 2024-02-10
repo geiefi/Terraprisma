@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240210171820
+
+### Patch Changes
+
+- fix tailwind colors generation not using the css variables
+
 ## 0.0.0-testing-20240207210117
 
 ### Patch Changes
