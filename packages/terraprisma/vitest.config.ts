@@ -1,26 +1,17 @@
 /// <reference types="vitest" />
-
-import { defineConfig } from 'vitest/config';
-import solidPlugin from 'vite-plugin-solid';
-
+import solid from 'vite-plugin-solid';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const dirname = path.dirname(fileURLToPath(import.meta.url));
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [solidPlugin()],
-  server: {
-    port: 3000
-  },
-  build: {
-    target: 'esnext'
+  plugins: [solid()],
+  resolve: {
+    conditions: ['development', 'browser'],
+    alias: {
+      '~': path.resolve(process.cwd(), './src')
+    }
   },
   test: {
-    environment: 'jsdom',
-    typecheck: {
-      include: ['/.*/']
-    },
     globals: true,
     testTransformMode: { web: ['/.[jt]sx?$/'] }
   }
