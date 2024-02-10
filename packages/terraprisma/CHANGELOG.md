@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240210212559
+
+### Patch Changes
+
+- allow users to pass their own store of values to the createForm
+
 ## 0.0.0-testing-20240210174359
 
 ### Patch Changes
