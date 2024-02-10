@@ -1,5 +1,11 @@
 import { JSX, ParentProps, onMount, useContext } from 'solid-js';
-import { SetStoreFunction, createStore, produce, unwrap } from 'solid-js/store';
+import {
+  SetStoreFunction,
+  StoreSetter,
+  createStore,
+  produce,
+  unwrap
+} from 'solid-js/store';
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
@@ -14,11 +20,7 @@ import {
   Toggler,
   Input
 } from './fields';
-import {
-  InputBaseValue,
-  InputProps,
-  InputType
-} from './fields/Input/Input';
+import { InputBaseValue, InputProps, InputType } from './fields/Input/Input';
 import { SliderProps } from './fields/Slider/Slider';
 import { SelectOptionProps, SelectProps } from './fields/Select';
 import { RadioGroupOptionProps, RadioGroupProps } from './fields/RadioGroup';
@@ -27,6 +29,7 @@ import { DatepickerProps } from './fields/Datepicker/Datepicker';
 import { TogglerProps } from './fields/Toggler';
 import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
+import { StoreTuple } from '../../types';
 
 export interface Form<Value extends FormValue> {
   (props: ParentProps): JSX.Element;
@@ -74,10 +77,9 @@ export interface Form<Value extends FormValue> {
       Omit<JSX.HTMLAttributes<HTMLInputElement>, keyof CheckboxProps>
   ): JSX.Element;
 
-  store: [
-    get: FormStore<Partial<Value>>,
-    set: SetStoreFunction<FormStore<Partial<Value>>>
-  ];
+  store: [get: FormStore, set: SetStoreFunction<FormStore>];
+
+  valuesStore: [get: Partial<Value>, set: SetStoreFunction<Partial<Value>>];
 
   providerValue: FormProviderValue<Value>;
 }
@@ -115,16 +117,29 @@ export interface Form<Value extends FormValue> {
  */
 export function createForm<Value extends FormValue>(
   identification: string,
-  initialValue: Partial<Value> = {},
+  initialValueOrStoreTuple:
+    | Partial<Value>
+    | [get: Partial<Value>, set: SetStoreFunction<Partial<Value>>] = {},
   agnosticValidators: AgnosticValidator[] = []
 ): Form<Value> {
+  let formValue: Partial<Value>;
+  let setFormValue: SetStoreFunction<Partial<Value>>;
+
+  if (Array.isArray(initialValueOrStoreTuple)) {
+    [formValue, setFormValue] = initialValueOrStoreTuple;
+  } else {
+    // eslint-disable-next-line solid/reactivity
+    const valueStore = createStore(initialValueOrStoreTuple);
+    formValue = valueStore[0];
+    setFormValue = valueStore[1];
+  }
+
   // eslint-disable-next-line solid/reactivity
-  const formStore = createStore(
-    new FormStore<Partial<Value>>(unwrap(initialValue))
-  );
+  const formStore = createStore(new FormStore());
 
   const formProviderValue = new FormProviderValue<Value>(
     formStore,
+    [formValue, setFormValue],
     agnosticValidators,
     identification
   );
@@ -143,6 +158,7 @@ export function createForm<Value extends FormValue>(
   form.Checkbox = Checkbox;
 
   form.store = formStore;
+  form.valuesStore = [formValue, setFormValue] as StoreTuple<Partial<Value>>;
   form.providerValue = formProviderValue;
 
   return form as Form<Value>;

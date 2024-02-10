@@ -1,5 +1,5 @@
-import { createContext, Setter } from 'solid-js';
-import { produce } from 'solid-js/store';
+import { batch, createContext, Setter } from 'solid-js';
+import { produce, SetStoreFunction } from 'solid-js/store';
 
 import {
   DeepGet,
@@ -21,11 +21,7 @@ export class FormError extends Error {}
  * }))
  * ```
  */
-export class FormStore<
-  T extends FormValue,
-  Values extends FormValue = Partial<T>
-> {
-  values: Values;
+export class FormStore {
   /**
    * A array of field names that are currently disabled
    */
@@ -33,8 +29,7 @@ export class FormStore<
   errors: Partial<Record<string, string[]>>;
   validators: Partial<Record<string, FieldValidator[]>>;
 
-  constructor(values: Values) {
-    this.values = values;
+  constructor() {
     this.disabled = {};
     this.validators = {};
     this.errors = {};
@@ -106,17 +101,24 @@ export class FormProviderValue<
     ? string
     : LeavesOfObject<T> = T extends EmptyObj ? string : LeavesOfObject<T>
 > {
-  private form: FormStore<Values>;
-  private setForm: Setter<FormStore<Values>>;
+  private values: Values;
+  private setValues: SetStoreFunction<Values>;
+
+  private form: FormStore;
+  private setForm: Setter<FormStore>;
 
   // this doesn't really need to be reactive
   private __isCleaningUp: boolean;
 
   constructor(
-    public store: StoreTuple<FormStore<Partial<Values>>>,
+    public store: StoreTuple<FormStore>,
+    public valuesStore: StoreTuple<Values>,
     public agnosticValidators: AgnosticValidator[],
     private _identification: string
   ) {
+    this.values = valuesStore[0];
+    this.setValues = valuesStore[1];
+
     this.form = store[0];
     this.setForm = store[1];
 
@@ -174,12 +176,17 @@ export class FormProviderValue<
           'You cannot have multiple fields defined on the same <Form> that have the same name!'
       );
     }
-    this.setForm(
-      produce((form) => {
-        setByPath(form.values, name, value);
-        form.validators[name] = validators as any;
-      })
-    );
+    batch(() => {
+      this.setValues(produce(values => {
+        setByPath(values, name, value);
+      }));
+
+      this.setForm(
+        produce((form) => {
+          form.validators[name] = validators as any;
+        })
+      );
+    });
   }
 
   /**
@@ -202,7 +209,7 @@ export class FormProviderValue<
   validate(name: Leaves): void {
     if (this.isDisabled(name)) return;
 
-    const formValueKeys: string[] = getLeaves(this.form.values);
+    const formValueKeys: string[] = getLeaves(this.values);
     if (!formValueKeys.includes(name)) {
       throw new FormError(
         `Cannot validate the field named "${name}" inside of the form with identification` +
@@ -213,7 +220,7 @@ Maybe you forgot to initialize it?`
       this.setForm(
         produce((form) => {
           const validators = form.validators[name] || [];
-          const value = getByPath(form.values, name);
+          const value = getByPath(this.values, name);
           const errors = validators
             .map((validator) => validator(value)!)
             .flat()
@@ -239,7 +246,7 @@ Maybe you forgot to initialize it?`
           if (this.isDisabled(field as any)) return;
 
           const validators = (form.validators as any)[field]!;
-          const value = getByPath(form.values, field);
+          const value = getByPath(this.values, field);
           const caughtErrors = validators
             .map((validator: FieldValidator) => validator(value)!)
             .flat()
@@ -251,7 +258,7 @@ Maybe you forgot to initialize it?`
           this.agnosticValidators.forEach((validator) => {
             const agnosticValidatorCaughtErrors: Partial<
               Record<Leaves, string>
-            > = validator(form.values) as any;
+            > = validator(this.values) as any;
             const fieldsWithErrorsCaughtByAgnosticValidator: Leaves[] =
               Object.keys(agnosticValidatorCaughtErrors) as Leaves[];
             fieldsWithErrorsCaughtByAgnosticValidator.forEach((field) => {
@@ -332,7 +339,7 @@ Maybe you forgot to initialize it?`
   }
 
   valueFor<Name extends Leaves>(name: Name): DeepGet<Values, Name> | undefined {
-    const value = getByPath(this.form.values, name);
+    const value = getByPath(this.values, name);
     deeplyTrack(value);
     return value;
   }
@@ -341,9 +348,9 @@ Maybe you forgot to initialize it?`
     name: Name,
     newValue: DeepGet<Values, Name>
   ): void {
-    this.setForm(
-      produce((form) => {
-        setByPath(form.values, name, newValue);
+    this.setValues(
+      produce((values) => {
+        setByPath(values, name, newValue);
       })
     );
   }
