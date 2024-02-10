@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240210174359
+
+### Patch Changes
+
+- add missing opacity variant for tailwind's colors
+
 ## 0.0.0-testing-20240210171820
 
 ### Patch Changes
