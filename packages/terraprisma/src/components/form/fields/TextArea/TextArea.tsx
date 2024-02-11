@@ -12,10 +12,7 @@ import {
 
 import './TextArea.css';
 import { Accents } from '../../../..';
-import {
-  mergeClass,
-  mergeCallbacks
-} from '../../../../utils';
+import { mergeClass, mergeCallbacks } from '../../../../utils';
 import { InputLikeBase, FormField } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 
@@ -74,7 +71,8 @@ const TextArea = (allProps: TextAreaProps) => {
         valueS: [value, setValue],
 
         focusedS: [focused, setFocused],
-        hasContent
+        hasContent,
+        validate
       }) => {
         let textarea: HTMLTextAreaElement;
         createEffect(() => {
@@ -128,7 +126,10 @@ const TextArea = (allProps: TextAreaProps) => {
                 }
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
+              onBlur={mergeCallbacks(elProps.onBlur, () => {
+                setFocused(false);
+                validate(value());
+              })}
             />
           </InputLikeBase>
         );
