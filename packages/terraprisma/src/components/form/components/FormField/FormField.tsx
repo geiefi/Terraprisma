@@ -129,21 +129,23 @@ export function FormField<
         ? props.children(fieldProviderValue)
         : props.children}
 
-      <Show when={fieldProps.helperText || hasErrors()}>
-        <div
-          class={mergeClass(
-            'pt-1.5 opacity-80 text-sm font-bold',
-            hasErrors() && 'font-extrabold text-[var(--danger-bg)]'
-          )}
-        >
-          <Show
-            when={hasErrors() && !isDisabled()}
-            fallback={fieldProps.helperText}
+      <Collapse>
+        <Show when={fieldProps.helperText || hasErrors()}>
+          <div
+            class={mergeClass(
+              'pt-1.5 opacity-80 text-xs font-bold',
+              hasErrors() && 'font-extrabold text-[var(--danger-bg)]'
+            )}
           >
-            {errors![0]}
-          </Show>
-        </div>
-      </Show>
+            <Show
+              when={hasErrors() && !isDisabled()}
+              fallback={fieldProps.helperText}
+            >
+              {errors![0]}
+            </Show>
+          </div>
+        </Show>
+      </Collapse>
     </FieldContext.Provider>
   );
 }
