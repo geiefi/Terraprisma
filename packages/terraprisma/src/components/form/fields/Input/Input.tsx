@@ -96,6 +96,7 @@ export const Input = <
         disabledS: [disabled],
         focusedS: [focused, setFocused],
         valueS: [value, setValue],
+        validate,
         hasContent
       }) => {
         createEffect(() => {
@@ -158,7 +159,10 @@ export const Input = <
                 }
               )}
               onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
+              onBlur={mergeCallbacks(elProps.onBlur, () => {
+                setFocused(false);
+                validate(value());
+              })}
             />
           </InputLikeBase>
         );
