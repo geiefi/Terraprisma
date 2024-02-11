@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240211224437
+
+### Patch Changes
+
+- fix certain fields not validating on blur
+
 ## 0.0.0-testing-20240210212559
 
 ### Patch Changes
