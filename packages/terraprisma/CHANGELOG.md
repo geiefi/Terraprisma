@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240212005607
+
+### Patch Changes
+
+- One extra adjustment to the useIsHydrating primitive
+
 ## 0.0.0-testing-20240212005406
 
 ### Patch Changes
