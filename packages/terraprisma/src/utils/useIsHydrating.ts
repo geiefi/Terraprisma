@@ -1,6 +1,9 @@
 import { createSignal, sharedConfig } from "solid-js";
+import { isServer } from "solid-js/web";
 
 export function useIsHydrating() {
+  if (isServer) return () => false;
+
   const getIsHydrating = () => !!sharedConfig.context;
 
   const [isHydrating, setIsHydrating] = createSignal(getIsHydrating());
