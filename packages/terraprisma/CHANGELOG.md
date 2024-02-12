@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240212005406
+
+### Patch Changes
+
+- fix hydartion errors on Ripple
+
 ## 0.0.0-testing-20240211224437
 
 ### Patch Changes
