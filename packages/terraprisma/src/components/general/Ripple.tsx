@@ -9,7 +9,7 @@ import {
   Show,
   splitProps
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
+import { isServer, Portal } from 'solid-js/web';
 import { createStore, produce } from 'solid-js/store';
 
 import { Ref } from '@solid-primitives/refs';
@@ -19,6 +19,7 @@ import './Ripple.css';
 import { Accents } from '../..';
 import { getAbsoluteBoundingRect, mergeClass } from '../../utils';
 import { LeftIntersection } from '../../types/LeftIntersection';
+import { useIsHydrating } from '../../utils/useIsHydrating';
 
 export type RippleProps = LeftIntersection<
   {
@@ -149,9 +150,11 @@ const Ripple = (allProps: RippleProps) => {
     })
   );
 
+  const isHydrating = useIsHydrating();
+
   return (
     <>
-      <Show when={typeof rippledElement() !== 'undefined' && rippledElement() !== null}>
+      <Show when={typeof rippledElement() !== 'undefined' && rippledElement() !== null && !isHydrating() && !isServer}>
         <Portal>
           <div
             {...props.wrapperProps}
