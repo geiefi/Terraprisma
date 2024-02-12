@@ -9,7 +9,6 @@ export function useIsHydrating() {
   const [isHydrating, setIsHydrating] = createSignal(getIsHydrating());
 
   function updateUntilHydrationIsFinished() {
-    dbg('updating to check if hydration is finished');
     if (getIsHydrating()) {
       // wait until the call stack ends
       // which will probably be after the hydration is finished
