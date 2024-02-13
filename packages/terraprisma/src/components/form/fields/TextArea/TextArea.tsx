@@ -94,6 +94,7 @@ const TextArea = (allProps: TextAreaProps) => {
           >
             <textarea
               {...elProps}
+              name={props.name}
               id={id()}
               ref={mergeRefs(elProps.ref, (r) => (textarea = r))}
               disabled={disabled()}

@@ -130,6 +130,7 @@ const Checkbox = (allProps: CheckboxProps) => {
               <input
                 {...elProps}
                 id={id()}
+                name={props.name}
                 type="checkbox"
                 class={mergeClass(
                   'left-0 top-0 w-full h-full opacity-0 pointer-events-none',

@@ -266,6 +266,7 @@ const Slider = (allProps: SliderProps) => {
               >
                 <input
                   {...elProps}
+                  name={props.name}
                   ref={mergeRefs(elProps.ref, (ref) => (input = ref))}
                   class={mergeClass(
                     'slider-input w-full h-full overflow-hidden whitespace-nowrap border-none absolute cursor-pointer',

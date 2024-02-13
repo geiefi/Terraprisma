@@ -59,6 +59,7 @@ const Toggler = (allProps: TogglerProps) => {
               {...elProps}
               id={id()}
               type="checkbox"
+              name={props.name}
               class={mergeClass(
                 'appearance-none transition-colors relative',
                 'after after:absolute after:top-1/2 after:rounded-full after:-translate-y-1/2 after:transition-all',

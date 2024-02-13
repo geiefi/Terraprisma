@@ -128,6 +128,7 @@ export const Input = <
           >
             <input
               {...elProps}
+              name={props.name}
               id={id()}
               ref={mergeRefs(elProps.ref, (r) => (input = r))}
               disabled={disabled()}
