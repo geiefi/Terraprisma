@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240213200811
+
+### Patch Changes
+
+- name prop for most fields for use with the <form> element
+
 ## 0.0.0-testing-20240212005913
 
 ### Patch Changes
