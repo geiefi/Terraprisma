@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240213205645
+
+### Patch Changes
+
+- Fixed the Input's background appearing after SSR
+
 ## 0.0.0-testing-20240213200811
 
 ### Patch Changes
