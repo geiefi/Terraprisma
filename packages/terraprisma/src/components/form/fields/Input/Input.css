@@ -9,13 +9,6 @@ input:-webkit-autofill:active {
     color 9999s ease-in-out 0s;
 }
 
-input:autofill {
-  background: initial !important;
-}
-inpuit {
-  filter: none;
-}
-
 /* Remove annoying up and down arrows from all number type of input */
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {

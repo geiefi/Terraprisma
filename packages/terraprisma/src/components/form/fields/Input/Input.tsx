@@ -134,7 +134,7 @@ export const Input = <
               disabled={disabled()}
               type={props.type}
               class={mergeClass(
-                'font-size-inherit border-none py-inherit px-inherit !outline-transparent bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
+                'font-size-inherit border-none py-inherit px-inherit !outline-transparent autofil:!bg-transparent filter-none bg-transparent w-full h-full box-border absolute p-[inherit] text-[var(--floating-fg)] appearance-none left-0 top-0 transition-opacity',
                 !focused() &&
                   !hasContent() &&
                   (typeof props.label !== 'undefined' ||
