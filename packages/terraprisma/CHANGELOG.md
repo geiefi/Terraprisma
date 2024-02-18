@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240218173218
+
+### Patch Changes
+
+- fix non-granular updates for form fields
+
 ## 0.0.0-testing-20240213205645
 
 ### Patch Changes
