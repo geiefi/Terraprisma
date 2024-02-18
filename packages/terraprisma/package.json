@@ -17,7 +17,7 @@
     "test": "vitest"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.x"
   },
   "repository": {
     "type": "git",
