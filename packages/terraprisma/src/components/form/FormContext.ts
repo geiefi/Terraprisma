@@ -348,11 +348,10 @@ Maybe you forgot to initialize it?`
     name: Name,
     newValue: DeepGet<Values, Name>
   ): void {
-    this.setValues(
-      produce((values) => {
-        setByPath(values, name, newValue);
-      })
-    );
+    const namePath = name.split('.');
+    // setValues does support passing in any size of paths to set through here,
+    // its types are limited though, so this is necessary
+    (this.setValues as any)(...namePath, newValue);
   }
 }
 

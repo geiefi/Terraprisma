@@ -1,4 +1,15 @@
-import { deepDelete, getByPath, setByPath } from './FormContext';
+import { createStore } from 'solid-js/store';
+import { createEffect, createRoot, on } from 'solid-js';
+
+import { captureStoreUpdates } from '@solid-primitives/deep';
+
+import {
+  FormProviderValue,
+  FormStore,
+  deepDelete,
+  getByPath,
+  setByPath
+} from './FormContext';
 
 describe('FormContext', () => {
   let object = {
@@ -21,6 +32,42 @@ describe('FormContext', () => {
         expiresIn: new Date()
       }
     };
+  });
+
+  test('update', () => {
+    const [store, setStore] = createStore(new FormStore());
+    const [values, setValues] = createStore(object);
+
+    const updates = captureStoreUpdates(values);
+
+    let formProvider = new FormProviderValue<typeof values>(
+      [store, setStore],
+      [values, setValues],
+      [],
+      '_'
+    );
+
+    formProvider.update(
+      'creditCardDetails.displayedName',
+      'I am the banana man'
+    );
+
+    expect(values.creditCardDetails.displayedName).toBe('I am the banana man');
+
+    createEffect(
+      on(
+        updates,
+        (changes) => {
+          expect(changes).toEqual([
+            {
+              path: ['creditCardDetails', 'displayedName'],
+              value: 'I am the banana man'
+            }
+          ]);
+        },
+        { defer: true }
+      )
+    );
   });
 
   describe('setByPath()', () => {

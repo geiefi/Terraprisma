@@ -29,6 +29,7 @@
   "homepage": "https://github.com/gabrielmfern/terraprisma#readme",
   "author": "Gabriel Miranda",
   "devDependencies": {
+    "@solid-primitives/deep": "0.2.5",
     "@solidjs/testing-library": "^0.7.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@types/tinycolor2": "^1.4.3",
