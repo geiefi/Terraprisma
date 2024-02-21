@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240221023548
+
+### Patch Changes
+
+- b963c3b: fix tailwind-colors breaking with accent colors that have numbers
+
 ## 0.0.0-testing-20240218173218
 
 ### Patch Changes
