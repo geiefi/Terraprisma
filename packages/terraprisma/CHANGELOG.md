@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240221152853
+
+### Patch Changes
+
+- remove default font family definition from styles
+
 ## 0.0.0-testing-20240221023548
 
 ### Patch Changes
