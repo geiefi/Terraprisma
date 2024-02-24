@@ -30,7 +30,7 @@ export function createCommunicationWithFormContext<
       form!.init(
         props.name,
         (props.validators || []) as any,
-        form!.valueFor(props.name) || (initialValue as any)
+        form!.valueFor(props.name) ?? (initialValue as any)
       );
     });
 
