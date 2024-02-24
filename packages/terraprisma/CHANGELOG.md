@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240224152148
+
+### Patch Changes
+
+- Fix zero values being ignored on Form Field initilization due to a `||`
+
 ## 0.0.0-testing-20240221152853
 
 ### Patch Changes
