@@ -3,6 +3,7 @@
   "name": "terraprisma-project",
   "scripts": {
     "changeset:version": "changeset version --snapshot testing",
+    "dev": "cd packages/terraprisma && pnpm dev",
     "publish": "turbo run build --filter='./packages/*' && changeset publish"
   },
   "repository": {
