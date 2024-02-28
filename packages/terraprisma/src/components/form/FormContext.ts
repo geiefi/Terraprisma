@@ -177,9 +177,13 @@ export class FormProviderValue<
       );
     }
     batch(() => {
-      this.setValues(produce(values => {
-        setByPath(values, name, value);
-      }));
+      // ensures that the values in the form are not set unecessarily
+      // if they are already set coming thorugh the store
+      if (getByPath(this.values, name) === undefined) {
+        this.setValues(produce(values => {
+          setByPath(values, name, value);
+        }));
+      }
 
       this.setForm(
         produce((form) => {
