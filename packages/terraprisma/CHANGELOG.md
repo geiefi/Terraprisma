@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240228172910
+
+### Patch Changes
+
+- fix values being set to the same when the values store is provided with predefined content in the form
+
 ## 0.0.0-testing-20240224152148
 
 ### Patch Changes
