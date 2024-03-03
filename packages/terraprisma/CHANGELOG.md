@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240303163149
+
+### Patch Changes
+
+- fix inputs not appearing without a InputLikeBase
+
 ## 0.0.0-testing-20240303162056
 
 ### Patch Changes
