@@ -1,5 +1,12 @@
 # terraprisma
 
+## 0.0.0-testing-20240303162056
+
+### Patch Changes
+
+- Input: Allow to completely modify the InputLikeBase through Solid's <Dynamic/>
+  Select: Fix positioning of the checkmark on selected options
+
 ## 0.0.0-testing-20240303154453
 
 ### Patch Changes
