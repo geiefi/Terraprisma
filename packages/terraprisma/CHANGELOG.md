@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240303154453
+
+### Patch Changes
+
+- add sizes into the Select and propagate into used components
+
 ## 0.0.0-testing-20240228172910
 
 ### Patch Changes
