@@ -125,7 +125,7 @@ export const Input = <
 
         return (
           <Dynamic
-            component={props.inputLikeBase}
+            component={props.inputLikeBase ?? InputLikeBase}
             size={props.size}
             color={color()}
             labelFor={id()}
