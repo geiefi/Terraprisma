@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240303184757
+
+### Patch Changes
+
+- fix misaligned icon and text in select options
+
 ## 0.0.0-testing-20240303163149
 
 ### Patch Changes
