@@ -325,7 +325,7 @@ Select.Dropdown = (
                 {optionElProps.children}
 
                 <Show when={optionProps.value === value()}>
-                  <span>
+                  <span class="mt-auto text-center align-middle">
                     <Icons.Check variant="rounded" />
                   </span>
                 </Show>
