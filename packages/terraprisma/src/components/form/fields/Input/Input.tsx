@@ -18,6 +18,7 @@ import {
 } from '../../../../utils';
 import { FormField, InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
+import { Dynamic } from 'solid-js/web';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
@@ -52,6 +53,8 @@ export type InputProps<
 
     color?: Accents;
 
+    inputLikeBase?: (props: ComponentProps<typeof InputLikeBase>) => JSX.Element;
+
     onChange?: (
       value: MaskedFieldProps<
         OwnerFormValue,
@@ -82,6 +85,7 @@ export const Input = <
     'size',
     'color',
     'onChange',
+    'inputLikeBase',
     ...MaskedFieldPropsKeys
   ]);
 
@@ -120,7 +124,8 @@ export const Input = <
         });
 
         return (
-          <InputLikeBase
+          <Dynamic
+            component={props.inputLikeBase}
             size={props.size}
             color={color()}
             labelFor={id()}
@@ -165,7 +170,7 @@ export const Input = <
                 validate(value());
               })}
             />
-          </InputLikeBase>
+          </Dynamic>
         );
       }}
     </FormField>
