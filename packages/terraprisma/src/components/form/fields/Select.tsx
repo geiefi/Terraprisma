@@ -313,7 +313,8 @@ Select.Dropdown = (
                 {...optionElProps}
                 clickable
                 class={mergeClass(
-                  'relative flex justify-between align-middle cursor-pointer',
+                  'relative flex align-middle cursor-pointer',
+                  optionProps.value === value() && 'justify-between',
                   optionElProps.class
                 )}
                 active={optionProps.value === value()}
@@ -325,7 +326,7 @@ Select.Dropdown = (
                 {optionElProps.children}
 
                 <Show when={optionProps.value === value()}>
-                  <span class="mt-auto text-center align-middle">
+                  <span class="my-auto text-center">
                     <Icons.Check variant="rounded" />
                   </span>
                 </Show>
