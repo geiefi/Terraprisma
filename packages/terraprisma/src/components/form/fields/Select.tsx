@@ -291,7 +291,8 @@ Select.Dropdown = (
       ref={mergeRefs(props.ref, setDropdownRef)}
       data-size={size()}
       class={mergeClass(
-        'flex flex-col gap-2 max-h-[10rem]',
+        'flex flex-col max-h-[10rem]',
+        'data-[size=small]:p-1 data-[size=medium]:p-2 data-[size=large]:p-3',
         'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
         props.class
       )}
@@ -301,7 +302,7 @@ Select.Dropdown = (
         ...props.style
       }}
     >
-      <List>
+      <List size={size()}>
         <For each={options()}>
           {(optionAllProps) => {
             const [optionProps, optionElProps] = splitProps(optionAllProps, [
@@ -312,7 +313,7 @@ Select.Dropdown = (
                 {...optionElProps}
                 clickable
                 class={mergeClass(
-                  'relative flex items-center align-middle gap-3 cursor-pointer',
+                  'relative flex justify-between align-middle cursor-pointer',
                   optionElProps.class
                 )}
                 active={optionProps.value === value()}
@@ -324,7 +325,7 @@ Select.Dropdown = (
                 {optionElProps.children}
 
                 <Show when={optionProps.value === value()}>
-                  <span class="absolute left-full top-1/2 -translate-x-[calc(100%+0.75rem)] -translate-y-1/2">
+                  <span>
                     <Icons.Check variant="rounded" />
                   </span>
                 </Show>

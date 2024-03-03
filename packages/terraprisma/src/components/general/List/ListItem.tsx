@@ -58,6 +58,9 @@ const ListItem = (allProps: ListItemProps) => {
             {...elProps}
             class={mergeClass(
               'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
+              'group-data-[size=large]:px-4 group-data-[size=large]:py-2 group-data-[size=large]:rounded-lg',
+              'group-data-[size=medium]:px-2.5 group-data-[size=medium]:py-1 group-data-[size=medium]:rounded-md',
+              'group-data-[size=small]:px-1.5 group-data-[size=small]:py-0.5 group-data-[size=small]:rounded-md',
               disabled()
                 ? 'bg-[var(--muted-bg)] text-[var(--muted-fg)] opacity-30'
                 : [
