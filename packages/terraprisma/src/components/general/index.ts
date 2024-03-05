@@ -9,7 +9,7 @@ import List from './List/List';
 import ListItem from './List/ListItem';
 import ListItemWithDetails from './List/ListItemWithDetails';
 import Box from './Box';
-import Dropdown from './Dropdown';
+import Popover from './Popover';
 import Dialog, { createDialog } from './Dialog';
 
 export {
@@ -24,7 +24,7 @@ export {
   ListItemWithDetails,
   ListItem,
   Box,
-  Dropdown,
+  Popover,
   Dialog,
   createDialog
 };

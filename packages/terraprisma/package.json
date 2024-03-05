@@ -58,10 +58,13 @@
   },
   "dependencies": {
     "@csstools/postcss-sass": "5.1.1",
+    "@floating-ui/dom": "1.6.3",
     "@solid-primitives/event-listener": "^2.3.1",
     "@solid-primitives/input-mask": "^0.2.0",
+    "@solid-primitives/intersection-observer": "2.1.5",
     "@solid-primitives/props": "^3.1.8",
     "@solid-primitives/refs": "^1.0.5",
+    "solid-floating-ui": "0.3.1",
     "solid-transition-group": "^0.2.3",
     "tailwind-merge": "^2.0.0",
     "tinycolor2": "^1.6.0"

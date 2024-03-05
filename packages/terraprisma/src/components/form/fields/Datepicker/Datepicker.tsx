@@ -28,7 +28,7 @@ import { Accents } from '../../../..';
 import {
   mergeClass
 } from '../../../../utils';
-import { Dropdown, IconButton, OutlinedButton } from '../../../general';
+import { Popover, IconButton, OutlinedButton } from '../../../general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
 import { Row } from '../../../layout';
 import { GrowFade } from '../../../transitions';
@@ -212,8 +212,8 @@ const Datepicker = (allProps: DatepickerProps) => {
 
             <Portal>
               <GrowFade growingOrigin="top">
-                <Dropdown
-                  align="right"
+                <Popover
+                  align="end"
                   for={inputContainerRef}
                   ref={(ref) => (dropdownRef = ref)}
                   tabindex="0"
@@ -313,7 +313,7 @@ const Datepicker = (allProps: DatepickerProps) => {
                       </Match>
                     </Switch>
                   </Row>
-                </Dropdown>
+                </Popover>
               </GrowFade>
             </Portal>
           </>

@@ -21,7 +21,7 @@ import { mergeRefs } from '@solid-primitives/refs';
 import {
   mergeClass,
   mergeCallbacks,
-  Dropdown,
+  Popover,
   List,
   ListItem,
   GrowFade,
@@ -38,6 +38,7 @@ import {
 } from '../types';
 import { FormField, InputLikeBase, useField } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
+import { combineStyle } from '@solid-primitives/props';
 
 export type SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -52,7 +53,6 @@ export type SelectProps<
     onFieldValueChanges?: (newValue: FormFieldValue) => any;
     onFocus?: () => any;
 
-    style?: JSX.CSSProperties;
     color?: Accents;
     size?: 'small' | 'medium' | 'large';
 
@@ -130,7 +130,6 @@ const Select = (allProps: SelectProps) => {
     'color',
     'children',
     'onFieldValueChanges',
-    'style',
     'onFocus'
   ]);
 
@@ -195,7 +194,6 @@ const Select = (allProps: SelectProps) => {
               {...elProps}
               id={id()}
               size={props.size}
-              style={props.style}
               labelFor={id()}
               class="flex items-center align-middle gap-3 cursor-pointer"
               label={props.label}
@@ -240,7 +238,7 @@ const Select = (allProps: SelectProps) => {
 };
 
 Select.Dropdown = (
-  props: Omit<ComponentProps<typeof Dropdown>, 'for'> & {
+  props: Omit<ComponentProps<typeof Popover>, 'for'> & {
     style?: JSX.CSSProperties;
   }
 ) => {
@@ -282,8 +280,8 @@ Select.Dropdown = (
   });
 
   return (
-    <Dropdown
-      align="right"
+    <Popover
+      align="end"
       visible={focused()}
       tabindex="0"
       {...props}
@@ -296,11 +294,10 @@ Select.Dropdown = (
         'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
         props.class
       )}
-      style={{
+      style={combineStyle({
         '--color': `var(--${color()}-bg)`,
-        '--hover-10': `var(--${color()}-hover-10)`,
-        ...props.style
-      }}
+        '--hover-10': `var(--${color()}-hover-10)`
+      }, props.style)}
     >
       <List size={size()}>
         <For each={options()}>
@@ -335,7 +332,7 @@ Select.Dropdown = (
           }}
         </For>
       </List>
-    </Dropdown>
+    </Popover>
   );
 };
 

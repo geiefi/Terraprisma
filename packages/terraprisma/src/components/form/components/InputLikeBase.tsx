@@ -5,11 +5,10 @@ import Label from './Label';
 // import './InputContainer.scss';
 import { mergeRefs } from '@solid-primitives/refs';
 import { Accents } from '../../..';
-import {
-  mergeClass
-} from '../../../utils';
+import { mergeClass } from '../../../utils';
 import { useField } from './FormField';
 import { LeftIntersection } from '../../../types/LeftIntersection';
+import { combineStyle } from '@solid-primitives/props';
 
 export type InputLikeBaseProps = LeftIntersection<
   {
@@ -31,7 +30,6 @@ export type InputLikeBaseProps = LeftIntersection<
     actLikeHasContent?: boolean;
     icon?: JSX.Element;
     color?: Accents;
-    style?: JSX.CSSProperties;
   },
   ComponentProps<'div'>
 >;
@@ -43,8 +41,7 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
     'size',
     'actLikeHasContent',
     'icon',
-    'color',
-    'style'
+    'color'
   ]);
   const color = () => props.color ?? 'accent';
   const {
@@ -75,12 +72,14 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
           : 'data-[size=small]:py-2 data-[size=medium]:py-4 data-[size=large]:py-5',
         elProps.class
       )}
-      style={{
-        '--color': `var(--${color()}-bg)`,
-        '--bg': disabled() ? 'var(--muted-bg)' : 'var(--floating-bg)',
-        '--fg': disabled() ? 'var(--muted-fg)' : 'var(--floating-fg)',
-        ...props.style
-      }}
+      style={combineStyle(
+        {
+          '--color': `var(--${color()}-bg)`,
+          '--bg': disabled() ? 'var(--muted-bg)' : 'var(--floating-bg)',
+          '--fg': disabled() ? 'var(--muted-fg)' : 'var(--floating-fg)'
+        },
+        elProps.style
+      )}
     >
       <Show when={props.label}>
         <Label

@@ -1,14 +1,14 @@
 import { mergeClass } from '../../../utils';
-import { Dropdown, List } from '../../general';
-import { DropdownProps } from '../../general/Dropdown';
+import { Popover, List } from '../../general';
+import { PopoverProps } from '../../general/Popover';
 
-export type MenuProps = DropdownProps;
+export type MenuProps = PopoverProps;
 
 const Menu = (elProps: MenuProps) => {
   return (
-    <Dropdown {...elProps} class={mergeClass('!w-[9rem] h-fit', elProps.class)}>
+    <Popover {...elProps} class={mergeClass('!w-[9rem] h-fit', elProps.class)}>
       <List>{elProps.children}</List>
-    </Dropdown>
+    </Popover>
   );
 };
 
