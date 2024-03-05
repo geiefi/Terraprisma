@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240305021556
+
+### Patch Changes
+
+- Rename the Dropdown to Popover, add position to its props and use solid-floating-ui for its positioning
+
 ## 0.0.0-testing-20240303184757
 
 ### Patch Changes
