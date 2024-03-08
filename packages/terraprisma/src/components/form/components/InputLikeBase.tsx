@@ -51,12 +51,9 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
     hasContent
   } = useField();
 
-  let inputContainer: HTMLDivElement;
-
   return (
     <div
       {...elProps}
-      ref={mergeRefs(elProps.ref, (r) => (r = inputContainer))}
       data-size={props.size ?? 'medium'}
       class={mergeClass(
         'group box-border w-full data-[size=small]:min-h-[35px] data-[size=medium]:min-h-[44px] data-[size=large]:min-h-[70px] h-fit',
