@@ -56,7 +56,7 @@ function CollapsedLinks(props: {
 
 export function Sidebar() {
   return (
-    <Box class="w-full h-full flex-grow flex flex-col gap-4">
+    <Box class="w-full h-full overflow-y-auto flex-grow flex flex-col gap-4">
       <List>
         {/* <h1 class="text-lg text-[var(--muted-fg)] uppercase"> */}
         {/*   getting started */}
@@ -142,6 +142,9 @@ export function Sidebar() {
               </ListItemLink>
               <ListItemLink to="/components/forms/checkbox">
                 checkbox
+              </ListItemLink>
+              <ListItemLink to="/components/forms/select">
+                select
               </ListItemLink>
               <ListItemLink to="/components/forms/radio-group">
                 radio group
