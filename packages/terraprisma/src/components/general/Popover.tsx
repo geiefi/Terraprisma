@@ -1,23 +1,17 @@
 import {
   ComponentProps,
   Show,
-  createEffect,
-  createMemo,
-  createRenderEffect,
   createSignal,
-  onCleanup,
   splitProps
 } from 'solid-js';
 
 import { mergeRefs } from '@solid-primitives/refs';
-import { createMutationObserver } from '@solid-primitives/mutation-observer';
 import { combineStyle } from '@solid-primitives/props';
 import { useFloating } from 'solid-floating-ui';
 
 import { mergeClass } from '../../utils';
 import { LeftIntersection } from '../../types/LeftIntersection';
 import { autoUpdate, flip, offset, shift } from '@floating-ui/dom';
-import { isServer } from 'solid-js/web';
 
 export type PopoverPosition = Exclude<PopoverProps['position'], undefined>;
 export type PopoverAlignment = Exclude<PopoverProps['align'], undefined>;
