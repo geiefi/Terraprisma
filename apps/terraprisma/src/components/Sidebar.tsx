@@ -146,6 +146,9 @@ export function Sidebar() {
               <ListItemLink to="/components/forms/select">
                 select
               </ListItemLink>
+              <ListItemLink to="/components/forms/datepicker">
+                datepicker
+              </ListItemLink>
               <ListItemLink to="/components/forms/radio-group">
                 radio group
               </ListItemLink>
