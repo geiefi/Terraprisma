@@ -1,5 +1,4 @@
-import { createHandler } from "@solidjs/start/entry";
-import { StartServer } from "@solidjs/start/server";
+import { StartServer, createHandler } from "@solidjs/start/server";
 
 import { initialStyles } from './theme';
 
