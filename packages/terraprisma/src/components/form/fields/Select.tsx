@@ -26,7 +26,8 @@ import {
   ListItem,
   GrowFade,
   Icons,
-  Accents
+  Accents,
+  createDismissListener
 } from '../../..';
 
 import {
@@ -198,15 +199,16 @@ const Select = (allProps: SelectProps) => {
               class="flex items-center align-middle gap-3 cursor-pointer"
               label={props.label}
               tabindex="0"
-              onFocus={() => !disabled() && setFocused(true)}
-              onBlur={(event) => {
-                if (
-                  !(event.relatedTarget instanceof HTMLElement) ||
-                  (event.relatedTarget !== dropdownRef() &&
-                    !dropdownRef()!.contains(event.relatedTarget))
-                ) {
-                  // if the new focused element is not the dropdown, or not inside the dropdown
-                  !disabled() && setFocused(false);
+              onPointerDown={() => {
+                !disabled() && setFocused(true)
+              }}
+              onFocusIn={() => {
+                !disabled() && setFocused(true)
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && focused()) {
+                  event.currentTarget.blur();
+                  setFocused(false);
                 }
               }}
               icon={
@@ -225,9 +227,15 @@ const Select = (allProps: SelectProps) => {
 
             <Portal>
               <GrowFade growingOrigin="top">
-                {typeof props.children === 'function'
-                  ? props.children(Option)
-                  : props.children}
+                {(() => {
+                  const children = props.children;
+
+                  if (typeof children === 'function') {
+                    return children(Option);
+                  } else {
+                    return children;
+                  }
+                })()}
               </GrowFade>
             </Portal>
           </SelectContext.Provider>
@@ -244,6 +252,7 @@ Select.Dropdown = (
 ) => {
   const {
     focusedS: [focused, setFocused],
+    disabledS: [disabled],
     valueS: [value, setValue]
   } = useField();
 
@@ -279,14 +288,19 @@ Select.Dropdown = (
     );
   });
 
+  const dismisser = createDismissListener({
+    onDismiss: () => setFocused(false),
+    nonDismissingElements: () => [inputContainerRef()!]
+  });
+
   return (
     <Popover
       align="end"
-      visible={focused()}
-      tabindex="0"
       {...props}
+      {...dismisser}
+      visible={focused()}
       for={inputContainerRef()!}
-      ref={mergeRefs(props.ref, setDropdownRef)}
+      ref={mergeRefs(props.ref, dismisser.ref, setDropdownRef)}
       data-size={size()}
       class={mergeClass(
         'flex flex-col max-h-[10rem]',
@@ -294,10 +308,14 @@ Select.Dropdown = (
         'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
         props.class
       )}
-      style={combineStyle({
-        '--color': `var(--${color()}-bg)`,
-        '--hover-10': `var(--${color()}-hover-10)`
-      }, props.style)}
+      style={combineStyle(
+        {
+          '--color': `var(--${color()}-bg)`,
+          '--hover-10': `var(--${color()}-hover-10)`,
+          'width': `${inputContainerRef()?.getBoundingClientRect()?.width ?? 250}px`
+        },
+        props.style
+      )}
     >
       <List size={size()}>
         <For each={options()}>
