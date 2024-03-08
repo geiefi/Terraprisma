@@ -24,10 +24,8 @@ import {
 import DayPicker, { amountOfDaysInMonth } from './DayPicker';
 import MonthPicker from './MonthPicker';
 import YearPicker from './YearPicker';
-import { Accents } from '../../../..';
-import {
-  mergeClass
-} from '../../../../utils';
+import { Accents, createDismissListener } from '../../../..';
+import { mergeClass } from '../../../../utils';
 import { Popover, IconButton, OutlinedButton } from '../../../general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
 import { Row } from '../../../layout';
@@ -178,6 +176,12 @@ const Datepicker = (allProps: DatepickerProps) => {
             return 'DD/MM/YYYY';
           }
         });
+
+        const dismisser = createDismissListener({
+          onDismiss: () => !disabled() && setFocused(false),
+          nonDismissingElements: () => [inputContainerRef]
+        });
+
         return (
           <>
             <InputLikeBase
@@ -192,15 +196,16 @@ const Datepicker = (allProps: DatepickerProps) => {
                 ...props.style
               }}
               tabindex="0"
-              onFocus={() => !disabled() && setFocused(true)}
-              onBlur={(event) => {
-                if (
-                  !(event.relatedTarget instanceof HTMLElement) ||
-                  (event.relatedTarget !== dropdownRef &&
-                    !dropdownRef.contains(event.relatedTarget))
-                ) {
-                  // if the new focused element is not the dropdown, or not inside the dropdown
-                  !disabled() && setFocused(false);
+              onPointerDown={() => {
+                !disabled() && setFocused(true);
+              }}
+              onFocusIn={() => {
+                !disabled() && setFocused(true);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && focused()) {
+                  event.currentTarget.blur();
+                  setFocused(false);
                 }
               }}
               icon={<CalendarMonth variant="rounded" />}
@@ -215,7 +220,10 @@ const Datepicker = (allProps: DatepickerProps) => {
                 <Popover
                   align="end"
                   for={inputContainerRef}
-                  ref={(ref) => (dropdownRef = ref)}
+                  ref={mergeRefs(
+                    (ref: HTMLDivElement) => (dropdownRef = ref),
+                    dismisser.ref
+                  )}
                   tabindex="0"
                   visible={focused()}
                   class={mergeClass(
