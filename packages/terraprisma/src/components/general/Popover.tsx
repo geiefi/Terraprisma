@@ -1,18 +1,23 @@
 import {
   ComponentProps,
   Show,
+  createEffect,
   createMemo,
+  createRenderEffect,
   createSignal,
+  onCleanup,
   splitProps
 } from 'solid-js';
 
 import { mergeRefs } from '@solid-primitives/refs';
+import { createMutationObserver } from '@solid-primitives/mutation-observer';
 import { combineStyle } from '@solid-primitives/props';
 import { useFloating } from 'solid-floating-ui';
 
 import { mergeClass } from '../../utils';
 import { LeftIntersection } from '../../types/LeftIntersection';
 import { autoUpdate, flip, offset, shift } from '@floating-ui/dom';
+import { isServer } from 'solid-js/web';
 
 export type PopoverPosition = Exclude<PopoverProps['position'], undefined>;
 export type PopoverAlignment = Exclude<PopoverProps['align'], undefined>;
@@ -99,25 +104,32 @@ const Popover = (allProps: PopoverProps) => {
 
   const [popoverRef, setPopoverRef] = createSignal<HTMLDivElement>();
 
-  const position = createMemo(() => {
-    const alignment = props.align ?? 'center';
-    const position = props.position ?? 'bottom';
-    return useFloating(() => props.for, popoverRef, {
-      placement: alignment === 'center' ? position : `${position}-${alignment}`,
+  const position = useFloating(
+    () => props.for,
+    popoverRef,
+    {
+      get placement() {
+        const alignment = props.align ?? 'center';
+        const position = props.position ?? 'bottom';
+
+        return alignment === 'center' ? position : `${position}-${alignment}` as const;
+      },
       strategy: 'fixed',
       whileElementsMounted: autoUpdate,
-      middleware: [offset(props.offsetFromAnchor ?? 5), flip(), shift()]
-    });
-  });
+      get middleware() {
+        return [offset(props.offsetFromAnchor ?? 5), flip(), shift()]
+      }
+    }
+  );
 
   return (
     <Show when={props.visible}>
       <div
         {...elProps}
-        ref={mergeRefs(elProps.ref, setPopoverRef)}
+        ref={mergeRefs(elProps.ref, (ref) => setPopoverRef(ref))}
         style={combineStyle(elProps.style, {
-          left: `${position().x ?? 0}px`,
-          top: `${position().y ?? 0}px`
+          left: `${position?.x ?? 0}px`,
+          top: `${position?.y ?? 0}px`
         })}
         class={mergeClass(
           'fixed z-auto h-fit overflow-y-auto overflow-x-hidden rounded-xl box-border p-2',
