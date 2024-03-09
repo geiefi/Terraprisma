@@ -12,9 +12,10 @@ import {
   Accessor,
   Setter,
   createSignal,
-  useContext
+  useContext,
+  createMemo
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
+import { Dynamic, Portal } from 'solid-js/web';
 
 import { mergeRefs } from '@solid-primitives/refs';
 
@@ -40,6 +41,8 @@ import {
 import { FormField, InputLikeBase, useField } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 import { combineStyle } from '@solid-primitives/props';
+import { DisplayExternalInput, Propane } from '../../icons';
+import { i } from 'vitest/dist/reporters-1evA5lom';
 
 export type SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -56,6 +59,8 @@ export type SelectProps<
 
     color?: Accents;
     size?: 'small' | 'medium' | 'large';
+
+    popover?: (props: ComponentProps<typeof Popover>) => JSX.Element;
 
     children:
       | JSX.Element
@@ -82,20 +87,6 @@ export type SelectOptionProps<
 
 const Option: Component<SelectOptionProps> = (props) =>
   props as unknown as JSX.Element;
-
-const SelectContext = createContext<{
-  options: Accessor<SelectOptionProps[]>;
-  setOptions: Setter<SelectOptionProps[]>;
-
-  color: Accessor<Accents>;
-
-  size: Accessor<'small' | 'medium' | 'large'>;
-
-  dropdownRef: Accessor<HTMLDivElement | undefined>;
-  setDropdownRef: Setter<HTMLDivElement | undefined>;
-
-  inputContainerRef: Accessor<HTMLDivElement | undefined>;
-}>();
 
 /**
  * @description The component to be able to select only one option among many such as choosing a state/county,
@@ -130,17 +121,42 @@ const Select = (allProps: SelectProps) => {
     'size',
     'color',
     'children',
+    'popover',
     'onFieldValueChanges',
     'onFocus'
   ]);
 
-  const color = () => props.color ?? 'accent';
-
   const [inputContainerRef, setInputContainerRef] =
     createSignal<HTMLDivElement>();
-  const [dropdownRef, setDropdownRef] = createSignal<HTMLDivElement>();
 
-  const [options, setOptions] = createSignal<SelectOptionProps[]>([]);
+  const getChildren = accessChildren(
+    () => props.children as JSX.Element
+  ) as Accessor<
+    JSX.Element | ((Option: Component<SelectOptionProps<any>>) => JSX.Element)
+  >;
+
+  const options = createMemo(() => {
+    let childrenArr: (JSX.Element | SelectOptionProps)[];
+
+    let children = getChildren();
+    if (typeof children === 'function') {
+      children = children(Option);
+    }
+    if (Array.isArray(children)) {
+      childrenArr = children;
+    } else {
+      childrenArr = [children];
+    }
+
+    return childrenArr.filter((child) => {
+      return (
+        child !== null &&
+        typeof child === 'object' &&
+        Object.hasOwn(child, 'value') &&
+        Object.hasOwn(child, 'children')
+      );
+    }) as SelectOptionProps[];
+  });
 
   const optionLabelFromValue = (value: FormFieldValue | undefined) => {
     return options().find((opt) => opt.value === value)?.children || '';
@@ -152,7 +168,7 @@ const Select = (allProps: SelectProps) => {
         elementId: id,
         disabledS: [disabled],
         focusedS: [focused, setFocused],
-        valueS: [value],
+        valueS: [value, setValue],
         validate
       }) => {
         createEffect(
@@ -180,17 +196,7 @@ const Select = (allProps: SelectProps) => {
         );
 
         return (
-          <SelectContext.Provider
-            value={{
-              options,
-              color,
-              setOptions,
-              size: () => props.size ?? 'medium',
-              dropdownRef,
-              setDropdownRef,
-              inputContainerRef
-            }}
-          >
+          <>
             <InputLikeBase
               {...elProps}
               id={id()}
@@ -200,10 +206,10 @@ const Select = (allProps: SelectProps) => {
               label={props.label}
               tabindex="0"
               onPointerDown={() => {
-                !disabled() && setFocused(true)
+                !disabled() && setFocused(true);
               }}
               onFocusIn={() => {
-                !disabled() && setFocused(true)
+                !disabled() && setFocused(true);
               }}
               onKeyDown={(event) => {
                 if (event.key === 'Escape' && focused()) {
@@ -227,98 +233,65 @@ const Select = (allProps: SelectProps) => {
 
             <Portal>
               <GrowFade growingOrigin="top">
-                {(() => {
-                  const children = props.children;
-
-                  if (typeof children === 'function') {
-                    return children(Option);
-                  } else {
-                    return children;
-                  }
-                })()}
+                <Dropdown
+                  onDismiss={() => setFocused(false)}
+                  visible={focused()}
+                  value={value()}
+                  setValue={setValue}
+                  anchor={inputContainerRef()!}
+                  options={options()}
+                  size={props.size ?? 'medium'}
+                  color={props.color ?? 'accent'}
+                  as={props.popover ?? Popover}
+                />
               </GrowFade>
             </Portal>
-          </SelectContext.Provider>
+          </>
         );
       }}
     </FormField>
   );
 };
 
-Select.Dropdown = (
-  props: Omit<ComponentProps<typeof Popover>, 'for'> & {
-    style?: JSX.CSSProperties;
-  }
-) => {
-  const {
-    focusedS: [focused, setFocused],
-    disabledS: [disabled],
-    valueS: [value, setValue]
-  } = useField();
+function Dropdown(props: {
+  as: (props: ComponentProps<typeof Popover>) => JSX.Element;
+  size: 'small' | 'medium' | 'large';
+  color: Accents;
+  anchor: HTMLDivElement;
+  visible: boolean;
+  onDismiss: () => any;
+  options: SelectOptionProps[];
 
-  const {
-    options,
-    color,
-    size,
-    setDropdownRef,
-    setOptions,
-    inputContainerRef
-  } = useContext(SelectContext)!; // TODO: throw clear and concise error here
-
-  const getChildren = accessChildren(() => props.children);
-  createEffect(() => {
-    let childrenArr: (JSX.Element | SelectOptionProps)[];
-
-    const children = getChildren();
-    if (Array.isArray(children)) {
-      childrenArr = children;
-    } else {
-      childrenArr = [children];
-    }
-
-    setOptions(
-      childrenArr.filter((child) => {
-        return (
-          child !== null &&
-          typeof child === 'object' &&
-          Object.hasOwn(child, 'value') &&
-          Object.hasOwn(child, 'children')
-        );
-      }) as SelectOptionProps[]
-    );
-  });
-
+  value: FormFieldValue;
+  setValue: Setter<FormFieldValue>;
+}) {
   const dismisser = createDismissListener({
-    onDismiss: () => setFocused(false),
-    nonDismissingElements: () => [inputContainerRef()!]
+    onDismiss: () => props.onDismiss(),
+    nonDismissingElements: () => [props.anchor]
   });
 
   return (
-    <Popover
+    <Dynamic
+      component={props.as}
       align="end"
-      {...props}
       {...dismisser}
-      visible={focused()}
-      for={inputContainerRef()!}
-      ref={mergeRefs(props.ref, dismisser.ref, setDropdownRef)}
-      data-size={size()}
+      visible={props.visible}
+      for={props.anchor}
+      ref={mergeRefs(dismisser.ref)}
+      data-size={props.size}
       class={mergeClass(
         'flex flex-col max-h-[10rem]',
         'data-[size=small]:p-1 data-[size=medium]:p-2 data-[size=large]:p-3',
-        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
-        props.class
+        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg'
       )}
-      style={combineStyle(
-        {
-          '--color': `var(--${color()}-bg)`,
-          '--hover-10': `var(--${color()}-hover-10)`,
-          'width': `${inputContainerRef()?.getBoundingClientRect()?.width ?? 250}px`
-        },
-        props.style
-      )}
+      style={{
+        '--color': `var(--${props.color}-bg)`,
+        '--hover-10': `var(--${props.color}-hover-10)`,
+        width: `${props.anchor.getBoundingClientRect()?.width ?? 250}px`
+      }}
     >
-      <List size={size()}>
-        <For each={options()}>
+      <List size={props.size}>
+        <For each={props.options}>
           {(optionAllProps) => {
             const [optionProps, optionElProps] = splitProps(optionAllProps, [
               'value'
@@ -329,18 +302,18 @@ Select.Dropdown = (
                 clickable
                 class={mergeClass(
                   'relative flex align-middle cursor-pointer',
-                  optionProps.value === value() && 'justify-between',
+                  optionProps.value === props.value && 'justify-between',
                   optionElProps.class
                 )}
-                active={optionProps.value === value()}
+                active={optionProps.value === props.value}
                 onClick={mergeCallbacks(optionElProps.onClick, () => {
-                  setValue(optionProps.value);
-                  setFocused(false);
+                  props.setValue(optionProps.value);
+                  props.onDismiss();
                 })}
               >
                 {optionElProps.children}
 
-                <Show when={optionProps.value === value()}>
+                <Show when={optionProps.value === props.value}>
                   <span class="my-auto text-center">
                     <Icons.Check variant="rounded" />
                   </span>
@@ -350,9 +323,9 @@ Select.Dropdown = (
           }}
         </For>
       </List>
-    </Popover>
+    </Dynamic>
   );
-};
+}
 
 Select.Option = Option;
 

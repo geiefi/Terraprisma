@@ -119,7 +119,7 @@ export const Input = <
 
         createEffect(() => {
           if (input) {
-            input.value = (value() ?? '').toString();
+            input.value = value() ?? '';
           }
         });
 

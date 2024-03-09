@@ -1,6 +1,6 @@
 import type { FieldValidator, FormFieldValue, FormValue } from '.';
 import { JSX } from 'solid-js/jsx-runtime';
-import { DeepGet, EmptyObj, LeavesOfObject, StoreTuple } from '../../../types';
+import { DeepGet, EmptyObj, AllKeysOfObject, StoreTuple } from '../../../types';
 
 export const FieldPropKeys = [
   'name',
@@ -22,7 +22,7 @@ export type FieldName<
   ValueType = any
 > = OwnerFormValue extends EmptyObj
   ? string
-  : LeavesOfObject<OwnerFormValue, ValueType>;
+  : AllKeysOfObject<OwnerFormValue, ValueType>;
 
 /**
  * The field props that are required for all of the fields used in conjunction with the `<Form />`
