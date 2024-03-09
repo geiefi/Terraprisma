@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240309094333
+
+### Patch Changes
+
+- custom fields for createForm and allow fields to be associated with object types
+
 ## 0.0.0-testing-20240308004120
 
 ### Patch Changes
