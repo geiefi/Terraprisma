@@ -1,4 +1,4 @@
-import { JSX, ParentProps, onMount, useContext } from 'solid-js';
+import { Component, JSX, ParentProps, onMount, useContext } from 'solid-js';
 import {
   SetStoreFunction,
   StoreSetter,
@@ -9,7 +9,7 @@ import {
 
 import { FormContext, FormProviderValue, FormStore } from './FormContext';
 
-import { AgnosticValidator, FieldName, FormValue } from './types';
+import { AgnosticValidator, FieldName, FieldProps, FormValue } from './types';
 import {
   Datepicker,
   Checkbox,
@@ -31,6 +31,23 @@ import { CheckboxProps } from './fields/Checkbox';
 import { FormFieldValue } from './types/FormFieldValue';
 import { StoreTuple } from '../../types';
 
+/**
+ * The type that will come out of `createForm`. It binds all fields together
+ * in a way that makes the field's properties actually be enforced based
+ * on the expected value of the Form.
+ *
+ * This is made so that it can be extended with the following:
+ *
+ * ```typescript
+ * declare module 'terraprisma' {
+ *   interface Form<Value extends FormValue> {
+ *     MyCustomField: <Name extends FieldName<Value, ExpectedFieldValueType>>(props: MyCustomFieldProps<Value, Name>) => JSX.Element;
+ *   }
+ * }
+ * ```
+ *
+ * To then be extended with the [acknowledgeFieldComponent]({@link acknowledgeFieldComponent}) function.
+ */
 export interface Form<Value extends FormValue> {
   (props: ParentProps): JSX.Element;
 
@@ -41,40 +58,31 @@ export interface Form<Value extends FormValue> {
     props: InputProps<Type, Value, Name>
   ) => JSX.Element;
   Slider<Name extends FieldName<Value, number>>(
-    props: SliderProps<Value, Name> &
-      Omit<JSX.InputHTMLAttributes<HTMLInputElement>, keyof SliderProps>
+    props: SliderProps<Value, Name>
   ): JSX.Element;
   Select: {
     <Name extends FieldName<Value, FormFieldValue>>(
-      props: SelectProps<Value, Name> &
-        Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof SelectProps>
+      props: SelectProps<Value, Name>
     ): JSX.Element;
     Option(props: SelectOptionProps): JSX.Element;
   };
   RadioGroup: {
     <Name extends FieldName<Value, FormFieldValue>>(
-      props: RadioGroupProps<Value, Name> &
-        Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof RadioGroupProps>
+      props: RadioGroupProps<Value, Name>
     ): JSX.Element;
-    Option(
-      props: RadioGroupOptionProps & JSX.InputHTMLAttributes<HTMLInputElement>
-    ): JSX.Element;
+    Option(props: RadioGroupOptionProps): JSX.Element;
   };
   TextArea<Name extends FieldName<Value, string>>(
-    props: TextAreaProps<Value, Name> &
-      Omit<JSX.InputHTMLAttributes<HTMLTextAreaElement>, keyof TextAreaProps>
+    props: TextAreaProps<Value, Name>
   ): JSX.Element;
   Datepicker<Name extends FieldName<Value, Date>>(
-    props: DatepickerProps<Value, Name> &
-      Omit<JSX.HTMLAttributes<HTMLDivElement>, keyof DatepickerProps>
+    props: DatepickerProps<Value, Name>
   ): JSX.Element;
   Toggler<Name extends FieldName<Value, boolean>>(
-    props: TogglerProps<Value, Name> &
-      Omit<JSX.HTMLAttributes<HTMLInputElement>, keyof TogglerProps>
+    props: TogglerProps<Value, Name>
   ): JSX.Element;
   Checkbox<Name extends FieldName<Value, boolean>>(
-    props: CheckboxProps<Value, Name> &
-      Omit<JSX.HTMLAttributes<HTMLInputElement>, keyof CheckboxProps>
+    props: CheckboxProps<Value, Name>
   ): JSX.Element;
 
   store: [get: FormStore, set: SetStoreFunction<FormStore>];
@@ -82,6 +90,36 @@ export interface Form<Value extends FormValue> {
   valuesStore: [get: Partial<Value>, set: SetStoreFunction<Partial<Value>>];
 
   providerValue: FormProviderValue<Value>;
+}
+
+type FieldComponent<T extends FieldProps<any> = FieldProps<any>> = (
+  props: T
+) => JSX.Element;
+declare global {
+  var fields: Record<string, FieldComponent<any>>;
+}
+
+const _global = typeof window !== 'undefined' ? window : global;
+
+_global.fields = {
+  Input,
+  Slider,
+  Select,
+  RadioGroup,
+  TextArea,
+  Datepicker,
+  Toggler,
+  Checkbox
+};
+
+/**
+  * The runtime step for extending the fields of the form.
+  */
+export function acknowledgeFieldComponent(
+  name: keyof Form<FormValue>,
+  component: (props: FieldProps<FormValue>) => JSX.Element
+) {
+  _global.fields[name] = component;
 }
 
 /**
@@ -148,14 +186,9 @@ export function createForm<Value extends FormValue>(
     <Form<Value> providerValue={formProviderValue}>{props.children}</Form>
   );
 
-  form.Input = Input;
-  form.Slider = Slider;
-  form.Select = Select;
-  form.RadioGroup = RadioGroup;
-  form.TextArea = TextArea;
-  form.Datepicker = Datepicker;
-  form.Toggler = Toggler;
-  form.Checkbox = Checkbox;
+  for (const [name, component] of Object.entries(_global.fields)) {
+    (form as any)[name as keyof Form<Value>] = component;
+  }
 
   form.store = formStore;
   form.valuesStore = [formValue, setFormValue] as StoreTuple<Partial<Value>>;

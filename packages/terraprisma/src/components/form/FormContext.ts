@@ -5,7 +5,7 @@ import {
   DeepGet,
   deeplyTrack,
   EmptyObj,
-  LeavesOfObject,
+  AllKeysOfObject,
   StoreTuple
 } from '../..';
 
@@ -97,9 +97,9 @@ export function deepDelete(obj: any, path: string | string[]): void {
 export class FormProviderValue<
   T extends FormValue,
   Values extends FormValue = Partial<T>,
-  Leaves extends T extends EmptyObj
+  Paths extends T extends EmptyObj
     ? string
-    : LeavesOfObject<T> = T extends EmptyObj ? string : LeavesOfObject<T>
+    : AllKeysOfObject<T> = T extends EmptyObj ? string : AllKeysOfObject<T>
 > {
   private values: Values;
   private setValues: SetStoreFunction<Values>;
@@ -162,7 +162,7 @@ export class FormProviderValue<
    *
    * @param value Just the initial value of the field being initialized.
    */
-  init<Name extends Leaves>(
+  init<Name extends Paths>(
     name: Name,
     validators: FieldValidator<DeepGet<Values, Name>>[],
     value: DeepGet<Values, Name>
@@ -197,7 +197,7 @@ export class FormProviderValue<
    * @description Removes all of the references inside of the formStore that
    * are associated with the field identified by `name` except for its value.
    */
-  delete(name: Leaves): void {
+  delete(name: Paths): void {
     this.setForm(
       produce((form) => {
         delete form.errors[name];
@@ -210,7 +210,7 @@ export class FormProviderValue<
    * @description Runs over all of the validators of the field with the specified
    * `name` and adds the errors to the field if necessary, thus making it invalid.
    */
-  validate(name: Leaves): void {
+  validate(name: Paths): void {
     if (this.isDisabled(name)) return;
 
     const formValueKeys: string[] = getLeaves(this.values);
@@ -243,8 +243,8 @@ Maybe you forgot to initialize it?`
     this.setForm(
       produce((form) => {
         // the validators just use the field paths for more usability
-        const fields = Object.keys(form.validators) as Leaves[];
-        const errors: Partial<Record<Leaves, string[]>> = {};
+        const fields = Object.keys(form.validators) as Paths[];
+        const errors: Partial<Record<Paths, string[]>> = {};
 
         fields.forEach((field) => {
           if (this.isDisabled(field as any)) return;
@@ -261,10 +261,10 @@ Maybe you forgot to initialize it?`
         if (this.agnosticValidators) {
           this.agnosticValidators.forEach((validator) => {
             const agnosticValidatorCaughtErrors: Partial<
-              Record<Leaves, string>
+              Record<Paths, string>
             > = validator(this.values) as any;
-            const fieldsWithErrorsCaughtByAgnosticValidator: Leaves[] =
-              Object.keys(agnosticValidatorCaughtErrors) as Leaves[];
+            const fieldsWithErrorsCaughtByAgnosticValidator: Paths[] =
+              Object.keys(agnosticValidatorCaughtErrors) as Paths[];
             fieldsWithErrorsCaughtByAgnosticValidator.forEach((field) => {
               if (this.isDisabled(field)) return;
 
@@ -284,11 +284,11 @@ Maybe you forgot to initialize it?`
     return this.isValid();
   }
 
-  isDisabled(name: Leaves): boolean {
+  isDisabled(name: Paths): boolean {
     return this.form.disabled[name] || false;
   }
 
-  setDisabled(name: Leaves, disabled: boolean): void {
+  setDisabled(name: Paths, disabled: boolean): void {
     this.setForm(
       produce((form) => {
         form.disabled[name] = disabled;
@@ -308,9 +308,9 @@ Maybe you forgot to initialize it?`
    * @description Checks weather or not the form is invalid.
    */
   isInvalid(): boolean {
-    const fieldsWithErrorObject: Leaves[] = Object.keys(
+    const fieldsWithErrorObject: Paths[] = Object.keys(
       this.form.errors
-    ) as Leaves[];
+    ) as Paths[];
     return fieldsWithErrorObject.some(
       (key) => this.form.errors[key]!.length > 0
     );
@@ -320,13 +320,13 @@ Maybe you forgot to initialize it?`
    * @description Gets the first error for the field with the specified
    * `name`.
    */
-  firstErrorFor(name: Leaves): string | undefined {
+  firstErrorFor(name: Paths): string | undefined {
     if (typeof this.form.errors[name] !== 'undefined') {
       return this.form.errors[name]![0];
     }
   }
 
-  getErrors(name: Leaves): string[] | undefined {
+  getErrors(name: Paths): string[] | undefined {
     if (typeof this.form.errors[name] === 'undefined') return undefined;
 
     // traverses through the errors so that Solid tracks them
@@ -336,19 +336,19 @@ Maybe you forgot to initialize it?`
     return this.form.errors[name];
   }
 
-  hasErrors(name: Leaves): boolean {
+  hasErrors(name: Paths): boolean {
     return typeof this.form.errors[name] !== 'undefined'
       ? typeof this.form.errors[name]![0].length !== 'undefined'
       : false;
   }
 
-  valueFor<Name extends Leaves>(name: Name): DeepGet<Values, Name> | undefined {
+  valueFor<Name extends Paths>(name: Name): DeepGet<Values, Name> | undefined {
     const value = getByPath(this.values, name);
     deeplyTrack(value);
     return value;
   }
 
-  update<Name extends Leaves>(
+  update<Name extends Paths>(
     name: Name,
     newValue: DeepGet<Values, Name>
   ): void {

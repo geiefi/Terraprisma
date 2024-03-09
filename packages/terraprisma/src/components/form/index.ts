@@ -1,7 +1,7 @@
-import { createForm, useForm } from './Form';
+import { createForm, Form, useForm, acknowledgeFieldComponent } from './Form';
 import Validators from './Validators';
 
-export { createForm, useForm, Validators };
+export { createForm, Form, useForm, Validators, acknowledgeFieldComponent };
 
 export * from './fields';
 export * from './types';
