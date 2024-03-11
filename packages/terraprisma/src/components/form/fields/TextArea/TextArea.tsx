@@ -12,7 +12,7 @@ import {
 
 import './TextArea.css';
 import { Accents } from '../../../..';
-import { mergeClass, mergeCallbacks } from '../../../../utils';
+import { mergeClass, mergeEventHandlers } from '../../../../utils';
 import { InputLikeBase, FormField } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 
@@ -105,7 +105,7 @@ const TextArea = (allProps: TextAreaProps) => {
                 !focused() && !hasContent() && '!opacity-0',
                 elProps.class
               )}
-              onInput={mergeCallbacks(
+              onInput={mergeEventHandlers(
                 elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
                 (event) => {
@@ -126,8 +126,8 @@ const TextArea = (allProps: TextAreaProps) => {
                   setValue(event.currentTarget.value);
                 }
               )}
-              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => {
+              onFocus={mergeEventHandlers(elProps.onFocus, () => setFocused(true))}
+              onBlur={mergeEventHandlers(elProps.onBlur, () => {
                 setFocused(false);
                 validate(value());
               })}

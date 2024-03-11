@@ -14,7 +14,7 @@ import Button from './Buttons/Button';
 import OutlinedButton from './Buttons/OutlinedButton';
 import {
   mergeClass,
-  mergeCallbacks
+  mergeEventHandlers
 } from '../../utils';
 import { Divisor } from '../layout';
 import { Fade } from '../transitions';
@@ -66,7 +66,7 @@ const DialogInternal = (allProps: DialogProps) => {
         >
           <Box
             {...elProps}
-            onClick={mergeCallbacks(
+            onClick={mergeEventHandlers(
               elProps.onClick as any,
               (event: MouseEvent) => {
                 event.stopPropagation();

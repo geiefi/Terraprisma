@@ -8,11 +8,9 @@ import {
   splitProps,
   ComponentProps,
   Show,
-  createContext,
   Accessor,
   Setter,
   createSignal,
-  useContext,
   createMemo
 } from 'solid-js';
 import { Dynamic, Portal } from 'solid-js/web';
@@ -21,7 +19,7 @@ import { mergeRefs } from '@solid-primitives/refs';
 
 import {
   mergeClass,
-  mergeCallbacks,
+  mergeEventHandlers,
   Popover,
   List,
   ListItem,
@@ -38,11 +36,8 @@ import {
   FieldProps,
   FieldPropKeys
 } from '../types';
-import { FormField, InputLikeBase, useField } from '../components';
+import { FormField, InputLikeBase } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
-import { combineStyle } from '@solid-primitives/props';
-import { DisplayExternalInput, Propane } from '../../icons';
-import { i } from 'vitest/dist/reporters-1evA5lom';
 
 export type SelectProps<
   OwnerFormValue extends FormValue = FormValue,
@@ -306,7 +301,7 @@ function Dropdown(props: {
                   optionElProps.class
                 )}
                 active={optionProps.value === props.value}
-                onClick={mergeCallbacks(optionElProps.onClick, () => {
+                onClick={mergeEventHandlers(optionElProps.onClick, () => {
                   props.setValue(optionProps.value);
                   props.onDismiss();
                 })}

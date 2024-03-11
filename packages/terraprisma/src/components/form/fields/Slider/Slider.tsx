@@ -18,7 +18,7 @@ import { mergeRefs } from '@solid-primitives/refs';
 import { Accents } from '../../../..';
 import {
   mergeClass,
-  mergeCallbacks
+  mergeEventHandlers
 } from '../../../../utils';
 import { createTooltip } from '../../../data-display';
 import { GrowFade } from '../../../transitions';
@@ -276,11 +276,11 @@ const Slider = (allProps: SliderProps) => {
                   max={max()}
                   step={step()}
                   id={id()}
-                  onFocus={mergeCallbacks(elProps.onFocus, () => {
+                  onFocus={mergeEventHandlers(elProps.onFocus, () => {
                     setFocused(true);
                     setFocusedThroughKeyboard(true);
                   })}
-                  onBlur={mergeCallbacks(elProps.onBlur, () => {
+                  onBlur={mergeEventHandlers(elProps.onBlur, () => {
                     setFocused(false);
                     setFocusedThroughKeyboard(false);
                   })}

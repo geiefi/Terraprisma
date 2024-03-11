@@ -11,7 +11,7 @@ import {
 } from 'solid-js';
 
 import {
-  mergeCallbacks,
+  mergeEventHandlers,
   mergeClass,
   Accents,
   Stack
@@ -111,10 +111,10 @@ const RadioInternal = (allProps: RadioGroupOptionProps) => {
           id={id()}
           type="radio"
           value={groupValue()}
-          onFocus={mergeCallbacks(elProps.onFocus, () =>
+          onFocus={mergeEventHandlers(elProps.onFocus, () =>
             setRadioToFocused(true)
           )}
-          onBlur={mergeCallbacks(elProps.onBlur, () =>
+          onBlur={mergeEventHandlers(elProps.onBlur, () =>
             setRadioToFocused(false)
           )}
         />
@@ -232,7 +232,7 @@ function RadioGroup(allProps: RadioGroupProps) {
                     tabindex={i()}
                     color={optionProps.color || color()}
                     size={optionProps.size || props.size || 'medium'}
-                    onClick={mergeCallbacks(optionProps.onClick, (e) => {
+                    onClick={mergeEventHandlers(optionProps.onClick, (e) => {
                       if (!disabled()) {
                         const newValue = optionProps.value;
                         setValue(newValue);

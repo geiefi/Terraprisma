@@ -1,6 +1,6 @@
 import { ComponentProps, JSX, Show, splitProps } from 'solid-js';
 import {
-  mergeCallbacks,
+  mergeEventHandlers,
   mergeClass,
   Icons,
   Accents
@@ -137,8 +137,8 @@ const Checkbox = (allProps: CheckboxProps) => {
                   elProps.class
                 )}
                 value={value() ? 'true' : 'false'}
-                onBlur={mergeCallbacks(elProps.onBlur, () => setFocused(false))}
-                onFocus={mergeCallbacks(elProps.onFocus, () =>
+                onBlur={mergeEventHandlers(elProps.onBlur, () => setFocused(false))}
+                onFocus={mergeEventHandlers(elProps.onFocus, () =>
                   setFocused(true)
                 )}
               />

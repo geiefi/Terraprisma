@@ -14,7 +14,7 @@ import './Input.css';
 import { Accents } from '../../../..';
 import {
   mergeClass,
-  mergeCallbacks
+  mergeEventHandlers
 } from '../../../../utils';
 import { FormField, InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
@@ -148,7 +148,7 @@ export const Input = <
                 elProps.class
               )}
               color={color()}
-              onInput={mergeCallbacks(
+              onInput={mergeEventHandlers(
                 elProps.onInput,
                 props.mask ? createInputMask(props.mask) : undefined,
                 (event) => {
@@ -164,8 +164,8 @@ export const Input = <
                   ref.value = ref.value;
                 }
               )}
-              onFocus={mergeCallbacks(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeCallbacks(elProps.onBlur, () => {
+              onFocus={mergeEventHandlers(elProps.onFocus, () => setFocused(true))}
+              onBlur={mergeEventHandlers(elProps.onBlur, () => {
                 setFocused(false);
                 validate(value());
               })}

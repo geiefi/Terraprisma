@@ -12,7 +12,7 @@ import {
 
 import ListItem from './ListItem';
 import { Accents } from '../../..';
-import { mergeClass, mergeCallbacks } from '../../../utils';
+import { mergeClass, mergeEventHandlers } from '../../../utils';
 import { KeyboardArrowDown } from '../../icons';
 import { Collapse } from '../../transitions';
 import { LeftIntersection } from '../../../types/LeftIntersection';
@@ -78,7 +78,7 @@ const ListItemWithDetails = (allProps: ListItemWithDetailsProps) => {
         active={props.active}
         style={props.style}
         clickable
-        onClick={mergeCallbacks(elProps.onClick, () => {
+        onClick={mergeEventHandlers(elProps.onClick, () => {
           if (typeof props.showingDetails === 'undefined' && setDetailsOpen) {
             setDetailsOpen((isOpen) => !isOpen);
           }

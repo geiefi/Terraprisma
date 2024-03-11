@@ -1,5 +1,5 @@
 import { deeplyTrack } from './deeplyTrack';
-import { mergeCallbacks } from './mergeCallbacks';
+import { mergeEventHandlers } from './mergeEventHandlers';
 import { generateStyleVariablesFrom } from './generateStyleVariablesFrom';
 import { generateTailwindColors } from './generateTailwindColors';
 import { mergeClass } from './mergeClass';
@@ -10,6 +10,6 @@ export {
   generateStyleVariablesFrom,
   generateTailwindColors,
   getAbsoluteBoundingRect,
-  mergeCallbacks,
+  mergeEventHandlers,
   mergeClass
 };
