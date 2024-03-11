@@ -52,8 +52,7 @@ export function mergeEventHandlers<EventType extends Event>(
 
     let stoppedImmediatePropagation = false;
 
-    const modifiedEvent = structuredClone(event);
-    modifiedEvent.stopImmediatePropagation = (() => {
+    event.stopImmediatePropagation = (() => {
       const actuallyStopImmediatePropagation = event.stopImmediatePropagation;
 
       return () => {
@@ -64,7 +63,7 @@ export function mergeEventHandlers<EventType extends Event>(
     })();
 
     for (const handler of handlerCallbacks) {
-      handler(modifiedEvent);
+      handler(event);
 
       if (stoppedImmediatePropagation) {
         break;
