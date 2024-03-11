@@ -115,9 +115,9 @@ _global.fields = {
 /**
   * The runtime step for extending the fields of the form.
   */
-export function acknowledgeFieldComponent(
+export function acknowledgeFieldComponent<Props extends FieldProps>(
   name: keyof Form<FormValue>,
-  component: (props: FieldProps<FormValue>) => JSX.Element
+  component: (props: Props) => JSX.Element
 ) {
   _global.fields[name] = component;
 }
