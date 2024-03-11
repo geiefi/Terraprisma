@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240311155535
+
+### Patch Changes
+
+- fix type narrowing for the function that extends the recognized Form fields
+
 ## 0.0.0-testing-20240309094333
 
 ### Patch Changes
