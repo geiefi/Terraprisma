@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240311234148
+
+### Patch Changes
+
+- fix cloning of the event class on the mergeEventHandler utility
+
 ## 0.0.0-testing-20240311232410
 
 ### Patch Changes
