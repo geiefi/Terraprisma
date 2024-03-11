@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240311232410
+
+### Patch Changes
+
+- make the merging utility for event handlers allow for stopping the subsequent event handlers
+
 ## 0.0.0-testing-20240311155535
 
 ### Patch Changes
