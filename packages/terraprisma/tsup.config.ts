@@ -19,6 +19,7 @@ function generateConfig({ ssr, jsx }: { ssr: boolean; jsx: boolean }): Options {
     platform: ssr ? 'node' : 'browser',
     clean: !watching,
     dts: format === 'esm' && !jsx,
+    sourcemap: true,
     format: ['esm', 'cjs'],
     entry: ssr
       ? {
