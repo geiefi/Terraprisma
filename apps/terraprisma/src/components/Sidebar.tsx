@@ -83,8 +83,8 @@ export function Sidebar() {
                 theme provider
               </ListItemLink>
               <ListItemLink to="/components/general/list">list</ListItemLink>
-              <ListItemLink to="/components/general/dropdown">
-                dropdown
+              <ListItemLink to="/components/general/popover">
+                popover
               </ListItemLink>
               <ListItemLink to="/components/general/dialog">
                 dialog

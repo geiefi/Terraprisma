@@ -2,7 +2,7 @@ import { createSignal } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { A } from '@solidjs/router';
 
-import { Box, Button, Dropdown, Icons, List, ListItem } from 'terraprisma';
+import { Box, Button, Popover, Icons, List, ListItem, createDismissListener } from 'terraprisma';
 
 import { CodeExample } from '~/components/CodeExample';
 import { PropsTable } from '~/components/PropsTable';
@@ -82,15 +82,22 @@ return (
 
           const [buttonRef, setButtonRef] = createSignal<HTMLButtonElement>();
 
+          const dismisser = createDismissListener({
+            onDismiss: () => {
+              setVisible(false)
+            },
+            nonDismissingElements: () => [buttonRef()]
+          });
+
           return (
             <>
-              <Button ref={setButtonRef} onClick={() => setVisible((v) => !v)}>
+              <Button ref={setButtonRef} onClick={() => setVisible(true)}>
                 Select which game is the best <Icons.ArrowDropDown />
               </Button>
 
               <Portal>
                 {/* Always recommended to wrap it in a Portal for positioning to work well */}
-                <Dropdown visible={isVisible()} for={buttonRef()!}>
+                <Popover ref={dismisser.ref} visible={isVisible()} for={buttonRef()!}>
                   <List>
                     <ListItem
                       active
@@ -117,7 +124,7 @@ return (
                       Stardew Valley
                     </ListItem>
                   </List>
-                </Dropdown>
+                </Popover>
               </Portal>
             </>
           );
