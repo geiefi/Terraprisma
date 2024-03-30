@@ -12,9 +12,6 @@ export default {
   theme: {
     extend: {
       colors: generateTailwindColors(initialStyles),
-      fontSize: {
-        base: ['14px', { lineHeight: '20px' }]
-      },
       transitionDuration: {
         DEFAULT: '225ms'
       },
