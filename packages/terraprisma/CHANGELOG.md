@@ -1,5 +1,11 @@
 # terraprisma
 
+## 0.0.0-testing-20240329174442
+
+### Patch Changes
+
+- add sourcemaps to the built code
+
 ## 0.0.0-testing-20240311234148
 
 ### Patch Changes
