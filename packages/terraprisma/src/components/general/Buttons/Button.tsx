@@ -57,9 +57,9 @@ const Button = (allProps: ButtonProps) => {
           !props.unstyled &&
           'rounded-md outline-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
           props.disabled && '!bg-[var(--muted-bg)] opacity-30',
-          size() === 'small' && 'px-2 py-1 text-sm',
-          size() === 'medium' && 'px-3 py-2 text-base',
-          size() === 'large' && 'px-4 py-3 text-lg',
+          size() === 'small' && 'px-2.5 py-1 text-sm',
+          size() === 'medium' && 'px-3 py-1 text-base',
+          size() === 'large' && 'px-4 py-1.5 text-lg',
           elProps.class
         )}
         style={{
