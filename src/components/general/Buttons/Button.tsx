@@ -52,14 +52,14 @@ const Button = (allProps: ButtonProps) => {
         type="button"
         {...elProps}
         class={mergeClass(
-          'inline-flex gap-1 text-center items-center justify-center border-none h-min w-fit box-border shadow-none select-none align-middle ease-in transition-colors !duration-150',
+          'inline-flex gap-1 text-center items-center justify-center border-none h-min w-fit box-border select-none align-middle ease-in transition-colors !duration-150',
           !props.disabled &&
           !props.unstyled &&
-          'rounded-md outline-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
+          'outline-none bg-[var(--bg)] text-[var(--fg)] hover:bg-[var(--hover)]',
           props.disabled && '!bg-[var(--muted-bg)] opacity-30',
-          size() === 'small' && 'px-2.5 py-1 text-sm',
-          size() === 'medium' && 'px-3 py-1 text-base',
-          size() === 'large' && 'px-4 py-1.5 text-lg',
+          size() === 'small' && 'px-5 py-2 text-base rounded-lg',
+          size() === 'medium' && 'px-3.5 py-2 text-base rounded-lg ',
+          size() === 'large' && 'px-3 py-2 text-base rounded-lg',
           elProps.class
         )}
         style={{
