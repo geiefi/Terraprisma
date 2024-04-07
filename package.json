@@ -33,6 +33,7 @@
     "@solid-primitives/deep": "0.2.5",
     "@solidjs/testing-library": "^0.7.1",
     "@testing-library/jest-dom": "^6.1.4",
+    "@types/node": "^18.18.6",
     "@types/tinycolor2": "^1.4.3",
     "autoprefixer": "^10.4.16",
     "esbuild-plugin-solid": "0.5.0",
