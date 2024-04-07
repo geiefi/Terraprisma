@@ -70,6 +70,7 @@
     "tinycolor2": "^1.6.0"
   },
   "type": "module",
+  "packageManager": "pnpm@8.15.5",
   "main": "./dist/server.js",
   "module": "./dist/server.cjs",
   "types": "./dist/browser.d.ts",
