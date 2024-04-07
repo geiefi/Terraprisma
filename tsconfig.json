@@ -1,6 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/tsconfig.json",
   "compilerOptions": {
+    "rootDir": "src",
+    "noEmit": true,
     "strict": true,
     "target": "ESNext",
     "module": "ESNext",
@@ -10,10 +12,10 @@
     "types": ["vite/client", "node"],
     "esModuleInterop": true,
     "jsx": "preserve",
-    "rootDir": "./",
     "jsxImportSource": "solid-js",
     "isolatedModules": false,
     "declaration": true
   },
-  "exclude": ["**/temp/", "**/.*/", "**/lib", "**/node_modules"]
+  "exclude": ["**/temp/", "**/.*/", "**/lib", "**/node_modules"],
+  "include": ["src/**/*"]
 }

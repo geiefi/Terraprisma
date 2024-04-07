@@ -1,4 +1,0 @@
-# This is due to the fact that we will always use .scss and if a .css exists it is because
-# of build compilation of .scss files
-**/src-temp
-**/.turbo
