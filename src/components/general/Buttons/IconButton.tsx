@@ -40,11 +40,11 @@ const IconButton = (allProps: IconButtonProps) => {
           ],
           props.squarish ? 'rounded-lg' : 'rounded-full'
         ],
-        defaultButtonProps.size === 'small' && 'min-w-[2rem] min-h-[2rem]',
+        defaultButtonProps.size === 'small' && 'w-5 h-5',
         (defaultButtonProps.size === 'medium' ||
           typeof defaultButtonProps.size === 'undefined') &&
-        'min-w-[3rem] min-h-[3rem]',
-        defaultButtonProps.size === 'large' && 'min-w-[3.5rem] min-h-[3.5rem]',
+        'w-6 h-6',
+        defaultButtonProps.size === 'large' && 'w-7 h-7',
         defaultButtonProps.class
       )}
     >
@@ -54,3 +54,4 @@ const IconButton = (allProps: IconButtonProps) => {
 };
 
 export default IconButton;
+  
