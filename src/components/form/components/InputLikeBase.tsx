@@ -56,7 +56,7 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
       {...elProps}
       data-size={props.size ?? 'medium'}
       class={mergeClass(
-        'group box-border w-full data-[size=small]:min-h-[35px] data-[size=medium]:min-h-[44px] data-[size=large]:min-h-[70px] h-fit',
+        'font-normal group box-border w-full data-[size=small]:min-h-[35px] data-[size=medium]:min-h-[44px] data-[size=large]:min-h-[70px] h-fit',
         'relative m-0 data-[size=small]:px-3 data-[size=medium]:px-4 data-[size=large]:px-8',
         'bg-[var(--bg)] text-[var(--fg)] transition-colors',
         'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
@@ -81,7 +81,7 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
       <Show when={props.label}>
         <Label
           class={mergeClass(
-            'font-extrabold absolute origin-top-left transition-all text-inherit',
+            'font-normal absolute origin-top-left transition-all text-inherit',
             'text-ellipsis overflow-x-hidden group-data-[size=small]:left-3 group-data-[size=small]:w-[calc(100%-1rem)] group-data-[size=medium]:left-4 group-data-[size=medium]:w-[calc(100%-2rem)] group-data-[size=large]:left-8 group-data-[size=large]:w-[calc(100%-4rem)]',
             focused() || props.actLikeHasContent || hasContent()
               ? 'group-data-[size=small]:top-1 group-data-[size=medium]:top-1.5 group-data-[size=large]:top-4 group-data-[size=medium]:scale-[0.642] group-data-[size=large]:scale-[0.428] opacity-70'
