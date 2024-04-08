@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vite/client", "node"],
+    "types": ["vite/client", "vitest/globals", "node"],
     "esModuleInterop": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
