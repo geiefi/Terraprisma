@@ -37,7 +37,6 @@ const PageNumber = (props: {
       active={props.active}
       color={props.color}
       rippleProps={{ center: false }}
-      squarish
       size="small"
       onClick={(e: MouseEvent) => props.onClick(e)}
     >
@@ -98,7 +97,6 @@ const Pagination = (allProps: PaginationProps) => {
       <IconButton
         class="back"
         disabled={props.current === 1}
-        squarish
         size="small"
         onClick={(e: MouseEvent) => handleChangePage(props.current - 1, e)}
       >
@@ -144,7 +142,6 @@ const Pagination = (allProps: PaginationProps) => {
 
       <IconButton
         class="next"
-        squarish
         disabled={props.current === props.total}
         onClick={(e: MouseEvent) => handleChangePage(props.current + 1, e)}
         size="small"
