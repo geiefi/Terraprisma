@@ -14,8 +14,8 @@ const List = (allProps: ListProps) => {
       data-size={props.size ?? 'medium'}
       class={mergeClass(
         'list-none group flex flex-col h-fit w-full p-0 m-0',
-        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg',
-        'data-[size=small]:gap-2 data-[size=medium]:gap-3 data-[size=large]:gap-4',
+        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-xl',
+        'data-[size=small]:gap-1 data-[size=medium]:gap-2 data-[size=large]:gap-3.5',
         elProps.class
       )}
     >

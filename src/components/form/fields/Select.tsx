@@ -125,18 +125,16 @@ const Select = (allProps: SelectProps) => {
     createSignal<HTMLDivElement>();
 
   const getChildren = accessChildren(
-    () => props.children as JSX.Element
+    () => typeof props.children === 'function' ? props.children(Option) : props.children
   ) as Accessor<
-    JSX.Element | ((Option: Component<SelectOptionProps<any>>) => JSX.Element)
+    JSX.Element
   >;
 
   const options = createMemo(() => {
     let childrenArr: (JSX.Element | SelectOptionProps)[];
 
     let children = getChildren();
-    if (typeof children === 'function') {
-      children = children(Option);
-    }
+
     if (Array.isArray(children)) {
       childrenArr = children;
     } else {
@@ -275,9 +273,9 @@ function Dropdown(props: {
       ref={mergeRefs(dismisser.ref)}
       data-size={props.size}
       class={mergeClass(
-        'flex flex-col max-h-[10rem]',
-        'data-[size=small]:p-1 data-[size=medium]:p-2 data-[size=large]:p-3',
-        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-lg'
+        'flex flex-col max-h-[20rem]',
+        'data-[size=small]:p-2.5 data-[size=medium]:p-3 data-[size=large]:p-3.5',
+        'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-xl'
       )}
       style={{
         '--color': `var(--${props.color}-bg)`,
