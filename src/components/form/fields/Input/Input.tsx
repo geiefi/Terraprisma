@@ -12,10 +12,7 @@ import {
 
 import './Input.css';
 import { Accents } from '../../../..';
-import {
-  mergeClass,
-  mergeEventHandlers
-} from '../../../../utils';
+import { mergeClass, mergeEventHandlers } from '../../../../utils';
 import { FormField, InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 import { Dynamic } from 'solid-js/web';
@@ -53,7 +50,9 @@ export type InputProps<
 
     color?: Accents;
 
-    inputLikeBase?: (props: ComponentProps<typeof InputLikeBase>) => JSX.Element;
+    inputLikeBase?: (
+      props: ComponentProps<typeof InputLikeBase>
+    ) => JSX.Element;
 
     onChange?: (
       value: MaskedFieldProps<
@@ -154,7 +153,9 @@ export const Input = <
                 (event) => {
                   const ref = event.currentTarget || event.target;
                   const fieldValue =
-                    props.type === 'number' ? parseFloat(ref.value) : ref.value;
+                    props.type === 'number'
+                      ? parseFloat(ref.value.length === 0 ? '0' : ref.value)
+                      : ref.value;
                   if (props.onChange) {
                     props.onChange(fieldValue as FieldValue, event);
                   }
@@ -164,7 +165,9 @@ export const Input = <
                   ref.value = ref.value;
                 }
               )}
-              onFocus={mergeEventHandlers(elProps.onFocus, () => setFocused(true))}
+              onFocus={mergeEventHandlers(elProps.onFocus, () =>
+                setFocused(true)
+              )}
               onBlur={mergeEventHandlers(elProps.onBlur, () => {
                 setFocused(false);
                 validate(value());
