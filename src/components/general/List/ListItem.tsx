@@ -57,7 +57,7 @@ const ListItem = (allProps: ListItemProps) => {
             aria-disabled={disabled()}
             {...elProps}
             class={mergeClass(
-              'w-full h-fit px-2.5 py-1 rounded-md transition-colors select-none cursor-pointer',
+              'w-full h-fit transition-colors select-none cursor-pointer',
               'group-data-[size=large]:px-3 group-data-[size=large]:text-xl group-data-[size=large]:py-1 group-data-[size=large]:rounded-md',
               'group-data-[size=medium]:px-3.5 group-data-[size=medium]:text-base group-data-[size=medium]:py-1.5 group-data-[size=medium]:rounded-md',
               'group-data-[size=small]:px-2 group-data-[size=small]:text-sm group-data-[size=small]:py-1.5 group-data-[size=small]:rounded-md',
@@ -85,7 +85,13 @@ const ListItem = (allProps: ListItemProps) => {
       <Match when={!clickable()}>
         <li
           {...elProps}
-          class={mergeClass('w-full h-fit px-2.5 py-1', elProps.class)}
+          class={mergeClass(
+            'w-full h-fit transition-colors',
+            'group-data-[size=large]:px-3 group-data-[size=large]:text-xl group-data-[size=large]:py-1 group-data-[size=large]:rounded-md',
+            'group-data-[size=medium]:px-3.5 group-data-[size=medium]:text-base group-data-[size=medium]:py-1.5 group-data-[size=medium]:rounded-md',
+            'group-data-[size=small]:px-2 group-data-[size=small]:text-sm group-data-[size=small]:py-1.5 group-data-[size=small]:rounded-md',
+            elProps.class
+          )}
         >
           {props.children}
         </li>
