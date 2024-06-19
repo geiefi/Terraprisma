@@ -46,6 +46,9 @@ devDependencies:
   '@testing-library/jest-dom':
     specifier: ^6.1.4
     version: 6.4.2(vitest@1.4.0)
+  '@types/node':
+    specifier: ^18.18.6
+    version: 18.19.36
   '@types/tinycolor2':
     specifier: ^1.4.3
     version: 1.4.6
@@ -99,13 +102,13 @@ devDependencies:
     version: 5.4.4
   vite:
     specifier: ^5.0.12
-    version: 5.2.8(sass@1.74.1)
+    version: 5.2.8(@types/node@18.19.36)(sass@1.74.1)
   vite-plugin-solid:
     specifier: 2.9.1
     version: 2.9.1(@testing-library/jest-dom@6.4.2)(solid-js@1.8.16)(vite@5.2.8)
   vitest:
     specifier: ^1.2.2
-    version: 1.4.0(jsdom@22.1.0)(sass@1.74.1)
+    version: 1.4.0(@types/node@18.19.36)(jsdom@22.1.0)(sass@1.74.1)
 
 packages:
 
@@ -1235,7 +1238,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash: 4.17.21
       redent: 3.0.0
-      vitest: 1.4.0(jsdom@22.1.0)(sass@1.74.1)
+      vitest: 1.4.0(@types/node@18.19.36)(jsdom@22.1.0)(sass@1.74.1)
     dev: true
 
   /@tootallnate/once@2.0.0:
@@ -1284,8 +1287,8 @@ packages:
     resolution: {integrity: sha512-PecSzorDGdabF57OBeQO/xFbAkYWo88g4Xvnsx7LRwqLC17I7OoKtA3bQB9uXkY6UkMWCOsA8HSVpaoitscdXw==}
     dev: true
 
-  /@types/node@20.12.5:
-    resolution: {integrity: sha512-BD+BjQ9LS/D8ST9p5uqBxghlN+S42iuNxjsUGjeZobe/ciXzk2qb1B6IXc6AnRLS+yFJRpN2IPEHMzwspfDJNw==}
+  /@types/node@18.19.36:
+    resolution: {integrity: sha512-tX1BNmYSWEvViftB26VLNxT6mEr37M7+ldUtq7rlKnv4/2fKYsJIOmqJAjT6h1DNuwQjIKgw3VJ/Dtw3yiTIQw==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1300,7 +1303,7 @@ packages:
   /@types/stylus@0.48.42:
     resolution: {integrity: sha512-CPGlr5teL4sqdap+EOowMifLuNGeIoLwc0VQ7u/BPxo+ocqiNa5jeVt0H0IVBblEh6ZwX1sGpIQIFnSSr8NBQA==}
     dependencies:
-      '@types/node': 20.12.5
+      '@types/node': 18.19.36
     dev: true
 
   /@types/tinycolor2@1.4.6:
@@ -2495,7 +2498,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 12.0.1
-      ws: 8.16.0
+      ws: 8.17.1
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -3626,7 +3629,7 @@ packages:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
     dev: true
 
-  /vite-node@1.4.0(sass@1.74.1):
+  /vite-node@1.4.0(@types/node@18.19.36)(sass@1.74.1):
     resolution: {integrity: sha512-VZDAseqjrHgNd4Kh8icYHWzTKSCZMhia7GyHfhtzLW33fZlG9SwsB6CEhgyVOWkJfJ2pFLrp/Gj1FSfAiqH9Lw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -3635,7 +3638,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.8(sass@1.74.1)
+      vite: 5.2.8(@types/node@18.19.36)(sass@1.74.1)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -3664,13 +3667,13 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.16
       solid-refresh: 0.6.3(solid-js@1.8.16)
-      vite: 5.2.8(sass@1.74.1)
+      vite: 5.2.8(@types/node@18.19.36)(sass@1.74.1)
       vitefu: 0.2.5(vite@5.2.8)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /vite@5.2.8(sass@1.74.1):
+  /vite@5.2.8(@types/node@18.19.36)(sass@1.74.1):
     resolution: {integrity: sha512-OyZR+c1CE8yeHw5V5t59aXsUPPVTHMDjEZz8MgguLL/Q7NblxhZUlTu9xSPqlsUO/y+X7dlU05jdhvyycD55DA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -3698,6 +3701,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 18.19.36
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.14.1
@@ -3714,10 +3718,10 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.8(sass@1.74.1)
+      vite: 5.2.8(@types/node@18.19.36)(sass@1.74.1)
     dev: true
 
-  /vitest@1.4.0(jsdom@22.1.0)(sass@1.74.1):
+  /vitest@1.4.0(@types/node@18.19.36)(jsdom@22.1.0)(sass@1.74.1):
     resolution: {integrity: sha512-gujzn0g7fmwf83/WzrDTnncZt2UiXP41mHuFYFrdwaLRVQ6JYQEiME2IfEjU3vcFL3VKa75XhI3lFgn+hfVsQw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -3742,6 +3746,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
+      '@types/node': 18.19.36
       '@vitest/expect': 1.4.0
       '@vitest/runner': 1.4.0
       '@vitest/snapshot': 1.4.0
@@ -3760,8 +3765,8 @@ packages:
       strip-literal: 2.1.0
       tinybench: 2.6.0
       tinypool: 0.8.3
-      vite: 5.2.8(sass@1.74.1)
-      vite-node: 1.4.0(sass@1.74.1)
+      vite: 5.2.8(@types/node@18.19.36)(sass@1.74.1)
+      vite-node: 1.4.0(@types/node@18.19.36)(sass@1.74.1)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
@@ -3883,8 +3888,8 @@ packages:
       strip-ansi: 7.1.0
     dev: true
 
-  /ws@8.16.0:
-    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
+  /ws@8.17.1:
+    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
