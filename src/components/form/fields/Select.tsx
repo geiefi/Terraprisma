@@ -9,7 +9,6 @@ import {
   ComponentProps,
   Show,
   Accessor,
-  Setter,
   createSignal,
   createMemo
 } from 'solid-js';
@@ -29,43 +28,26 @@ import {
   createDismissListener
 } from '../../..';
 
-import {
-  FormValue,
-  FormFieldValue,
-  FieldName,
-  FieldProps,
-  FieldPropKeys
-} from '../types';
-import { FormField, InputLikeBase } from '../components';
+import { FormFieldValue } from '../types';
+import { InputLikeBase } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export type SelectProps<
-  OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, FormFieldValue> = FieldName<
-    OwnerFormValue,
-    FormFieldValue
-  >
-> = LeftIntersection<
-  FieldProps<OwnerFormValue, FormFieldValue, Name> & {
+export type SelectProps = LeftIntersection<
+  {
     label?: JSX.Element;
 
-    onFieldValueChanges?: (newValue: FormFieldValue) => any;
+    disabled?: boolean;
+    onChange?: (newValue: FormFieldValue) => any;
     onFocus?: () => any;
+    onBlur?: (event?: FocusEvent) => any;
 
     color?: Accents;
     size?: 'small' | 'medium' | 'large';
+    value?: FormFieldValue;
 
     popover?: (props: ComponentProps<typeof Popover>) => JSX.Element;
 
-    children:
-      | JSX.Element
-      | ((
-          Option: Component<
-            SelectOptionProps<
-              FieldProps<OwnerFormValue, FormFieldValue, Name>['value']
-            >
-          >
-        ) => JSX.Element);
+    children: JSX.Element;
   },
   ComponentProps<'div'>
 >;
@@ -110,14 +92,14 @@ const Option: Component<SelectOptionProps> = (props) =>
  */
 const Select = (allProps: SelectProps) => {
   const [props, elProps] = splitProps(allProps, [
-    ...FieldPropKeys,
     'label',
-    'helperText',
     'size',
     'color',
     'children',
+    'disabled',
+    'value',
     'popover',
-    'onFieldValueChanges',
+    'onChange',
     'onFocus'
   ]);
 
@@ -125,10 +107,8 @@ const Select = (allProps: SelectProps) => {
     createSignal<HTMLDivElement>();
 
   const getChildren = accessChildren(
-    () => typeof props.children === 'function' ? props.children(Option) : props.children
-  ) as Accessor<
-    JSX.Element
-  >;
+    () => props.children
+  ) as Accessor<JSX.Element>;
 
   const options = createMemo(() => {
     let childrenArr: (JSX.Element | SelectOptionProps)[];
@@ -155,98 +135,79 @@ const Select = (allProps: SelectProps) => {
     return options().find((opt) => opt.value === value)?.children || '';
   };
 
+  const [focused, setFocused] = createSignal(false);
+
+  createEffect(
+    on(
+      focused,
+      () => {
+        if (props.onFocus && focused() === true) {
+          props.onFocus();
+        }
+
+        if (focused() === false) {
+          elProps.onBlur?.();
+        }
+      },
+      { defer: true }
+    )
+  );
+
   return (
-    <FormField fieldProperties={props}>
-      {({
-        elementId: id,
-        disabledS: [disabled],
-        focusedS: [focused, setFocused],
-        valueS: [value, setValue],
-        validate
-      }) => {
-        createEffect(
-          on(
-            focused,
-            () => {
-              if (props.onFocus && focused() === true) {
-                props.onFocus();
-              }
+    <>
+      <InputLikeBase
+        {...elProps}
+        size={props.size}
+        class="flex items-center align-middle gap-3 cursor-pointer"
+        focused={focused()}
+        tabindex="0"
+        hasContent={props.value !== undefined}
+        onPointerDown={() => {
+          !props.disabled && setFocused(true);
+        }}
+        onFocusIn={() => {
+          !props.disabled && setFocused(true);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && focused()) {
+            event.currentTarget.blur();
+            setFocused(false);
+          }
+        }}
+        icon={
+          <Icons.KeyboardArrowDown
+            variant="rounded"
+            class={mergeClass(
+              'transition-transform origin-center',
+              focused() ? 'rotate-180' : 'rotate-0'
+            )}
+          />
+        }
+        ref={mergeRefs(elProps.ref, setInputContainerRef)}
+      >
+        {optionLabelFromValue(props.value)}
+      </InputLikeBase>
 
-              if (focused() === false) {
-                validate(value());
-              }
-            },
-            { defer: true }
-          )
-        );
-
-        createEffect(
-          on(value, (newValue) => {
-            if (props.onFieldValueChanges) {
-              props.onFieldValueChanges(newValue);
-            }
-          })
-        );
-
-        return (
-          <>
-            <InputLikeBase
-              {...elProps}
-              id={id()}
-              size={props.size}
-              labelFor={id()}
-              class="flex items-center align-middle gap-3 cursor-pointer"
-              label={props.label}
-              tabindex="0"
-              onPointerDown={() => {
-                !disabled() && setFocused(true);
-              }}
-              onFocusIn={() => {
-                !disabled() && setFocused(true);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Escape' && focused()) {
-                  event.currentTarget.blur();
-                  setFocused(false);
-                }
-              }}
-              icon={
-                <Icons.KeyboardArrowDown
-                  variant="rounded"
-                  class={mergeClass(
-                    'transition-transform origin-center',
-                    focused() ? 'rotate-180' : 'rotate-0'
-                  )}
-                />
-              }
-              ref={mergeRefs(elProps.ref, setInputContainerRef)}
-            >
-              {optionLabelFromValue(value())}
-            </InputLikeBase>
-
-            <Portal>
-              <GrowFade growingOrigin="top">
-                <Dropdown
-                  onDismiss={() => setFocused(false)}
-                  visible={focused()}
-                  value={value()}
-                  setValue={setValue}
-                  anchor={inputContainerRef()!}
-                  options={options()}
-                  size={props.size ?? 'medium'}
-                  color={props.color ?? 'accent'}
-                  as={props.popover ?? Popover}
-                />
-              </GrowFade>
-            </Portal>
-          </>
-        );
-      }}
-    </FormField>
+      <Portal>
+        <GrowFade growingOrigin="top">
+          <SelectDropdown
+            onDismiss={() => setFocused(false)}
+            visible={focused()}
+            value={props.value}
+            onChange={props.onChange}
+            anchor={inputContainerRef()!}
+            options={options()}
+            size={props.size ?? 'medium'}
+            color={props.color ?? 'accent'}
+            as={props.popover ?? Popover}
+          />
+        </GrowFade>
+      </Portal>
+    </>
   );
 };
 
-function Dropdown(props: {
+function SelectDropdown(props: {
   as: (props: ComponentProps<typeof Popover>) => JSX.Element;
   size: 'small' | 'medium' | 'large';
   color: Accents;
@@ -256,7 +217,7 @@ function Dropdown(props: {
   options: SelectOptionProps[];
 
   value: FormFieldValue;
-  setValue: Setter<FormFieldValue>;
+  onChange?: (newV: FormFieldValue) => void;
 }) {
   const dismisser = createDismissListener({
     onDismiss: () => props.onDismiss(),
@@ -300,7 +261,7 @@ function Dropdown(props: {
                 )}
                 active={optionProps.value === props.value}
                 onClick={mergeEventHandlers(optionElProps.onClick, () => {
-                  props.setValue(optionProps.value);
+                  props.onChange?.(optionProps.value);
                   props.onDismiss();
                 })}
               >

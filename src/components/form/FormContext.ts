@@ -162,11 +162,11 @@ export class FormProviderValue<
    *
    * @param value Just the initial value of the field being initialized.
    */
-  init<Name extends Paths>(
+  register<Name extends Paths>(
     name: Name,
     validators: FieldValidator<DeepGet<Values, Name>>[],
     value: DeepGet<Values, Name>
-  ): void {
+  ) {
     if (
       document.querySelectorAll(`#field-${this.identification()}-${name}`)
         .length > 1
@@ -191,6 +191,29 @@ export class FormProviderValue<
         })
       );
     });
+
+    const provider = this;
+    return {
+      get value() {
+        const value = getByPath(provider.values, name);
+        deeplyTrack(value);
+        return value; 
+      },
+      get disabled() {
+        return provider.form.disabled;
+      },
+      get 'aria-disabled'() {
+        return provider.form.disabled;
+      },
+      onChange(newValue: DeepGet<Values, Name>) {
+        provider.setValues(produce(values => {
+          setByPath(values, name, newValue);
+        }));
+      },
+      onBlur() {
+        provider.validate(name);
+      }
+    };
   }
 
   /**

@@ -4,7 +4,7 @@ import { LeftIntersection } from '../../../types/LeftIntersection';
 
 export type LabelProps = LeftIntersection<
   {
-    for: string;
+    for?: string;
     hasErrors: boolean;
   },
   ComponentProps<'label'>
