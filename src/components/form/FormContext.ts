@@ -164,8 +164,7 @@ export class FormProviderValue<
    */
   register<Name extends Paths>(
     name: Name,
-    validators: FieldValidator<DeepGet<Values, Name>>[],
-    value: DeepGet<Values, Name>
+    validators: FieldValidator<DeepGet<Values, Name>>[] = []
   ) {
     if (
       document.querySelectorAll(`#field-${this.identification()}-${name}`)
@@ -177,14 +176,6 @@ export class FormProviderValue<
       );
     }
     batch(() => {
-      // ensures that the values in the form are not set unecessarily
-      // if they are already set coming thorugh the store
-      if (getByPath(this.values, name) === undefined) {
-        this.setValues(produce(values => {
-          setByPath(values, name, value);
-        }));
-      }
-
       this.setForm(
         produce((form) => {
           form.validators[name] = validators as any;
@@ -197,13 +188,13 @@ export class FormProviderValue<
       get value() {
         const value = getByPath(provider.values, name);
         deeplyTrack(value);
-        return value; 
+        return value;
       },
       get disabled() {
-        return provider.form.disabled;
+        return provider.form.disabled[name];
       },
       get 'aria-disabled'() {
-        return provider.form.disabled;
+        return provider.form.disabled[name];
       },
       onChange(newValue: DeepGet<Values, Name>) {
         provider.setValues(produce(values => {
