@@ -13,7 +13,7 @@ import {
 import './Input.css';
 import { Accents } from '../../../..';
 import { mergeClass, mergeEventHandlers } from '../../../../utils';
-import { FormField, InputLikeBase } from '../../components';
+import { InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 import { Dynamic } from 'solid-js/web';
 

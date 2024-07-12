@@ -15,6 +15,8 @@ export type InputLikeBaseProps = LeftIntersection<
      */
     size?: 'small' | 'medium' | 'large';
 
+    label?: JSX.Element;
+
     focused?: boolean;
     disabled?: boolean;
     hasErrors?: boolean;
@@ -33,6 +35,7 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
     'hasContent',
     'hasErrors',
     'disabled',
+    'label',
     'icon',
     'color'
   ]);
@@ -50,12 +53,14 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
         'data-[size=small]:text-sm data-[size=medium]:text-base data-[size=large]:text-xl',
         'data-[size=small]:rounded-xl data-[size=medium]:rounded-xl data-[size=large]:rounded-xl',
         '!outline-none border-solid border focus:focus-visible:border-[var(--color)] focus-visible:border-[var(--color)]',
-        props.focused ? 'border-[var(--color)]' : 'border-[var(--floating-border)]',
+        props.focused
+          ? 'border-[var(--color)]'
+          : 'border-[var(--floating-border)]',
         props.disabled && '!cursor-none',
-        //'data-[size=small]:py-3 data-[size=medium]:py-3.5 data-[size=large]:py-4',
-        //props.label
-        //  ? 'data-[size=small]:pt-6 data-[size=small]:pb-1.5 data-[size=medium]:pt-7 data-[size=medium]:pb-1.5 data-[size=large]:pt-8 data-[size=large]:pb-1.5'
-        //  : 'data-[size=small]:py-3 data-[size=medium]:py-3.5 data-[size=large]:py-4',
+        // 'data-[size=small]:py-3 data-[size=medium]:py-3.5 data-[size=large]:py-4',
+        props.label
+          ? 'data-[size=small]:pt-6 data-[size=small]:pb-1.5 data-[size=medium]:pt-7 data-[size=medium]:pb-1.5 data-[size=large]:pt-8 data-[size=large]:pb-1.5'
+          : 'data-[size=small]:py-3 data-[size=medium]:py-3.5 data-[size=large]:py-4',
         elProps.class
       )}
       style={combineStyle(
@@ -67,6 +72,24 @@ export const InputLikeBase = (allProps: InputLikeBaseProps) => {
         elProps.style
       )}
     >
+      <Show when={props.label}>
+        <Label
+          class={mergeClass(
+            'font-semibold absolute origin-top-left transition-all text-inherit',
+            'text-ellipsis overflow-x-hidden',
+            'group-data-[size=small]:left-4 group-data-[size=small]:w-[calc(100%-2*1rem)]',
+            'group-data-[size=medium]:left-5 group-data-[size=medium]:w-[calc(100%-2*1.25rem)]',
+            'group-data-[size=large]:left-7 group-data-[size=large]:w-[calc(100%-2*1.75rem)]',
+            props.focused || props.hasContent
+              ? 'group-data-[size=small]:top-1 group-data-[size=medium]:top-2 group-data-[size=large]:top-1.5 group-data-[size=medium]:scale-[0.642] group-data-[size=large]:scale-[0.428] opacity-70'
+              : 'group-data-[size=small]:top-4 group-data-[size=medium]:top-5 group-data-[size=large]:top-9 -translate-y-1/2'
+          )}
+          hasErrors={props.hasErrors}
+        >
+          {props.label}
+        </Label>
+      </Show>
+
       {elProps.children}
 
       <span class="bg-[var(--floating-bg)] absolute w-min h-min group-data-[size=small]:right-3 group-data-[size=medium]:right-4 group-data-[size=large]:right-8 top-1/2 -translate-y-1/2 text-[var(--label-color)] text-[1em] select-none pointer-events-none">

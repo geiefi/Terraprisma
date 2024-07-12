@@ -1,23 +1,12 @@
 import { ComponentProps, JSX, Show, splitProps } from 'solid-js';
-import {
-  mergeEventHandlers,
-  mergeClass,
-  Icons,
-  Accents
-} from '../../..';
+import { mergeEventHandlers, mergeClass, Icons, Accents } from '../../..';
 
-import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../types';
-import { FormField, Label } from '../components';
+import { FieldPropKeys } from '../types';
+import { Label } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 
-export type CheckboxProps<
-  OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, boolean> = FieldName<
-    OwnerFormValue,
-    boolean
-  >
-> = LeftIntersection<
-  FieldProps<OwnerFormValue, boolean, Name> & {
+export type CheckboxProps = LeftIntersection<
+  {
     label?: JSX.Element;
     helperText?: JSX.Element;
     color?: Accents;
@@ -41,7 +30,6 @@ export type CheckboxProps<
 
 const Checkbox = (allProps: CheckboxProps) => {
   const [props, elProps] = splitProps(allProps, [
-    ...FieldPropKeys,
     'label',
     'helperText',
     'color',
@@ -137,7 +125,9 @@ const Checkbox = (allProps: CheckboxProps) => {
                   elProps.class
                 )}
                 value={value() ? 'true' : 'false'}
-                onBlur={mergeEventHandlers(elProps.onBlur, () => setFocused(false))}
+                onBlur={mergeEventHandlers(elProps.onBlur, () =>
+                  setFocused(false)
+                )}
                 onFocus={mergeEventHandlers(elProps.onFocus, () =>
                   setFocused(true)
                 )}

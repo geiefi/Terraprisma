@@ -13,7 +13,7 @@ import {
 import './TextArea.css';
 import { Accents } from '../../../..';
 import { mergeClass, mergeEventHandlers } from '../../../../utils';
-import { InputLikeBase, FormField } from '../../components';
+import { InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 
 export type TextAreaChangeEvent = Event & {

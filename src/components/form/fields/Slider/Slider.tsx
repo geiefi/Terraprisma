@@ -11,7 +11,7 @@ import {
 } from 'solid-js';
 import { Dynamic, Portal, isServer } from 'solid-js/web';
 
-import { FieldName, FieldPropKeys, FieldProps, FormValue } from '../../types';
+import { FieldName, FieldPropKeys, FormValue } from '../../types';
 
 import './Slider.css';
 import { mergeRefs } from '@solid-primitives/refs';
@@ -22,17 +22,11 @@ import {
 } from '../../../../utils';
 import { createTooltip } from '../../../data-display';
 import { GrowFade } from '../../../transitions';
-import { FormField, Label } from '../../components';
+import { Label } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 
-export type SliderProps<
-  OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, number> = FieldName<
-    OwnerFormValue,
-    number
-  >
-> = LeftIntersection<
-  FieldProps<OwnerFormValue, number, Name> & {
+export type SliderProps = LeftIntersection<
+  {
     label?: JSX.Element;
 
     size?: 'small' | 'medium' | 'large';
@@ -52,9 +46,7 @@ export type SliderProps<
 
 const Slider = (allProps: SliderProps) => {
   const [props, elProps] = splitProps(allProps, [
-    ...FieldPropKeys,
     'label',
-    'helperText',
     'showTooltip',
     'renderTooltipContent',
     'color',

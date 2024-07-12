@@ -4,17 +4,15 @@ import { LeftIntersection } from '../../../types/LeftIntersection';
 
 export type LabelProps = LeftIntersection<
   {
-    for?: string;
-    hasErrors: boolean;
+    hasErrors?: boolean;
   },
   ComponentProps<'label'>
 >;
 
 const Label = (allProps: LabelProps) => {
-  const [props, elProps] = splitProps(allProps, ['for', 'hasErrors']);
+  const [props, elProps] = splitProps(allProps, ['hasErrors']);
   return (
     <label
-      for={props.for}
       {...elProps}
       class={mergeClass(
         'select-none pointer-events-none',

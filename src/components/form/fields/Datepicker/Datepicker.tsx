@@ -14,11 +14,8 @@ import { Portal } from 'solid-js/web';
 import { mergeRefs } from '@solid-primitives/refs';
 
 import {
-  FieldName,
   FieldPropKeys,
-  FieldProps,
   FormFieldValue,
-  FormValue
 } from '../../types';
 
 import DayPicker, { amountOfDaysInMonth } from './DayPicker';
@@ -30,14 +27,11 @@ import { Popover, IconButton, OutlinedButton } from '../../../general';
 import { CalendarMonth, ChevronLeft, ChevronRight } from '../../../icons';
 import { Row } from '../../../layout';
 import { GrowFade } from '../../../transitions';
-import { FormField, InputLikeBase } from '../../components';
+import { InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 
-export type DatepickerProps<
-  OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, Date> = FieldName<OwnerFormValue, Date>
-> = LeftIntersection<
-  FieldProps<OwnerFormValue, Date, Name> & {
+export type DatepickerProps = LeftIntersection<
+   {
     label?: string;
 
     size?: 'small' | 'medium' | 'large';
@@ -52,9 +46,7 @@ export type DatepickerProps<
 
 const Datepicker = (allProps: DatepickerProps) => {
   const [props, elProps] = splitProps(allProps, [
-    ...FieldPropKeys,
     'label',
-    'helperText',
     'style',
     'size',
     'color',

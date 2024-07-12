@@ -28,9 +28,10 @@ import {
   createDismissListener
 } from '../../..';
 
-import { FormFieldValue } from '../types';
-import { InputLikeBase } from '../components';
+import { FieldValidator, FormFieldValue } from '../types';
+import { InputLikeBase, Label } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
+import { createValueSignal } from './createValueSignal';
 
 export type SelectProps = LeftIntersection<
   {
@@ -40,10 +41,11 @@ export type SelectProps = LeftIntersection<
     onChange?: (newValue: FormFieldValue) => any;
     onFocus?: () => any;
     onBlur?: (event?: FocusEvent) => any;
+    value?: FormFieldValue;
+    isInvalid?: boolean;
 
     color?: Accents;
     size?: 'small' | 'medium' | 'large';
-    value?: FormFieldValue;
 
     popover?: (props: ComponentProps<typeof Popover>) => JSX.Element;
 
@@ -98,6 +100,7 @@ const Select = (allProps: SelectProps) => {
     'children',
     'disabled',
     'value',
+    'isInvalid',
     'popover',
     'onChange',
     'onFocus'
@@ -131,7 +134,7 @@ const Select = (allProps: SelectProps) => {
     }) as SelectOptionProps[];
   });
 
-  const optionLabelFromValue = (value: FormFieldValue | undefined) => {
+  const getOptionLabelFromValue = (value: FormFieldValue | undefined) => {
     return options().find((opt) => opt.value === value)?.children || '';
   };
 
@@ -153,15 +156,17 @@ const Select = (allProps: SelectProps) => {
     )
   );
 
+  const [value, setValue] = createValueSignal(() => props.value);
+
   return (
     <>
       <InputLikeBase
         {...elProps}
         size={props.size}
-        class="flex items-center align-middle gap-3 cursor-pointer"
+        class="flex flex-col items-center align-middle gap-3 cursor-pointer"
         focused={focused()}
         tabindex="0"
-        hasContent={props.value !== undefined}
+        hasContent={value() !== undefined}
         onPointerDown={() => {
           !props.disabled && setFocused(true);
         }}
@@ -183,9 +188,10 @@ const Select = (allProps: SelectProps) => {
             )}
           />
         }
+        label={props.label}
         ref={mergeRefs(elProps.ref, setInputContainerRef)}
       >
-        {optionLabelFromValue(props.value)}
+        {getOptionLabelFromValue(value())}
       </InputLikeBase>
 
       <Portal>
@@ -193,8 +199,11 @@ const Select = (allProps: SelectProps) => {
           <SelectDropdown
             onDismiss={() => setFocused(false)}
             visible={focused()}
-            value={props.value}
-            onChange={props.onChange}
+            value={value()}
+            onChange={(newValue) => {
+              setValue(newValue);
+              props.onChange?.(newValue);
+            }}
             anchor={inputContainerRef()!}
             options={options()}
             size={props.size ?? 'medium'}

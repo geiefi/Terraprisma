@@ -1,9 +1,5 @@
 import {
-  Accessor,
   ComponentProps,
-  JSX,
-  Setter,
-  createSignal,
   splitProps
 } from 'solid-js';
 import { Accents } from '../../..';

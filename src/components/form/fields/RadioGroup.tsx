@@ -23,10 +23,9 @@ import {
   FormValue,
   FormFieldValue,
   FieldName,
-  FieldProps,
   FieldPropKeys
 } from '../types';
-import { FormField, Label, useField } from '../components';
+import { Label } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 
 export type RadioGroupOptionProps<
