@@ -28,8 +28,8 @@ import {
   createDismissListener
 } from '../../..';
 
-import { FieldValidator, FormFieldValue } from '../types';
-import { InputLikeBase, Label } from '../components';
+import { FormFieldValue } from '../types';
+import { InputLikeBase } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 import { createValueSignal } from './createValueSignal';
 
@@ -163,7 +163,7 @@ const Select = (allProps: SelectProps) => {
       <InputLikeBase
         {...elProps}
         size={props.size}
-        class="flex flex-col items-center align-middle gap-3 cursor-pointer"
+        class={mergeClass("flex items-center align-middle gap-3 cursor-pointer", elProps.class)}
         focused={focused()}
         tabindex="0"
         hasContent={value() !== undefined}
