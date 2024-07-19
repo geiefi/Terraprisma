@@ -94,7 +94,7 @@ export function deepDelete(obj: any, path: string | string[]): void {
  * This is going to be the value that comes from the `useForm()` call to get the data
  * and access to some actions related to the context Form.
  */
-export class FormProviderValue<
+export class Form<
   T extends FormValue,
   Values extends FormValue = Partial<T>,
   Paths extends T extends EmptyObj
@@ -373,4 +373,4 @@ Maybe you forgot to initialize it?`
   }
 }
 
-export const FormContext = createContext<FormProviderValue<FormValue>>();
+export const FormContext = createContext<Form<FormValue>>();

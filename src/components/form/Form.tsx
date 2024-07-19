@@ -5,10 +5,9 @@ import {
   produce
 } from 'solid-js/store';
 
-import { FormContext, FormProviderValue, FormStore } from './FormContext';
+import { Form, FormStore } from './FormContext';
 
 import { AgnosticValidator, FormValue } from './types';
-import { StoreTuple } from '../../types';
 
 /**
  * @description This is a Form pattern of usage that makes it possible to have typesafe fields
@@ -63,56 +62,13 @@ export function createForm<Value extends FormValue>(
   // eslint-disable-next-line solid/reactivity
   const formStore = createStore(new FormStore());
 
-  const formProviderValue = new FormProviderValue<Value>(
+  const form = new Form<Value>(
     formStore,
     [formValue, setFormValue],
     agnosticValidators,
     identification
   );
 
-  const form = (props: ParentProps) => (
-    <Form<Value> providerValue={formProviderValue}>{props.children}</Form>
-  );
-
-  form.store = formStore;
-  form.valuesStore = [formValue, setFormValue] as StoreTuple<Partial<Value>>;
-  form.providerValue = formProviderValue;
   return form;
 }
 
-const Form = <Value extends FormValue>(
-  props: ParentProps<{ providerValue: FormProviderValue<Value> }>
-): JSX.Element => {
-  // eslint-disable-next-line solid/reactivity
-  const [, setForm] = props.providerValue.store;
-
-  onMount(() => {
-    setForm(
-      produce((form) => {
-        form.errors = {};
-      })
-    );
-  });
-
-  return (
-    <FormContext.Provider
-      // eslint-disable-next-line solid/reactivity
-      value={props.providerValue as unknown as FormProviderValue<FormValue>}
-    >
-      {props.children}
-    </FormContext.Provider>
-  );
-};
-
-/**
- * Gets a reference to the context of the parent form, this is mainly going
- * to be used inside of internal GrapeS components.
- *
- * The provider value that gets out of this function is precisely a class that has implemented methods
- * that help with validating, cleaninUp and managing all of the values of the form.
- */
-export function useForm<K extends FormValue = FormValue>() {
-  return useContext<FormProviderValue<FormValue> | undefined>(
-    FormContext
-  ) as unknown as FormProviderValue<K>;
-}
