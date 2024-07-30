@@ -1,4 +1,10 @@
-import { ComponentProps, JSX, createEffect, splitProps } from 'solid-js';
+import {
+  ComponentProps,
+  JSX,
+  createEffect,
+  createSignal,
+  splitProps
+} from 'solid-js';
 
 import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
@@ -11,24 +17,23 @@ import {
 } from '../../types';
 
 import './TextArea.css';
-import { Accents } from '../../../..';
+import {
+  Accents,
+  FieldRequiredProperties,
+  FieldRequiredPropertyKeys
+} from '../../../..';
 import { mergeClass, mergeEventHandlers } from '../../../../utils';
 import { InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
+import { createValueSignal } from '../createValueSignal';
 
 export type TextAreaChangeEvent = Event & {
   currentTarget: HTMLTextAreaElement;
   target: HTMLTextAreaElement;
 };
 
-export type TextAreaProps<
-  OwnerFormValue extends FormValue = FormValue,
-  Name extends FieldName<OwnerFormValue, string> = FieldName<
-    OwnerFormValue,
-    string
-  >
-> = LeftIntersection<
-  MaskedFieldProps<OwnerFormValue, string, Name> & {
+export type TextAreaProps = LeftIntersection<
+  {
     label?: JSX.Element;
 
     size?: 'small' | 'medium' | 'large';
@@ -42,15 +47,13 @@ export type TextAreaProps<
      * @default 'both' or 'none' if {@link resizable} is false
      */
     reisizingDrection?: JSX.CSSProperties['resize'];
-
-    onChange?: (newValue: string, event?: TextAreaChangeEvent) => any;
-  },
+  } & FieldRequiredProperties<string>,
   ComponentProps<'textarea'>
 >;
 
 const TextArea = (allProps: TextAreaProps) => {
   const [props, elProps] = splitProps(allProps, [
-    ...MaskedFieldPropsKeys,
+    ...FieldRequiredPropertyKeys,
     'label',
     'color',
     'resizable',
@@ -59,83 +62,68 @@ const TextArea = (allProps: TextAreaProps) => {
     'onChange'
   ]);
   const color = () => props.color ?? 'accent';
+
+  const [value, setValue] = createValueSignal(props);
+  const [focused, setFocused] = createSignal(false);
+
   const resizingDirection = () =>
     props.resizable ?? true ? props.reisizingDrection ?? 'both' : 'none';
+  let textarea: HTMLTextAreaElement;
+  createEffect(() => {
+    if (textarea) {
+      textarea.value = (value() ?? '').toString();
+    }
+  });
+
+  const hasContent = () =>
+    value() !== undefined && value()!.toString().length > 0;
 
   return (
-    <FormField fieldProperties={props}>
-      {({
-        elementId: id,
-
-        disabledS: [disabled],
-        valueS: [value, setValue],
-
-        focusedS: [focused, setFocused],
-        hasContent,
-        validate
-      }) => {
-        let textarea: HTMLTextAreaElement;
-        createEffect(() => {
-          if (textarea) {
-            textarea.value = (value() ?? '').toString();
-          }
-        });
-
-        return (
-          <InputLikeBase
-            class="max-w-full max-h-full w-full h-full overflow-x-hidden overflow-y-auto"
-            style={{
-              resize: resizingDirection()
-            }}
-            size={props.size}
-            labelFor={id()}
-            color={color()}
-            label={props.label}
-          >
-            <textarea
-              {...elProps}
-              name={props.name}
-              id={id()}
-              ref={mergeRefs(elProps.ref, (r) => (textarea = r))}
-              disabled={disabled()}
-              class={mergeClass(
-                'border-none outline-none appearance-none bg-transparent w-full h-full min-h-full m-0 p-[inherit] absolute left-0 top-0',
-                'overflow-hidden resize-none transition-opacity opacity-100',
-                typeof props.label === 'undefined' && 'py-2',
-                !focused() && !hasContent() && '!opacity-0',
-                elProps.class
-              )}
-              onInput={mergeEventHandlers(
-                elProps.onInput,
-                props.mask ? createInputMask(props.mask) : undefined,
-                (event) => {
-                  event.target.style.height = '0px';
-                  requestAnimationFrame(() => {
-                    const scrollHeight = Math.max(
-                      event.target.scrollHeight,
-                      event.target.parentElement!.getBoundingClientRect()
-                        .height - 2
-                    );
-                    event.target.style.height = `${scrollHeight}px`;
-                  });
-
-                  if (props.onChange) {
-                    props.onChange(event.currentTarget.value, event);
-                  }
-
-                  setValue(event.currentTarget.value);
-                }
-              )}
-              onFocus={mergeEventHandlers(elProps.onFocus, () => setFocused(true))}
-              onBlur={mergeEventHandlers(elProps.onBlur, () => {
-                setFocused(false);
-                validate(value());
-              })}
-            />
-          </InputLikeBase>
-        );
+    <InputLikeBase
+      class="max-w-full max-h-full w-full h-full overflow-x-hidden overflow-y-auto"
+      style={{
+        resize: resizingDirection()
       }}
-    </FormField>
+      size={props.size}
+      hasErrors={props.isInvalid}
+      hasContent={hasContent()}
+      focused={focused()}
+      color={color()}
+      label={props.label}
+    >
+      <textarea
+        {...elProps}
+        ref={mergeRefs(elProps.ref, (r) => (textarea = r))}
+        disabled={props.disabled}
+        class={mergeClass(
+          'border-none outline-none appearance-none bg-transparent w-full h-full min-h-full m-0 pt-[inherit] pb-[inherit] pl-[inherit] pr-[inherit] absolute left-0 top-0',
+          'overflow-hidden box-border resize-none transition-opacity opacity-100',
+          typeof props.label === 'undefined' && 'py-2',
+          !focused() && !hasContent() && '!opacity-0',
+          elProps.class
+        )}
+        onInput={mergeEventHandlers(
+          elProps.onInput,
+          //props.mask ? createInputMask(props.mask) : undefined,
+          (event) => {
+            event.target.style.height = '0px';
+            requestAnimationFrame(() => {
+              const scrollHeight = Math.max(
+                event.target.scrollHeight,
+                event.target.parentElement!.getBoundingClientRect().height - 2
+              );
+              event.target.style.height = `${scrollHeight}px`;
+            });
+
+            setValue(event.currentTarget.value);
+          }
+        )}
+        onFocus={mergeEventHandlers(elProps.onFocus, () => setFocused(true))}
+        onBlur={mergeEventHandlers(elProps.onBlur, () => {
+          setFocused(false);
+        })}
+      />
+    </InputLikeBase>
   );
 };
 
