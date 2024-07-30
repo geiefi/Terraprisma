@@ -1,5 +1,5 @@
 import { ComponentProps, JSX, Show, createSignal, splitProps } from 'solid-js';
-import { mergeEventHandlers, mergeClass, Icons, Accents, FieldRequiredProperties } from '../../..';
+import { mergeEventHandlers, mergeClass, Icons, Accents, FieldRequiredProperties, FieldRequiredPropertyKeys } from '../../..';
 
 import { Label } from '../components';
 import { LeftIntersection } from '../../../types/LeftIntersection';
@@ -19,20 +19,17 @@ export type CheckboxProps = LeftIntersection<
 const Checkbox = (allProps: CheckboxProps) => {
   const [props, elProps] = splitProps(allProps, [
     'label',
-    'disabled',
-    'value',
-    'isInvalid',
+    ...FieldRequiredPropertyKeys,
     'color',
     'size',
     'onChange',
-    'onInstantChange'
   ]);
 
   const color = () => props.color ?? 'accent';
 
   const size = () => props.size ?? 'medium';
 
-  const [value, setValue] = createValueSignal(() => props.value);
+  const [value, setValue] = createValueSignal(props);
 
   const toggleValue = (
     e:
@@ -49,9 +46,6 @@ const Checkbox = (allProps: CheckboxProps) => {
       const newValue = !value();
       setValue(newValue);
 
-      if (props.onInstantChange) {
-        props.onInstantChange(newValue, e);
-      }
       props.onChange?.(newValue);
     }
   };

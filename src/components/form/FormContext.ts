@@ -96,8 +96,15 @@ export type FieldRequiredProperties<V extends FormFieldValue = FormFieldValue> =
   'aria-disabled'?: boolean;
   isInvalid?: boolean;
   value?: V;
-  onInstantChange?: (value: V, event?: Event) => any;
+  onInstantChange?: (value: V) => any;
 };
+
+export const FieldRequiredPropertyKeys = [
+  'disabled',
+  'isInvalid',
+  'value',
+  'onInstantChange'
+] as const;
 
 /**
  * This is going to be the value that comes from `createForm()` 

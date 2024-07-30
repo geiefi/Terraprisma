@@ -10,7 +10,7 @@ import {
   splitProps
 } from 'solid-js';
 
-import { mergeEventHandlers, mergeClass, Accents, Stack, FieldRequiredProperties } from '../../..';
+import { mergeEventHandlers, mergeClass, Accents, Stack, FieldRequiredProperties, FieldRequiredPropertyKeys } from '../../..';
 
 import type { StackProps } from '../../layout/Stack';
 
@@ -143,10 +143,7 @@ function RadioGroup(allProps: RadioGroupProps) {
     'radiosDirection',
     'color',
     'size',
-    'onInstantChange',
-    'value',
-    'disabled',
-    'isInvalid',
+    ...FieldRequiredPropertyKeys,
     'children'
   ]);
   const color = () => props.color ?? 'accent';
@@ -156,7 +153,7 @@ function RadioGroup(allProps: RadioGroupProps) {
       : props.children
   );
 
-  const [value, setValue] = createValueSignal(() => props.value);
+  const [value, setValue] = createValueSignal(props);
   const options = () => {
     let childrenArr: (JSX.Element | ComponentProps<typeof RadioOption>)[];
 
@@ -200,10 +197,6 @@ function RadioGroup(allProps: RadioGroupProps) {
                 if (!props.disabled) {
                   const newValue = optionProps.value;
                   setValue(newValue);
-
-                  if (props.onInstantChange) {
-                    props.onInstantChange(newValue, e);
-                  }
                 }
               })}
             />

@@ -1,8 +1,9 @@
+import { ComponentProps, splitProps } from 'solid-js';
 import {
-  ComponentProps,
-  splitProps
-} from 'solid-js';
-import { Accents, FieldRequiredProperties } from '../../..';
+  Accents,
+  FieldRequiredProperties,
+  FieldRequiredPropertyKeys
+} from '../../..';
 import { mergeClass } from '../../../utils';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 import { createValueSignal } from './createValueSignal';
@@ -18,12 +19,11 @@ export type TogglerProps = LeftIntersection<
 const Toggler = (allProps: TogglerProps) => {
   const [props, elProps] = splitProps(allProps, [
     'color',
-    'value',
     'size',
-    'onInstantChange'
+    ...FieldRequiredPropertyKeys
   ]);
 
-  const [value, setValue] = createValueSignal(() => props.value ?? false);
+  const [value, setValue] = createValueSignal(props);
 
   const color = () => props.color ?? 'accent';
   const size = () => props.size ?? 'medium';
@@ -45,7 +45,7 @@ const Toggler = (allProps: TogglerProps) => {
           ? 'after:left-[calc(100%-0.25rem)] after:-translate-x-full'
           : 'after:left-1',
 
-        elProps.disabled
+        props.disabled
           ? 'cursor-default bg-[var(--muted-bg)] after:bg-[var(--muted-fg)] opacity-30'
           : [
               'cursor-pointer',
@@ -63,7 +63,7 @@ const Toggler = (allProps: TogglerProps) => {
       classList={{
         on: value() === true,
 
-        disabled: elProps.disabled,
+        disabled: props.disabled,
 
         small: props.size === 'small',
         medium: props.size === 'medium' || typeof props.size === 'undefined',
@@ -73,7 +73,7 @@ const Toggler = (allProps: TogglerProps) => {
       }}
       value={value() ? 'on' : 'off'}
       onClick={(event) => {
-        if (!elProps.disabled) {
+        if (!props.disabled) {
           const newValue = !value();
           setValue(newValue);
 

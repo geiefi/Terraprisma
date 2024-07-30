@@ -26,7 +26,8 @@ import {
   Icons,
   Accents,
   createDismissListener,
-  FieldRequiredProperties
+  FieldRequiredProperties,
+  FieldRequiredPropertyKeys
 } from '../../..';
 
 import { FormFieldValue } from '../types';
@@ -95,11 +96,8 @@ const Select = (allProps: SelectProps) => {
     'size',
     'color',
     'children',
-    'disabled',
-    'value',
-    'isInvalid',
     'popover',
-    'onInstantChange',
+    ...FieldRequiredPropertyKeys,
     'onFocus'
   ]);
 
@@ -153,7 +151,7 @@ const Select = (allProps: SelectProps) => {
     )
   );
 
-  const [value, setValue] = createValueSignal(() => props.value);
+  const [value, setValue] = createValueSignal(props);
 
   return (
     <>
@@ -199,7 +197,6 @@ const Select = (allProps: SelectProps) => {
             value={value()}
             onChange={(newValue) => {
               setValue(newValue);
-              props.onInstantChange?.(newValue);
             }}
             anchor={inputContainerRef()!}
             options={options()}
