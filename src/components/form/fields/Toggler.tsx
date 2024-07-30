@@ -2,7 +2,7 @@ import {
   ComponentProps,
   splitProps
 } from 'solid-js';
-import { Accents } from '../../..';
+import { Accents, FieldRequiredProperties } from '../../..';
 import { mergeClass } from '../../../utils';
 import { LeftIntersection } from '../../../types/LeftIntersection';
 import { createValueSignal } from './createValueSignal';
@@ -11,10 +11,7 @@ export type TogglerProps = LeftIntersection<
   {
     size?: 'small' | 'medium' | 'large';
     color?: Accents;
-
-    value?: boolean;
-    onChange?: (value: boolean, event: MouseEvent) => any;
-  },
+  } & FieldRequiredProperties,
   ComponentProps<'input'>
 >;
 
@@ -23,7 +20,7 @@ const Toggler = (allProps: TogglerProps) => {
     'color',
     'value',
     'size',
-    'onChange'
+    'onInstantChange'
   ]);
 
   const [value, setValue] = createValueSignal(() => props.value ?? false);
@@ -80,7 +77,7 @@ const Toggler = (allProps: TogglerProps) => {
           const newValue = !value();
           setValue(newValue);
 
-          props.onChange?.(newValue, event);
+          props.onInstantChange?.(newValue, event);
         }
       }}
     />

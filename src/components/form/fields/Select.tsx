@@ -25,7 +25,8 @@ import {
   GrowFade,
   Icons,
   Accents,
-  createDismissListener
+  createDismissListener,
+  FieldRequiredProperties
 } from '../../..';
 
 import { FormFieldValue } from '../types';
@@ -37,12 +38,8 @@ export type SelectProps = LeftIntersection<
   {
     label?: JSX.Element;
 
-    disabled?: boolean;
-    onChange?: (newValue: FormFieldValue) => any;
     onFocus?: () => any;
     onBlur?: (event?: FocusEvent) => any;
-    value?: FormFieldValue;
-    isInvalid?: boolean;
 
     color?: Accents;
     size?: 'small' | 'medium' | 'large';
@@ -50,7 +47,7 @@ export type SelectProps = LeftIntersection<
     popover?: (props: ComponentProps<typeof Popover>) => JSX.Element;
 
     children: JSX.Element;
-  },
+  } & FieldRequiredProperties,
   ComponentProps<'div'>
 >;
 
@@ -102,7 +99,7 @@ const Select = (allProps: SelectProps) => {
     'value',
     'isInvalid',
     'popover',
-    'onChange',
+    'onInstantChange',
     'onFocus'
   ]);
 
@@ -202,7 +199,7 @@ const Select = (allProps: SelectProps) => {
             value={value()}
             onChange={(newValue) => {
               setValue(newValue);
-              props.onChange?.(newValue);
+              props.onInstantChange?.(newValue);
             }}
             anchor={inputContainerRef()!}
             options={options()}

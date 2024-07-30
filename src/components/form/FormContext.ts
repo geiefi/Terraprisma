@@ -9,7 +9,8 @@ import {
   StoreTuple
 } from '../..';
 
-import { AgnosticValidator, FieldValidator, FormValue } from './types';
+import { AgnosticValidator, FieldValidator, FormFieldValue, FormValue } from './types';
+import { trackDeep } from '@solid-primitives/deep';
 
 export class FormError extends Error {}
 
@@ -90,9 +91,16 @@ export function deepDelete(obj: any, path: string | string[]): void {
   }
 }
 
+export type FieldRequiredProperties<V extends FormFieldValue = FormFieldValue> = {
+  disabled?: boolean;
+  'aria-disabled'?: boolean;
+  isInvalid?: boolean;
+  value?: V;
+  onInstantChange?: (value: V, event?: Event) => any;
+};
+
 /**
- * This is going to be the value that comes from the `useForm()` call to get the data
- * and access to some actions related to the context Form.
+ * This is going to be the value that comes from `createForm()` 
  */
 export class Form<
   T extends FormValue,
@@ -166,15 +174,6 @@ export class Form<
     name: Name,
     validators: FieldValidator<DeepGet<Values, Name>>[] = []
   ) {
-    if (
-      document.querySelectorAll(`#field-${this.identification()}-${name}`)
-        .length > 1
-    ) {
-      throw new FormError(
-        `Error with the field "${name}" on the <Form> with identification "${this.identification()}": ` +
-          'You cannot have multiple fields defined on the same <Form> that have the same name!'
-      );
-    }
     batch(() => {
       this.setForm(
         produce((form) => {
@@ -196,15 +195,15 @@ export class Form<
       get 'aria-disabled'() {
         return provider.form.disabled[name];
       },
-      onChange(newValue: DeepGet<Values, Name>) {
-        provider.setValues(produce(values => {
+      get isInvalid() {
+        return provider.hasErrors(name);
+      },
+      onInstantChange: (newValue: DeepGet<Values, Name>) => {
+        this.setValues(produce(values => {
           setByPath(values, name, newValue);
         }));
-      },
-      onBlur() {
-        provider.validate(name);
       }
-    };
+    } satisfies FieldRequiredProperties;
   }
 
   /**
@@ -352,7 +351,7 @@ Maybe you forgot to initialize it?`
 
   hasErrors(name: Paths): boolean {
     return typeof this.form.errors[name] !== 'undefined'
-      ? typeof this.form.errors[name]![0].length !== 'undefined'
+      ? this.form.errors[name]!.length > 0
       : false;
   }
 

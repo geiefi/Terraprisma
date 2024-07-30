@@ -10,7 +10,7 @@ import {
   splitProps
 } from 'solid-js';
 
-import { mergeEventHandlers, mergeClass, Accents, Stack } from '../../..';
+import { mergeEventHandlers, mergeClass, Accents, Stack, FieldRequiredProperties } from '../../..';
 
 import type { StackProps } from '../../layout/Stack';
 
@@ -126,18 +126,14 @@ export type RadioGroupProps = LeftIntersection<
     radiosDirection?: StackProps['direction'];
     color?: Accents;
 
-    onChange?: (newValue: FormFieldValue, event?: MouseEvent) => any;
     onFocus?: () => any;
-    value?: FormFieldValue;
-    disabled?: boolean;
-    isInvalid?: boolean;
 
     children?:
       | JSX.Element
       | ((
           Option: Component<ComponentProps<typeof RadioOption>>
         ) => JSX.Element);
-  },
+  } & FieldRequiredProperties,
   ComponentProps<typeof Stack>
 >;
 
@@ -147,7 +143,7 @@ function RadioGroup(allProps: RadioGroupProps) {
     'radiosDirection',
     'color',
     'size',
-    'onChange',
+    'onInstantChange',
     'value',
     'disabled',
     'isInvalid',
@@ -205,8 +201,8 @@ function RadioGroup(allProps: RadioGroupProps) {
                   const newValue = optionProps.value;
                   setValue(newValue);
 
-                  if (props.onChange) {
-                    props.onChange(newValue, e);
+                  if (props.onInstantChange) {
+                    props.onInstantChange(newValue, e);
                   }
                 }
               })}
