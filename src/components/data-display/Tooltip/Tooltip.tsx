@@ -53,7 +53,7 @@ export type TooltipProps = LeftIntersection<
  *
  * @see {@link Tooltip}
  */
-export function createTooltip(identification: string) {
+export function createTooltip() {
   const [anchorRef, setAnchorRef] = createSignal<HTMLElement>();
 
   let updateBoundingBox: (() => void) | undefined = undefined;
@@ -64,7 +64,7 @@ export function createTooltip(identification: string) {
       if (updateBoundingBox) {
         updateBoundingBox();
       } else {
-        console.warn(`Tooltip ${identification}: Could not call updateBoundingBox manually due to missing Tooltip in the DOM.
+        console.warn(`Could not call updateBoundingBox manually due to missing Tooltip in the DOM.
         Maybe you need to add <Tooltip></Tooltip> to your component?`);
       }
     },
@@ -87,7 +87,7 @@ export function createTooltip(identification: string) {
         if (anchor) {
           setBoundingRect(getAbsoluteBoundingRect(anchor));
         } else {
-          console.warn(`Tooltip ${identification}: Could not determine bounding box due to missing anchor ref.
+          console.warn(`Could not determine bounding box due to missing anchor ref.
             Are your forgetting to call setAnchor for it?`);
         }
       };
@@ -150,7 +150,7 @@ const Tooltip = (
   } & ComponentProps<'div'>
 ) => {
   // eslint-disable-next-line solid/reactivity
-  const { setAnchor, Tooltip: Comp } = createTooltip(props.identification);
+  const { setAnchor, Tooltip: Comp } = createTooltip();
 
   createEffect(() => setAnchor(props.anchor));
 

@@ -4,7 +4,7 @@ import { createEffect, createRoot, on } from 'solid-js';
 import { captureStoreUpdates } from '@solid-primitives/deep';
 
 import {
-  FormProviderValue,
+  Form,
   FormStore,
   deepDelete,
   getByPath,
@@ -40,7 +40,7 @@ describe('FormContext', () => {
 
     const updates = captureStoreUpdates(values);
 
-    let formProvider = new FormProviderValue<typeof values>(
+    let formProvider = new Form<typeof values>(
       [store, setStore],
       [values, setValues],
       [],

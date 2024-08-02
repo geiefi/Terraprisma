@@ -9,7 +9,8 @@ import {
   StoreTuple
 } from '../..';
 
-import { AgnosticValidator, FieldValidator, FormValue } from './types';
+import { AgnosticValidator, FieldValidator, FormFieldValue, FormValue } from './types';
+import { trackDeep } from '@solid-primitives/deep';
 
 export class FormError extends Error {}
 
@@ -90,11 +91,25 @@ export function deepDelete(obj: any, path: string | string[]): void {
   }
 }
 
+export type FieldRequiredProperties<V extends FormFieldValue = FormFieldValue> = {
+  disabled?: boolean;
+  'aria-disabled'?: boolean;
+  isInvalid?: boolean;
+  value?: V;
+  onInstantChange?: (value: V) => any;
+};
+
+export const FieldRequiredPropertyKeys = [
+  'disabled',
+  'isInvalid',
+  'value',
+  'onInstantChange'
+] as const;
+
 /**
- * This is going to be the value that comes from the `useForm()` call to get the data
- * and access to some actions related to the context Form.
+ * This is going to be the value that comes from `createForm()` 
  */
-export class FormProviderValue<
+export class Form<
   T extends FormValue,
   Values extends FormValue = Partial<T>,
   Paths extends T extends EmptyObj
@@ -162,35 +177,40 @@ export class FormProviderValue<
    *
    * @param value Just the initial value of the field being initialized.
    */
-  init<Name extends Paths>(
+  register<Name extends Paths>(
     name: Name,
-    validators: FieldValidator<DeepGet<Values, Name>>[],
-    value: DeepGet<Values, Name>
-  ): void {
-    if (
-      document.querySelectorAll(`#field-${this.identification()}-${name}`)
-        .length > 1
-    ) {
-      throw new FormError(
-        `Error with the field "${name}" on the <Form> with identification "${this.identification()}": ` +
-          'You cannot have multiple fields defined on the same <Form> that have the same name!'
-      );
-    }
+    validators: FieldValidator<DeepGet<Values, Name>>[] = []
+  ) {
     batch(() => {
-      // ensures that the values in the form are not set unecessarily
-      // if they are already set coming thorugh the store
-      if (getByPath(this.values, name) === undefined) {
-        this.setValues(produce(values => {
-          setByPath(values, name, value);
-        }));
-      }
-
       this.setForm(
         produce((form) => {
           form.validators[name] = validators as any;
         })
       );
     });
+
+    const provider = this;
+    return {
+      get value() {
+        const value = getByPath(provider.values, name);
+        deeplyTrack(value);
+        return value;
+      },
+      get disabled() {
+        return provider.form.disabled[name];
+      },
+      get 'aria-disabled'() {
+        return provider.form.disabled[name];
+      },
+      get isInvalid() {
+        return provider.hasErrors(name);
+      },
+      onInstantChange: (newValue: DeepGet<Values, Name>) => {
+        this.setValues(produce(values => {
+          setByPath(values, name, newValue);
+        }));
+      }
+    } satisfies FieldRequiredProperties;
   }
 
   /**
@@ -338,7 +358,7 @@ Maybe you forgot to initialize it?`
 
   hasErrors(name: Paths): boolean {
     return typeof this.form.errors[name] !== 'undefined'
-      ? typeof this.form.errors[name]![0].length !== 'undefined'
+      ? this.form.errors[name]!.length > 0
       : false;
   }
 
@@ -359,4 +379,4 @@ Maybe you forgot to initialize it?`
   }
 }
 
-export const FormContext = createContext<FormProviderValue<FormValue>>();
+export const FormContext = createContext<Form<FormValue>>();
