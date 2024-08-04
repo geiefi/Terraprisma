@@ -6,15 +6,7 @@ import {
   splitProps
 } from 'solid-js';
 
-import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
-
-import {
-  FieldName,
-  FormValue,
-  MaskedFieldProps,
-  MaskedFieldPropsKeys
-} from '../../types';
 
 import './TextArea.css';
 import {

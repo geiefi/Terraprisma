@@ -77,7 +77,7 @@ const Toggler = (allProps: TogglerProps) => {
           const newValue = !value();
           setValue(newValue);
 
-          props.onInstantChange?.(newValue, event);
+          props.onInstantChange?.(newValue);
         }
       }}
     />

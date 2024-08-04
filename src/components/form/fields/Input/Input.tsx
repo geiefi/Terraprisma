@@ -6,15 +6,7 @@ import {
   splitProps
 } from 'solid-js';
 
-import { createInputMask } from '@solid-primitives/input-mask';
 import { mergeRefs } from '@solid-primitives/refs';
-
-import {
-  FieldName,
-  FormValue,
-  MaskedFieldProps,
-  MaskedFieldPropsKeys
-} from '../../types';
 
 import './Input.css';
 import {
@@ -27,7 +19,6 @@ import { InputLikeBase } from '../../components';
 import { LeftIntersection } from '../../../../types/LeftIntersection';
 import { Dynamic } from 'solid-js/web';
 import { createValueSignal } from '../createValueSignal';
-import { isInaccessible } from '@solidjs/testing-library';
 
 export type InputOnChangeEvent = Event & {
   currentTarget: HTMLInputElement;
