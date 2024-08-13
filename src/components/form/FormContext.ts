@@ -9,8 +9,12 @@ import {
   StoreTuple
 } from '../..';
 
-import { AgnosticValidator, FieldValidator, FormFieldValue, FormValue } from './types';
-import { trackDeep } from '@solid-primitives/deep';
+import {
+  AgnosticValidator,
+  FieldValidator,
+  FormFieldValue,
+  FormValue
+} from './types';
 
 export class FormError extends Error {}
 
@@ -91,13 +95,14 @@ export function deepDelete(obj: any, path: string | string[]): void {
   }
 }
 
-export type FieldRequiredProperties<V extends FormFieldValue = FormFieldValue> = {
-  disabled?: boolean;
-  'aria-disabled'?: boolean;
-  isInvalid?: boolean;
-  value?: V;
-  onInstantChange?: (value: V) => any;
-};
+export type FieldRequiredProperties<V extends FormFieldValue = FormFieldValue> =
+  {
+    disabled?: boolean;
+    'aria-disabled'?: boolean;
+    isInvalid?: boolean;
+    value?: V;
+    onInstantChange?: (value: V) => any;
+  };
 
 export const FieldRequiredPropertyKeys = [
   'disabled',
@@ -107,7 +112,7 @@ export const FieldRequiredPropertyKeys = [
 ] as const;
 
 /**
- * This is going to be the value that comes from `createForm()` 
+ * This is going to be the value that comes from `createForm()`
  */
 export class Form<
   T extends FormValue,
@@ -128,8 +133,7 @@ export class Form<
   constructor(
     public store: StoreTuple<FormStore>,
     public valuesStore: StoreTuple<Values>,
-    public agnosticValidators: AgnosticValidator[],
-    private _identification: string
+    public agnosticValidators: AgnosticValidator[]
   ) {
     this.values = valuesStore[0];
     this.setValues = valuesStore[1];
@@ -152,10 +156,6 @@ export class Form<
 
   set isCleaningUp(cleaningUp: boolean) {
     this.__isCleaningUp = cleaningUp;
-  }
-
-  identification(): string {
-    return this._identification;
   }
 
   track(): void {
@@ -206,9 +206,11 @@ export class Form<
         return provider.hasErrors(name);
       },
       onInstantChange: (newValue: DeepGet<Values, Name>) => {
-        this.setValues(produce(values => {
-          setByPath(values, name, newValue);
-        }));
+        this.setValues(
+          produce((values) => {
+            setByPath(values, name, newValue);
+          })
+        );
       }
     } satisfies FieldRequiredProperties;
   }
@@ -236,8 +238,7 @@ export class Form<
     const formValueKeys: string[] = getLeaves(this.values);
     if (!formValueKeys.includes(name)) {
       throw new FormError(
-        `Cannot validate the field named "${name}" inside of the form with identification` +
-          ` ${this.identification()} because it does not exist!
+        `Cannot validate the field named "${name}" because it does not exist in the form!
 Maybe you forgot to initialize it?`
       );
     } else {

@@ -41,7 +41,6 @@ import { AgnosticValidator, FormValue } from './types';
  * ```
  */
 export function createForm<Value extends FormValue>(
-  identification: string,
   initialValueOrStoreTuple:
     | Partial<Value>
     | [get: Partial<Value>, set: SetStoreFunction<Partial<Value>>] = {},
@@ -66,7 +65,6 @@ export function createForm<Value extends FormValue>(
     formStore,
     [formValue, setFormValue],
     agnosticValidators,
-    identification
   );
 
   return form;
