@@ -45,7 +45,7 @@ export function createForm<Value extends FormValue>(
     | Partial<Value>
     | [get: Partial<Value>, set: SetStoreFunction<Partial<Value>>] = {},
   agnosticValidators: AgnosticValidator[] = []
-) {
+): Form<Value> {
   let formValue: Partial<Value>;
   let setFormValue: SetStoreFunction<Partial<Value>>;
 

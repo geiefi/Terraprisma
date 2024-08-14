@@ -6,6 +6,7 @@ import Slider from './Slider/Slider';
 import Toggler from './Toggler';
 import Checkbox from './Checkbox';
 import RadioGroup from './RadioGroup';
+import { createValueSignal } from './createValueSignal';
 
 export {
   Checkbox,
@@ -15,5 +16,6 @@ export {
   Select,
   Slider,
   TextArea,
-  Toggler
+  Toggler,
+  createValueSignal
 };
