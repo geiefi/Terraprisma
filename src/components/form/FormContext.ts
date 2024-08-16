@@ -194,7 +194,7 @@ export class Form<
       get value() {
         const value = getByPath(provider.values, name);
         deeplyTrack(value);
-        return value;
+        return value as DeepGet<Values, Name>;
       },
       get disabled() {
         return provider.form.disabled[name];

@@ -7,5 +7,5 @@ export type DeepGet<
   : TPath extends `${infer FirstKey}.${infer Rest}`
     ? FirstKey extends keyof TValue
       ? DeepGet<TValue[FirstKey], Rest>
-      : never
-    : never;
+      : any
+    : any;
